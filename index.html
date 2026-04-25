@@ -3,64 +3,127 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Oichi Equipment</title>
 
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+
 <style>
-body {margin:0;background:#0d0d0d;color:#fff;font-family:Arial;}
-.wrap {max-width:900px;margin:auto;padding:80px 20px;}
-h1 {font-size:42px;margin-bottom:20px;}
-p {color:#bbb;line-height:1.7;}
-.section {margin-top:60px;}
-a {color:#4da3ff;text-decoration:none;}
-.footer {margin-top:80px;font-size:12px;color:#777;}
+body {
+  margin:0;
+  font-family: 'Inter', sans-serif;
+  background:#0b0b0b;
+  color:#eee;
+}
+
+/* header */
+header {
+  position:fixed;
+  top:0;
+  width:100%;
+  background:#111;
+  border-bottom:1px solid #222;
+  padding:15px 30px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+header a {
+  color:#fff;
+  text-decoration:none;
+  margin-left:20px;
+  font-size:14px;
+}
+
+.container {
+  max-width:900px;
+  margin:auto;
+  padding:120px 20px 60px;
+}
+
+h1 {
+  font-size:42px;
+  margin-bottom:20px;
+}
+
+h2 {
+  margin-top:50px;
+  font-size:22px;
+}
+
+p {
+  color:#bbb;
+  line-height:1.7;
+}
+
+.section {
+  margin-top:50px;
+}
+
+.footer {
+  margin-top:80px;
+  padding-top:20px;
+  border-top:1px solid #222;
+  font-size:13px;
+  color:#777;
+}
 </style>
+
 </head>
 
 <body>
-<div class="wrap">
+
+<header>
+  <div>Oichi Equipment</div>
+  <div>
+    <a href="index.html">Home</a>
+    <a href="terms.html">Terms</a>
+    <a href="privacy.html">Privacy</a>
+    <a href="tokushoho.html">Legal</a>
+  </div>
+</header>
+
+<div class="container">
 
 <h1>Trading Execution Panel for MT5</h1>
 
 <p>
-Oichi Equipment provides a desktop-based trading support panel for MetaTrader 5.<br>
-This software allows manual trade execution and position management while using external chart analysis tools.
+A desktop-based trading support panel for MetaTrader 5.<br>
+Designed for manual execution and position management.
 </p>
 
 <div class="section">
 <h2>Features</h2>
 <p>
-• Manual order execution (Buy / Sell)<br>
-• Position and pending order management<br>
-• One-click full close functionality<br>
-• Real-time account information display
+Manual order execution (Buy / Sell)<br>
+Position & pending order management<br>
+One-click full close<br>
+Real-time account info display
 </p>
 </div>
 
 <div class="section">
-<h2>System Overview</h2>
+<h2>How it works</h2>
 <p>
-The software operates locally on the user's machine and connects to an active MT5 terminal.<br>
-No cloud execution or automated trading logic is included.
+Runs locally on your machine and connects to MT5.<br>
+No automation, no cloud processing.
 </p>
 </div>
 
 <div class="section">
 <h2>Important Notice</h2>
 <p>
-This product does not provide financial advice, trading signals, or automated trading.<br>
-All trading decisions must be made solely at the user's own responsibility.
+This product does not provide financial advice or automated trading.<br>
+All decisions are your responsibility.
 </p>
 </div>
 
 <div class="footer">
-<p>© Oichi Equipment</p>
-<p>
-<a href="tokushoho.html">Legal</a> |
-<a href="privacy.html">Privacy Policy</a> |
-<a href="terms.html">Terms of Service</a>
-</p>
+© Oichi Equipment
 </div>
 
 </div>
+
 </body>
 </html>
