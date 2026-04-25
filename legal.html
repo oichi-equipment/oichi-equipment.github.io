@@ -1,23 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
-<head><meta charset="UTF-8"><title>Legal Notice - Oichi Equipment</title></head>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Legal Notice - Oichi Equipment</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;}
+body{margin:0;font-family:'Inter',sans-serif;background:#0a0a0a;color:#eee;}
+header{position:fixed;top:0;width:100%;background:rgba(10,10,10,0.85);backdrop-filter:blur(12px);border-bottom:1px solid #222;z-index:100;}
+.header-inner{max-width:1200px;margin:auto;padding:16px 24px;display:flex;justify-content:space-between;align-items:center;}
+.logo{color:#fff;text-decoration:none;font-weight:600;}
+nav{display:flex;align-items:center;}
+nav a{color:#aaa;margin-left:20px;text-decoration:none;font-size:14px;transition:0.2s;}
+nav a:hover{color:#fff;}
+.lang-switch{border-left:1px solid #444;margin-left:20px;padding-left:20px;}
+.lang-switch a{margin-left:10px;font-weight:600;color:#fff;}
+.lang-switch a.inactive{color:#555;font-weight:400;}
+
+.container{max-width:900px;margin:auto;padding:140px 24px 80px;}
+h1{font-size:32px;margin-bottom:30px;}
+p{color:#bbb;line-height:1.8;font-size:16px;margin-bottom:12px;}
+.legal-table{width:100%;border-collapse:collapse;margin-top:20px;}
+.legal-table th, .legal-table td{text-align:left;padding:15px;border-bottom:1px solid #222;vertical-align:top;}
+.legal-table th{width:35%;color:#fff;font-weight:600;}
+
+footer{border-top:1px solid #222;margin-top:60px;padding:40px 24px;text-align:center;color:#777;}
+footer a{color:#4da3ff;margin:0 10px;text-decoration:none;}
+</style>
+</head>
 <body>
 <header>
   <div class="header-inner">
     <a href="index.html" class="logo">Oichi Equipment</a>
     <nav>
-      <a href="terms.html">Terms</a><a href="privacy.html">Privacy</a><a href="legal.html">Legal</a>
-      <div class="lang-switch"><a href="ja/tokushoho.html" class="inactive">JP</a><a href="legal.html">EN</a></div>
+      <a href="terms.html">Terms</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="legal.html">Legal</a>
+      <div class="lang-switch">
+        <a href="ja/tokushoho.html" class="inactive">JP</a>
+        <a href="legal.html">EN</a>
+      </div>
     </nav>
   </div>
 </header>
-<div class="section" style="padding-top:140px; max-width:900px;">
+
+<div class="container">
   <h1>Legal Notice</h1>
-  <p><strong>Merchant Name:</strong> Oichi Equipment</p>
-  <p><strong>Representative:</strong> Tadayuki Nishikawa</p>
-  <p><strong>Contact:</strong> oichi.equipment@gmail.com</p>
-  <p><strong>Location:</strong> Japan (Available upon request)</p>
-  <p><strong>Business:</strong> Digital software and tools for MetaTrader 5.</p>
+  <table class="legal-table">
+    <tr><th>Merchant Name</th><td>Oichi Equipment</td></tr>
+    <tr><th>Representative</th><td>Tadayuki Nishikawa</td></tr>
+    <tr><th>Location</th><td>Japan (Full address available upon request)</td></tr>
+    <tr><th>Email</th><td>oichi.equipment@gmail.com</td></tr>
+    <tr><th>Business</th><td>Software development for MetaTrader 5</td></tr>
+    <tr><th>Return Policy</th><td>Non-refundable for digital products</td></tr>
+  </table>
 </div>
+
+<footer>
+  <p>© Oichi Equipment</p>
+  <p>
+    <a href="legal.html">Legal</a>
+    <a href="privacy.html">Privacy</a>
+    <a href="terms.html">Terms</a>
+  </p>
+</footer>
 </body>
 </html>
