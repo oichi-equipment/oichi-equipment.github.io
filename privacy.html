@@ -6,14 +6,18 @@
 <title>Privacy Policy - Oichi Equipment</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
 <style>
-/* CSSは他ページと共通 */
+/* CSS styles identical to terms.html */
 *{box-sizing:border-box;}
 body{margin:0;font-family:'Inter',sans-serif;background:#0a0a0a;color:#eee;}
 header{position:fixed;top:0;width:100%;background:rgba(10,10,10,0.85);backdrop-filter:blur(12px);border-bottom:1px solid #222;z-index:100;}
 .header-inner{max-width:1200px;margin:auto;padding:16px 24px;display:flex;justify-content:space-between;align-items:center;}
 .logo{color:#fff;text-decoration:none;font-weight:600;}
-nav a{color:#aaa;margin-left:20px;text-decoration:none;font-size:14px;}
+nav{display:flex;align-items:center;}
+nav a{color:#aaa;margin-left:20px;text-decoration:none;font-size:14px;transition:0.2s;}
 nav a:hover{color:#fff;}
+.lang-switch{border-left:1px solid #444;margin-left:20px;padding-left:20px;}
+.lang-switch a{margin-left:10px;font-weight:600;color:#fff;}
+.lang-switch a.inactive{color:#555;font-weight:400;}
 .container{max-width:900px;margin:auto;padding:140px 24px 80px;}
 h1{font-size:36px;margin-bottom:30px;}
 h2{font-size:24px;margin-top:40px;margin-bottom:16px;}
@@ -26,34 +30,30 @@ footer a{color:#4da3ff;margin:0 10px;text-decoration:none;}
 <header>
   <div class="header-inner">
     <a href="index.html" class="logo">Oichi Equipment</a>
-    <nav><a href="terms.html">Terms</a><a href="privacy.html">Privacy</a><a href="tokushoho.html">Legal</a></nav>
+    <nav>
+      <a href="terms.html">Terms</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="legal.html">Legal</a>
+      <div class="lang-switch">
+        <a href="ja/privacy.html" class="inactive">JP</a>
+        <a href="privacy.html">EN</a>
+      </div>
+    </nav>
   </div>
 </header>
-
 <div class="container">
   <h1>Privacy Policy</h1>
-  
-  <h2>1. Data Collection</h2>
-  <p>We collect minimal personal information, such as your email address, when you purchase a license or contact support. This information is used strictly for service delivery and authentication.</p>
-
-  <h2>2. Purpose of Use</h2>
-  <p>Your data is used for the following purposes:</p>
-  <ul style="color:#bbb; line-height:1.8;">
-    <li>Managing software licenses and updates.</li>
-    <li>Providing technical support and responding to inquiries.</li>
-    <li>Preventing unauthorized use or piracy of the software.</li>
-  </ul>
-
-  <h2>3. Third-Party Services</h2>
-  <p>We utilize third-party platforms (such as Polar.sh or Stripe) for payment processing and license management. We do not directly store your credit card or financial information. These third parties have their own privacy policies governing your data.</p>
-
-  <h2>4. Disclosure of Information</h2>
-  <p>We do not sell, trade, or otherwise transfer your personal data to outside parties, except as required by law or to protect our rights.</p>
+  <p>We collect only necessary data for service operation and license management.</p>
+  <p>Payments are handled by third-party providers (e.g., Stripe, Polar.sh). We do not store your credit card information.</p>
+  <p>No personal data is sold or shared with outside parties except as required by law.</p>
 </div>
-
 <footer>
   <p>© Oichi Equipment</p>
-  <p><a href="tokushoho.html">Legal</a><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a></p>
+  <p>
+    <a href="legal.html">Legal</a>
+    <a href="privacy.html">Privacy</a>
+    <a href="terms.html">Terms</a>
+  </p>
 </footer>
 </body>
 </html>
