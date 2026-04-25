@@ -4,225 +4,67 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Oichi Equipment</title>
-
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-
 <style>
+/* CSSは全ページ共通 */
 *{box-sizing:border-box;}
-body{
-  margin:0;
-  font-family:'Inter',sans-serif;
-  background:#0a0a0a;
-  color:#eee;
-}
-
-/* header */
-header{
-  position:fixed;
-  width:100%;
-  background:rgba(10,10,10,0.85);
-  backdrop-filter:blur(12px);
-  border-bottom:1px solid #222;
-}
-
-.header-inner{
-  max-width:1200px;
-  margin:auto;
-  padding:16px 24px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-}
-
-.logo{
-  color:#fff;
-  text-decoration:none;
-  font-weight:600;
-}
-
-nav a{
-  color:#aaa;
-  margin-left:20px;
-  text-decoration:none;
-  font-size:14px;
-}
-
+body{margin:0;font-family:'Inter',sans-serif;background:#0a0a0a;color:#eee;}
+header{position:fixed;width:100%;background:rgba(10,10,10,0.85);backdrop-filter:blur(12px);border-bottom:1px solid #222;z-index:100;}
+.header-inner{max-width:1200px;margin:auto;padding:16px 24px;display:flex;justify-content:space-between;align-items:center;}
+.logo{color:#fff;text-decoration:none;font-weight:600;}
+nav{display:flex;align-items:center;}
+nav a{color:#aaa;margin-left:20px;text-decoration:none;font-size:14px;transition:0.2s;}
 nav a:hover{color:#fff;}
+.lang-switch{border-left:1px solid #444;margin-left:20px;padding-left:20px;}
+.lang-switch a{margin-left:10px;font-weight:600;color:#fff;}
+.lang-switch a.inactive{color:#555;font-weight:400;}
 
-/* hero */
-.hero{
-  max-width:1200px;
-  margin:auto;
-  padding:160px 24px 100px;
-}
-
-.hero h1{
-  font-size:56px;
-  line-height:1.2;
-  margin-bottom:20px;
-}
-
-.hero p{
-  color:#aaa;
-  font-size:18px;
-  max-width:600px;
-}
-
-/* button */
-.btn{
-  display:inline-block;
-  margin-top:30px;
-  padding:14px 28px;
-  background:#fff;
-  color:#000;
-  border-radius:6px;
-  text-decoration:none;
-  font-weight:600;
-}
-
-/* section */
-.section{
-  max-width:1200px;
-  margin:auto;
-  padding:80px 24px;
-}
-
-.grid{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:24px;
-}
-
-.card{
-  background:#111;
-  padding:28px;
-  border:1px solid #222;
-  border-radius:10px;
-  transition:0.2s;
-}
-
-.card:hover{
-  border-color:#444;
-  transform:translateY(-3px);
-}
-
-.card h3{margin-top:0;}
-
-/* divider */
-.divider{
-  height:1px;
-  background:#222;
-  margin:60px 0;
-}
-
-/* notice */
-.notice{
-  background:#111;
-  border:1px solid #333;
-  padding:24px;
-  border-radius:10px;
-  color:#bbb;
-  max-width:700px;
-}
-
-/* footer */
-footer{
-  border-top:1px solid #222;
-  margin-top:100px;
-  padding:40px 24px;
-  text-align:center;
-  color:#777;
-}
-
-footer a{
-  color:#4da3ff;
-  margin:0 10px;
-  text-decoration:none;
-}
-
-@media(max-width:800px){
-  .grid{grid-template-columns:1fr;}
-  .hero h1{font-size:40px;}
-}
+.hero{max-width:1200px;margin:auto;padding:160px 24px 100px;}
+.hero h1{font-size:56px;line-height:1.2;margin-bottom:20px;}
+.hero p{color:#aaa;font-size:18px;max-width:600px;}
+.btn{display:inline-block;margin-top:30px;padding:14px 28px;background:#fff;color:#000;border-radius:6px;text-decoration:none;font-weight:600;}
+.section{max-width:1200px;margin:auto;padding:80px 24px;}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;}
+.card{background:#111;padding:28px;border:1px solid #222;border-radius:10px;transition:0.2s;}
+.card:hover{border-color:#444;transform:translateY(-3px);}
+.notice{background:#111;border:1px solid #333;padding:24px;border-radius:10px;color:#bbb;max-width:700px;}
+footer{border-top:1px solid #222;margin-top:100px;padding:40px 24px;text-align:center;color:#777;}
+footer a{color:#4da3ff;margin:0 10px;text-decoration:none;}
+@media(max-width:800px){.grid{grid-template-columns:1fr;}.hero h1{font-size:40px;}}
 </style>
 </head>
-
 <body>
-
 <header>
   <div class="header-inner">
     <a href="index.html" class="logo">Oichi Equipment</a>
     <nav>
       <a href="terms.html">Terms</a>
       <a href="privacy.html">Privacy</a>
-      <a href="tokushoho.html">Legal</a>
+      <a href="legal.html">Legal</a>
+      <div class="lang-switch">
+        <a href="ja/index.html" class="inactive">JP</a>
+        <a href="index.html">EN</a>
+      </div>
     </nav>
   </div>
 </header>
-
-<!-- HERO -->
 <div class="hero">
   <h1>Precision Trading Panel<br>for MetaTrader 5</h1>
-  <p>
-    A minimal, high-speed execution panel designed for manual trading.<br>
-    Built for control, not automation.
-  </p>
-
+  <p>A minimal, high-speed execution panel designed for manual trading.<br>Built for control, not automation.</p>
   <a href="#" class="btn">Get Started</a>
 </div>
-
-<!-- FEATURES -->
 <div class="section">
   <div class="grid">
-    <div class="card">
-      <h3>Manual Execution</h3>
-      <p>Execute trades instantly without automated logic.</p>
-    </div>
-    <div class="card">
-      <h3>Position Management</h3>
-      <p>Monitor and control all open positions efficiently.</p>
-    </div>
-    <div class="card">
-      <h3>One-click Close</h3>
-      <p>Exit all trades instantly with a single action.</p>
-    </div>
-    <div class="card">
-      <h3>Real-time Data</h3>
-      <p>Track account status and performance live.</p>
-    </div>
+    <div class="card"><h3>Manual Execution</h3><p>Execute trades instantly without automated logic.</p></div>
+    <div class="card"><h3>Position Management</h3><p>Monitor and control all open positions efficiently.</p></div>
   </div>
 </div>
-
 <div class="section">
-  <div class="divider"></div>
+  <div class="notice">This product does not provide financial advice, signals, or automated trading. All trading decisions are made at your own responsibility.</div>
 </div>
-
-<!-- DESCRIPTION -->
-<div class="section">
-  <h2>Designed for Serious Traders</h2>
-  <p>
-    This tool operates locally and connects directly to MetaTrader 5.<br>
-    No cloud dependency, no automation layer.
-  </p>
-</div>
-
-<!-- NOTICE -->
-<div class="section">
-  <div class="notice">
-    This product does not provide financial advice, signals, or automated trading.<br>
-    All trading decisions are made at your own responsibility.
-  </div>
-</div>
-
-<!-- FOOTER -->
 <footer>
   <p>© Oichi Equipment</p>
-  <p>
-    <a href="tokushoho.html">Legal</a>
-    <a href="privacy.html">Privacy</a>
-    <a href="terms.html">Terms</a>
-  </p>
+  <p><a href="legal.html">Legal</a><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a></p>
 </footer>
-
 </body>
 </html>
