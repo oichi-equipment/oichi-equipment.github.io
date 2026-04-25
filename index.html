@@ -3,84 +3,41 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Oichi Equipment</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 
 <style>
-body {
-  margin:0;
-  font-family: 'Inter', sans-serif;
-  background:#0b0b0b;
-  color:#eee;
-}
+*{box-sizing:border-box;}
+body{margin:0;font-family:'Inter',sans-serif;background:#0b0b0b;color:#eee;}
 
-/* header */
-header {
-  position:fixed;
-  top:0;
-  width:100%;
-  background:#111;
-  border-bottom:1px solid #222;
-  padding:15px 30px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-}
+header{position:fixed;top:0;width:100%;background:#111;border-bottom:1px solid #222;}
+.header-inner{max-width:1000px;margin:auto;padding:15px 20px;display:flex;justify-content:space-between;align-items:center;}
+nav a{color:#fff;text-decoration:none;margin-left:15px;font-size:14px;}
 
-header a {
-  color:#fff;
-  text-decoration:none;
-  margin-left:20px;
-  font-size:14px;
-}
+.container{max-width:900px;margin:auto;padding:100px 20px 60px;}
 
-.container {
-  max-width:900px;
-  margin:auto;
-  padding:120px 20px 60px;
-}
+h1{font-size:40px;}
+h2{margin-top:50px;}
 
-h1 {
-  font-size:42px;
-  margin-bottom:20px;
-}
+p{color:#bbb;line-height:1.7;}
 
-h2 {
-  margin-top:50px;
-  font-size:22px;
-}
-
-p {
-  color:#bbb;
-  line-height:1.7;
-}
-
-.section {
-  margin-top:50px;
-}
-
-.footer {
-  margin-top:80px;
-  padding-top:20px;
-  border-top:1px solid #222;
-  font-size:13px;
-  color:#777;
-}
+footer{border-top:1px solid #222;margin-top:80px;padding-top:20px;font-size:13px;color:#777;text-align:center;}
+a{color:#4da3ff;text-decoration:none;}
 </style>
-
 </head>
 
 <body>
 
 <header>
-  <div>Oichi Equipment</div>
-  <div>
-    <a href="index.html">Home</a>
-    <a href="terms.html">Terms</a>
-    <a href="privacy.html">Privacy</a>
-    <a href="tokushoho.html">Legal</a>
+  <div class="header-inner">
+    <div>Oichi Equipment</div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="terms.html">Terms</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="tokushoho.html">Legal</a>
+    </nav>
   </div>
 </header>
 
@@ -89,39 +46,38 @@ p {
 <h1>Trading Execution Panel for MT5</h1>
 
 <p>
-A desktop-based trading support panel for MetaTrader 5.<br>
-Designed for manual execution and position management.
+Desktop-based trading support tool for MetaTrader 5.<br>
+Manual execution and position management.
 </p>
 
-<div class="section">
 <h2>Features</h2>
 <p>
 Manual order execution (Buy / Sell)<br>
-Position & pending order management<br>
-One-click full close<br>
-Real-time account info display
+Position management<br>
+Full close functionality<br>
+Account information display
 </p>
-</div>
 
-<div class="section">
 <h2>How it works</h2>
 <p>
-Runs locally on your machine and connects to MT5.<br>
-No automation, no cloud processing.
+Runs locally and connects to MT5.<br>
+No automation or cloud execution.
 </p>
-</div>
 
-<div class="section">
 <h2>Important Notice</h2>
 <p>
 This product does not provide financial advice or automated trading.<br>
-All decisions are your responsibility.
+All trading decisions are the user's responsibility.
 </p>
-</div>
 
-<div class="footer">
-© Oichi Equipment
-</div>
+<footer>
+<p>© Oichi Equipment</p>
+<p>
+<a href="tokushoho.html">Legal</a> |
+<a href="privacy.html">Privacy</a> |
+<a href="terms.html">Terms</a>
+</p>
+</footer>
 
 </div>
 
