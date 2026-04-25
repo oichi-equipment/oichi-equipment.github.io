@@ -5,25 +5,145 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Oichi Equipment</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
 
 <style>
 *{box-sizing:border-box;}
-body{margin:0;font-family:'Inter',sans-serif;background:#0b0b0b;color:#eee;}
+body{
+  margin:0;
+  font-family:'Inter',sans-serif;
+  background:#0a0a0a;
+  color:#eee;
+}
 
-header{position:fixed;top:0;width:100%;background:#111;border-bottom:1px solid #222;}
-.header-inner{max-width:1000px;margin:auto;padding:15px 20px;display:flex;justify-content:space-between;align-items:center;}
-nav a{color:#fff;text-decoration:none;margin-left:15px;font-size:14px;}
+/* header */
+header{
+  position:fixed;
+  width:100%;
+  background:rgba(10,10,10,0.85);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid #222;
+}
 
-.container{max-width:900px;margin:auto;padding:100px 20px 60px;}
+.header-inner{
+  max-width:1200px;
+  margin:auto;
+  padding:16px 24px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
 
-h1{font-size:40px;}
-h2{margin-top:50px;}
+.logo{
+  color:#fff;
+  text-decoration:none;
+  font-weight:600;
+}
 
-p{color:#bbb;line-height:1.7;}
+nav a{
+  color:#aaa;
+  margin-left:20px;
+  text-decoration:none;
+  font-size:14px;
+}
 
-footer{border-top:1px solid #222;margin-top:80px;padding-top:20px;font-size:13px;color:#777;text-align:center;}
-a{color:#4da3ff;text-decoration:none;}
+nav a:hover{color:#fff;}
+
+/* hero */
+.hero{
+  max-width:1200px;
+  margin:auto;
+  padding:160px 24px 100px;
+}
+
+.hero h1{
+  font-size:56px;
+  line-height:1.2;
+  margin-bottom:20px;
+}
+
+.hero p{
+  color:#aaa;
+  font-size:18px;
+  max-width:600px;
+}
+
+/* button */
+.btn{
+  display:inline-block;
+  margin-top:30px;
+  padding:14px 28px;
+  background:#fff;
+  color:#000;
+  border-radius:6px;
+  text-decoration:none;
+  font-weight:600;
+}
+
+/* section */
+.section{
+  max-width:1200px;
+  margin:auto;
+  padding:80px 24px;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:24px;
+}
+
+.card{
+  background:#111;
+  padding:28px;
+  border:1px solid #222;
+  border-radius:10px;
+  transition:0.2s;
+}
+
+.card:hover{
+  border-color:#444;
+  transform:translateY(-3px);
+}
+
+.card h3{margin-top:0;}
+
+/* divider */
+.divider{
+  height:1px;
+  background:#222;
+  margin:60px 0;
+}
+
+/* notice */
+.notice{
+  background:#111;
+  border:1px solid #333;
+  padding:24px;
+  border-radius:10px;
+  color:#bbb;
+  max-width:700px;
+}
+
+/* footer */
+footer{
+  border-top:1px solid #222;
+  margin-top:100px;
+  padding:40px 24px;
+  text-align:center;
+  color:#777;
+}
+
+footer a{
+  color:#4da3ff;
+  margin:0 10px;
+  text-decoration:none;
+}
+
+@media(max-width:800px){
+  .grid{grid-template-columns:1fr;}
+  .hero h1{font-size:40px;}
+}
 </style>
 </head>
 
@@ -31,9 +151,8 @@ a{color:#4da3ff;text-decoration:none;}
 
 <header>
   <div class="header-inner">
-    <div>Oichi Equipment</div>
+    <a href="index.html" class="logo">Oichi Equipment</a>
     <nav>
-      <a href="index.html">Home</a>
       <a href="terms.html">Terms</a>
       <a href="privacy.html">Privacy</a>
       <a href="tokushoho.html">Legal</a>
@@ -41,45 +160,69 @@ a{color:#4da3ff;text-decoration:none;}
   </div>
 </header>
 
-<div class="container">
+<!-- HERO -->
+<div class="hero">
+  <h1>Precision Trading Panel<br>for MetaTrader 5</h1>
+  <p>
+    A minimal, high-speed execution panel designed for manual trading.<br>
+    Built for control, not automation.
+  </p>
 
-<h1>Trading Execution Panel for MT5</h1>
-
-<p>
-Desktop-based trading support tool for MetaTrader 5.<br>
-Manual execution and position management.
-</p>
-
-<h2>Features</h2>
-<p>
-Manual order execution (Buy / Sell)<br>
-Position management<br>
-Full close functionality<br>
-Account information display
-</p>
-
-<h2>How it works</h2>
-<p>
-Runs locally and connects to MT5.<br>
-No automation or cloud execution.
-</p>
-
-<h2>Important Notice</h2>
-<p>
-This product does not provide financial advice or automated trading.<br>
-All trading decisions are the user's responsibility.
-</p>
-
-<footer>
-<p>© Oichi Equipment</p>
-<p>
-<a href="tokushoho.html">Legal</a> |
-<a href="privacy.html">Privacy</a> |
-<a href="terms.html">Terms</a>
-</p>
-</footer>
-
+  <a href="#" class="btn">Get Started</a>
 </div>
+
+<!-- FEATURES -->
+<div class="section">
+  <div class="grid">
+    <div class="card">
+      <h3>Manual Execution</h3>
+      <p>Execute trades instantly without automated logic.</p>
+    </div>
+    <div class="card">
+      <h3>Position Management</h3>
+      <p>Monitor and control all open positions efficiently.</p>
+    </div>
+    <div class="card">
+      <h3>One-click Close</h3>
+      <p>Exit all trades instantly with a single action.</p>
+    </div>
+    <div class="card">
+      <h3>Real-time Data</h3>
+      <p>Track account status and performance live.</p>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="divider"></div>
+</div>
+
+<!-- DESCRIPTION -->
+<div class="section">
+  <h2>Designed for Serious Traders</h2>
+  <p>
+    This tool operates locally and connects directly to MetaTrader 5.<br>
+    No cloud dependency, no automation layer.
+  </p>
+</div>
+
+<!-- NOTICE -->
+<div class="section">
+  <div class="notice">
+    This product does not provide financial advice, signals, or automated trading.<br>
+    All trading decisions are made at your own responsibility.
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <p>© Oichi Equipment</p>
+  <p>
+    <a href="tokushoho.html">Legal</a>
+    <a href="privacy.html">Privacy</a>
+    <a href="terms.html">Terms</a>
+  </p>
+</footer>
 
 </body>
 </html>
