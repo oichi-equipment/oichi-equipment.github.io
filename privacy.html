@@ -2,43 +2,120 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Privacy Policy</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Privacy Policy - Oichi Equipment</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
 
 <style>
 *{box-sizing:border-box;}
-body{margin:0;font-family:'Inter',sans-serif;background:#0b0b0b;color:#eee;}
+body{
+  margin:0;
+  font-family:'Inter',sans-serif;
+  background:#0a0a0a;
+  color:#eee;
+}
 
-header{position:fixed;top:0;width:100%;background:#111;border-bottom:1px solid #222;}
-.header-inner{max-width:1000px;margin:auto;padding:15px 20px;display:flex;justify-content:space-between;}
+/* header */
+header{
+  position:fixed;
+  top: 0;
+  width:100%;
+  background:rgba(10,10,10,0.85);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid #222;
+  z-index: 100;
+}
 
-.container{max-width:900px;margin:auto;padding:100px 20px;}
-p{color:#bbb;}
+.header-inner{
+  max-width:1200px;
+  margin:auto;
+  padding:16px 24px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
 
-footer{border-top:1px solid #222;margin-top:80px;padding-top:20px;text-align:center;color:#777;}
+.logo{
+  color:#fff;
+  text-decoration:none;
+  font-weight:600;
+}
+
+nav a{
+  color:#aaa;
+  margin-left:20px;
+  text-decoration:none;
+  font-size:14px;
+}
+
+nav a:hover{color:#fff;}
+
+/* container */
+.container{
+  max-width:900px;
+  margin:auto;
+  padding:140px 24px 80px; /* ヘッダーの高さ分を考慮 */
+}
+
+h1{
+  font-size:36px;
+  margin-top:0;
+  margin-bottom:30px;
+}
+
+p{
+  color:#bbb;
+  line-height:1.8;
+  font-size:16px;
+  margin-bottom:16px;
+}
+
+/* footer */
+footer{
+  border-top:1px solid #222;
+  margin-top:60px;
+  padding:40px 24px;
+  text-align:center;
+  color:#777;
+}
+
+footer a{
+  color:#4da3ff;
+  margin:0 10px;
+  text-decoration:none;
+}
 </style>
 </head>
 
 <body>
 
 <header>
-<div class="header-inner">
-<div>Oichi Equipment</div>
-</div>
+  <div class="header-inner">
+    <a href="index.html" class="logo">Oichi Equipment</a>
+    <nav>
+      <a href="terms.html">Terms</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="tokushoho.html">Legal</a>
+    </nav>
+  </div>
 </header>
 
 <div class="container">
-
-<h1>Privacy Policy</h1>
-
-<p>We collect only necessary data for service operation.</p>
-<p>Payments are handled by third-party providers.</p>
-<p>No personal data is sold or shared.</p>
-
-<footer>© Oichi Equipment</footer>
-
+  <h1>Privacy Policy</h1>
+  <p>We collect only necessary data for service operation.</p>
+  <p>Payments are handled by third-party providers.</p>
+  <p>No personal data is sold or shared.</p>
 </div>
+
+<footer>
+  <p>© Oichi Equipment</p>
+  <p>
+    <a href="tokushoho.html">Legal</a>
+    <a href="privacy.html">Privacy</a>
+    <a href="terms.html">Terms</a>
+  </p>
+</footer>
 
 </body>
 </html>
