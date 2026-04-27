@@ -99,6 +99,53 @@ padding:0;
 .pricing{grid-template-columns:1fr;}
 .hero h1{font-size:40px;}
 }
+
+/* 右側まとめ */
+.nav-right{
+display:flex;
+align-items:center;
+}
+
+/* 上部言語 */
+.top-lang{
+margin-right:15px;
+}
+
+/* スマホ */
+@media(max-width:800px){
+
+.top-lang{
+display:flex;
+}
+
+nav{
+position:absolute;
+top:60px;
+right:0;
+background:#0a0a0a;
+width:100%;
+flex-direction:column;
+align-items:flex-start;
+padding:20px;
+display:none;
+border-top:1px solid #222;
+}
+
+nav.active{
+display:flex;
+}
+
+nav a{
+margin:10px 0;
+font-size:16px;
+}
+
+/* メニュー内のlangは消す */
+nav .lang-switch{
+display:none;
+}
+
+}
 </style>
 </head>
 
@@ -109,6 +156,15 @@ padding:0;
 
 <a href="index.html" class="logo">Oichi Equipment</a>
 
+<!-- 右側まとめ -->
+<div class="nav-right">
+
+<!-- 言語（常時表示） -->
+<div class="lang-switch top-lang">
+<a href="equipment.html" class="inactive">JP</a>
+<a href="../equipment.html">EN</a>
+</div>
+
 <!-- ハンバーガー -->
 <div class="menu-toggle" id="menuToggle">
 <span></span>
@@ -116,17 +172,15 @@ padding:0;
 <span></span>
 </div>
 
+</div>
+
+<!-- メニュー -->
 <nav id="navMenu">
 <a href="index.html">TOP</a>
 <a href="equipment.html">Equipment</a>
 <a href="terms.html">利用規約</a>
 <a href="privacy.html">プライバシー</a>
 <a href="legal.html">特商法</a>
-
-<div class="lang-switch">
-<a href="equipment.html" class="inactive">JP</a>
-<a href="../equipment.html">EN</a>
-</div>
 </nav>
 
 </div>
@@ -311,8 +365,16 @@ Synk Mushroomはこの一点に特化し、<br>
 const toggle = document.getElementById("menuToggle");
 const nav = document.getElementById("navMenu");
 
+// 開閉
 toggle.addEventListener("click", () => {
 nav.classList.toggle("active");
+});
+
+// メニュークリックで閉じる
+document.querySelectorAll("#navMenu a").forEach(link => {
+link.addEventListener("click", () => {
+nav.classList.remove("active");
+});
 });
 </script>
 </body>
