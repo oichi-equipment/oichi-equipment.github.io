@@ -26,7 +26,59 @@ h2{font-size:22px;margin-top:40px;margin-bottom:16px;}
 p{color:#bbb;line-height:1.8;font-size:15px;margin-bottom:14px;}
 
 footer{border-top:1px solid #222;margin-top:60px;padding:40px 24px;text-align:center;color:#777;}
-footer a{color:#4da3ff;margin:0 10px;text-decoration:none;}
+footer a{color:#4a8f4a;margin:0 10px;text-decoration:none;}
+
+/* ハンバーガー */
+.menu-toggle{
+display:none;
+flex-direction:column;
+cursor:pointer;
+}
+
+.menu-toggle span{
+width:25px;
+height:2px;
+background:#fff;
+margin:4px 0;
+transition:0.3s;
+}
+
+/* スマホ */
+@media(max-width:800px){
+
+.menu-toggle{
+display:flex;
+}
+
+nav{
+position:absolute;
+top:60px;
+right:0;
+background:#0a0a0a;
+width:100%;
+flex-direction:column;
+align-items:flex-start;
+padding:20px;
+display:none;
+border-top:1px solid #222;
+}
+
+nav.active{
+display:flex;
+}
+
+nav a{
+margin:10px 0;
+font-size:16px;
+}
+
+.lang-switch{
+border-left:none;
+margin:10px 0 0 0;
+padding:0;
+}
+
+}
 </style>
 </head>
 
@@ -34,20 +86,29 @@ footer a{color:#4da3ff;margin:0 10px;text-decoration:none;}
 
 <header>
 <div class="header-inner">
-<a href="index.html" class="logo">Oichi Equipment</a>
-<nav>
-<a href="index.html">TOP</a>
-<a href="index.html">Equipment</a>
 
+<a href="index.html" class="logo">Oichi Equipment</a>
+
+<!-- ハンバーガー -->
+<div class="menu-toggle" id="menuToggle">
+<span></span>
+<span></span>
+<span></span>
+</div>
+
+<nav id="navMenu">
+<a href="index.html">TOP</a>
+<a href="equipment.html">Equipment</a>
 <a href="terms.html">利用規約</a>
 <a href="privacy.html">プライバシー</a>
 <a href="legal.html">特商法</a>
 
 <div class="lang-switch">
-<a href="privacy.html" class="inactive">JP</a>
-<a href="../privacy.html">EN</a>
+<a href="equipment.html" class="inactive">JP</a>
+<a href="../equipment.html">EN</a>
 </div>
 </nav>
+
 </div>
 </header>
 
@@ -126,4 +187,12 @@ Oichi Equipment（以下、「当方」）は、本ウェブサイトおよび�
 </footer>
 
 </body>
+<script>
+const toggle = document.getElementById("menuToggle");
+const nav = document.getElementById("navMenu");
+
+toggle.addEventListener("click", () => {
+nav.classList.toggle("active");
+});
+</script>
 </html>
