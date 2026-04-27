@@ -11,34 +11,153 @@
 *{box-sizing:border-box;}
 body{margin:0;font-family:'Inter',sans-serif;background:#0a0a0a;color:#eee;}
 
-header{position:fixed;top:0;width:100%;background:rgba(10,10,10,0.85);backdrop-filter:blur(12px);border-bottom:1px solid #222;z-index:100;}
-.header-inner{max-width:1200px;margin:auto;padding:16px 24px;display:flex;justify-content:space-between;align-items:center;}
+/* header */
+header{
+position:fixed;
+top:0;
+width:100%;
+background:rgba(10,10,10,0.85);
+backdrop-filter:blur(12px);
+border-bottom:1px solid #222;
+z-index:100;
+}
+.header-inner{
+max-width:1200px;
+margin:auto;
+padding:16px 24px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
 .logo{color:#fff;text-decoration:none;font-weight:600;}
 
 nav{display:flex;align-items:center;}
 nav a{color:#aaa;margin-left:20px;text-decoration:none;font-size:14px;}
 nav a:hover{color:#fff;}
 
-.lang-switch{border-left:1px solid #444;margin-left:20px;padding-left:20px;}
+.lang-switch{
+border-left:1px solid #444;
+margin-left:20px;
+padding-left:20px;
+}
 .lang-switch a{margin-left:10px;font-weight:600;color:#fff;}
 .lang-switch a.inactive{color:#555;}
 
-.section{max-width:1000px;margin:auto;padding:140px 24px 80px;}
-h1{font-size:40px;margin-bottom:20px;}
-h2{margin-top:60px;font-size:26px;}
+/* layout */
+.section{
+max-width:1100px;
+margin:auto;
+padding:140px 24px 80px;
+}
 
-p{color:#bbb;line-height:1.8;}
+.hero-brand{
+text-align:center;
+margin-bottom:80px;
+}
 
-.card{background:#111;padding:28px;border:1px solid #222;border-radius:10px;margin-top:20px;}
+.hero-brand img{
+width:120px;
+margin-bottom:20px;
+opacity:0.9;
+}
 
-.image-box{margin-top:30px;text-align:center;}
-.image-box img{max-width:900px;width:100%;border-radius:10px;border:1px solid #222;}
+.hero-brand h1{
+font-size:44px;
+margin-bottom:10px;
+}
 
-footer{border-top:1px solid #222;margin-top:80px;padding:40px;text-align:center;color:#777;}
-footer a{color:#4da3ff;margin:0 10px;text-decoration:none;}
+.hero-brand p{
+color:#aaa;
+max-width:700px;
+margin:auto;
+line-height:1.8;
+}
 
-@media(max-width:800px){
-.section{padding-top:120px;}
+.split{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:60px;
+align-items:center;
+margin-top:60px;
+}
+
+.split img{
+width:100%;
+border-radius:12px;
+border:1px solid #222;
+}
+
+.products{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:30px;
+margin-top:40px;
+}
+
+.product-card{
+background:#111;
+padding:32px;
+border:1px solid #222;
+border-radius:14px;
+transition:0.2s;
+}
+
+.product-card:hover{
+border-color:#444;
+transform:translateY(-4px);
+}
+
+.product-card h3{
+margin-top:0;
+font-size:20px;
+}
+
+.product-tag{
+font-size:12px;
+color:#888;
+margin-bottom:10px;
+}
+
+.product-card p{
+color:#bbb;
+line-height:1.7;
+}
+
+.image-full{
+margin-top:80px;
+text-align:center;
+}
+
+.image-full img{
+max-width:1000px;
+width:100%;
+border-radius:12px;
+border:1px solid #222;
+}
+
+.image-full p{
+color:#aaa;
+margin-top:10px;
+}
+
+footer{
+border-top:1px solid #222;
+margin-top:80px;
+padding:40px;
+text-align:center;
+color:#777;
+}
+footer a{
+color:#4da3ff;
+margin:0 10px;
+text-decoration:none;
+}
+
+/* responsive */
+@media(max-width:900px){
+.split{grid-template-columns:1fr;}
+.products{grid-template-columns:1fr;}
+.hero-brand h1{font-size:34px;}
 }
 </style>
 </head>
@@ -48,12 +167,14 @@ footer a{color:#4da3ff;margin:0 10px;text-decoration:none;}
 <header>
 <div class="header-inner">
 <a href="/ja/index.html" class="logo">Oichi Equipment</a>
+
 <nav>
 <a href="/ja/index.html">TOP</a>
 <a href="/ja/equipment.html">Equipment</a>
 <a href="/ja/terms.html">利用規約</a>
 <a href="/ja/privacy.html">プライバシー</a>
 <a href="/ja/legal.html">特商法</a>
+
 <div class="lang-switch">
 <a href="/ja/equipment.html" class="inactive">JP</a>
 <a href="/equipment.html">EN</a>
@@ -64,70 +185,78 @@ footer a{color:#4da3ff;margin:0 10px;text-decoration:none;}
 
 <div class="section">
 
+<!-- ブランドヒーロー -->
+<div class="hero-brand">
+<img src="/assets/images/logo-shiro.png" alt="logo">
 <h1>Oichi Equipment</h1>
-
 <p>
-Oichi Equipmentは、トレーダーのための「実行環境」に特化したツールブランドです。<br>
-分析やロジックではなく、「どれだけ正確に・速く発注できるか」に焦点を当てています。
+トレードの「実行環境」に特化したツールブランド。<br>
+分析ではなく、発注の精度と速度を最大化するための設計。
 </p>
-
-<!-- ブランド画像 -->
-<div class="image-box">
-<img src="/assets/images/logo-shiro.png" alt="Oichi Equipment Logo">
 </div>
 
+<!-- コンセプト -->
+<div class="split">
+
+<div>
 <h2>ブランドコンセプト</h2>
-
 <p>
-ブランドの象徴である「Mushroom」は、見えない接続とネットワークを意味します。<br><br>
+「Mushroom」は接続とネットワークの象徴。<br><br>
 
-地中に広がる菌糸のように、異なるツールや環境を静かに接続し、<br>
-ユーザーが意識することなくトレードの実行を支える存在です。<br><br>
+見えないレイヤーでツール同士を接続し、
+ユーザーが意識することなく実行を支える存在。<br><br>
 
-Oichi Equipmentはこの思想に基づき、<br>
-「表に出ないが最も重要なレイヤー」を担うツールを開発しています。
-</p>
-
-<h2>Products</h2>
-
-<div class="card">
-<h3>Synk Mushroom（パネル）</h3>
-<p>
-TradingViewとMetaTrader 5を接続し、裁量トレードの発注を効率化する実行パネル。<br><br>
-
-チャートと発注を一体化し、視線移動・操作遅延・ヒューマンエラーを削減します。<br>
-「分析 → 即実行」を同一環境で完結させるためのツールです。
+Oichi Equipmentは、
+トレード環境の裏側を最適化するためのブランドです。
 </p>
 </div>
 
-<div class="card">
-<h3>Engine Mushroom（エンジン）</h3>
+<div>
+<img src="/assets/images/logo-shiro.png" alt="concept">
+</div>
+
+</div>
+
+<!-- プロダクト -->
+<h2 style="margin-top:100px;">Products</h2>
+
+<div class="products">
+
+<div class="product-card">
+<div class="product-tag">Execution Panel</div>
+<h3>Synk Mushroom</h3>
 <p>
-TradingViewのシグナルや外部入力を直接MT5に送信する実行エンジン。<br><br>
+TradingViewとMetaTrader 5を同期する裁量トレードパネル。<br><br>
 
-完全自動化・低遅延環境を前提とした設計で、<br>
-裁量トレードを超えたアルゴリズム実行レイヤーを担います。<br><br>
+視線移動・操作遅延・ヒューマンエラーを削減し、
+「分析 → 即発注」を同一環境で完結させます。
+</p>
+</div>
 
+<div class="product-card">
+<div class="product-tag">Execution Engine</div>
+<h3>Engine Mushroom</h3>
+<p>
+シグナルを直接MT5に送る実行エンジン。<br><br>
+
+低遅延・完全自動化を前提とした設計。<br>
 現在開発中（Coming Soon）
 </p>
 </div>
 
-<!-- UIプレビュー（後で差し替え） -->
-<h2>インターフェース</h2>
-
-<div class="image-box">
-<img src="/assets/images/ui-preview.png" alt="UI Preview">
 </div>
 
-<p style="text-align:center;">
-TradingView上で完結する実行パネル
-</p>
+<!-- UI -->
+<div class="image-full">
+<h2>インターフェース</h2>
+<img src="/assets/images/ui-preview.png" alt="ui">
+<p>TradingView上で完結する実行パネル</p>
+</div>
 
-<!-- システム構成（後で差し替え） -->
+<!-- 構成 -->
+<div class="image-full">
 <h2>システム構成</h2>
-
-<div class="image-box">
-<img src="/assets/images/diagram.png" alt="System Diagram">
+<img src="/assets/images/diagram.png" alt="diagram">
 </div>
 
 </div>
