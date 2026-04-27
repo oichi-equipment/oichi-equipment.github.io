@@ -3,272 +3,37 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Equipment | Oichi Equipment</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+<title>Equipment</title>
 
 <style>
-*{box-sizing:border-box;}
-body{margin:0;font-family:'Inter',sans-serif;background:#0a0a0a;color:#eee;}
-
-/* header */
-header{
-position:fixed;
-top:0;
-width:100%;
-background:rgba(10,10,10,0.85);
-backdrop-filter:blur(12px);
-border-bottom:1px solid #222;
-z-index:100;
-}
-.header-inner{
-max-width:1200px;
-margin:auto;
-padding:16px 24px;
-display:flex;
-justify-content:space-between;
-align-items:center;
-}
-.logo{color:#fff;text-decoration:none;font-weight:600;}
-
-nav{display:flex;align-items:center;}
-nav a{color:#aaa;margin-left:20px;text-decoration:none;font-size:14px;}
-nav a:hover{color:#fff;}
-
-.lang-switch{
-border-left:1px solid #444;
-margin-left:20px;
-padding-left:20px;
-}
-.lang-switch a{margin-left:10px;font-weight:600;color:#fff;}
-.lang-switch a.inactive{color:#555;}
-
-/* layout */
-.section{
-max-width:1100px;
-margin:auto;
-padding:140px 24px 80px;
-}
-
-.hero-brand{
-text-align:center;
-margin-bottom:80px;
-}
-
-.hero-brand img{
-width:120px;
-margin-bottom:20px;
-opacity:0.9;
-}
-
-.hero-brand h1{
-font-size:44px;
-margin-bottom:10px;
-}
-
-.hero-brand p{
-color:#aaa;
-max-width:700px;
-margin:auto;
-line-height:1.8;
-}
-
-.split{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:60px;
-align-items:center;
-margin-top:60px;
-}
-
-.split img{
-width:100%;
-border-radius:12px;
-border:1px solid #222;
-}
-
-.products{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:30px;
-margin-top:40px;
-}
-
-.product-card{
-background:#111;
-padding:32px;
-border:1px solid #222;
-border-radius:14px;
-transition:0.2s;
-}
-
-.product-card:hover{
-border-color:#444;
-transform:translateY(-4px);
-}
-
-.product-card h3{
-margin-top:0;
-font-size:20px;
-}
-
-.product-tag{
-font-size:12px;
-color:#888;
-margin-bottom:10px;
-}
-
-.product-card p{
-color:#bbb;
-line-height:1.7;
-}
-
-.image-full{
-margin-top:80px;
-text-align:center;
-}
-
-.image-full img{
-max-width:1000px;
-width:100%;
-border-radius:12px;
-border:1px solid #222;
-}
-
-.image-full p{
-color:#aaa;
-margin-top:10px;
-}
-
-footer{
-border-top:1px solid #222;
-margin-top:80px;
-padding:40px;
-text-align:center;
-color:#777;
-}
-footer a{
-color:#4da3ff;
-margin:0 10px;
-text-decoration:none;
-}
-
-/* responsive */
-@media(max-width:900px){
-.split{grid-template-columns:1fr;}
-.products{grid-template-columns:1fr;}
-.hero-brand h1{font-size:34px;}
-}
+body{margin:0;background:#0a0a0a;color:#eee;font-family:Arial;}
+.section{max-width:900px;margin:auto;padding:120px 20px;}
+.card{background:#111;padding:20px;margin-top:20px;}
 </style>
 </head>
 
 <body>
 
-<header>
-<div class="header-inner">
-<a href="/ja/index.html" class="logo">Oichi Equipment</a>
-
-<nav>
-<a href="/ja/index.html">TOP</a>
-<a href="/ja/equipment.html">Equipment</a>
-<a href="/ja/terms.html">利用規約</a>
-<a href="/ja/privacy.html">プライバシー</a>
-<a href="/ja/legal.html">特商法</a>
-
-<div class="lang-switch">
-<a href="/ja/equipment.html" class="inactive">JP</a>
-<a href="/equipment.html">EN</a>
-</div>
-</nav>
-</div>
-</header>
-
 <div class="section">
-
-<!-- ブランドヒーロー -->
-<div class="hero-brand">
-<img src="/assets/images/logo-shiro.png" alt="logo">
 <h1>Oichi Equipment</h1>
-<p>
-トレードの「実行環境」に特化したツールブランド。<br>
-分析ではなく、発注の精度と速度を最大化するための設計。
-</p>
-</div>
 
-<!-- コンセプト -->
-<div class="split">
+<p>トレード実行環境に特化したブランド</p>
 
-<div>
-<h2>ブランドコンセプト</h2>
-<p>
-「Mushroom」は接続とネットワークの象徴。<br><br>
+<img src="../assets/images/logo-shiro.png" style="width:120px;">
 
-見えないレイヤーでツール同士を接続し、
-ユーザーが意識することなく実行を支える存在。<br><br>
+<h2>Products</h2>
 
-Oichi Equipmentは、
-トレード環境の裏側を最適化するためのブランドです。
-</p>
-</div>
-
-<div>
-<img src="/assets/images/logo-shiro.png" alt="concept">
-</div>
-
-</div>
-
-<!-- プロダクト -->
-<h2 style="margin-top:100px;">Products</h2>
-
-<div class="products">
-
-<div class="product-card">
-<div class="product-tag">Execution Panel</div>
+<div class="card">
 <h3>Synk Mushroom</h3>
-<p>
-TradingViewとMetaTrader 5を同期する裁量トレードパネル。<br><br>
-
-視線移動・操作遅延・ヒューマンエラーを削減し、
-「分析 → 即発注」を同一環境で完結させます。
-</p>
+<p>裁量トレードパネル</p>
 </div>
 
-<div class="product-card">
-<div class="product-tag">Execution Engine</div>
+<div class="card">
 <h3>Engine Mushroom</h3>
-<p>
-シグナルを直接MT5に送る実行エンジン。<br><br>
-
-低遅延・完全自動化を前提とした設計。<br>
-現在開発中（Coming Soon）
-</p>
+<p>実行エンジン（開発中）</p>
 </div>
 
 </div>
-
-<!-- UI -->
-<div class="image-full">
-<h2>インターフェース</h2>
-<img src="/assets/images/ui-preview.png" alt="ui">
-<p>TradingView上で完結する実行パネル</p>
-</div>
-
-<!-- 構成 -->
-<div class="image-full">
-<h2>システム構成</h2>
-<img src="/assets/images/diagram.png" alt="diagram">
-</div>
-
-</div>
-
-<footer>
-<p>© Oichi Equipment</p>
-<p>
-<a href="/ja/legal.html">特商法</a>
-<a href="/ja/privacy.html">プライバシー</a>
-<a href="/ja/terms.html">利用規約</a>
-</p>
-</footer>
 
 </body>
 </html>
