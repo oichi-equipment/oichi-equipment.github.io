@@ -41,8 +41,59 @@ nav a:hover{color:#fff;}
 .notice{background:#111;border:1px solid #333;padding:24px;border-radius:10px;color:#bbb;max-width:700px;}
 
 footer{border-top:1px solid #222;margin-top:100px;padding:40px;text-align:center;color:#777;}
-footer a{color:#4da3ff;margin:0 10px;text-decoration:none;}
+footer a{color:#4a8f4a;margin:0 10px;text-decoration:none;}
 
+/* ハンバーガー */
+.menu-toggle{
+display:none;
+flex-direction:column;
+cursor:pointer;
+}
+
+.menu-toggle span{
+width:25px;
+height:2px;
+background:#fff;
+margin:4px 0;
+transition:0.3s;
+}
+
+/* スマホ */
+@media(max-width:800px){
+
+.menu-toggle{
+display:flex;
+}
+
+nav{
+position:absolute;
+top:60px;
+right:0;
+background:#0a0a0a;
+width:100%;
+flex-direction:column;
+align-items:flex-start;
+padding:20px;
+display:none;
+border-top:1px solid #222;
+}
+
+nav.active{
+display:flex;
+}
+
+nav a{
+margin:10px 0;
+font-size:16px;
+}
+
+.lang-switch{
+border-left:none;
+margin:10px 0 0 0;
+padding:0;
+}
+
+}
 @media(max-width:800px){
 .grid{grid-template-columns:1fr;}
 .pricing{grid-template-columns:1fr;}
@@ -55,18 +106,29 @@ footer a{color:#4da3ff;margin:0 10px;text-decoration:none;}
 
 <header>
 <div class="header-inner">
+
 <a href="index.html" class="logo">Oichi Equipment</a>
-<nav>
+
+<!-- ハンバーガー -->
+<div class="menu-toggle" id="menuToggle">
+<span></span>
+<span></span>
+<span></span>
+</div>
+
+<nav id="navMenu">
 <a href="index.html">TOP</a>
 <a href="equipment.html">Equipment</a>
 <a href="terms.html">利用規約</a>
 <a href="privacy.html">プライバシー</a>
 <a href="legal.html">特商法</a>
+
 <div class="lang-switch">
-<a href="index.html" class="inactive">JP</a>
-<a href="../index.html">EN</a>
+<a href="equipment.html" class="inactive">JP</a>
+<a href="../equipment.html">EN</a>
 </div>
 </nav>
+
 </div>
 </header>
 
@@ -245,6 +307,13 @@ Synk Mushroomはこの一点に特化し、<br>
 <a href="/ja/terms.html">利用規約</a>
 </p>
 </footer>
+<script>
+const toggle = document.getElementById("menuToggle");
+const nav = document.getElementById("navMenu");
 
+toggle.addEventListener("click", () => {
+nav.classList.toggle("active");
+});
+</script>
 </body>
 </html>
