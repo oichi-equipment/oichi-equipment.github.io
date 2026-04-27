@@ -10,36 +10,42 @@
 <style>
 *{box-sizing:border-box;}
 body{margin:0;font-family:'Inter',sans-serif;background:#0a0a0a;color:#eee;}
+
 header{position:fixed;top:0;width:100%;background:rgba(10,10,10,0.85);backdrop-filter:blur(12px);border-bottom:1px solid #222;z-index:100;}
 .header-inner{max-width:1200px;margin:auto;padding:16px 24px;display:flex;justify-content:space-between;align-items:center;}
 .logo{color:#fff;text-decoration:none;font-weight:600;}
+
 nav{display:flex;align-items:center;}
-nav a{color:#aaa;margin-left:20px;text-decoration:none;font-size:14px;transition:0.2s;}
+nav a{color:#aaa;margin-left:20px;text-decoration:none;font-size:14px;}
 nav a:hover{color:#fff;}
+
 .lang-switch{border-left:1px solid #444;margin-left:20px;padding-left:20px;}
 .lang-switch a{margin-left:10px;font-weight:600;color:#fff;}
-.lang-switch a.inactive{color:#555;font-weight:400;}
+.lang-switch a.inactive{color:#555;}
 
 .hero{max-width:1200px;margin:auto;padding:160px 24px 100px;}
-.hero h1{font-size:56px;line-height:1.2;margin-bottom:20px;}
+.hero h1{font-size:56px;margin-bottom:20px;}
 .hero p{color:#aaa;font-size:18px;max-width:600px;}
 .btn{display:inline-block;margin-top:30px;padding:14px 28px;background:#fff;color:#000;border-radius:6px;text-decoration:none;font-weight:600;}
 
 .section{max-width:1200px;margin:auto;padding:80px 24px;}
 .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;}
-.card{background:#111;padding:28px;border:1px solid #222;border-radius:10px;transition:0.2s;}
-.card:hover{border-color:#444;transform:translateY(-3px);}
-.card h3{margin-top:0;}
+.card{background:#111;padding:28px;border:1px solid #222;border-radius:10px;}
 
-.divider{height:1px;background:#222;margin:60px 0;}
+.pricing{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:40px;}
+.price-card{background:#111;padding:28px;border:1px solid #222;border-radius:10px;text-align:center;}
+.price-card h3{margin-top:0;}
+.price{font-size:28px;margin:20px 0;color:#fff;}
+
 .notice{background:#111;border:1px solid #333;padding:24px;border-radius:10px;color:#bbb;max-width:700px;}
 
-footer{border-top:1px solid #222;margin-top:100px;padding:40px 24px;text-align:center;color:#777;}
+footer{border-top:1px solid #222;margin-top:100px;padding:40px;text-align:center;color:#777;}
 footer a{color:#4da3ff;margin:0 10px;text-decoration:none;}
 
 @media(max-width:800px){
-  .grid{grid-template-columns:1fr;}
-  .hero h1{font-size:40px;}
+.grid{grid-template-columns:1fr;}
+.pricing{grid-template-columns:1fr;}
+.hero h1{font-size:40px;}
 }
 </style>
 </head>
@@ -47,86 +53,102 @@ footer a{color:#4da3ff;margin:0 10px;text-decoration:none;}
 <body>
 
 <header>
-  <div class="header-inner">
-    <a href="/ja/index.html" class="logo">Oichi Equipment</a>
-    <nav>
-  <a href="/ja/index.html">TOP</a>
-  <a href="/ja/index.html#products">Equipment</a>
+<div class="header-inner">
+<a href="/ja/index.html" class="logo">Oichi Equipment</a>
+<nav>
+<a href="/ja/index.html">TOP</a>
+<a href="/ja/index.html#products">Equipment</a>
+<a href="/ja/terms.html">利用規約</a>
+<a href="/ja/privacy.html">プライバシー</a>
+<a href="/ja/legal.html">特商法</a>
 
-  <a href="/ja/terms.html">利用規約</a>
-  <a href="/ja/privacy.html">プライバシー</a>
-  <a href="/ja/legal.html">特商法</a>
-
-  <div class="lang-switch">
-    <a href="/ja/index.html" class="inactive">JP</a>
-    <a href="/index.html">EN</a>
-  </div>
+<div class="lang-switch">
+<a href="/ja/index.html" class="inactive">JP</a>
+<a href="/index.html">EN</a>
+</div>
 </nav>
-  </div>
+</div>
 </header>
 
 <div class="hero">
-  <h1>高精度トレード実行パネル<br>for MetaTrader 5</h1>
+<h1>高精度トレード実行パネル</h1>
 
-  <p>
-    Synk Mushroomは、TradingViewとMetaTrader 5を接続する<br>
-    裁量トレード専用の実行パネルです。
-  </p>
+<p>
+Synk MushroomはTradingViewとMetaTrader 5を接続する裁量トレード専用パネルです。<br>
+ローカル環境で動作し、低遅延な実行環境を提供します。
+</p>
 
-  <p>
-    ローカル環境で動作し、クラウドを介さない低遅延なトレード環境を提供します。
-  </p>
+<a href="#" class="btn">無料トライアル開始</a>
+</div>
 
-  <a href="#" class="btn">無料トライアル開始</a>
+<div class="section" id="products">
+<div class="grid">
+<div class="card">
+<h3>裁量トレード専用</h3>
+<p>売買判断はユーザー自身が行います。</p>
+</div>
+
+<div class="card">
+<h3>リアルタイム同期</h3>
+<p>TradingViewと連動。</p>
+</div>
+
+<div class="card">
+<h3>ローカル完結</h3>
+<p>VPS不要。</p>
+</div>
+
+<div class="card">
+<h3>高速実行</h3>
+<p>MT5へ直接接続。</p>
+</div>
+</div>
 </div>
 
 <div class="section">
-  <div class="grid">
-    <div class="card">
-      <h3>裁量トレード専用</h3>
-      <p>売買判断はユーザー自身が行い、発注操作のみを効率化します。</p>
-    </div>
-    <div class="card">
-      <h3>リアルタイム同期</h3>
-      <p>TradingViewの通貨ペアと連動し、スムーズな操作を実現。</p>
-    </div>
-    <div class="card">
-      <h3>ローカル完結</h3>
-      <p>VPS不要。すべてローカル環境で完結します。</p>
-    </div>
-    <div class="card">
-      <h3>MT5直接接続</h3>
-      <p>MetaTrader 5と直接連携し、高速な発注を可能にします。</p>
-    </div>
-  </div>
+<h2>料金プラン</h2>
+
+<div class="pricing">
+
+<div class="price-card">
+<h3>月額</h3>
+<div class="price">¥7,980</div>
+<p>毎月更新</p>
+</div>
+
+<div class="price-card">
+<h3>年間</h3>
+<div class="price">¥79,800</div>
+<p>2ヶ月分無料</p>
+</div>
+
+<div class="price-card">
+<h3>買い切り</h3>
+<div class="price">¥198,000</div>
+<p>永久ライセンス</p>
+</div>
+
+</div>
+
+<p style="margin-top:20px;color:#aaa;">
+※7日間無料トライアルあり（クレジットカード登録必要・自動課金）
+</p>
 </div>
 
 <div class="section">
-  <div class="divider"></div>
+<div class="notice">
+本ソフトは投資助言・自動売買・シグナル提供を行いません。<br>
+すべての取引は自己責任で行ってください。
 </div>
-
-<div class="section">
-  <h2>プロトレーダー向け設計</h2>
-  <p>
-    本ツールはローカル環境で動作し、MetaTrader 5へ直接接続します。<br>
-    クラウド依存や自動売買ロジックを排除し、完全な操作主導型トレード環境を提供します。
-  </p>
-</div>
-
-<div class="section">
-  <div class="notice">
-    本ソフトウェアはトレード支援ツールであり、自動売買、投資助言、売買シグナルの提供は行いません。<br>
-    すべての取引判断は利用者自身の責任により行われます。
-  </div>
 </div>
 
 <footer>
-  <p>© Oichi Equipment</p>
-  <p>
-    <a href="/legal.html">特商法</a>
-    <a href="/privacy.html">プライバシー</a>
-    <a href="/terms.html">利用規約</a>
-  </p>
+<p>© Oichi Equipment</p>
+<p>
+<a href="/ja/legal.html">特商法</a>
+<a href="/ja/privacy.html">プライバシー</a>
+<a href="/ja/terms.html">利用規約</a>
+</p>
 </footer>
 
 </body>
