@@ -25,9 +25,10 @@ nav a:hover{color:#fff;}
 
 .hero{max-width:1200px;margin:auto;padding:160px 24px 100px;}
 .hero h1{font-size:56px;margin-bottom:20px;}
-.hero p{color:#aaa;font-size:18px;max-width:700px;}
+.hero p{color:#aaa;font-size:18px;max-width:700px;line-height:1.7;}
 
-.btn{display:inline-block;margin-top:30px;padding:14px 28px;background:#fff;color:#000;border-radius:6px;text-decoration:none;font-weight:600;}
+.btn{display:inline-block;margin-top:30px;padding:14px 28px;background:#fff;color:#000;border-radius:6px;text-decoration:none;font-weight:600;text-align:center;}
+.btn-large{font-size:18px;padding:18px 40px;margin-top:40px;}
 
 .section{max-width:1200px;margin:auto;padding:80px 24px;}
 .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;}
@@ -138,12 +139,12 @@ padding:0;
 
 <!-- HERO -->
 <div class="hero">
-<h1>High-Precision Trade Execution Panel</h1>
+<h1>TradingView × MT5 Direct Execution</h1>
 <p>
-Synk Mushroom is a dedicated execution panel for discretionary trading that directly connects TradingView and MetaTrader 5.<br><br>
-By integrating analysis and execution into a single seamless environment, it maximizes both trade precision and execution speed.
+Automatically link TradingView and MT5.<br>
+Complete your trades from order to execution seamlessly within your familiar charting screen.
 </p>
-<a href="#" class="btn">Start Free Trial</a>
+<a href="#" class="btn btn-large">Start Now</a>
 </div>
 
 <div class="section" style="padding-top:0;">
@@ -156,19 +157,23 @@ By integrating analysis and execution into a single seamless environment, it max
 <div class="grid">
 <div class="card">
 <h3>No Broker Restrictions</h3>
-<p>Compatible with any broker that supports MetaTrader 5, giving you complete freedom of choice.</p>
+<p>Compatible with any broker that supports MetaTrader 5, regardless of account type.</p>
 </div>
 <div class="card">
 <h3>High Leverage Support</h3>
-<p>Execute trades efficiently regardless of leverage, fully maximizing your trading opportunities.</p>
+<p>Seamlessly utilize your trading environment regardless of leverage limits.<br><small style="color:#888;">*Trading leverage depends on your broker and account settings.</small></p>
 </div>
 <div class="card">
 <h3>No VPS Required</h3>
-<p>Operates entirely locally on your machine. No need to set up or pay for external VPS hosting.</p>
+<p>Operates entirely locally. No need to set up or pay for an external VPS.<br><small style="color:#888;">*Currently available for Windows only.</small></p>
 </div>
 <div class="card">
 <h3>TradingView Integration</h3>
-<p>Experience seamless execution directly from TradingView charts without switching windows.</p>
+<p>Complete the entire process from analysis to execution directly on the TradingView screen.</p>
+</div>
+<div class="card">
+<h3>High-Speed Local Connection</h3>
+<p>Eliminates the need for cloud or Webhooks by communicating directly within your local environment, ensuring ultra-low latency execution.</p>
 </div>
 </div>
 </div>
@@ -221,9 +226,11 @@ Deploys the execution panel directly over your chart, allowing you to complete a
 </div>
 
 <div class="card">
-<h3>Smart Symbol Mapping</h3>
+<h3>Automatic Symbol Recognition</h3>
 <p>
-Automatically identifies complex symbol names across different brokers and instantly synchronizes with the optimal trading target.
+Automatically identifies the selected currency pair in TradingView and instantly synchronizes it with the optimal symbol registered in your MT5 Market Watch.<br><br>
+Supports accounts with symbol suffixes.<br>
+When viewing multiple charts, it seamlessly links with your active chart.
 </p>
 </div>
 
@@ -251,18 +258,29 @@ Fully adaptable to multi-monitor setups through Progressive Web App installation
 
 </div>
 
+<!-- Middle CTA -->
+<div class="section" style="text-align:center; padding-top:0;">
+<a href="#" class="btn btn-large">Get This Environment Now</a>
+</div>
+
 <!-- Safety First Design -->
 <div class="section">
-<h2>Safety First Design</h2>
+<h2>Design That Prevents Order Mistakes</h2>
+<p style="color:#aaa;margin-bottom:30px;line-height:1.7;font-size:16px;">Continuously monitors connection status, symbols, and user actions,<br>automatically blocking orders in potentially hazardous states.</p>
+
 <div class="card" style="margin-bottom:24px;">
-<h3>One-click execution safety</h3>
-<p>One-click execution requires explicit confirmation</p>
+<p style="font-weight:600;margin-bottom:10px;">One-click execution requires confirmation</p>
 <img src="assets/images/ui-oneclick-warning.png" alt="One-click execution safety" class="img-responsive-card">
 </div>
-<div class="card">
-<h3>Symbol validation lock</h3>
-<p>Invalid symbols are automatically locked</p>
+
+<div class="card" style="margin-bottom:24px;">
+<p style="font-weight:600;margin-bottom:10px;">Invalid symbols are automatically locked</p>
 <img src="assets/images/ui-symbol-notfound.png" alt="Symbol validation lock" class="img-responsive-card">
+</div>
+
+<div class="card">
+<p style="font-weight:600;margin-bottom:10px;">Orders are disabled when MT5 is disconnected</p>
+<img src="assets/images/ui-mt5-disconnected.png" alt="MT5 disconnected" class="img-responsive-card">
 </div>
 </div>
 
@@ -334,9 +352,19 @@ fundamentally redesigning your trading environment from the ground up.
 
 </div>
 
-<p style="margin-top:20px;color:#aaa;">
+<p style="margin-top:20px;color:#fff;font-weight:bold;font-size:18px;">
+Available with a single purchase<br>No additional fees
+</p>
+
+<p style="margin-top:10px;color:#aaa;">
 * Includes a 7-day free trial (Credit card required, auto-renews if not canceled)
 </p>
+
+<!-- Bottom CTA -->
+<div style="text-align:center; margin-top:40px;">
+<a href="#" class="btn btn-large">Purchase Synk Mushroom</a>
+</div>
+
 </div>
 
 <!-- Disclaimer -->
