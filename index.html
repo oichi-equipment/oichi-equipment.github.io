@@ -13,7 +13,7 @@ body{margin:0;font-family:'Inter',sans-serif;background:#0a0a0a;color:#eee;}
 
 header{position:fixed;top:0;width:100%;background:rgba(10,10,10,0.85);backdrop-filter:blur(12px);border-bottom:1px solid #222;z-index:100;}
 .header-inner{max-width:1200px;margin:auto;padding:16px 24px;display:flex;justify-content:space-between;align-items:center;}
-.logo{color:#fff;text-decoration:none;font-weight:600;}
+.logo{color:#fff;text-decoration:none;font-weight:600;font-size:20px;}
 
 nav{display:flex;align-items:center;}
 nav a{color:#aaa;margin-left:20px;text-decoration:none;font-size:14px;}
@@ -23,9 +23,42 @@ nav a:hover{color:#fff;}
 .lang-switch a{margin-left:10px;font-weight:600;color:#fff;}
 .lang-switch a.inactive{color:#555;}
 
-.hero{max-width:1200px;margin:auto;padding:160px 24px 100px;}
-.hero h1{font-size:56px;margin-bottom:20px;}
-.hero p{color:#aaa;font-size:18px;max-width:700px;line-height:1.7;}
+.hero-wrapper { padding: 120px 24px 40px; }
+.hero {
+position: relative;
+max-width: 1200px;
+margin: 0 auto;
+padding: 120px 24px;
+border-radius: 16px;
+border: 1px solid #333;
+overflow: hidden;
+text-align: center;
+display: flex;
+align-items: center;
+justify-content: center;
+min-height: 500px;
+background: #111;
+}
+.hero-bg {
+position: absolute;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+object-fit: cover;
+object-position: center;
+opacity: 0.35;
+z-index: 1;
+}
+.hero-content {
+position: relative;
+z-index: 2;
+display: flex;
+flex-direction: column;
+align-items: center;
+}
+.hero h1 { font-size: 56px; margin-bottom: 20px; color: #fff; text-shadow: 0 2px 10px rgba(0,0,0,0.8); }
+.hero p { color: #eee; font-size: 18px; max-width: 700px; line-height: 1.7; margin: 0 auto; text-shadow: 0 2px 10px rgba(0,0,0,0.8); }
 
 .btn{display:inline-block;margin-top:30px;padding:14px 28px;background:#fff;color:#000;border-radius:6px;text-decoration:none;font-weight:600;text-align:center;}
 .btn-large{font-size:18px;padding:18px 40px;margin-top:40px;}
@@ -101,7 +134,10 @@ padding:0;
 @media(max-width:800px){
 .grid{grid-template-columns:1fr;}
 .pricing{grid-template-columns:1fr;}
-.hero h1{font-size:40px;}
+.hero-wrapper { padding: 80px 16px 20px; }
+.hero { padding: 80px 16px; min-height: 400px; }
+.hero h1{font-size:32px;}
+.hero p{font-size:15px;}
 }
 
 </style>
@@ -138,7 +174,10 @@ padding:0;
 </header>
 
 <!-- HERO -->
+<div class="hero-wrapper">
 <div class="hero">
+<img src="assets/images/ui-main.png" alt="Main UI" class="hero-bg">
+<div class="hero-content">
 <h1>TradingView × MT5 Direct Execution</h1>
 <p>
 Automatically link TradingView and MT5.<br>
@@ -146,9 +185,7 @@ Complete your trades from order to execution seamlessly within your familiar cha
 </p>
 <a href="#" class="btn btn-large">Start Now</a>
 </div>
-
-<div class="section" style="padding-top:0;">
-<img src="assets/images/ui-main.png" alt="Main UI" class="img-responsive">
+</div>
 </div>
 
 <!-- Strengths -->
@@ -157,59 +194,28 @@ Complete your trades from order to execution seamlessly within your familiar cha
 <div class="grid">
 <div class="card">
 <h3>No Broker Restrictions</h3>
-<p>Compatible with any broker that supports MetaTrader 5, regardless of account type.</p>
+<p>Compatible with any MetaTrader 5 supported broker.</p>
 </div>
 <div class="card">
 <h3>High Leverage Support</h3>
-<p>Seamlessly utilize your trading environment regardless of leverage limits.<br><small style="color:#888;">*Trading leverage depends on your broker and account settings.</small></p>
+<p>Can be used without leverage restrictions.</p>
 </div>
 <div class="card">
 <h3>No VPS Required</h3>
-<p>Operates entirely locally. No need to set up or pay for an external VPS.<br><small style="color:#888;">*Currently available for Windows only.</small></p>
+<p>Operates entirely locally (Windows only).</p>
 </div>
 <div class="card">
 <h3>TradingView Integration</h3>
-<p>Complete the entire process from analysis to execution directly on the TradingView screen.</p>
+<p>Complete analysis and execution on the same screen.</p>
 </div>
 <div class="card">
-<h3>High-Speed Local Connection</h3>
-<p>Eliminates the need for cloud or Webhooks by communicating directly within your local environment, ensuring ultra-low latency execution.</p>
+<h3>Minimizable Panel</h3>
+<p>Can be displayed only when necessary.</p>
 </div>
-</div>
-</div>
-
-<!-- Quick Features -->
-<div class="section">
-<div class="grid">
-
 <div class="card">
-<h3>Discretionary Trading Focus</h3>
-<p>
-Not an automated trading bot, but an execution support tool purposefully designed for user-driven decision making.
-</p>
+<h3>Freely Movable</h3>
+<p>Can be placed anywhere on the screen.</p>
 </div>
-
-<div class="card">
-<h3>Real-Time Synchronization</h3>
-<p>
-Instantly syncs TradingView and MT5, keeping your target symbols fully aligned at all times.
-</p>
-</div>
-
-<div class="card">
-<h3>Local Environment</h3>
-<p>
-Cloud-independent architecture, providing a highly stable and ultra-low latency execution environment.
-</p>
-</div>
-
-<div class="card">
-<h3>High-Speed Execution</h3>
-<p>
-Minimizes order latency through direct local connection between platforms.
-</p>
-</div>
-
 </div>
 </div>
 
@@ -228,10 +234,9 @@ Deploys the execution panel directly over your chart, allowing you to complete a
 <div class="card">
 <h3>Automatic Symbol Recognition</h3>
 <p>
-Automatically identifies the selected currency pair in TradingView and instantly synchronizes it with the optimal symbol registered in your MT5 Market Watch.<br><br>
-Supports accounts with symbol suffixes.<br>
-When viewing multiple charts, it seamlessly links with your active chart.
+Automatically identifies the selected currency pair in TradingView and instantly synchronizes it with the symbol registered in your MT5 Market Watch.
 </p>
+<img src="assets/images/ui-symbol-sync.png" alt="Symbol Sync" class="img-responsive-card" style="width:100%; margin:20px auto 0;">
 </div>
 
 <div class="card">
@@ -265,22 +270,28 @@ Fully adaptable to multi-monitor setups through Progressive Web App installation
 
 <!-- Safety First Design -->
 <div class="section">
-<h2>Design That Prevents Order Mistakes</h2>
-<p style="color:#aaa;margin-bottom:30px;line-height:1.7;font-size:16px;">Continuously monitors connection status, symbols, and user actions,<br>automatically blocking orders in potentially hazardous states.</p>
+<h2>Safe Trading: Design That Prevents Order Mistakes</h2>
+<p style="color:#aaa;margin-bottom:30px;line-height:1.7;font-size:16px;">Monitors connection status, symbols, and user actions,<br>blocking orders in potentially hazardous states.</p>
 
-<div class="card" style="margin-bottom:24px;">
-<p style="font-weight:600;margin-bottom:10px;">One-click execution requires confirmation</p>
-<img src="assets/images/ui-oneclick-warning.png" alt="One-click execution safety" class="img-responsive-card">
-</div>
-
-<div class="card" style="margin-bottom:24px;">
-<p style="font-weight:600;margin-bottom:10px;">Invalid symbols are automatically locked</p>
-<img src="assets/images/ui-symbol-notfound.png" alt="Symbol validation lock" class="img-responsive-card">
+<div class="pricing" style="margin-top:0;">
+<div class="card">
+<img src="assets/images/ui-oneclick-toggle.png" alt="One-click execution requires manual permission" class="img-responsive-card" style="margin-top:0; margin-bottom:15px;">
+<p style="font-weight:600;margin:0;">One-click execution requires manual permission</p>
 </div>
 
 <div class="card">
-<p style="font-weight:600;margin-bottom:10px;">Orders are disabled when MT5 is disconnected</p>
-<img src="assets/images/ui-mt5-disconnected.png" alt="MT5 disconnected" class="img-responsive-card">
+<img src="assets/images/ui-symbol-notfound.png" alt="Invalid symbols are automatically locked" class="img-responsive-card" style="margin-top:0; margin-bottom:15px;">
+<p style="font-weight:600;margin:0;">Invalid symbols are automatically locked</p>
+</div>
+
+<div class="card">
+<img src="assets/images/ui-mt5-disconnected.png" alt="Orders are disabled when MT5 is disconnected" class="img-responsive-card" style="margin-top:0; margin-bottom:15px;">
+<p style="font-weight:600;margin:0;">Orders are disabled when MT5 is disconnected</p>
+</div>
+
+<div class="card" style="grid-column: 1 / -1; text-align: center; padding: 20px;">
+<p style="font-weight:600;margin:0;">Even if the currency pair is not linked,<br>you can still close open positions as long as MT5 is connected.</p>
+</div>
 </div>
 </div>
 
@@ -352,9 +363,7 @@ fundamentally redesigning your trading environment from the ground up.
 
 </div>
 
-<p style="margin-top:20px;color:#fff;font-weight:bold;font-size:18px;">
-Available with a single purchase<br>No additional fees
-</p>
+
 
 <p style="margin-top:10px;color:#aaa;">
 * Includes a 7-day free trial (Credit card required, auto-renews if not canceled)
