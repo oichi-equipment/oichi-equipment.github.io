@@ -3,132 +3,318 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Oichi Equipment - Trading Execution Panel</title>
+<title>Oichi Equipment - Trade Execution Panel</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
 
 <style>
 *{box-sizing:border-box;}
 body{margin:0;font-family:'Inter',sans-serif;background:#0a0a0a;color:#eee;}
+
 header{position:fixed;top:0;width:100%;background:rgba(10,10,10,0.85);backdrop-filter:blur(12px);border-bottom:1px solid #222;z-index:100;}
 .header-inner{max-width:1200px;margin:auto;padding:16px 24px;display:flex;justify-content:space-between;align-items:center;}
 .logo{color:#fff;text-decoration:none;font-weight:600;}
+
 nav{display:flex;align-items:center;}
-nav a{color:#aaa;margin-left:20px;text-decoration:none;font-size:14px;transition:0.2s;}
+nav a{color:#aaa;margin-left:20px;text-decoration:none;font-size:14px;}
 nav a:hover{color:#fff;}
+
 .lang-switch{border-left:1px solid #444;margin-left:20px;padding-left:20px;}
 .lang-switch a{margin-left:10px;font-weight:600;color:#fff;}
-.lang-switch a.inactive{color:#555;font-weight:400;}
+.lang-switch a.inactive{color:#555;}
 
 .hero{max-width:1200px;margin:auto;padding:160px 24px 100px;}
-.hero h1{font-size:56px;line-height:1.2;margin-bottom:20px;}
-.hero p{color:#aaa;font-size:18px;max-width:600px;}
+.hero h1{font-size:56px;margin-bottom:20px;}
+.hero p{color:#aaa;font-size:18px;max-width:700px;}
+
 .btn{display:inline-block;margin-top:30px;padding:14px 28px;background:#fff;color:#000;border-radius:6px;text-decoration:none;font-weight:600;}
 
 .section{max-width:1200px;margin:auto;padding:80px 24px;}
 .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;}
-.card{background:#111;padding:28px;border:1px solid #222;border-radius:10px;transition:0.2s;}
-.card:hover{border-color:#444;transform:translateY(-3px);}
-.card h3{margin-top:0;}
 
-.divider{height:1px;background:#222;margin:60px 0;}
+.card{background:#111;padding:28px;border:1px solid #222;border-radius:10px;line-height:1.7;}
+
+.pricing{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:40px;}
+.price-card{background:#111;padding:28px;border:1px solid #222;border-radius:10px;text-align:center;}
+.price{font-size:28px;margin:20px 0;}
+
 .notice{background:#111;border:1px solid #333;padding:24px;border-radius:10px;color:#bbb;max-width:700px;}
 
-footer{border-top:1px solid #222;margin-top:100px;padding:40px 24px;text-align:center;color:#777;}
-footer a{color:#4da3ff;margin:0 10px;text-decoration:none;}
+footer{border-top:1px solid #222;margin-top:100px;padding:40px;text-align:center;color:#777;}
+footer a{color:#4a8f4a;margin:0 10px;text-decoration:none;}
 
-@media(max-width:800px){
-  .grid{grid-template-columns:1fr;}
-  .hero h1{font-size:40px;}
+/* Hamburger Menu */
+.menu-toggle{
+display:none;
+flex-direction:column;
+cursor:pointer;
 }
+
+.menu-toggle span{
+width:25px;
+height:2px;
+background:#fff;
+margin:4px 0;
+transition:0.3s;
+}
+
+/* Mobile */
+@media(max-width:800px){
+
+.menu-toggle{
+display:flex;
+}
+
+nav{
+position:absolute;
+top:60px;
+right:0;
+background:#0a0a0a;
+width:100%;
+flex-direction:column;
+align-items:flex-start;
+padding:20px;
+display:none;
+border-top:1px solid #222;
+}
+
+nav.active{
+display:flex;
+}
+
+nav a{
+margin:10px 0;
+font-size:16px;
+}
+
+.lang-switch{
+border-left:none;
+margin:10px 0 0 0;
+padding:0;
+}
+
+}
+@media(max-width:800px){
+.grid{grid-template-columns:1fr;}
+.pricing{grid-template-columns:1fr;}
+.hero h1{font-size:40px;}
+}
+
 </style>
 </head>
 
 <body>
 
 <header>
-  <div class="header-inner">
-    <a href="/index.html" class="logo">Oichi Equipment</a>
-    <nav>
-  <a href="/index.html">TOP</a>
-  <a href="/index.html#products">Equipment</a>
+<div class="header-inner">
 
-  <a href="/terms.html">Terms</a>
-  <a href="/privacy.html">Privacy</a>
-  <a href="/legal.html">Legal</a>
+<a href="index.html" class="logo">Oichi Equipment</a>
 
-  <div class="lang-switch">
-    <a href="/ja/index.html">JP</a>
-    <a href="/index.html" class="inactive">EN</a>
-  </div>
+<!-- Hamburger Menu -->
+<div class="menu-toggle" id="menuToggle">
+<span></span>
+<span></span>
+<span></span>
+</div>
+
+<nav id="navMenu">
+<a href="index.html">Home</a>
+<a href="equipment.html">Equipment</a>
+<a href="terms.html">Terms</a>
+<a href="privacy.html">Privacy</a>
+<a href="legal.html">Legal Notice</a>
+
+<div class="lang-switch">
+<a href="ja/index.html">JP</a>
+<a href="index.html" class="inactive">EN</a>
+</div>
 </nav>
-  </div>
+
+</div>
 </header>
 
+<!-- HERO -->
 <div class="hero">
-  <h1>Precision Trading Execution Panel<br>for MetaTrader 5</h1>
-
-  <p>
-    Synk Mushroom is a trading execution panel that connects TradingView and MetaTrader 5.<br>
-    Built for manual traders who demand speed and control.
-  </p>
-
-  <p>
-    Operates locally with no cloud dependency, delivering a low-latency trading environment.
-  </p>
-
-  <a href="#" class="btn">Start Free Trial</a>
+<h1>High-Precision Trade Execution Panel</h1>
+<p>
+Synk Mushroom is a dedicated execution panel for discretionary trading that directly connects TradingView and MetaTrader 5.<br><br>
+By integrating analysis and execution into a single seamless environment, it maximizes both trade precision and execution speed.
+</p>
+<a href="#" class="btn">Start Free Trial</a>
 </div>
 
+<!-- Quick Features -->
 <div class="section">
-  <div class="grid">
-    <div class="card">
-      <h3>Manual Trading Only</h3>
-      <p>All trading decisions are made by the user. No automated execution.</p>
-    </div>
-    <div class="card">
-      <h3>Real-Time Synchronization</h3>
-      <p>Syncs with TradingView symbols for seamless workflow.</p>
-    </div>
-    <div class="card">
-      <h3>Fully Local Environment</h3>
-      <p>No VPS or cloud required. Everything runs on your local machine.</p>
-    </div>
-    <div class="card">
-      <h3>Direct MT5 Connection</h3>
-      <p>Connects directly to MetaTrader 5 for fast and reliable execution.</p>
-    </div>
-  </div>
+<div class="grid">
+
+<div class="card">
+<h3>Discretionary Trading Focus</h3>
+<p>
+Not an automated trading bot, but an execution support tool purposefully designed for user-driven decision making.
+</p>
 </div>
 
-<div class="section">
-  <div class="divider"></div>
+<div class="card">
+<h3>Real-Time Synchronization</h3>
+<p>
+Instantly syncs TradingView and MT5, keeping your target symbols fully aligned at all times.
+</p>
 </div>
 
-<div class="section">
-  <h2>Built for Serious Traders</h2>
-  <p>
-    This tool runs locally and connects directly to MetaTrader 5.<br>
-    No cloud layers, no automation logic — only pure execution control.
-  </p>
+<div class="card">
+<h3>Local Environment</h3>
+<p>
+Cloud-independent architecture, providing a highly stable and ultra-low latency execution environment.
+</p>
 </div>
 
+<div class="card">
+<h3>High-Speed Execution</h3>
+<p>
+Minimizes order latency through direct local connection between platforms.
+</p>
+</div>
+
+</div>
+</div>
+
+<!-- Core Features -->
 <div class="section">
-  <div class="notice">
-    This software is a trading support tool and does not provide automated trading,
-    financial advice, or trading signals.<br>
-    All trading decisions are made at the user's own responsibility.
-  </div>
+<h2>Core Features</h2>
+
+<div class="card">
+<h3>Native Panel Integrated with TradingView</h3>
+<p>
+Deploys the execution panel directly over your chart, allowing you to complete analysis and order placement without shifting your visual focus.
+</p>
+</div>
+
+<div class="card">
+<h3>Smart Symbol Mapping</h3>
+<p>
+Automatically identifies complex symbol names across different brokers and instantly synchronizes with the optimal trading target.
+</p>
+</div>
+
+<div class="card">
+<h3>Fail-Safe Design</h3>
+<p>
+Equipped with multiple sophisticated lock mechanisms to strictly prevent accidental or erroneous orders.
+</p>
+</div>
+
+<div class="card">
+<h3>Full Status Management</h3>
+<p>
+View and manage all your positions and active orders in a comprehensive list for immediate action.
+</p>
+</div>
+
+<div class="card">
+<h3>PWA Support</h3>
+<p>
+Fully adaptable to multi-monitor setups through Progressive Web App installation.
+</p>
+</div>
+
+</div>
+
+<!-- Problem / Solution -->
+<div class="section">
+<h2>Conventional Challenges & Solutions</h2>
+
+<div class="card">
+<h3>Fragmented Focus and Operation</h3>
+<p>Separation of analysis and execution causes operational delays.</p>
+<p>→ Consolidated into a single screen to eliminate latency.</p>
+</div>
+
+<div class="card">
+<h3>Complex Configuration</h3>
+<p>Order errors caused by incorrect manual symbol settings.</p>
+<p>→ No setup required thanks to Auto Symbol Mapping.</p>
+</div>
+
+<div class="card">
+<h3>Unclear Connections</h3>
+<p>Risk of placing orders on the wrong account or broker.</p>
+<p>→ Visualized connection status coupled with lock mechanisms.</p>
+</div>
+
+<div class="card">
+<h3>Inconsistent UI</h3>
+<p>Operational stress from using completely disparate external tools.</p>
+<p>→ Completely integrated into the TradingView interface.</p>
+</div>
+
+</div>
+
+<!-- Philosophy -->
+<div class="section">
+<h2>Design Philosophy</h2>
+
+<p>
+In trading, what truly matters is not just market analysis, but <strong>Execution Precision</strong>.<br><br>
+Synk Mushroom specializes exclusively in this critical aspect,<br>
+fundamentally redesigning your trading environment from the ground up.
+</p>
+
+</div>
+
+<!-- Pricing -->
+<div class="section">
+<h2>Pricing Plans</h2>
+
+<div class="pricing">
+
+<div class="price-card">
+<h3>Monthly</h3>
+<div class="price">¥7,980</div>
+<p>Billed monthly</p>
+</div>
+
+<div class="price-card">
+<h3>Annual</h3>
+<div class="price">¥79,800</div>
+<p>2 months free</p>
+</div>
+
+<div class="price-card">
+<h3>Lifetime</h3>
+<div class="price">¥198,000</div>
+<p>Permanent license</p>
+</div>
+
+</div>
+
+<p style="margin-top:20px;color:#aaa;">
+* Includes a 7-day free trial (Credit card required, auto-renews if not canceled)
+</p>
+</div>
+
+<!-- Disclaimer -->
+<div class="section">
+<div class="notice">
+<strong>Disclaimer:</strong> This software does NOT provide investment advice, automated trading features, or trading signals.<br>
+All trading and investment decisions are strictly your own responsibility.
+</div>
 </div>
 
 <footer>
-  <p>© Oichi Equipment</p>
-  <p>
-    <a href="/legal.html">Legal</a>
-    <a href="/privacy.html">Privacy</a>
-    <a href="/terms.html">Terms</a>
-  </p>
+<p>© Oichi Equipment</p>
+<p>
+<a href="legal.html">Legal Notice</a>
+<a href="privacy.html">Privacy Policy</a>
+<a href="terms.html">Terms of Service</a>
+</p>
 </footer>
+<script>
+const toggle = document.getElementById("menuToggle");
+const nav = document.getElementById("navMenu");
 
+toggle.addEventListener("click", () => {
+nav.classList.toggle("active");
+});
+</script>
 </body>
 </html>

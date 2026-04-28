@@ -3,8 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Legal Notice - Oichi Equipment</title>
+<meta name="robots" content="noindex,nofollow">
+<title>Legal Notice | Oichi Equipment</title>
+
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
 <style>
 *{box-sizing:border-box;}
 body{margin:0;font-family:'Inter',sans-serif;background:#0a0a0a;color:#eee;}
@@ -20,50 +23,184 @@ nav a:hover{color:#fff;}
 
 .container{max-width:900px;margin:auto;padding:140px 24px 80px;}
 h1{font-size:32px;margin-bottom:30px;}
-p{color:#bbb;line-height:1.8;font-size:16px;margin-bottom:12px;}
+h2{font-size:22px;margin-top:40px;margin-bottom:16px;}
+p{color:#bbb;line-height:1.8;font-size:15px;margin-bottom:12px;}
+
 .legal-table{width:100%;border-collapse:collapse;margin-top:20px;}
-.legal-table th, .legal-table td{text-align:left;padding:15px;border-bottom:1px solid #222;vertical-align:top;}
-.legal-table th{width:35%;color:#fff;font-weight:600;}
+.legal-table th,.legal-table td{text-align:left;padding:14px;border-bottom:1px solid #222;vertical-align:top;}
+.legal-table th{width:32%;color:#fff;font-weight:600;}
 
 footer{border-top:1px solid #222;margin-top:60px;padding:40px 24px;text-align:center;color:#777;}
-footer a{color:#4da3ff;margin:0 10px;text-decoration:none;}
+footer a{color:#4a8f4a;margin:0 10px;text-decoration:none;}
+
+/* Hamburger */
+.menu-toggle{
+display:none;
+flex-direction:column;
+cursor:pointer;
+}
+
+.menu-toggle span{
+width:25px;
+height:2px;
+background:#fff;
+margin:4px 0;
+transition:0.3s;
+}
+
+/* Mobile */
+@media(max-width:800px){
+
+.menu-toggle{
+display:flex;
+}
+
+nav{
+position:absolute;
+top:60px;
+right:0;
+background:#0a0a0a;
+width:100%;
+flex-direction:column;
+align-items:flex-start;
+padding:20px;
+display:none;
+border-top:1px solid #222;
+}
+
+nav.active{
+display:flex;
+}
+
+nav a{
+margin:10px 0;
+font-size:16px;
+}
+
+.lang-switch{
+border-left:none;
+margin:10px 0 0 0;
+padding:0;
+}
+
+}
 </style>
 </head>
+
 <body>
+
 <header>
-  <div class="header-inner">
-    <a href="index.html" class="logo">Oichi Equipment</a>
-    <nav>
-      <a href="terms.html">Terms</a>
-      <a href="privacy.html">Privacy</a>
-      <a href="legal.html">Legal</a>
-      <div class="lang-switch">
-        <a href="ja/tokushoho.html" class="inactive">JP</a>
-        <a href="legal.html">EN</a>
-      </div>
-    </nav>
-  </div>
+<div class="header-inner">
+
+<a href="index.html" class="logo">Oichi Equipment</a>
+
+<!-- Hamburger -->
+<div class="menu-toggle" id="menuToggle">
+<span></span>
+<span></span>
+<span></span>
+</div>
+
+<nav id="navMenu">
+<a href="index.html">Home</a>
+<a href="equipment.html">Equipment</a>
+<a href="terms.html">Terms</a>
+<a href="privacy.html">Privacy</a>
+<a href="legal.html">Legal Notice</a>
+
+<div class="lang-switch">
+<a href="ja/legal.html">JP</a>
+<a href="legal.html" class="inactive">EN</a>
+</div>
+</nav>
+
+</div>
 </header>
 
 <div class="container">
-  <h1>Legal Notice</h1>
-  <table class="legal-table">
-    <tr><th>Merchant Name</th><td>Oichi Equipment</td></tr>
-    <tr><th>Representative</th><td>Tadayuki Nishikawa</td></tr>
-    <tr><th>Location</th><td>Japan (Full address available upon request)</td></tr>
-    <tr><th>Email</th><td>oichi.equipment@gmail.com</td></tr>
-    <tr><th>Business</th><td>Software development for MetaTrader 5</td></tr>
-    <tr><th>Return Policy</th><td>Non-refundable for digital products</td></tr>
-  </table>
+
+<h1>Legal Notice</h1>
+<p>Information required under the Specified Commercial Transactions Act of Japan and general seller policies.</p>
+
+<table class="legal-table">
+<tr><th>Seller</th><td>Oichi Equipment</td></tr>
+<tr><th>Operations Manager</th><td>Tadayuki Nishikawa</td></tr>
+
+<tr>
+<th>Address & Phone Number</th>
+<td>
+Will be disclosed without delay upon request.<br>
+Email Address: oichi.equipment@gmail.com
+</td>
+</tr>
+
+<tr><th>Sales URL</th><td>https://oichi-equipment.github.io/</td></tr>
+
+<tr><th>Selling Price</th><td>Listed on each respective product page</td></tr>
+
+<tr>
+<th>Additional Costs</th>
+<td>Customers are responsible for any telecommunication costs, such as internet connection fees, required to use the software.</td>
+</tr>
+
+<tr>
+<th>Payment Methods</th>
+<td>Credit Card (Processed securely via Stripe / Polar, etc.)</td>
+</tr>
+
+<tr>
+<th>Delivery Time</th>
+<td>The license is issued, or the digital download is provided immediately upon payment completion.</td>
+</tr>
+
+<tr>
+<th>Operating Environment</th>
+<td>
+Environments where MetaTrader 5 operates normally (primarily Windows).<br>
+Further details are provided on the specific product pages or within the instruction manuals.
+</td>
+</tr>
+
+<tr>
+<th>Returns & Cancellations</th>
+<td>
+Due to the nature of digital content, we generally do not accept returns, refunds, or cancellations after a purchase has been made.<br>
+Exceptions apply only where required by applicable laws.
+</td>
+</tr>
+</table>
+
+<h2>Disclaimer</h2>
+<p>
+The software provided by this service is strictly a tool designed to assist in trade execution. It does not offer investment advice, provide trading signals, or guarantee any profits.
+</p>
+
+<p>
+We assume no responsibility for any losses—including but not limited to financial loss, opportunity loss, or losses due to system failures—incurred through the use of this software.
+</p>
+
+<p>
+Users must utilize the service entirely at their own risk and are strongly advised to conduct sufficient testing (e.g., using demo environments) prior to live trading.
+</p>
+
 </div>
 
 <footer>
   <p>© Oichi Equipment</p>
   <p>
-    <a href="legal.html">Legal</a>
-    <a href="privacy.html">Privacy</a>
-    <a href="terms.html">Terms</a>
+    <a href="legal.html">Legal Notice</a>
+    <a href="privacy.html">Privacy Policy</a>
+    <a href="terms.html">Terms of Service</a>
   </p>
 </footer>
+<script>
+const toggle = document.getElementById("menuToggle");
+const nav = document.getElementById("navMenu");
+
+toggle.addEventListener("click", () => {
+nav.classList.toggle("active");
+});
+</script>
 </body>
+
 </html>

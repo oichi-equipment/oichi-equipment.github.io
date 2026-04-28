@@ -3,10 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Privacy Policy - Oichi Equipment</title>
+<title>Privacy Policy | Oichi Equipment</title>
+
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
 <style>
-/* CSS styles identical to terms.html */
 *{box-sizing:border-box;}
 body{margin:0;font-family:'Inter',sans-serif;background:#0a0a0a;color:#eee;}
 header{position:fixed;top:0;width:100%;background:rgba(10,10,10,0.85);backdrop-filter:blur(12px);border-bottom:1px solid #222;z-index:100;}
@@ -18,42 +19,176 @@ nav a:hover{color:#fff;}
 .lang-switch{border-left:1px solid #444;margin-left:20px;padding-left:20px;}
 .lang-switch a{margin-left:10px;font-weight:600;color:#fff;}
 .lang-switch a.inactive{color:#555;font-weight:400;}
+
 .container{max-width:900px;margin:auto;padding:140px 24px 80px;}
 h1{font-size:36px;margin-bottom:30px;}
-h2{font-size:24px;margin-top:40px;margin-bottom:16px;}
-p{color:#bbb;line-height:1.8;font-size:16px;margin-bottom:16px;}
+h2{font-size:22px;margin-top:40px;margin-bottom:16px;}
+p{color:#bbb;line-height:1.8;font-size:15px;margin-bottom:14px;}
+
 footer{border-top:1px solid #222;margin-top:60px;padding:40px 24px;text-align:center;color:#777;}
-footer a{color:#4da3ff;margin:0 10px;text-decoration:none;}
+footer a{color:#4a8f4a;margin:0 10px;text-decoration:none;}
+
+/* Hamburger */
+.menu-toggle{
+display:none;
+flex-direction:column;
+cursor:pointer;
+}
+
+.menu-toggle span{
+width:25px;
+height:2px;
+background:#fff;
+margin:4px 0;
+transition:0.3s;
+}
+
+/* Mobile */
+@media(max-width:800px){
+
+.menu-toggle{
+display:flex;
+}
+
+nav{
+position:absolute;
+top:60px;
+right:0;
+background:#0a0a0a;
+width:100%;
+flex-direction:column;
+align-items:flex-start;
+padding:20px;
+display:none;
+border-top:1px solid #222;
+}
+
+nav.active{
+display:flex;
+}
+
+nav a{
+margin:10px 0;
+font-size:16px;
+}
+
+.lang-switch{
+border-left:none;
+margin:10px 0 0 0;
+padding:0;
+}
+
+}
 </style>
 </head>
+
 <body>
+
 <header>
-  <div class="header-inner">
-    <a href="index.html" class="logo">Oichi Equipment</a>
-    <nav>
-      <a href="terms.html">Terms</a>
-      <a href="privacy.html">Privacy</a>
-      <a href="legal.html">Legal</a>
-      <div class="lang-switch">
-        <a href="ja/privacy.html" class="inactive">JP</a>
-        <a href="privacy.html">EN</a>
-      </div>
-    </nav>
-  </div>
-</header>
-<div class="container">
-  <h1>Privacy Policy</h1>
-  <p>We collect only necessary data for service operation and license management.</p>
-  <p>Payments are handled by third-party providers (e.g., Stripe, Polar.sh). We do not store your credit card information.</p>
-  <p>No personal data is sold or shared with outside parties except as required by law.</p>
+<div class="header-inner">
+
+<a href="index.html" class="logo">Oichi Equipment</a>
+
+<!-- Hamburger -->
+<div class="menu-toggle" id="menuToggle">
+<span></span>
+<span></span>
+<span></span>
 </div>
+
+<nav id="navMenu">
+<a href="index.html">Home</a>
+<a href="equipment.html">Equipment</a>
+<a href="terms.html">Terms</a>
+<a href="privacy.html">Privacy</a>
+<a href="legal.html">Legal Notice</a>
+
+<div class="lang-switch">
+<a href="ja/privacy.html">JP</a>
+<a href="privacy.html" class="inactive">EN</a>
+</div>
+</nav>
+
+</div>
+</header>
+
+<div class="container">
+
+<h1>Privacy Policy</h1>
+
+<p>
+Oichi Equipment (hereinafter referred to as "we", "us", or "our") respects your privacy and is committed to handling your personal information appropriately on this website and within the software we provide.
+</p>
+
+<h2>1. Information We Collect</h2>
+<p>
+We may collect the following information strictly to the extent necessary for service provision, customer support, and license management:
+</p>
+<p>
+・Email address<br>
+・Payment-related information (*Credit card details are NEVER stored or collected by us)<br>
+・Access logs (IP address, browser information, etc.)
+</p>
+
+<h2>2. Purpose of Use</h2>
+<p>
+We use the collected information within the scope of the following purposes:
+</p>
+<p>
+・Provision and operation of the service and software<br>
+・User support and responding to inquiries<br>
+・Prevention of fraudulent use and maintenance of system security
+</p>
+
+<h2>3. Handling of Payment Information</h2>
+<p>
+All payment processing is securely handled through external third-party payment services such as Stripe, Inc. and Polar.sh. We do not retain, store, or have access to any of your complete credit card information on our servers.
+</p>
+
+<h2>4. Provision to Third Parties</h2>
+<p>
+We will not disclose or provide your personal information to any third parties without your prior consent, except in cases where required by applicable laws or legal requests.
+</p>
+
+<h2>5. Use of External Services</h2>
+<p>
+This service may utilize external third-party services for operational and functional purposes (e.g., payment gateways, license verification). The collection and handling of information by these external services are subject to their respective privacy policies.
+</p>
+
+<h2>6. Security</h2>
+<p>
+We implement appropriate security measures designed to protect your personal information from unauthorized access, leakage, loss, or alteration.
+</p>
+
+<h2>7. Disclaimer</h2>
+<p>
+Our software primarily operates locally on your personal environment (e.g., your PC and MetaTrader 5 terminal). We assume no responsibility for data handling, security breaches, or information leaks that occur due to vulnerabilities within your local system or network environment.
+</p>
+
+<h2>8. Changes to this Policy</h2>
+<p>
+This policy may be updated as necessary to reflect changes in our practices or legal obligations. Any changes to this policy will be announced directly on this page.
+</p>
+
+</div>
+
 <footer>
   <p>© Oichi Equipment</p>
   <p>
-    <a href="legal.html">Legal</a>
-    <a href="privacy.html">Privacy</a>
-    <a href="terms.html">Terms</a>
+    <a href="legal.html">Legal Notice</a>
+    <a href="privacy.html">Privacy Policy</a>
+    <a href="terms.html">Terms of Service</a>
   </p>
 </footer>
+
+<script>
+const toggle = document.getElementById("menuToggle");
+const nav = document.getElementById("navMenu");
+
+toggle.addEventListener("click", () => {
+nav.classList.toggle("active");
+});
+</script>  
 </body>
+
 </html>

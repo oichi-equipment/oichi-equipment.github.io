@@ -3,8 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Terms of Service - Oichi Equipment</title>
+<title>Terms of Service | Oichi Equipment</title>
+
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
 <style>
 *{box-sizing:border-box;}
 body{margin:0;font-family:'Inter',sans-serif;background:#0a0a0a;color:#eee;}
@@ -20,61 +22,195 @@ nav a:hover{color:#fff;}
 
 .container{max-width:900px;margin:auto;padding:140px 24px 80px;}
 h1{font-size:36px;margin-bottom:30px;}
-h2{font-size:24px;border-left:4px solid #fff;padding-left:15px;margin:40px 0 20px;}
-p{color:#bbb;line-height:1.8;font-size:16px;margin-bottom:16px;}
-.warning-box{background:#1a1a1a;border:1px solid #ff4d4d;padding:24px;border-radius:8px;margin:30px 0;}
-.warning-box h3{color:#ff4d4d;margin-top:0;}
+h2{font-size:22px;border-left:4px solid #fff;padding-left:15px;margin:40px 0 20px;}
+p{color:#bbb;line-height:1.8;font-size:15px;margin-bottom:14px;}
 ul{padding-left:20px;color:#bbb;}
 li{margin-bottom:10px;line-height:1.6;}
 
+.warning-box{background:#1a1a1a;border:1px solid #ff4d4d;padding:24px;border-radius:8px;margin:30px 0;}
+.warning-box h3{color:#ff4d4d;margin-top:0;}
+
 footer{border-top:1px solid #222;margin-top:60px;padding:40px 24px;text-align:center;color:#777;}
-footer a{color:#4da3ff;margin:0 10px;text-decoration:none;}
+footer a{color:#4a8f4a;margin:0 10px;text-decoration:none;}
+/* Hamburger */
+.menu-toggle{
+display:none;
+flex-direction:column;
+cursor:pointer;
+}
+
+.menu-toggle span{
+width:25px;
+height:2px;
+background:#fff;
+margin:4px 0;
+transition:0.3s;
+}
+
+/* Mobile */
+@media(max-width:800px){
+
+.menu-toggle{
+display:flex;
+}
+
+nav{
+position:absolute;
+top:60px;
+right:0;
+background:#0a0a0a;
+width:100%;
+flex-direction:column;
+align-items:flex-start;
+padding:20px;
+display:none;
+border-top:1px solid #222;
+}
+
+nav.active{
+display:flex;
+}
+
+nav a{
+margin:10px 0;
+font-size:16px;
+}
+
+.lang-switch{
+border-left:none;
+margin:10px 0 0 0;
+padding:0;
+}
+
+}
 </style>
 </head>
+
 <body>
+
 <header>
-  <div class="header-inner">
-    <a href="index.html" class="logo">Oichi Equipment</a>
-    <nav>
-      <a href="terms.html">Terms</a>
-      <a href="privacy.html">Privacy</a>
-      <a href="legal.html">Legal</a>
-      <div class="lang-switch">
-        <a href="ja/terms.html" class="inactive">JP</a>
-        <a href="terms.html">EN</a>
-      </div>
-    </nav>
-  </div>
+<div class="header-inner">
+
+<a href="index.html" class="logo">Oichi Equipment</a>
+
+<!-- Hamburger -->
+<div class="menu-toggle" id="menuToggle">
+<span></span>
+<span></span>
+<span></span>
+</div>
+
+<nav id="navMenu">
+<a href="index.html">Home</a>
+<a href="equipment.html">Equipment</a>
+<a href="terms.html">Terms</a>
+<a href="privacy.html">Privacy</a>
+<a href="legal.html">Legal Notice</a>
+
+<div class="lang-switch">
+<a href="ja/terms.html">JP</a>
+<a href="terms.html" class="inactive">EN</a>
+</div>
+</nav>
+
+</div>
 </header>
 
 <div class="container">
-  <h1>Terms of Service</h1>
 
-  <div class="warning-box">
-    <h3>High-Risk Investment Warning</h3>
-    <p>Trading foreign exchange (Forex) and other financial instruments carries a high level of risk and may not be suitable for all investors. The high degree of leverage can work against you as well as for you. Before deciding to trade, you should carefully consider your investment objectives, level of experience, and risk appetite. The possibility exists that you could sustain a loss of some or all of your initial investment.</p>
-  </div>
+<h1>Terms of Service</h1>
 
-  <h2>1. No Financial Advice or Automated Trading</h2>
-  <p>Oichi Equipment provides manual execution support tools for MetaTrader 5. This software is NOT an "Expert Advisor" (EA) for automated trading, nor does it provide trade signals, market predictions, or financial advice. All trading decisions are made solely by the user.</p>
+<div class="warning-box">
+  <h3>Important Notice Regarding Risks</h3>
+  <p>
+  Foreign exchange (FX) trading and related financial instruments carry a high level of risk. 
+  Due to market fluctuations, you may lose some or all of your initial investment. 
+  All trading and investment decisions are strictly your own responsibility.
+  </p>
+</div>
 
-  <h2>2. Mandatory Demo Account Testing</h2>
-  <p>Users are strictly required to test the software extensively on a **demo account** before applying it to a live trading account. Oichi Equipment is not responsible for losses caused by the user's lack of familiarity with the software's operation.</p>
+<h2>1. Scope of Service</h2>
+<p>
+Oichi Equipment provides discretionary trade execution support software for MetaTrader 5. 
+This software is purely a tool designed to assist with manual order execution and does NOT provide trading decisions, investment strategies, or automated bots.
+</p>
 
-  <h2>3. Disclaimer of Liability</h2>
-  <p>This software is provided "as is". To the maximum extent permitted by law, Oichi Equipment shall not be liable for any financial loss, data loss, or system interruption arising from your trading decisions or technical connectivity issues.</p>
+<h2>2. Disclaimer of Investment Advice and Automated Trading</h2>
+<p>
+This service does NOT provide investment advice, trading signals, or automated trading functionalities. 
+All trading decisions are made solely at the user's own discretion and responsibility.
+</p>
 
-  <h2>4. Prohibited Acts</h2>
-  <p>Reverse engineering, reselling, or unauthorized redistribution of this software is strictly prohibited.</p>
+<h2>3. Operating Environment</h2>
+<p>
+This software operates in a local environment and depends entirely on the user's PC, network environment, and broker infrastructure. 
+We are not responsible for any malfunctions, delays, or losses arising from these local dependencies.
+</p>
+
+<h2>4. Disclaimer of Liability</h2>
+<p>
+We shall not be held liable for any damages or losses arising from the use of this service, including but not limited to:
+</p>
+
+<ul>
+  <li>Losses due to market fluctuations or your own trading decisions</li>
+  <li>Communication latency, connection failures, or server downtime</li>
+  <li>Malfunctions or issues caused by third-party services (e.g., MetaTrader, your broker)</li>
+  <li>User errors, misconfigurations, or improper use of the software</li>
+</ul>
+
+<h2>5. Testing in Demo Environments</h2>
+<p>
+Users agree to conduct thorough testing and verification of the software using a demo account before utilizing it in a live trading environment with real funds.
+</p>
+
+<h2>6. Prohibited Actions</h2>
+<ul>
+  <li>Reverse engineering, decompilation, parsing, or modification of the software</li>
+  <li>Redistribution, resale, lending, or unauthorized sharing of licenses</li>
+  <li>Any illegal activities or fraudulent use</li>
+</ul>
+
+<h2>7. Fees and Payment</h2>
+<p>
+Service fees are processed securely through external third-party payment providers (e.g., Stripe, Polar). 
+Payment conditions, renewals, and billing timings are subject to the terms of these respective services.
+</p>
+
+<h2>8. Refund Policy</h2>
+<p>
+Due to the nature of digital content and software licenses, we generally do not offer refunds, returns, or cancellations after a purchase has been made. 
+Exceptions apply only where expressly required by applicable consumer protection laws.
+</p>
+
+<h2>9. Changes to Terms</h2>
+<p>
+These terms may be modified as necessary. The updated terms will become effective immediately upon being posted on this website. Continued use of the software constitutes acceptance of the modified terms.
+</p>
+
+<h2>10. Governing Law and Jurisdiction</h2>
+<p>
+These terms shall be governed by and construed in accordance with the laws of Japan. 
+Any disputes arising in connection with this service shall be subject to the exclusive jurisdiction of the courts governing our location in Japan.
+</p>
+
 </div>
 
 <footer>
   <p>© Oichi Equipment</p>
   <p>
-    <a href="legal.html">Legal</a>
-    <a href="privacy.html">Privacy</a>
-    <a href="terms.html">Terms</a>
+    <a href="legal.html">Legal Notice</a>
+    <a href="privacy.html">Privacy Policy</a>
+    <a href="terms.html">Terms of Service</a>
   </p>
 </footer>
+<script>
+const toggle = document.getElementById("menuToggle");
+const nav = document.getElementById("navMenu");
+
+toggle.addEventListener("click", () => {
+nav.classList.toggle("active");
+});
+</script>
 </body>
 </html>
