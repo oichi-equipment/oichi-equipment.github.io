@@ -63,8 +63,8 @@ align-items: center;
 .btn{display:inline-block;margin-top:30px;padding:14px 28px;background:#fff;color:#000;border-radius:6px;text-decoration:none;font-weight:600;}
 .btn-large{font-size:18px;padding:18px 40px;margin-top:40px;}
 
-.section{max-width:1200px;margin:auto;padding:80px 24px;}
-.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;}
+.section{max-width:1200px;margin:auto;padding:80px 24px;margin-top:60px;}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
 
 .card{background:#111;padding:28px;border:1px solid #222;border-radius:10px;line-height:1.7;}
 
@@ -132,7 +132,7 @@ padding:0;
 
 }
 @media(max-width:800px){
-.grid{grid-template-columns:1fr;}
+.grid{grid-template-columns:1fr;gap:20px;}
 .pricing{grid-template-columns:1fr;}
 .hero-wrapper { padding: 80px 16px 20px; }
 .hero { padding: 80px 16px; min-height: 400px; }
@@ -182,8 +182,7 @@ padding:0;
 <div class="hero-content">
 <h1>TradingView×MT5　そのまま発注</h1>
 <p>
-TradingViewとMT5を自動リンク。<br>
-いつもの画面で、そのまま注文から決済まで完結します。
+TradingViewとMT5を自動リンク。いつもの画面で、そのまま注文から決済まで完結します。
 </p>
 <a href="#" class="btn btn-large">今すぐ使う</a>
 </div>
@@ -195,27 +194,27 @@ TradingViewとMT5を自動リンク。<br>
 <div class="grid">
 <div class="card">
 <h3>ブローカー制限なし</h3>
-<p>MetaTrader 5対応ブローカーであればそのまま利用可能</p>
+<p>MetaTrader 5に対応しているブローカーであれば、口座種類に関係なくそのまま利用できます。</p>
 </div>
 <div class="card">
 <h3>ハイレバレッジ対応</h3>
-<p>レバレッジ制限なく利用可能</p>
+<p>レバレッジの高さに関わらず、そのままトレード環境として利用できます。※取引レバレッジは各ブローカー・口座の設定に依存します。</p>
 </div>
 <div class="card">
 <h3>VPS不要</h3>
-<p>ローカル環境で完結（Windowsのみ対応）</p>
+<p>ローカル環境で完結するため、VPSの契約や設定は不要です。※現在はWindowsのみ対応</p>
 </div>
 <div class="card">
 <h3>TradingView一体化</h3>
-<p>分析から発注まで同一画面で完結</p>
+<p>分析から発注・決済まで、TradingViewの画面上でそのまま完結します。</p>
 </div>
 <div class="card">
 <h3>パネル最小化</h3>
-<p>必要な時だけ表示可能</p>
+<p>必要な時だけ展開表示でき、分析の邪魔になりません。</p>
 </div>
 <div class="card">
 <h3>自由移動</h3>
-<p>任意の位置に配置可能</p>
+<p>パネルは任意の位置に配置できます。</p>
 </div>
 </div>
 </div>
@@ -233,10 +232,9 @@ TradingViewとMT5を自動リンク。<br>
 </div>
 
 <div class="card">
-<h3>通貨ペア自動取得（完全自動シンボル同期）</h3>
+<h3>通貨ペア自動取得（シンボル完全自動同期）</h3>
 <p>
-TradingViewで選択している通貨ペアを自動判別し、<br>
-MT5の気配値に登録された銘柄へ即時同期します。
+TradingViewで選択している通貨ペアを自動判別し、MT5の気配値に登録されている最適な銘柄へ即時同期します。サフィックス付き口座にも対応。複数チャート表示時は、選択中のチャートと連動します。
 </p>
 <img src="../assets/images/ui-symbol-sync.png" alt="Symbol Sync" class="img-responsive-card" style="width:100%; margin:20px auto 0;">
 </div>
@@ -273,17 +271,17 @@ MT5の気配値に登録された銘柄へ即時同期します。
 <!-- 安全設計 -->
 <div class="section">
 <h2>安心した取引：誤発注を防ぐ設計</h2>
-<p style="color:#aaa;margin-bottom:30px;line-height:1.7;font-size:16px;">接続状態・銘柄・操作を監視し、<br>危険な状態では発注をブロックします。</p>
+<p style="color:#aaa;margin-bottom:30px;line-height:1.7;font-size:16px;">接続状態・銘柄・操作を常時監視し、危険な状態では発注を自動でブロックします。</p>
 
 <div class="pricing" style="margin-top:0;">
 <div class="card">
 <img src="../assets/images/ui-oneclick-toggle.png" alt="ワンクリック取引は手動で許可が必要です" class="img-responsive-card" style="margin-top:0; margin-bottom:15px;">
-<p style="font-weight:600;margin:0;">ワンクリック取引は手動で許可が必要です</p>
+<p style="font-weight:600;margin:0;">ワンクリック取引は手動で事前許可が必要です</p>
 </div>
 
 <div class="card">
 <img src="../assets/images/ui-symbol-notfound.png" alt="存在しない銘柄は自動でロックされます" class="img-responsive-card" style="margin-top:0; margin-bottom:15px;">
-<p style="font-weight:600;margin:0;">存在しない銘柄は自動でロックされます</p>
+<p style="font-weight:600;margin:0;">気配値に存在しない銘柄は自動で発注ロック</p>
 </div>
 
 <div class="card">
@@ -292,7 +290,7 @@ MT5の気配値に登録された銘柄へ即時同期します。
 </div>
 
 <div class="card" style="grid-column: 1 / -1; text-align: center; padding: 20px;">
-<p style="font-weight:600;margin:0;">通貨ペアのリンクがない状態でも、<br>MT5に接続されていれば保有ポジションの決済は可能です</p>
+<p style="font-weight:600;margin:0;">通貨ペアが未同期でも、MT5に接続されていれば保有ポジションの決済は可能です。</p>
 </div>
 </div>
 </div>
@@ -310,7 +308,7 @@ MT5の気配値に登録された銘柄へ即時同期します。
 <div class="card">
 <h3>設定の煩雑さ</h3>
 <p>銘柄設定ミスによる発注エラー。</p>
-<p>→ 自動名寄せで設定不要。</p>
+<p>→ 自動シンボル取得・自動同期で設定不要。</p>
 </div>
 
 <div class="card">
