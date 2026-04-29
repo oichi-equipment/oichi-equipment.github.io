@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex,nofollow">
-<title>特定商取引法に基づく表記 | Oichi Equipment</title>
+<title>お問い合わせ | Oichi Equipment</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
 
@@ -26,9 +26,11 @@ h1{font-size:32px;margin-bottom:30px;}
 h2{font-size:22px;margin-top:40px;margin-bottom:16px;}
 p{color:#bbb;line-height:1.8;font-size:15px;margin-bottom:12px;}
 
-.legal-table{width:100%;border-collapse:collapse;margin-top:20px;}
-.legal-table th,.legal-table td{text-align:left;padding:14px;border-bottom:1px solid #222;vertical-align:top;}
-.legal-table th{width:32%;color:#fff;font-weight:600;}
+.grid{display:grid;grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));gap:24px;margin-top:40px;}
+.card{background:#111;padding:28px;border:1px solid #222;border-radius:10px;line-height:1.7;}
+.section .card + .card{
+margin-top:24px;
+}
 
 footer{border-top:1px solid #222;margin-top:60px;padding:40px 24px;text-align:center;color:#777;}
 footer a{color:#4a8f4a;margin:0 10px;text-decoration:none;}
@@ -109,7 +111,7 @@ padding:0;
 <header>
 <div class="header-inner">
 
-<a href="index.html" class="logo">Oichi Equipment</a>
+<a href="ja_index.html" class="logo">Oichi Equipment</a>
 
 <!-- ハンバーガー -->
 <div class="menu-toggle" id="menuToggle">
@@ -119,22 +121,22 @@ padding:0;
 </div>
 
 <nav id="navMenu">
-<a href="index.html">TOP</a>
-<a href="equipment.html">Equipment</a>
-<a href="qa.html">FAQ</a>
-<a href="contact.html">Contact</a>
+<a href="ja_index.html">TOP</a>
+<a href="ja_equipment.html">Equipment</a>
+<a href="ja_qa.html">FAQ</a>
+<a href="ja_contact.html">Contact</a>
 <div class="dropdown">
   <a href="#">About ▾</a>
   <div class="dropdown-menu">
-    <a href="terms.html">利用規約</a>
-    <a href="privacy.html">個人情報の取り扱い</a>
-    <a href="legal.html">特定商取引法に基づく表記</a>
+    <a href="ja_terms.html">利用規約</a>
+    <a href="ja_privacy.html">個人情報の取り扱い</a>
+    <a href="ja_legal.html">特定商取引法に基づく表記</a>
   </div>
 </div>
 
 <div class="lang-switch">
-<a href="legal.html">JP</a>
-<a href="../legal.html" class="inactive">EN</a>
+<a href="ja_contact.html">JP</a>
+<a href="../contact.html" class="inactive">EN</a>
 </div>
 </nav>
 
@@ -143,79 +145,42 @@ padding:0;
 
 <div class="container">
 
-<h1>特定商取引法に基づく表記</h1>
+<h1>お問い合わせ</h1>
+<p style="color:#bbb;line-height:1.8;font-size:16px;">本サービスに関するご質問・不具合報告は以下のメールアドレスまでご連絡ください。</p>
 
-<table class="legal-table">
-<tr><th>販売事業者</th><td>Oichi Equipment</td></tr>
-<tr><th>運営責任者</th><td>Tadayuki Nishikawa</td></tr>
+<div class="grid">
 
-<tr>
-<th>所在地・電話番号</th>
-<td>
-ご請求いただいた場合、遅滞なく開示いたします。<br>
-メールアドレス：oichi.equipment@gmail.com
-</td>
-</tr>
+<div class="card">
+<h3 style="margin-top:0;font-size:18px;">Email</h3>
+<p style="color:#fff;font-weight:600;font-size:16px;margin-bottom:0;">oichi.equipment@gmail.com</p>
+</div>
 
-<tr><th>販売URL</th><td>https://oichi-equipment.github.io/</td></tr>
+<div class="card">
+<h3 style="margin-top:0;font-size:18px;">対応について</h3>
+<p style="margin-bottom:0;">通常、24〜48時間以内に返信いたします。<br>内容によってはお時間をいただく場合があります。</p>
+</div>
 
-<tr><th>販売価格</th><td>各商品ページに記載</td></tr>
+<div class="card">
+<h3 style="margin-top:0;font-size:18px;">サポート対象</h3>
+<ul style="color:#bbb;line-height:1.8;padding-left:20px;margin-bottom:0;margin-top:0;">
+<li>セットアップに関する質問</li>
+<li>動作不具合</li>
+<li>ライセンス関連</li>
+</ul>
+</div>
 
-<tr>
-<th>商品代金以外の必要料金</th>
-<td>インターネット接続にかかる通信費等はお客様のご負担となります。</td>
-</tr>
-
-<tr>
-<th>支払方法</th>
-<td>クレジットカード（Stripe / Polar 等の決済サービスを利用）</td>
-</tr>
-
-<tr>
-<th>商品の提供時期</th>
-<td>決済完了後、即時にライセンス発行またはダウンロード提供</td>
-</tr>
-
-<tr>
-<th>動作環境</th>
-<td>
-MetaTrader 5が正常に動作する環境（主にWindows）<br>
-詳細は各商品ページまたはマニュアルに記載
-</td>
-</tr>
-
-<tr>
-<th>返品・キャンセル</th>
-<td>
-デジタルコンテンツの性質上、購入後の返品・返金・キャンセルは原則としてお受けできません。<br>
-ただし、法令に基づく場合を除きます。
-</td>
-</tr>
-</table>
-
-<h2>免責事項</h2>
-<p>
-本サービスが提供するソフトウェアは、トレードの実行を補助するツールであり、
-投資助言、売買シグナルの提供、または利益の保証を行うものではありません。
-</p>
-
-<p>
-本ソフトウェアの利用により生じた損失（資金損失、機会損失、システム障害等）について、
-当方は一切の責任を負いません。
-</p>
-
-<p>
-利用者は自己責任においてサービスを利用し、事前に十分な検証（デモ環境等）を行うものとします。
-</p>
+</div>
 
 </div>
 
 <footer>
   <p>© Oichi Equipment</p>
   <p>
-    <a href="legal.html">特商法</a>
-    <a href="privacy.html">プライバシー</a>
-    <a href="terms.html">利用規約</a>
+    <a href="ja_contact.html">Contact</a>
+    <a href="ja_qa.html">FAQ</a>
+    <a href="ja_legal.html">特商法</a>
+    <a href="ja_privacy.html">プライバシー</a>
+    <a href="ja_terms.html">利用規約</a>
   </p>
 </footer>
 <script>
