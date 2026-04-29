@@ -28,6 +28,9 @@ p{color:#bbb;line-height:1.8;font-size:15px;margin-bottom:12px;}
 
 .grid{display:grid;grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));gap:24px;margin-top:40px;}
 .card{background:#111;padding:28px;border:1px solid #222;border-radius:10px;line-height:1.7;}
+.section .card + .card{
+margin-top:24px;
+}
 
 footer{border-top:1px solid #222;margin-top:60px;padding:40px 24px;text-align:center;color:#777;}
 footer a{color:#4a8f4a;margin:0 10px;text-decoration:none;}
@@ -36,14 +39,15 @@ footer a{color:#4a8f4a;margin:0 10px;text-decoration:none;}
 .section{margin-top:80px;}
 .feature-section{margin-top:80px !important;}
 .feature-box{padding:40px 28px;}
+.feature-box + .feature-box{margin-top:24px;}
 .feature-box img{margin-top:24px;display:block;}
 .section:first-of-type{margin-top:140px;}
 
 .dropdown{position:relative;}
-.dropdown-menu{display:none;position:absolute;top:30px;background:#111;border:1px solid #222;border-radius:6px;min-width:200px;z-index:200;}
+.dropdown-menu{display:none;flex-direction:column;position:absolute;top:30px;background:#111;border:1px solid #222;border-radius:6px;min-width:200px;z-index:200;}
 .dropdown-menu a{display:block;padding:10px 16px;color:#aaa;text-decoration:none;}
 .dropdown-menu a:hover{color:#fff;}
-.dropdown:hover .dropdown-menu{display:block;}
+.dropdown:hover .dropdown-menu{display:flex;}
 
 /* ハンバーガー */
 .menu-toggle{
@@ -63,7 +67,7 @@ transition:0.3s;
 /* スマホ */
 @media(max-width:800px){
 
-.dropdown-menu{position:static;display:block;border:none;}
+.dropdown-menu{position:static;display:flex;flex-direction:column;border:none;}
 
 
 .menu-toggle{

@@ -1,413 +1,606 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Oichi Equipment - Trade Execution Panel</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Oichi Equipment - Trade Execution Panel</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
 
-<style>
-*{box-sizing:border-box;}
-body{margin:0;font-family:'Inter',sans-serif;background:#0a0a0a;color:#eee;}
+  <style>
+    * {
+      box-sizing: border-box;
+    }
 
-header{position:fixed;top:0;width:100%;background:rgba(10,10,10,0.85);backdrop-filter:blur(12px);border-bottom:1px solid #222;z-index:100;}
-.header-inner{max-width:1200px;margin:auto;padding:16px 24px;display:flex;justify-content:space-between;align-items:center;}
-.logo{color:#fff;text-decoration:none;font-weight:600;font-size:20px;}
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background: #0a0a0a;
+      color: #eee;
+    }
 
-nav{display:flex;align-items:center;}
-nav a{color:#aaa;margin-left:20px;text-decoration:none;font-size:14px;}
-nav a:hover{color:#fff;}
+    header {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: rgba(10, 10, 10, 0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid #222;
+      z-index: 100;
+    }
 
-.lang-switch{border-left:1px solid #444;margin-left:20px;padding-left:20px;}
-.lang-switch a{margin-left:10px;font-weight:600;color:#fff;}
-.lang-switch a.inactive{color:#555;}
+    .header-inner {
+      max-width: 1200px;
+      margin: auto;
+      padding: 16px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
 
-.hero-wrapper { padding: 120px 24px 40px; }
-.hero {
-position: relative;
-max-width: 1200px;
-margin: 0 auto;
-padding: 120px 24px;
-border-radius: 16px;
-border: 1px solid #333;
-overflow: hidden;
-text-align: center;
-display: flex;
-align-items: center;
-justify-content: center;
-min-height: 500px;
-background: #111;
-}
-.hero-bg {
-position: absolute;
-top: 0;
-left: 0;
-width: 100%;
-height: 100%;
-object-fit: cover;
-object-position: center;
-opacity: 0.35;
-z-index: 1;
-}
-.hero-content {
-position: relative;
-z-index: 2;
-display: flex;
-flex-direction: column;
-align-items: center;
-}
-.hero h1 { font-size: 56px; margin-bottom: 20px; color: #fff; text-shadow: 0 2px 10px rgba(0,0,0,0.8); }
-.hero p { color: #eee; font-size: 18px; max-width: 700px; line-height: 1.7; margin: 0 auto; text-shadow: 0 2px 10px rgba(0,0,0,0.8); }
+    .logo {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 20px;
+    }
 
-.btn{display:inline-block;margin-top:30px;padding:14px 28px;background:#fff;color:#000;border-radius:6px;text-decoration:none;font-weight:600;text-align:center;}
-.btn-large{font-size:18px;padding:18px 40px;margin-top:40px;}
+    nav {
+      display: flex;
+      align-items: center;
+    }
 
-.section{max-width:1200px;margin:auto;padding:80px 24px;margin-top:60px;}
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+    nav a {
+      color: #aaa;
+      margin-left: 20px;
+      text-decoration: none;
+      font-size: 14px;
+    }
 
-.card{background:#111;padding:28px;border:1px solid #222;border-radius:10px;line-height:1.7;}
+    nav a:hover {
+      color: #fff;
+    }
 
-.pricing{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:40px;}
-.price-card{background:#111;padding:28px;border:1px solid #222;border-radius:10px;text-align:center;}
-.price{font-size:28px;margin:20px 0;}
+    .lang-switch {
+      border-left: 1px solid #444;
+      margin-left: 20px;
+      padding-left: 20px;
+    }
 
-.notice{background:#111;border:1px solid #333;padding:24px;border-radius:10px;color:#bbb;max-width:700px;}
+    .lang-switch a {
+      margin-left: 10px;
+      font-weight: 600;
+      color: #fff;
+    }
 
-footer{border-top:1px solid #222;margin-top:100px;padding:40px;text-align:center;color:#777;}
-footer a{color:#4a8f4a;margin:0 10px;text-decoration:none;}
+    .lang-switch a.inactive {
+      color: #555;
+    }
 
-.img-responsive{max-width:1000px;width:100%;height:auto;border-radius:12px;border:1px solid #222;margin:40px auto;display:block;}
-.img-responsive-card{max-width:100%;height:auto;border-radius:8px;border:1px solid #222;margin-top:20px;display:block;}
+    .hero-wrapper {
+      padding: 120px 24px 40px;
+    }
 
-/* Hamburger Menu */
-.menu-toggle{
-display:none;
-flex-direction:column;
-cursor:pointer;
-}
+    .hero {
+      position: relative;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 120px 24px;
+      border-radius: 16px;
+      border: 1px solid #333;
+      overflow: hidden;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 500px;
+      background: #111;
+    }
 
-.menu-toggle span{
-width:25px;
-height:2px;
-background:#fff;
-margin:4px 0;
-transition:0.3s;
-}
+    .hero-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      opacity: 0.35;
+      z-index: 1;
+    }
 
-/* Mobile */
-@media(max-width:800px){
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
 
-.dropdown-menu{position:static;display:block;border:none;}
+    .hero h1 {
+      font-size: 56px;
+      margin-bottom: 20px;
+      color: #fff;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
+    }
+
+    .hero p {
+      color: #eee;
+      font-size: 18px;
+      max-width: 700px;
+      line-height: 1.7;
+      margin: 0 auto;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
+    }
+
+    .btn {
+      display: inline-block;
+      margin-top: 30px;
+      padding: 14px 28px;
+      background: #fff;
+      color: #000;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 600;
+      text-align: center;
+    }
+
+    .btn-large {
+      font-size: 18px;
+      padding: 18px 40px;
+      margin-top: 40px;
+    }
+
+    .section {
+      max-width: 1200px;
+      margin: auto;
+      padding: 80px 24px;
+      margin-top: 60px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .card {
+      background: #111;
+      padding: 28px;
+      border: 1px solid #222;
+      border-radius: 10px;
+      line-height: 1.7;
+    }
+
+    .section .card+.card {
+      margin-top: 24px;
+    }
+
+    .pricing {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 40px;
+    }
+
+    .price-card {
+      background: #111;
+      padding: 28px;
+      border: 1px solid #222;
+      border-radius: 10px;
+      text-align: center;
+    }
+
+    .price {
+      font-size: 28px;
+      margin: 20px 0;
+    }
+
+    .notice {
+      background: #111;
+      border: 1px solid #333;
+      padding: 24px;
+      border-radius: 10px;
+      color: #bbb;
+      max-width: 700px;
+    }
+
+    footer {
+      border-top: 1px solid #222;
+      margin-top: 100px;
+      padding: 40px;
+      text-align: center;
+      color: #777;
+    }
+
+    footer a {
+      color: #4a8f4a;
+      margin: 0 10px;
+      text-decoration: none;
+    }
+
+    .img-responsive {
+      max-width: 1000px;
+      width: 100%;
+      height: auto;
+      border-radius: 12px;
+      border: 1px solid #222;
+      margin: 40px auto;
+      display: block;
+    }
+
+    .img-responsive-card {
+      max-width: 100%;
+      height: auto;
+      border-radius: 8px;
+      border: 1px solid #222;
+      margin-top: 20px;
+      display: block;
+    }
+
+    /* Hamburger Menu */
+    .menu-toggle {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+    }
+
+    .menu-toggle span {
+      width: 25px;
+      height: 2px;
+      background: #fff;
+      margin: 4px 0;
+      transition: 0.3s;
+    }
+
+    /* Mobile */
+    @media(max-width:800px) {
+
+      .dropdown-menu {
+        position: static;
+        display: flex;
+        flex-direction: column;
+        border: none;
+      }
 
 
-.menu-toggle{
-display:flex;
-}
+      .menu-toggle {
+        display: flex;
+      }
 
-nav{
-position:absolute;
-top:60px;
-right:0;
-background:#0a0a0a;
-width:100%;
-flex-direction:column;
-align-items:flex-start;
-padding:20px;
-display:none;
-border-top:1px solid #222;
-}
+      nav {
+        position: absolute;
+        top: 60px;
+        right: 0;
+        background: #0a0a0a;
+        width: 100%;
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 20px;
+        display: none;
+        border-top: 1px solid #222;
+      }
 
-nav.active{
-display:flex;
-}
+      nav.active {
+        display: flex;
+      }
 
-nav a{
-margin:10px 0;
-font-size:16px;
-}
+      nav a {
+        margin: 10px 0;
+        font-size: 16px;
+      }
 
-.lang-switch{
-border-left:none;
-margin:10px 0 0 0;
-padding:0;
-}
+      .lang-switch {
+        border-left: none;
+        margin: 10px 0 0 0;
+        padding: 0;
+      }
 
-}
-@media(max-width:800px){
-.grid{grid-template-columns:1fr;gap:20px;}
-.pricing{grid-template-columns:1fr;}
-.hero-wrapper { padding: 80px 16px 20px; }
-.hero { padding: 80px 16px; min-height: 400px; }
-.hero h1{font-size:32px;}
-.hero p{font-size:15px;}
-}
+    }
 
-</style>
+    @media(max-width:800px) {
+      .grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+
+      .pricing {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-wrapper {
+        padding: 80px 16px 20px;
+      }
+
+      .hero {
+        padding: 80px 16px;
+        min-height: 400px;
+      }
+
+      .hero h1 {
+        font-size: 32px;
+      }
+
+      .hero p {
+        font-size: 15px;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
-<header>
-<div class="header-inner">
+  <header>
+    <div class="header-inner">
 
-<a href="index.html" class="logo">Oichi Equipment</a>
+      <a href="index.html" class="logo">Oichi Equipment</a>
 
-<!-- Hamburger Menu -->
-<div class="menu-toggle" id="menuToggle">
-<span></span>
-<span></span>
-<span></span>
-</div>
+      <!-- Hamburger Menu -->
+      <div class="menu-toggle" id="menuToggle">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
 
-<nav id="navMenu">
-<a href="index.html">Home</a>
-<a href="equipment.html">Equipment</a>
-<a href="ja/qa.html">FAQ</a>
-<a href="ja/contact.html">Contact</a>
-<div class="dropdown">
-  <a href="#">About ▾</a>
-  <div class="dropdown-menu">
-    <a href="/terms.html">Terms</a>
-    <a href="/privacy.html">Privacy Policy</a>
-    <a href="/legal.html">Legal Notice</a>
+      <nav id="navMenu">
+        <a href="index.html">Home</a>
+        <a href="equipment.html">Equipment</a>
+        <a href="ja/qa.html">FAQ</a>
+        <a href="ja/contact.html">Contact</a>
+        <div class="dropdown">
+          <a href="#">About ▾</a>
+          <div class="dropdown-menu">
+            <a href="/terms.html">Terms</a>
+            <a href="/privacy.html">Privacy Policy</a>
+            <a href="/legal.html">Legal Notice</a>
+          </div>
+        </div>
+
+        <div class="lang-switch">
+          <a href="/ja/index.html" class="inactive">JP</a>
+          <a href="/index.html">EN</a>
+        </div>
+      </nav>
+
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <div class="hero-wrapper">
+    <div class="hero">
+      <img src="assets/images/ui-main.png" alt="Main UI" class="hero-bg">
+      <div class="hero-content">
+        <h1>Trade directly from TradingView</h1>
+        <p>
+          Connect TradingView to MT5 and execute trades instantly — all from the same screen.
+        </p>
+        <a href="#" class="btn btn-large">Start Trading Now</a>
+      </div>
+    </div>
   </div>
-</div>
 
-<div class="lang-switch">
-<a href="/ja/index.html" class="inactive">JP</a>
-<a href="/index.html">EN</a>
-</div>
-</nav>
+  <!-- Strengths -->
+  <div class="section">
+    <h2>Why Choose Synk Mushroom</h2>
+    <div class="grid">
+      <div class="card">
+        <h3>Use your existing broker</h3>
+        <p>Works with any MetaTrader 5 broker, regardless of account type.</p>
+      </div>
+      <div class="card">
+        <h3>Supports high leverage accounts</h3>
+        <p>Fully compatible with high leverage trading environments.</p>
+      </div>
+      <div class="card">
+        <h3>No VPS required</h3>
+        <p>Runs entirely on your local machine with no additional setup.</p>
+      </div>
+      <div class="card">
+        <h3>Fully integrated with TradingView</h3>
+        <p>Analyze and execute trades without leaving the chart.</p>
+      </div>
+      <div class="card">
+        <h3>Minimizable panel</h3>
+        <p>Hide the panel when not in use to keep your chart clean.</p>
+      </div>
+      <div class="card">
+        <h3>Draggable interface</h3>
+        <p>Move the panel freely to match your workflow.</p>
+      </div>
+    </div>
+  </div>
 
-</div>
-</header>
+  <!-- Core Features -->
+  <div class="section">
+    <h2>Core Features</h2>
 
-<!-- HERO -->
-<div class="hero-wrapper">
-<div class="hero">
-<img src="assets/images/ui-main.png" alt="Main UI" class="hero-bg">
-<div class="hero-content">
-<h1>Trade directly from TradingView</h1>
-<p>
-Connect TradingView to MT5 and execute trades instantly — all from the same screen.
-</p>
-<a href="#" class="btn btn-large">Start Trading Now</a>
-</div>
-</div>
-</div>
+    <div class="card">
+      <h3>Native Panel Integrated with TradingView</h3>
+      <p>
+        Deploys the execution panel directly over your chart, allowing you to complete analysis and order placement
+        without shifting your visual focus.
+      </p>
+      <img src="assets/images/ui-panel-position.png" alt="Panel UI" class="img-responsive-card">
+    </div>
 
-<!-- Strengths -->
-<div class="section">
-<h2>Why Choose Synk Mushroom</h2>
-<div class="grid">
-<div class="card">
-<h3>Use your existing broker</h3>
-<p>Works with any MetaTrader 5 broker, regardless of account type.</p>
-</div>
-<div class="card">
-<h3>Supports high leverage accounts</h3>
-<p>Fully compatible with high leverage trading environments.</p>
-</div>
-<div class="card">
-<h3>No VPS required</h3>
-<p>Runs entirely on your local machine with no additional setup.</p>
-</div>
-<div class="card">
-<h3>Fully integrated with TradingView</h3>
-<p>Analyze and execute trades without leaving the chart.</p>
-</div>
-<div class="card">
-<h3>Minimizable panel</h3>
-<p>Hide the panel when not in use to keep your chart clean.</p>
-</div>
-<div class="card">
-<h3>Draggable interface</h3>
-<p>Move the panel freely to match your workflow.</p>
-</div>
-</div>
-</div>
+    <div class="card">
+      <h3>Automatic symbol synchronization</h3>
+      <p>
+        The system detects the symbol selected in TradingView and automatically maps it to the correct MT5 instrument.
+        Works with suffix brokers and multi-chart setups.
+      </p>
+      <img src="assets/images/ui-symbol-sync.png" alt="Symbol Sync" class="img-responsive-card"
+        style="width:100%; margin:20px auto 0;">
+    </div>
 
-<!-- Core Features -->
-<div class="section">
-<h2>Core Features</h2>
+    <div class="card">
+      <h3>Fail-Safe Design</h3>
+      <p>
+        Equipped with multiple sophisticated lock mechanisms to strictly prevent accidental or erroneous orders.
+      </p>
+    </div>
 
-<div class="card">
-<h3>Native Panel Integrated with TradingView</h3>
-<p>
-Deploys the execution panel directly over your chart, allowing you to complete analysis and order placement without shifting your visual focus.
-</p>
-<img src="assets/images/ui-panel-position.png" alt="Panel UI" class="img-responsive-card">
-</div>
+    <div class="card">
+      <h3>Full Status Management</h3>
+      <p>
+        View and manage all your positions and active orders in a comprehensive list for immediate action.
+      </p>
+      <img src="assets/images/ui-fullstatus.png" alt="Position UI" class="img-responsive-card">
+    </div>
 
-<div class="card">
-<h3>Automatic symbol synchronization</h3>
-<p>
-The system detects the symbol selected in TradingView and automatically maps it to the correct MT5 instrument. Works with suffix brokers and multi-chart setups.
-</p>
-<img src="assets/images/ui-symbol-sync.png" alt="Symbol Sync" class="img-responsive-card" style="width:100%; margin:20px auto 0;">
-</div>
+    <div class="card">
+      <h3>PWA Support</h3>
+      <p>
+        Fully adaptable to multi-monitor setups through Progressive Web App installation.
+      </p>
+    </div>
 
-<div class="card">
-<h3>Fail-Safe Design</h3>
-<p>
-Equipped with multiple sophisticated lock mechanisms to strictly prevent accidental or erroneous orders.
-</p>
-</div>
+  </div>
 
-<div class="card">
-<h3>Full Status Management</h3>
-<p>
-View and manage all your positions and active orders in a comprehensive list for immediate action.
-</p>
-<img src="assets/images/ui-fullstatus.png" alt="Position UI" class="img-responsive-card">
-</div>
+  <!-- Middle CTA -->
+  <div class="section" style="text-align:center; padding-top:0;">
+    <a href="#" class="btn btn-large">Get Started</a>
+  </div>
 
-<div class="card">
-<h3>PWA Support</h3>
-<p>
-Fully adaptable to multi-monitor setups through Progressive Web App installation.
-</p>
-</div>
+  <!-- Safety First Design -->
+  <div class="section">
+    <h2>Designed for safe trading</h2>
+    <p style="color:#aaa;margin-bottom:30px;line-height:1.7;font-size:16px;">The system continuously monitors connection
+      status, symbols, and execution conditions to prevent unintended trades.</p>
 
-</div>
+    <div class="pricing" style="margin-top:0;">
+      <div class="card">
+        <img src="assets/images/ui-oneclick-toggle.png" alt="One-click execution requires manual permission"
+          class="img-responsive-card" style="margin-top:0; margin-bottom:15px;">
+        <p style="font-weight:600;margin:0;">One-click trading requires manual activation</p>
+      </div>
 
-<!-- Middle CTA -->
-<div class="section" style="text-align:center; padding-top:0;">
-<a href="#" class="btn btn-large">Get Started</a>
-</div>
+      <div class="card">
+        <img src="assets/images/ui-symbol-notfound.png" alt="Invalid symbols are automatically locked"
+          class="img-responsive-card" style="margin-top:0; margin-bottom:15px;">
+        <p style="font-weight:600;margin:0;">Invalid symbols are automatically locked</p>
+      </div>
 
-<!-- Safety First Design -->
-<div class="section">
-<h2>Designed for safe trading</h2>
-<p style="color:#aaa;margin-bottom:30px;line-height:1.7;font-size:16px;">The system continuously monitors connection status, symbols, and execution conditions to prevent unintended trades.</p>
+      <div class="card">
+        <img src="assets/images/ui-mt5-disconnected.png" alt="Orders are disabled when MT5 is disconnected"
+          class="img-responsive-card" style="margin-top:0; margin-bottom:15px;">
+        <p style="font-weight:600;margin:0;">Trading is disabled when MT5 is not connected</p>
+      </div>
 
-<div class="pricing" style="margin-top:0;">
-<div class="card">
-<img src="assets/images/ui-oneclick-toggle.png" alt="One-click execution requires manual permission" class="img-responsive-card" style="margin-top:0; margin-bottom:15px;">
-<p style="font-weight:600;margin:0;">One-click trading requires manual activation</p>
-</div>
+      <div class="card" style="grid-column: 1 / -1; text-align: center; padding: 20px;">
+        <p style="font-weight:600;margin:0;">Positions can still be closed even if the symbol is not synced, as long as
+          MT5 is connected</p>
+      </div>
+    </div>
+  </div>
 
-<div class="card">
-<img src="assets/images/ui-symbol-notfound.png" alt="Invalid symbols are automatically locked" class="img-responsive-card" style="margin-top:0; margin-bottom:15px;">
-<p style="font-weight:600;margin:0;">Invalid symbols are automatically locked</p>
-</div>
+  <!-- Problem / Solution -->
+  <div class="section">
+    <h2>Conventional Challenges & Solutions</h2>
 
-<div class="card">
-<img src="assets/images/ui-mt5-disconnected.png" alt="Orders are disabled when MT5 is disconnected" class="img-responsive-card" style="margin-top:0; margin-bottom:15px;">
-<p style="font-weight:600;margin:0;">Trading is disabled when MT5 is not connected</p>
-</div>
+    <div class="card">
+      <h3>Fragmented Focus and Operation</h3>
+      <p>Separation of analysis and execution causes operational delays.</p>
+      <p>→ Consolidated into a single screen to eliminate latency.</p>
+    </div>
 
-<div class="card" style="grid-column: 1 / -1; text-align: center; padding: 20px;">
-<p style="font-weight:600;margin:0;">Positions can still be closed even if the symbol is not synced, as long as MT5 is connected</p>
-</div>
-</div>
-</div>
+    <div class="card">
+      <h3>Complex Configuration</h3>
+      <p>Order errors caused by incorrect manual symbol settings.</p>
+      <p>→ No setup required with automatic symbol detection and synchronization.</p>
+    </div>
 
-<!-- Problem / Solution -->
-<div class="section">
-<h2>Conventional Challenges & Solutions</h2>
+    <div class="card">
+      <h3>Unclear Connections</h3>
+      <p>Risk of placing orders on the wrong account or broker.</p>
+      <p>→ Visualized connection status coupled with lock mechanisms.</p>
+    </div>
 
-<div class="card">
-<h3>Fragmented Focus and Operation</h3>
-<p>Separation of analysis and execution causes operational delays.</p>
-<p>→ Consolidated into a single screen to eliminate latency.</p>
-</div>
+    <div class="card">
+      <h3>Inconsistent UI</h3>
+      <p>Operational stress from using completely disparate external tools.</p>
+      <p>→ Completely integrated into the TradingView interface.</p>
+    </div>
 
-<div class="card">
-<h3>Complex Configuration</h3>
-<p>Order errors caused by incorrect manual symbol settings.</p>
-<p>→ No setup required with automatic symbol detection and synchronization.</p>
-</div>
+  </div>
 
-<div class="card">
-<h3>Unclear Connections</h3>
-<p>Risk of placing orders on the wrong account or broker.</p>
-<p>→ Visualized connection status coupled with lock mechanisms.</p>
-</div>
+  <!-- Philosophy -->
+  <div class="section">
+    <h2>Design Philosophy</h2>
 
-<div class="card">
-<h3>Inconsistent UI</h3>
-<p>Operational stress from using completely disparate external tools.</p>
-<p>→ Completely integrated into the TradingView interface.</p>
-</div>
+    <p>
+      In trading, what truly matters is not just market analysis, but <strong>Execution Precision</strong>.<br><br>
+      Synk Mushroom specializes exclusively in this critical aspect,<br>
+      fundamentally redesigning your trading environment from the ground up.
+    </p>
 
-</div>
+  </div>
 
-<!-- Philosophy -->
-<div class="section">
-<h2>Design Philosophy</h2>
+  <!-- Pricing -->
+  <div class="section">
+    <h2>Pricing Plans</h2>
 
-<p>
-In trading, what truly matters is not just market analysis, but <strong>Execution Precision</strong>.<br><br>
-Synk Mushroom specializes exclusively in this critical aspect,<br>
-fundamentally redesigning your trading environment from the ground up.
-</p>
+    <div class="pricing">
 
-</div>
+      <div class="price-card">
+        <h3>Monthly</h3>
+        <div class="price">¥7,980</div>
+        <p>Billed monthly</p>
+      </div>
 
-<!-- Pricing -->
-<div class="section">
-<h2>Pricing Plans</h2>
+      <div class="price-card">
+        <h3>Annual</h3>
+        <div class="price">¥79,800</div>
+        <p>2 months free</p>
+      </div>
 
-<div class="pricing">
+      <div class="price-card">
+        <h3>Lifetime</h3>
+        <div class="price">¥198,000</div>
+        <p>Permanent license</p>
+      </div>
 
-<div class="price-card">
-<h3>Monthly</h3>
-<div class="price">¥7,980</div>
-<p>Billed monthly</p>
-</div>
-
-<div class="price-card">
-<h3>Annual</h3>
-<div class="price">¥79,800</div>
-<p>2 months free</p>
-</div>
-
-<div class="price-card">
-<h3>Lifetime</h3>
-<div class="price">¥198,000</div>
-<p>Permanent license</p>
-</div>
-
-</div>
+    </div>
 
 
 
-<p style="margin-top:10px;color:#aaa;">
-* Includes a 7-day free trial (Credit card required, auto-renews if not canceled)
-</p>
+    <p style="margin-top:10px;color:#aaa;">
+      * Includes a 7-day free trial (Credit card required, auto-renews if not canceled)
+    </p>
 
-<!-- Bottom CTA -->
-<div style="text-align:center; margin-top:40px;">
-<a href="#" class="btn btn-large">Buy Synk Mushroom</a>
-</div>
+    <!-- Bottom CTA -->
+    <div style="text-align:center; margin-top:40px;">
+      <a href="#" class="btn btn-large">Buy Synk Mushroom</a>
+    </div>
 
-</div>
+  </div>
 
-<!-- Disclaimer -->
-<div class="section">
-<div class="notice">
-<strong>Disclaimer:</strong> This software does NOT provide investment advice, automated trading features, or trading signals.<br>
-All trading and investment decisions are strictly your own responsibility.
-</div>
-</div>
+  <!-- Disclaimer -->
+  <div class="section">
+    <div class="notice">
+      <strong>Disclaimer:</strong> This software does NOT provide investment advice, automated trading features, or
+      trading signals.<br>
+      All trading and investment decisions are strictly your own responsibility.
+    </div>
+  </div>
 
-<footer>
-<p>© Oichi Equipment</p>
-<p>
-<a href="legal.html">Legal Notice</a>
-<a href="privacy.html">Privacy Policy</a>
-<a href="terms.html">Terms of Service</a>
-</p>
-</footer>
-<script>
-const toggle = document.getElementById("menuToggle");
-const nav = document.getElementById("navMenu");
+  <footer>
+    <p>© Oichi Equipment</p>
+    <p>
+      <a href="legal.html">Legal Notice</a>
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="terms.html">Terms of Service</a>
+    </p>
+  </footer>
+  <script>
+    const toggle = document.getElementById("menuToggle");
+    const nav = document.getElementById("navMenu");
 
-toggle.addEventListener("click", () => {
-nav.classList.toggle("active");
-});
-</script>
+    toggle.addEventListener("click", () => {
+      nav.classList.toggle("active");
+    });
+  </script>
 </body>
+
 </html>
