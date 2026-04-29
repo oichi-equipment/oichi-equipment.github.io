@@ -19,7 +19,7 @@ nav{display:flex;align-items:center;}
 nav a{color:#aaa;margin-left:20px;text-decoration:none;font-size:15px;font-weight:500;display:flex;align-items:center;height:auto;} nav ul{display:flex;align-items:center;} nav li{display:flex;align-items:center;} .dropdown > a{display:flex;align-items:center;gap:4px;}
 nav a:hover{color:#fff;}
 
-.lang-switch{border-left:1px solid #444;margin-left:20px;padding-left:20px;display:flex;align-items:center;}
+.lang-switch{border-left:1px solid #444;margin-left:20px;padding-left:20px;display:flex;align-items:center;gap:10px;}
 .lang-switch a{margin-left:10px;font-weight:600;color:#fff;display:inline-block;}
 .lang-switch a.inactive{color:#555;}
 
@@ -161,30 +161,15 @@ padding:0;
 .hero p{font-size:15px;}
 }
 
-.section > div{
-margin:24px 0 !important;
-display:grid !important;
-grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-gap:20px;
-align-items:stretch;
-}
-
-.section .card,
-.section > div > div{
+.grid > div{
 display:flex;
 flex-direction:column;
 justify-content:space-between;
-height:100%;
 }
 
-.section img{
-width:100% !important;
-max-width:100% !important;
-margin-top:12px !important;
-}
-
-.section{
-text-align:center;
+.card img{
+width:100%;
+margin-top:12px;
 }
 </style>
 </head>
@@ -422,7 +407,7 @@ Synk Mushroomはこの一点に特化し、<br>
 </p>
 
 <!-- 最下部CTA -->
-<div class="section" style="text-align:center;">
+<div class="section" style="text-align:center; margin:24px 0;">
 
 <a href="#" class="btn btn-large">Synk Mushroom を購入する</a>
 </div>

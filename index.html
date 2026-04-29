@@ -88,6 +88,7 @@
       padding-left: 20px;
       display: flex;
       align-items: center;
+      gap: 10px;
     }
 
     .lang-switch a {
@@ -398,30 +399,15 @@
       height: auto;
       margin-top: 16px;
     }
-    .section > div {
-      margin: 24px 0 !important;
-      display: grid !important;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 20px;
-      align-items: stretch;
-    }
-
-    .section .card,
-    .section > div > div {
+    .grid > div {
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      height: 100%;
     }
 
-    .section img {
-      width: 100% !important;
-      max-width: 100% !important;
-      margin-top: 12px !important;
-    }
-
-    .section {
-      text-align: center;
+    .card img {
+      width: 100%;
+      margin-top: 12px;
     }
   </style>
 </head>
@@ -666,7 +652,7 @@
     </p>
 
     <!-- Bottom CTA -->
-    <div class="section" style="margin:40px 0; text-align:center;">
+    <div class="section" style="text-align:center; margin:24px 0;">
       <a href="#" class="btn btn-large">Buy Synk Mushroom</a>
     </div>
 
