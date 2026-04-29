@@ -153,6 +153,19 @@ margin:0 10px;
 text-decoration:none;
 }
 
+
+.section{margin-top:80px;}
+.feature-section{margin-top:80px !important;}
+.feature-box{padding:40px 28px;}
+.feature-box img{margin-top:24px;display:block;}
+.section:first-of-type{margin-top:140px;}
+
+.dropdown{position:relative;}
+.dropdown-menu{display:none;position:absolute;top:30px;background:#111;border:1px solid #222;border-radius:6px;min-width:200px;z-index:200;}
+.dropdown-menu a{display:block;padding:10px 16px;color:#aaa;text-decoration:none;}
+.dropdown-menu a:hover{color:#fff;}
+.dropdown:hover .dropdown-menu{display:block;}
+
 /* ハンバーガー */
 .menu-toggle{
 display:none;
@@ -170,6 +183,9 @@ transition:0.3s;
 
 /* スマホ */
 @media(max-width:800px){
+
+.dropdown-menu{position:static;display:block;border:none;}
+
 
 .menu-toggle{
 display:flex;
@@ -230,11 +246,16 @@ padding:0;
 <nav id="navMenu">
 <a href="index.html">TOP</a>
 <a href="equipment.html">Equipment</a>
+<a href="qa.html">FAQ</a>
 <a href="contact.html">Contact</a>
-<a href="qa.html">FAQ</a>  
-<a href="terms.html">利用規約</a>
-<a href="privacy.html">プライバシー</a>
-<a href="legal.html">特商法</a>
+<div class="dropdown">
+  <a href="#">About ▾</a>
+  <div class="dropdown-menu">
+    <a href="terms.html">利用規約</a>
+    <a href="privacy.html">プライバシー</a>
+    <a href="legal.html">特商法</a>
+  </div>
+</div>
 
 <div class="lang-switch">
 <a href="equipment.html">JP</a>

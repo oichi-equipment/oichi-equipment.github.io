@@ -28,6 +28,19 @@ p{color:#bbb;line-height:1.8;font-size:15px;margin-bottom:14px;}
 footer{border-top:1px solid #222;margin-top:60px;padding:40px 24px;text-align:center;color:#777;}
 footer a{color:#4a8f4a;margin:0 10px;text-decoration:none;}
 
+
+.section{margin-top:80px;}
+.feature-section{margin-top:80px !important;}
+.feature-box{padding:40px 28px;}
+.feature-box img{margin-top:24px;display:block;}
+.section:first-of-type{margin-top:140px;}
+
+.dropdown{position:relative;}
+.dropdown-menu{display:none;position:absolute;top:30px;background:#111;border:1px solid #222;border-radius:6px;min-width:200px;z-index:200;}
+.dropdown-menu a{display:block;padding:10px 16px;color:#aaa;text-decoration:none;}
+.dropdown-menu a:hover{color:#fff;}
+.dropdown:hover .dropdown-menu{display:block;}
+
 /* Hamburger */
 .menu-toggle{
 display:none;
@@ -45,6 +58,9 @@ transition:0.3s;
 
 /* Mobile */
 @media(max-width:800px){
+
+.dropdown-menu{position:static;display:block;border:none;}
+
 
 .menu-toggle{
 display:flex;
@@ -99,15 +115,20 @@ padding:0;
 <nav id="navMenu">
 <a href="index.html">Home</a>
 <a href="equipment.html">Equipment</a>
-<a href="ja/contact.html">Contact</a>
 <a href="ja/qa.html">FAQ</a>
-<a href="terms.html">Terms</a>
-<a href="privacy.html">Privacy</a>
-<a href="legal.html">Legal Notice</a>
+<a href="ja/contact.html">Contact</a>
+<div class="dropdown">
+  <a href="#">About ▾</a>
+  <div class="dropdown-menu">
+    <a href="/terms.html">Terms</a>
+    <a href="/privacy.html">Privacy Policy</a>
+    <a href="/legal.html">Legal Notice</a>
+  </div>
+</div>
 
 <div class="lang-switch">
-<a href="ja/privacy.html" class="inactive">JP</a>
-<a href="privacy.html">EN</a>
+<a href="/ja/index.html" class="inactive">JP</a>
+<a href="/index.html">EN</a>
 </div>
 </nav>
 
