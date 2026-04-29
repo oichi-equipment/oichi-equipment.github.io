@@ -19,8 +19,8 @@ nav{display:flex;align-items:center;}
 nav a{color:#aaa;margin-left:20px;text-decoration:none;font-size:15px;font-weight:500;display:flex;align-items:center;height:auto;} nav ul{display:flex;align-items:center;} nav li{display:flex;align-items:center;} .dropdown > a{display:flex;align-items:center;gap:4px;}
 nav a:hover{color:#fff;}
 
-.lang-switch{border-left:1px solid #444;margin-left:20px;padding-left:20px;}
-.lang-switch a{margin-left:10px;font-weight:600;color:#fff;}
+.lang-switch{border-left:1px solid #444;margin-left:20px;padding-left:20px;display:flex;align-items:center;}
+.lang-switch a{margin-left:10px;font-weight:600;color:#fff;display:inline-block;}
 .lang-switch a.inactive{color:#555;}
 
 .hero-wrapper { padding: 120px 24px 40px; }
@@ -87,9 +87,9 @@ footer a{color:#4a8f4a;margin:0 10px;text-decoration:none;}
 
 .section{margin-top:80px;}
 .feature-section{margin-top:80px !important;}
-.feature-box{padding:40px 28px;}
+.feature-box{padding:40px 28px;display:flex;flex-direction:column;justify-content:space-between;height:100%;}
 .feature-box + .feature-box{margin-top:24px;}
-.feature-box img{margin-top:24px;display:block;}
+.feature-box img{margin-top:16px;display:block;width:100%;height:auto;}
 .section:first-of-type{margin-top:140px;}
 
 .dropdown{position:relative;}
@@ -290,7 +290,7 @@ TradingViewで選択している通貨ペアを自動判別し、MT5の気配値
 </div>
 
 <!-- 中間CTA -->
-<div class="section" style="text-align:center;">
+<div class="section" style="text-align:center; margin:24px 0;">
 
 <a href="#" class="btn btn-large">すぐに使い始める</a>
 </div>

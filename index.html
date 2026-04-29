@@ -86,12 +86,15 @@
       border-left: 1px solid #444;
       margin-left: 20px;
       padding-left: 20px;
+      display: flex;
+      align-items: center;
     }
 
     .lang-switch a {
       margin-left: 10px;
       font-weight: 600;
       color: #fff;
+      display: inline-block;
     }
 
     .lang-switch a.inactive {
@@ -382,6 +385,19 @@
         font-size: 15px;
       }
     }
+
+    .feature-box {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 100%;
+    }
+
+    .feature-box img {
+      width: 100%;
+      height: auto;
+      margin-top: 16px;
+    }
   </style>
 </head>
 
@@ -400,7 +416,7 @@
       </div>
 
       <nav id="navMenu">
-        <a href="index.html">Home</a>
+        <a href="index.html">TOP</a>
         <a href="equipment.html">Equipment</a>
         <a href="qa.html">FAQ</a>
         <a href="contact.html">Contact</a>
@@ -514,7 +530,7 @@
 
   </div>
 
-  <div class="section" style="text-align:center;">
+  <div class="section" style="text-align:center; margin:24px 0;">
     <a href="#" class="btn btn-large">Get Started</a>
   </div>
 
