@@ -1,50 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
 
-  <!-- EN -->
+  <!-- TOP -->
   <url>
     <loc>https://oichi-equipment.github.io/index.html</loc>
-  </url>
-  <url>
-    <loc>https://oichi-equipment.github.io/equipment.html</loc>
-  </url>
-  <url>
-    <loc>https://oichi-equipment.github.io/qa.html</loc>
-  </url>
-  <url>
-    <loc>https://oichi-equipment.github.io/contact.html</loc>
-  </url>
-  <url>
-    <loc>https://oichi-equipment.github.io/legal.html</loc>
-  </url>
-  <url>
-    <loc>https://oichi-equipment.github.io/privacy.html</loc>
-  </url>
-  <url>
-    <loc>https://oichi-equipment.github.io/terms.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://oichi-equipment.github.io/index.html"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://oichi-equipment.github.io/ja/index_ja.html"/>
   </url>
 
-  <!-- JA -->
+  <!-- Equipment -->
   <url>
-    <loc>https://oichi-equipment.github.io/ja/index_ja.html</loc>
+    <loc>https://oichi-equipment.github.io/equipment.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://oichi-equipment.github.io/equipment.html"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://oichi-equipment.github.io/ja/equipment_ja.html"/>
   </url>
+
+  <!-- FAQ -->
   <url>
-    <loc>https://oichi-equipment.github.io/ja/equipment_ja.html</loc>
+    <loc>https://oichi-equipment.github.io/qa.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://oichi-equipment.github.io/qa.html"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://oichi-equipment.github.io/ja/qa_ja.html"/>
   </url>
+
+  <!-- Contact -->
   <url>
-    <loc>https://oichi-equipment.github.io/ja/qa_ja.html</loc>
+    <loc>https://oichi-equipment.github.io/contact.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://oichi-equipment.github.io/contact.html"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://oichi-equipment.github.io/ja/contact_ja.html"/>
   </url>
+
+  <!-- Terms -->
   <url>
-    <loc>https://oichi-equipment.github.io/ja/contact_ja.html</loc>
+    <loc>https://oichi-equipment.github.io/terms.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://oichi-equipment.github.io/terms.html"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://oichi-equipment.github.io/ja/terms_ja.html"/>
   </url>
+
+  <!-- Privacy -->
   <url>
-    <loc>https://oichi-equipment.github.io/ja/legal_ja.html</loc>
+    <loc>https://oichi-equipment.github.io/privacy.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://oichi-equipment.github.io/privacy.html"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://oichi-equipment.github.io/ja/privacy_ja.html"/>
   </url>
+
+  <!-- Legal -->
   <url>
-    <loc>https://oichi-equipment.github.io/ja/privacy_ja.html</loc>
-  </url>
-  <url>
-    <loc>https://oichi-equipment.github.io/ja/terms_ja.html</loc>
+    <loc>https://oichi-equipment.github.io/legal.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://oichi-equipment.github.io/legal.html"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://oichi-equipment.github.io/ja/legal_ja.html"/>
   </url>
 
 </urlset>
