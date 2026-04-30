@@ -17,7 +17,14 @@ header{position:fixed;top:0;width:100%;background:rgba(10,10,10,0.85);backdrop-f
 nav{display:flex;align-items:center;}
 nav a{color:#aaa;margin-left:20px;text-decoration:none;font-size:15px;font-weight:500;display:flex;align-items:center;height:auto;transition:0.2s;} nav ul{display:flex;align-items:center;} nav li{display:flex;align-items:center;} .dropdown > a{display:flex;align-items:center;gap:4px;}
 nav a:hover{color:#fff;}
-.lang-switch{border-left:1px solid #444;margin-left:20px;padding-left:20px;}
+.lang-switch{
+  border-left:1px solid #444;
+  margin-left:20px;
+  padding-left:20px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
 .lang-switch a{margin-left:10px;font-weight:600;color:#fff;}
 .lang-switch a.inactive{color:#555;font-weight:400;}
 
@@ -126,9 +133,9 @@ padding:0;
 <div class="dropdown">
   <a href="#">About</a>
   <div class="dropdown-menu">
-    <a href="/terms.html">利用規約</a>
-    <a href="/privacy.html">個人情報の取り扱い</a>
-    <a href="/legal.html">特定商取引法に基づく表記</a>
+    <a href="/terms.html">Terms</a>
+    <a href="/privacy.html">Privacy</a>
+    <a href="/legal.html">Legal</a>
   </div>
 </div>
 
