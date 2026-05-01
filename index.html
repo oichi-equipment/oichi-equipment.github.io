@@ -101,7 +101,7 @@ html {
             複数のアプリケーションと<br class="hidden md:block" />ローカル操作を、ひとつに統合。
         </h1>
         <p class="mt-4 max-w-2xl mx-auto text-lg text-text-sub mb-12 leading-relaxed">
-            Synk Mushroomは、画面の切り替えや複雑なワークフローを統合し、<br class="hidden md:block" />ユーザー自身の判断に基づくスムーズなPC操作を支援するユーティリティです。
+            Synk Mushroomは、複数のアプリケーション環境における画面操作や入力処理を統合し、<br class="hidden md:block" />ユーザー自身の判断に基づくスムーズなPC操作を支援するデスクトップユーティリティです。
         </p>
         <div class="flex flex-col sm:flex-row justify-center items-center gap-4">
             <a href="#pricing" class="w-full sm:w-auto px-10 py-3.5 bg-uguisu text-white font-medium rounded hover:bg-uguisu-hover transition">
@@ -150,7 +150,7 @@ html {
             <h2 class="text-3xl font-bold text-uguisu-light mb-6">環境のシームレスな統合</h2>
             <p class="text-text-main leading-relaxed mb-10 text-lg">
                 Synk Mushroomは、これらの物理的な操作の障壁を取り除くためのユーティリティです。<br>
-                ユーザーの手動操作をトリガーとして、ローカルアプリケーションのウィンドウ制御と<br class="hidden md:block">入力処理を統合的かつ瞬時に行います。
+                ユーザーの手動操作をトリガーとして、ローカルアプリケーションのウィンドウ制御と<br class="hidden md:block">入力処理を統合的かつスムーズに処理されます。
             </p>
             <div class="inline-flex items-center gap-3 p-4 border border-dark-border bg-dark-card rounded text-sm text-text-sub">
                 <span class="text-uguisu-light font-bold">i</span>
@@ -182,7 +182,7 @@ html {
                         <div class="text-uguisu-light text-xs font-mono tracking-widest mb-2">WINDOW MANAGEMENT</div>
                         <h3 class="text-2xl font-bold text-text-main mb-4">ウィンドウ制御</h3>
                         <p class="text-text-sub leading-relaxed">
-                            対象となるアプリケーションのウィンドウ状態を監視し、最適な位置への配置や最前面表示を制御します。必要な情報と操作パネルを常に視界内に保ち、クリックのための画面切り替えを不要にします。
+                            対象となるアプリケーションのウィンドウ状態を認識し、最適な位置への配置や最前面表示を制御します。必要な情報と操作パネルを常に視界内に保ち、クリックのための画面切り替えを不要にします。
                         </p>
                     </div>
                 </div>
@@ -235,47 +235,21 @@ html {
         <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h2 class="text-3xl font-bold text-text-main mb-12">インターフェース</h2>
             
-            <div class="ui-glow border border-dark-border bg-dark-base rounded-lg max-w-4xl mx-auto overflow-hidden">
-                <div class="bg-dark-card px-4 py-3 flex items-center border-b border-dark-border">
-                    <div class="flex space-x-2">
-                        <div class="w-3 h-3 rounded-full bg-dark-border"></div>
-                        <div class="w-3 h-3 rounded-full bg-dark-border"></div>
-                        <div class="w-3 h-3 rounded-full bg-dark-border"></div>
-                    </div>
-                    <div class="mx-auto text-[10px] font-mono text-text-muted tracking-[0.2em]">CONTROL PANEL</div>
-                </div>
-                <div class="p-6 flex flex-col md:flex-row gap-6 text-sm">
-                    <div class="w-full md:w-1/4 flex flex-col gap-1 border-r border-dark-border pr-4">
-                        <div class="bg-dark-card text-text-main px-3 py-2 rounded border border-dark-border font-medium">General</div>
-                        <div class="text-text-muted px-3 py-2 hover:text-text-main cursor-pointer transition">Window Map</div>
-                        <div class="text-text-muted px-3 py-2 hover:text-text-main cursor-pointer transition">Key Bindings</div>
-                        <div class="text-text-muted px-3 py-2 hover:text-text-main cursor-pointer transition">System Log</div>
-                    </div>
-                    <div class="w-full md:w-3/4 text-left">
-                        <div class="mb-8">
-                            <div class="text-xs font-mono text-text-sub mb-3 uppercase tracking-wider">Active Integrations</div>
-                            <div class="w-full h-12 bg-dark-card border border-dark-border rounded flex items-center px-4 justify-between">
-                                <span class="text-text-main">Target Application_01</span>
-                                <span class="flex items-center text-xs text-uguisu-light"><span class="w-2 h-2 bg-uguisu-light rounded-full mr-2"></span>Connected</span>
-                            </div>
-                        </div>
-                        <div>
-                            <div class="text-xs font-mono text-text-sub mb-3 uppercase tracking-wider">Input Routing</div>
-                            <div class="grid grid-cols-2 gap-3">
-                                <div class="bg-dark-card border border-dark-border rounded p-3 flex flex-col justify-center">
-                                    <span class="text-xs text-text-muted mb-1">Trigger</span>
-                                    <span class="text-text-main font-mono">Ctrl + Space</span>
-                                </div>
-                                <div class="bg-dark-card border border-dark-border rounded p-3 flex flex-col justify-center">
-                                    <span class="text-xs text-text-muted mb-1">Action</span>
-                                    <span class="text-text-main font-mono">Focus & Input</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div class="border border-dark-border rounded overflow-hidden bg-dark-base">
+                <img src="assets/images/ui-main.png" alt="Main UI" class="w-full h-auto object-cover">
             </div>
-            <p class="text-xs text-text-muted mt-8 font-mono">※ 画面は開発中のUIイメージです。</p>
+
+            <div class="border border-dark-border rounded overflow-hidden bg-dark-base">
+                <img src="assets/images/ui-fullstatus.png" alt="Full Status" class="w-full h-auto object-cover">
+            </div>
+
+            <div class="border border-dark-border rounded overflow-hidden bg-dark-base">
+                <img src="assets/images/ui-oneclick-warning.png" alt="Warning UI" class="w-full h-auto object-cover">
+            </div>
+
+            <div class="border border-dark-border rounded overflow-hidden bg-dark-base">
+                <img src="assets/images/ui-mt5-disconnected.png" alt="Disconnected UI" class="w-full h-auto object-cover">
+            </div>
         </div>
     </section>
 
@@ -394,7 +368,7 @@ html {
                     <div class="accordion-content bg-dark-base px-6">
                         <p class="py-5 text-text-sub text-sm leading-relaxed border-t border-dark-border">
                             本ソフトウェアは、OS上で動作する一般的なウィンドウアプリケーションを対象とします。<br>
-                            例として、ブラウザベースの分析ツール（例：TradingView）の画面配置と、ローカルアプリケーション（例：MetaTrader 5）の操作入力を統合・最適化する用途などにご利用いただけます。
+                            例として、ブラウザベースの分析ツール（例：TradingView）の画面配置と、ローカルアプリケーション（例：MetaTrader 5）の操作入力を配置や操作の効率化を補助する用途などにご利用いただけます。
                         </p>
                     </div>
                 </div>
