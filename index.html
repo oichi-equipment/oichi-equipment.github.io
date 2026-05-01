@@ -1,692 +1,519 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Oichi Equipment - Trade Execution Panel</title>
-
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-
-  <style>
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      margin: 0;
-      font-family: 'Inter', sans-serif;
-      background: #0a0a0a;
-      color: #eee;
-    }
-
-    header {
-      position: fixed;
-      top: 0;
-      width: 100%;
-      background: rgba(10, 10, 10, 0.85);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid #222;
-      z-index: 100;
-    }
-
-    .header-inner {
-      max-width: 1200px;
-      margin: auto;
-      padding: 16px 24px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .logo {
-      color: #fff;
-      text-decoration: none;
-      font-weight: 600;
-      font-size: 20px;
-    }
-
-    nav {
-      display: flex;
-      align-items: center;
-    }
-
-    nav a {
-      color: #aaa;
-      margin-left: 20px;
-      text-decoration: none;
-      font-size: 15px;
-      font-weight: 500;
-      display: flex;
-      align-items: center;
-      height: auto;
-    }
-
-    nav ul {
-      display: flex;
-      align-items: center;
-    }
-
-    nav li {
-      display: flex;
-      align-items: center;
-    }
-
-    .dropdown > a {
-      display: flex;
-      align-items: center;
-      gap: 4px;
-    }
-
-    nav a:hover {
-      color: #fff;
-    }
-
-    .lang-switch{
-      border-left:1px solid #444;
-      margin-left:20px;
-      padding-left:20px;
-      display:flex;
-      align-items:center;
-      gap:10px;
-    }
-
-    .lang-switch a {
-      margin-left: 10px;
-      font-weight: 600;
-      color: #fff;
-      display: inline-block;
-    }
-
-    .lang-switch a.inactive {
-      color: #555;
-    }
-
-    .hero-wrapper {
-      padding: 120px 24px 40px;
-    }
-
-    .hero {
-      position: relative;
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 120px 24px;
-      border-radius: 16px;
-      border: 1px solid #333;
-      overflow: hidden;
-      text-align: center;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 500px;
-      background: #111;
-    }
-
-    .hero-bg {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center;
-      opacity: 0.35;
-      z-index: 1;
-    }
-
-    .hero-content {
-      position: relative;
-      z-index: 2;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .hero h1 {
-      font-size: 56px;
-      margin-bottom: 20px;
-      color: #fff;
-      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
-    }
-
-    .hero p {
-      color: #eee;
-      font-size: 18px;
-      max-width: 700px;
-      line-height: 1.7;
-      margin: 0 auto;
-      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
-    }
-
-    .btn {
-      display: inline-block;
-      margin-top: 30px;
-      padding: 14px 28px;
-      background: #fff;
-      color: #000;
-      border-radius: 6px;
-      text-decoration: none;
-      font-weight: 600;
-      text-align: center;
-    }
-
-    .btn-large {
-      font-size: 18px;
-      padding: 18px 40px;
-      margin-top: 40px;
-    }
-
-    .section {
-      max-width: 1200px;
-      margin: auto;
-      padding: 80px 24px;
-      margin-top: 60px;
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 24px;
-    }
-
-    .card {
-      background: #111;
-      padding: 28px;
-      border: 1px solid #222;
-      border-radius: 10px;
-      line-height: 1.7;
-    }
-
-    .section .card+.card {
-      margin-top: 24px;
-    }
-
-    .pricing {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 24px;
-      margin-top: 40px;
-    }
-
-    .price-card {
-      background: #111;
-      padding: 28px;
-      border: 1px solid #222;
-      border-radius: 10px;
-      text-align: center;
-    }
-
-    .price {
-      font-size: 28px;
-      margin: 20px 0;
-    }
-
-    .notice {
-      background: #111;
-      border: 1px solid #333;
-      padding: 24px;
-      border-radius: 10px;
-      color: #bbb;
-      margin: 40px auto;
-      width: 100%;
-      max-width: 700px;
-      text-align: center;
-      display: block;
-    }
-
-    footer {
-      border-top: 1px solid #222;
-      margin-top: 100px;
-      padding: 40px;
-      text-align: center;
-      color: #777;
-    }
-
-    footer a {
-      color: #4a8f4a;
-      margin: 0 10px;
-      text-decoration: none;
-    }
-
-    .img-responsive {
-      max-width: 1000px;
-      width: 100%;
-      height: auto;
-      border-radius: 12px;
-      border: 1px solid #222;
-      margin: 40px auto;
-      display: block;
-    }
-
-    .img-responsive-card {
-      max-width: 100%;
-      height: auto;
-      border-radius: 8px;
-      border: 1px solid #222;
-      margin-top: 20px;
-      display: block;
-    }
-
-    .dropdown {
-      position: relative;
-    }
-
-    .dropdown-menu {
-      display: none;
-      position: absolute;
-      top: 100%;
-      left: 0;
-      background: #111;
-      border: 1px solid #222;
-      border-radius: 6px;
-      min-width: 200px;
-      z-index: 200;
-      flex-direction: column;
-    }
-
-    .dropdown-menu a {
-      display: block;
-      padding: 10px 16px;
-      color: #aaa;
-      text-decoration: none;
-    }
-
-    .dropdown-menu a:hover {
-      color: #fff;
-    }
-
-    .dropdown:hover .dropdown-menu {
-      display: flex;
-    }
-
-    /* Hamburger Menu */
-    .menu-toggle {
-      display: none;
-      flex-direction: column;
-      cursor: pointer;
-    }
-
-    .menu-toggle span {
-      width: 25px;
-      height: 2px;
-      background: #fff;
-      margin: 4px 0;
-      transition: 0.3s;
-    }
-
-    /* Mobile */
-    @media(max-width:800px) {
-
-      .dropdown-menu {
-        position: static;
-        display: flex;
-        flex-direction: column;
-        border: none;
-      }
-
-
-      .menu-toggle {
-        display: flex;
-      }
-
-      nav {
-        position: absolute;
-        top: 60px;
-        right: 0;
-        background: #0a0a0a;
-        width: 100%;
-        flex-direction: column;
-        align-items: flex-start;
-        padding: 20px;
-        display: none;
-        border-top: 1px solid #222;
-      }
-
-      nav.active {
-        display: flex;
-      }
-
-      nav a {
-        margin: 10px 0;
-        font-size: 16px;
-      }
-
-      .lang-switch {
-        border-left: none;
-        margin: 10px 0 0 0;
-        padding: 0;
-      }
-
-    }
-
-    @media(max-width:800px) {
-      .grid {
-        grid-template-columns: 1fr;
-        gap: 20px;
-      }
-
-      .pricing {
-        grid-template-columns: 1fr;
-      }
-
-      .hero-wrapper {
-        padding: 80px 16px 20px;
-      }
-
-      .hero {
-        padding: 80px 16px;
-        min-height: 400px;
-      }
-
-      .hero h1 {
-        font-size: 32px;
-      }
-
-      .hero p {
-        font-size: 15px;
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Synk Mushuroom - チャート分析とローカル環境をシームレスに連携</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          uguisu: {
+            DEFAULT: '#52662c', // 指定された鶯系カラー
+            hover: '#6b823e',
+            dark: '#3d4d21',
+            light: '#8ba36b',
+            bg: '#1a1f13',
+          },
+          enji: {
+            DEFAULT: '#9b2d30', // 臙脂（えんじ）色
+            light: '#c84b4f',
+            pale: '#e8b3b4',
+            bg: '#2a1213',
+          },
+          dark: {
+            base: '#111311', // 最背面
+            card: '#1a1d1a', // カード面
+            border: '#2a2f2a',
+          },
+          text: {
+            main: '#e5e7eb',
+            sub: '#9ca3af',
+            muted: '#6b7280',
+          }
+        }
       }
     }
-
-    .feature-box {
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      height: 100%;
+  }
+</script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&display=swap');
+body {
+    font-family: 'Noto Sans JP', sans-serif;
+    background-color: #111311;
+    color: #e5e7eb;
+}
+html {
+    scroll-behavior: smooth;
+}
+.chart-container {
+    position: relative;
+    width: 100%;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    height: 300px;
+    max-height: 400px;
+}
+@media (min-width: 768px) {
+    .chart-container {
+        height: 350px;
     }
-
-    .feature-box img {
-      width: 100%;
-      height: auto;
-      margin-top: 16px;
-    }
-    .grid {
-      align-items: stretch;
-    }
-
-    .grid > .card {
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-
-    .card img {
-      width: 100%;
-      margin-top: 12px;
-    }
-  </style>
+}
+.accordion-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+}
+.tab-content {
+    display: none;
+}
+.tab-content.active {
+    display: block;
+    animation: fadeIn 0.5s;
+}
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+</style>
 </head>
+<body class="antialiased bg-dark-base text-text-main">
 
-<body>
+<!-- Chosen Palette: Dark & Uguisu (Background: dark-base, Text: text-main, Accent: uguisu) -->
+<!-- Application Structure Plan: The SPA is designed as an interactive product presentation dashboard. It uses a sticky navigation for quick access. The 'Problem vs Solution' is visualized using a Chart.js comparison of UX metrics (operations/switches) to prove efficiency without touching financial claims. Features and Pricing use clean card grids. Heavy legal and FAQ texts are organized into interactive accordions and tabs to prevent information overload, ensuring the primary goal (compliance and user understanding) is met efficiently. -->
+<!-- Visualization & Content Choices: Problem/Solution -> Goal: Compare -> Bar Chart (Chart.js) comparing UX steps -> Shows efficiency visually without financial metrics -> Chart.js chosen for dynamic, clean rendering within strict constraints. FAQ/Legal -> Goal: Organize -> Interactive Accordions/Tabs -> Keeps the interface clean while fulfilling strict compliance requirements. CONFIRMING NO SVG/Mermaid. -->
+<!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
 
-  <header>
-    <div class="header-inner">
-
-      <a href="/index.html" class="logo">Oichi Equipment</a>
-
-      <!-- Hamburger Menu -->
-      <div class="menu-toggle" id="menuToggle">
-        <span></span>
-        <span></span>
-        <span></span>
-      </div>
-
-      <nav id="navMenu">
-<a href="/index.html">Top</a>
-<a href="/equipment.html">Equipment</a>
-<a href="/qa.html">Faq</a>
-<a href="/contact.html">Contact</a>
-<div class="dropdown">
-  <a href="#">About</a>
-  <div class="dropdown-menu">
-    <a href="/terms.html">Terms</a>
-    <a href="/privacy.html">Privacy</a>
-    <a href="/legal.html">Legal</a>
-  </div>
-</div>
-
-<div class="lang-switch">
-<a href="/ja/index_ja.html" class="inactive">JP</a>
-<a href="/index.html">EN</a>
-</div>
+<nav class="fixed w-full bg-dark-base/90 backdrop-blur-md border-b border-dark-border z-50">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between h-16">
+            <div class="flex items-center">
+                <a href="#" class="text-xl font-bold tracking-tighter text-uguisu-light">Oichi Equipment</a>
+            </div>
+            <div class="hidden md:flex items-center space-x-8">
+                <a href="#concept" class="text-text-sub hover:text-uguisu-light transition">コンセプト</a>
+                <a href="#features" class="text-text-sub hover:text-uguisu-light transition">機能・構成</a>
+                <a href="#pricing" class="text-text-sub hover:text-uguisu-light transition">料金</a>
+                <a href="#faq" class="text-text-sub hover:text-uguisu-light transition">FAQ・規約</a>
+                <a href="#pricing" class="bg-uguisu text-white px-4 py-2 rounded-md font-medium hover:bg-uguisu-hover transition shadow-sm">Start Free Trial</a>
+            </div>
+        </div>
+    </div>
 </nav>
 
-    </div>
-  </header>
+<main class="pt-16">
 
-  <!-- HERO -->
-  <div class="hero-wrapper">
-    <div class="hero">
-      <img src="assets/images/ui-main.png" alt="Main UI" class="hero-bg">
-      <div class="hero-content">
-        <h1>Trade directly from TradingView</h1>
-        <p>
-          Connect TradingView to MT5 and execute trades instantly — all from the same screen.
+    <section id="hero" class="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-16 text-center">
+        <div class="inline-block mb-4 px-3 py-1 bg-dark-card text-text-sub border border-dark-border rounded-full text-sm font-medium tracking-wide">
+            裁量トレーダー専用デスクトップ操作支援
+        </div>
+        <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-text-main leading-tight mb-6">
+            チャート分析とローカル環境を<br class="hidden md:block" />シームレスに連携。
+        </h1>
+        <p class="mt-4 max-w-2xl mx-auto text-lg text-text-sub mb-10">
+            Synk Mushuroomは、画面の切り替えや複雑なワークフローを統合し、<br class="hidden md:block" />あなた自身の判断に基づくスムーズなPC操作を実現します。
         </p>
-        <a href="#" class="btn btn-large">Start Trading Now</a>
-      </div>
+        <div class="flex flex-col sm:flex-row justify-center items-center gap-4">
+            <a href="#pricing" class="w-full sm:w-auto px-8 py-3 bg-uguisu text-dark-base font-medium rounded-md hover:bg-uguisu-hover transition shadow-md text-lg">
+                Start Free Trial
+            </a>
+            <a href="#pricing" class="w-full sm:w-auto px-8 py-3 bg-dark-card text-uguisu border border-uguisu font-medium rounded-md hover:bg-uguisu-bg transition shadow-sm text-lg">
+                View Pricing
+            </a>
+        </div>
+    </section>
+
+    <section id="concept" class="py-20 bg-dark-card border-y border-dark-border">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-text-main mb-4">分断されたワークフローからの解放</h2>
+                <p class="text-text-sub max-w-3xl mx-auto">
+                    このセクションでは、従来の操作環境が抱える課題と、Synk Mushuroomによる環境一体化の価値を視覚的に比較します。操作の煩雑さを減らすことが、いかに集中力の維持に繋がるかをご確認ください。
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div class="space-y-8">
+                    <div>
+                        <h3 class="text-xl font-bold text-enji-light mb-2 flex items-center">
+                            <span class="mr-2">×</span> 問題提起：操作の遅延
+                        </h3>
+                        <ul class="space-y-2 text-text-sub ml-6 list-disc">
+                            <li>分析画面と操作画面が独立しており、視線やマウスの移動に手間がかかる。</li>
+                            <li>複数のアプリケーションをまたぐウィンドウ操作が、日常的なストレスに。</li>
+                            <li>自分自身の判断を、より迅速かつ正確にソフトウェア上で反映させたい。</li>
+                        </ul>
+                        <p class="mt-2 text-sm font-medium text-text-muted">ローカル環境における操作の煩雑さが、集中力を削ぐ原因となります。</p>
+                    </div>
+
+                    <div class="p-6 bg-uguisu-bg rounded-lg border border-uguisu/30">
+                        <h3 class="text-xl font-bold text-uguisu-light mb-2 flex items-center">
+                            <span class="mr-2">○</span> ソリューション：環境の一体化
+                        </h3>
+                        <p class="text-text-main leading-relaxed mb-4">
+                            チャート分析環境とローカルのPC操作環境をシームレスに連携させるデスクトップソフトウェアです。画面間の不要な切り替えを削減し、一元化されたワークフローを提供します。
+                        </p>
+                        <p class="text-xs text-uguisu-light font-bold p-3 bg-dark-card rounded border border-uguisu/20 shadow-sm">
+                            ※あくまでユーザー自身のPC操作効率を向上させる目的で設計されており、システムによる自動化や判断の代行は一切行いません。
+                        </p>
+                    </div>
+                </div>
+
+                <div class="bg-dark-base p-6 rounded-xl border border-dark-border shadow-inner">
+                    <h4 class="text-center font-bold text-text-main mb-4">PC操作負担の比較（概念モデル）</h4>
+                    <div class="chart-container">
+                        <canvas id="efficiencyChart"></canvas>
+                    </div>
+                    <p class="text-center text-xs text-text-muted mt-4">※UI操作にかかるステップ数および画面切り替え頻度を示す概念図であり、投資成果を示すものではありません。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="features" class="py-20 bg-dark-base">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-text-main mb-4">主な機能と利用シーン</h2>
+                <p class="text-text-sub max-w-3xl mx-auto">
+                    Synk Mushuroomが提供する具体的な操作支援機能と、それが活躍するデスクトップ環境の構成についてご説明します。
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8 mb-16">
+                <div class="bg-dark-card p-8 rounded-xl shadow-sm border border-dark-border hover:border-uguisu/50 transition">
+                    <h3 class="text-xl font-bold text-text-main mb-3">ウィンドウ連携機能</h3>
+                    <p class="text-text-sub text-sm">
+                        分析画面と操作パネルをディスプレイ上で最適なレイアウトに統合・固定します。複数のモニターを使用し、多くの情報を整理しながらデスクトップ操作を行いたいときに最適です。
+                    </p>
+                </div>
+                <div class="bg-dark-card p-8 rounded-xl shadow-sm border border-dark-border hover:border-uguisu/50 transition">
+                    <h3 class="text-xl font-bold text-text-main mb-3">ローカル処理の最適化</h3>
+                    <p class="text-text-sub text-sm">
+                        PC内部の処理プロセスを最適化し、入力から画面反映までの低遅延なレスポンスをサポートします。分析結果を、ご自身の判断のもとで素早くソフトウェアに反映させたいときに威力を発揮します。
+                    </p>
+                </div>
+                <div class="bg-dark-card p-8 rounded-xl shadow-sm border border-dark-border hover:border-uguisu/50 transition">
+                    <h3 class="text-xl font-bold text-text-main mb-3">ショートカット統合</h3>
+                    <p class="text-text-sub text-sm">
+                        キーボードやマウスによる操作をユーザーの好みにカスタマイズし、複雑な手順を簡略化した入力を支援します。定型的な操作を一元化し、入力ミスを防ぎます。
+                    </p>
+                </div>
+            </div>
+
+            <div class="bg-dark-card text-text-main p-8 rounded-xl max-w-4xl mx-auto border border-dark-border">
+                <h3 class="text-xl font-bold text-text-main mb-4 border-b border-dark-border pb-2">システム構成・要件</h3>
+                <div class="grid sm:grid-cols-2 gap-4 text-sm">
+                    <div><span class="text-text-sub">対応OS:</span> Windows 10/11 (64bit) / macOS 12以降</div>
+                    <div><span class="text-text-sub">CPU:</span> Intel Core i5 または Apple M1 以上推奨</div>
+                    <div><span class="text-text-sub">メモリ:</span> 8GB以上推奨</div>
+                    <div><span class="text-text-sub">ネットワーク:</span> ブロードバンドインターネット接続</div>
+                </div>
+                <p class="mt-4 text-xs text-text-muted pt-4 border-t border-dark-border">
+                    ※本ソフトウェアはローカル環境で動作し、お客様の物理的な操作を補助するツールです。操作支援インターフェースのみを提供し、投資判断、市場データの提供、または自動的な取引処理等の機能は一切含んでおりません。
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section id="pricing" class="py-20 bg-dark-card border-y border-dark-border">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-text-main mb-4">料金プラン</h2>
+                <p class="text-text-sub max-w-3xl mx-auto">
+                    ユーザーの利用スタイルに合わせた3つのプランをご用意しています。サブスクリプションプランには7日間の無料トライアルが含まれます。
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                <div class="border border-dark-border rounded-xl p-8 flex flex-col bg-dark-base">
+                    <h3 class="text-xl font-bold text-text-main mb-2">月額プラン</h3>
+                    <div class="text-3xl font-bold text-uguisu-light mb-6">¥7,980 <span class="text-sm font-normal text-text-sub">(税込)</span></div>
+                    <ul class="space-y-3 text-text-sub mb-8 flex-grow">
+                        <li class="flex items-center">✓ 7日間無料トライアル</li>
+                        <li class="flex items-center">✓ 全機能へのアクセス</li>
+                        <li class="flex items-center">✓ 継続的なアップデート</li>
+                    </ul>
+                    <button class="w-full py-3 border border-uguisu text-uguisu font-bold rounded hover:bg-uguisu-bg transition">Start Free Trial</button>
+                </div>
+
+                <div class="border-2 border-uguisu rounded-xl p-8 flex flex-col bg-dark-base relative shadow-2xl transform md:-translate-y-4">
+                    <div class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-uguisu text-dark-base px-4 py-1 rounded-full text-xs font-bold">推奨プラン</div>
+                    <h3 class="text-xl font-bold text-text-main mb-2">年額プラン</h3>
+                    <div class="text-3xl font-bold text-uguisu-light mb-6">¥79,800 <span class="text-sm font-normal text-text-sub">(税込)</span></div>
+                    <ul class="space-y-3 text-text-sub mb-8 flex-grow">
+                        <li class="flex items-center">✓ 7日間無料トライアル</li>
+                        <li class="flex items-center">✓ 全機能へのアクセス</li>
+                        <li class="flex items-center">✓ 継続的なアップデート</li>
+                        <li class="flex items-center text-uguisu font-medium">✓ 月額換算でお得</li>
+                    </ul>
+                    <button class="w-full py-3 bg-uguisu text-dark-base font-bold rounded hover:bg-uguisu-hover transition">Start Free Trial</button>
+                </div>
+
+                <div class="border border-dark-border rounded-xl p-8 flex flex-col bg-dark-base">
+                    <h3 class="text-xl font-bold text-text-main mb-2">買い切りプラン</h3>
+                    <div class="text-3xl font-bold text-uguisu-light mb-6">¥198,000 <span class="text-sm font-normal text-text-sub">(税込)</span></div>
+                    <ul class="space-y-3 text-text-sub mb-8 flex-grow">
+                        <li class="flex items-center">✓ 永続ライセンス</li>
+                        <li class="flex items-center">✓ 全機能へのアクセス</li>
+                        <li class="flex items-center">✓ メジャーアップデートを含む無期限サポート</li>
+                    </ul>
+                    <button class="w-full py-3 border border-dark-border text-text-sub font-bold rounded hover:text-text-main hover:bg-dark-card transition">View Details</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="onboarding" class="py-16 bg-[#161a16] border-b border-dark-border">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-text-main">
+            <h2 class="text-2xl font-bold mb-8 text-center">ご利用開始までのステップ</h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+                <div>
+                    <div class="w-12 h-12 rounded-full bg-uguisu text-dark-base flex items-center justify-center mx-auto mb-4 text-xl font-bold">1</div>
+                    <h4 class="font-bold mb-2">アカウント登録</h4>
+                    <p class="text-xs text-text-sub">メールアドレスを使用してアカウントを作成し、プランを選択します。</p>
+                </div>
+                <div>
+                    <div class="w-12 h-12 rounded-full bg-uguisu text-dark-base flex items-center justify-center mx-auto mb-4 text-xl font-bold">2</div>
+                    <h4 class="font-bold mb-2">ダウンロード</h4>
+                    <p class="text-xs text-text-sub">専用ページからお使いのOSに対応したインストーラーを取得。</p>
+                </div>
+                <div>
+                    <div class="w-12 h-12 rounded-full bg-uguisu text-dark-base flex items-center justify-center mx-auto mb-4 text-xl font-bold">3</div>
+                    <h4 class="font-bold mb-2">インストール・設定</h4>
+                    <p class="text-xs text-text-sub">PCにインストールし、画面レイアウトやショートカットを設定。</p>
+                </div>
+                <div>
+                    <div class="w-12 h-12 rounded-full bg-uguisu text-dark-base flex items-center justify-center mx-auto mb-4 text-xl font-bold">4</div>
+                    <h4 class="font-bold mb-2">利用開始</h4>
+                    <p class="text-xs text-text-sub">統合されたワークフローで、スムーズなデスクトップ操作を開始。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="faq" class="py-20 bg-dark-base">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="mb-12 p-6 bg-enji-bg border-l-4 border-enji rounded shadow-sm">
+                <h2 class="text-xl font-bold text-enji-light mb-4 flex items-center">重要なお知らせ・注意事項</h2>
+                <ul class="space-y-2 text-sm text-white list-disc ml-4">
+                    <li>本ソフトウェア「Synk Mushuroom」は、PC上のアプリケーション操作を補助・統合するためのデスクトップソフトウェアです。</li>
+                    <li>金融商品取引法に基づく投資助言業務、投資運用業務、またはそれに類するサービスを提供するものではありません。</li>
+                    <li><strong>本ソフトウェアは自動売買システム（EA、bot等）やAIトレードツールではありません。利益の保証、勝率の向上、市場における優位性の提供を行う機能は一切有していません。</strong></li>
+                    <li>本ソフトウェアを使用したすべての操作、最終的な決定、および各種プロセスの手動実行は、ユーザーご自身の完全な判断と責任において行われます。</li>
+                    <li>本ソフトウェアの利用、または利用できなかったことによって生じた、いかなる直接的・間接的な損害や損失についても、開発者および運営者は一切の責任を負いません。</li>
+                </ul>
+            </div>
+
+            <div class="text-center mb-10">
+                <h2 class="text-3xl font-bold text-text-main mb-4">FAQ & 法的情報</h2>
+                <p class="text-text-sub">よくあるご質問や、各種規約については下記よりご確認ください。</p>
+            </div>
+
+            <div class="flex flex-wrap border-b border-dark-border mb-6" id="legalTabs">
+                <button class="px-4 py-2 font-bold text-uguisu border-b-2 border-uguisu bg-dark-card focus:outline-none transition" onclick="switchTab('tab-faq', this)">よくあるご質問</button>
+                <button class="px-4 py-2 font-medium text-text-sub hover:text-text-main focus:outline-none transition" onclick="switchTab('tab-tokushoho', this)">特定商取引法表記</button>
+                <button class="px-4 py-2 font-medium text-text-sub hover:text-text-main focus:outline-none transition" onclick="switchTab('tab-privacy', this)">プライバシーポリシー</button>
+                <button class="px-4 py-2 font-medium text-text-sub hover:text-text-main focus:outline-none transition" onclick="switchTab('tab-terms', this)">利用規約</button>
+            </div>
+
+            <div id="tab-faq" class="tab-content active space-y-4">
+                <div class="border border-dark-border rounded-lg bg-dark-card">
+                    <button class="accordion-btn w-full px-6 py-4 text-left font-bold text-text-main flex justify-between items-center focus:outline-none">
+                        このソフトウェアは自動で処理を行ってくれますか？
+                        <span class="text-text-muted">▼</span>
+                    </button>
+                    <div class="accordion-content bg-dark-base px-6">
+                        <p class="py-4 text-text-sub text-sm">いいえ。本ソフトウェアは自動売買やbot機能、AIによる判断機能などを一切搭載しておりません。あくまでお客様ご自身の判断と手動操作を支援するためのインターフェースツールです。</p>
+                    </div>
+                </div>
+                <div class="border border-dark-border rounded-lg bg-dark-card">
+                    <button class="accordion-btn w-full px-6 py-4 text-left font-bold text-text-main flex justify-between items-center focus:outline-none">
+                        どのような環境と連携できますか？
+                        <span class="text-text-muted">▼</span>
+                    </button>
+                    <div class="accordion-content bg-dark-base px-6">
+                        <p class="py-4 text-text-sub text-sm">一般的なブラウザ上の分析画面や、ローカルのデスクトップアプリケーションのウィンドウ配置・操作入力を統合的に管理できます。</p>
+                    </div>
+                </div>
+                <div class="border border-dark-border rounded-lg bg-dark-card">
+                    <button class="accordion-btn w-full px-6 py-4 text-left font-bold text-text-main flex justify-between items-center focus:outline-none">
+                        無料トライアルについて教えてください。
+                        <span class="text-text-muted">▼</span>
+                    </button>
+                    <div class="accordion-content bg-dark-base px-6">
+                        <p class="py-4 text-text-sub text-sm">サブスクリプションプラン（月額・年額）に限り、初回登録時から7日間の無料トライアルをご利用いただけます。期間内に解約手続きが行われた場合、料金は一切発生いたしません。</p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="tab-tokushoho" class="tab-content bg-dark-card p-6 border border-dark-border rounded-lg text-sm text-text-sub">
+                <h3 class="font-bold text-text-main text-lg mb-4 border-b border-dark-border pb-2">特定商取引法に基づく表記</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-y-2 gap-x-4">
+                    <div class="font-bold text-text-sub">販売事業者名</div><div class="sm:col-span-2 text-text-main">Oichi Equipment</div>
+                    <div class="font-bold text-text-sub">代表責任者</div><div class="sm:col-span-2 text-text-main">西川忠孝</div>
+                    <div class="font-bold text-text-sub">所在地</div><div class="sm:col-span-2 text-text-main">〒868-0092 熊本県球磨郡山江村山田丁2435</div>
+                    <div class="font-bold text-text-sub">電話番号</div><div class="sm:col-span-2 text-text-main">080-1775-6028</div>
+                    <div class="font-bold text-text-sub">メールアドレス</div><div class="sm:col-span-2 text-text-main">oichi.equipment@gmail.com</div>
+                    <div class="font-bold text-text-sub">販売価格</div><div class="sm:col-span-2 text-text-main">月額 ¥7,980、年額 ¥79,800、買い切り ¥198,000</div>
+                    <div class="font-bold text-text-sub">商品代金以外の必要料金</div><div class="sm:col-span-2 text-text-main">ソフトウェアのダウンロードおよび利用に伴うインターネット通信料</div>
+                    <div class="font-bold text-text-sub">支払方法</div><div class="sm:col-span-2 text-text-main">クレジットカード決済（Stripe）</div>
+                    <div class="font-bold text-text-sub">代金の支払時期</div><div class="sm:col-span-2 text-text-main">月額/年額プラン：7日間の無料トライアル終了後に初回決済。<br>買い切りプラン：購入申し込み時に一括決済。</div>
+                    <div class="font-bold text-text-sub">商品の引渡時期</div><div class="sm:col-span-2 text-text-main">決済手続き完了後、マイページより直ちにダウンロード可能。</div>
+                    <div class="font-bold text-text-sub">返品・キャンセル</div>
+                    <div class="sm:col-span-2 text-text-main">
+                        デジタルコンテンツという商品の性質上、購入後の返品・返金には一切応じられません。<br>
+                        ・月額/年額プラン：解約はいつでも可能。解約後の日割り計算等の返金はいたしません。<br>
+                        ・買い切りプラン：購入後のキャンセル・返金不可。
+                    </div>
+                    <div class="font-bold text-text-sub">動作環境</div><div class="sm:col-span-2 text-text-main">システム要件のセクションをご参照ください。</div>
+                </div>
+            </div>
+
+            <div id="tab-privacy" class="tab-content bg-dark-card p-6 border border-dark-border rounded-lg text-sm text-text-sub space-y-4">
+                <h3 class="font-bold text-text-main text-lg mb-2 border-b border-dark-border pb-2">プライバシーポリシー</h3>
+                <p>Oichi Equipment（以下、「当社」）は、提供するソフトウェア「Synk Mushuroom」および関連サービスにおけるユーザーの個人情報の取り扱いについて、以下のとおり定めます。</p>
+                <h4 class="font-bold text-text-main mt-4">1. 収集する情報</h4>
+                <p>アカウント作成時のメールアドレス、氏名、決済情報、および本サービスの利用状況・エラーログ等の技術的データ。</p>
+                <h4 class="font-bold text-text-main mt-4">2. 利用目的</h4>
+                <p>本サービスの提供・運営、カスタマーサポート対応、利用料金の請求、セキュリティの維持および不正利用の防止のため。</p>
+                <h4 class="font-bold text-text-main mt-4">3. 第三者への提供</h4>
+                <p>法令に基づく場合を除き、あらかじめユーザーの同意を得ることなく個人情報を第三者に提供しません。ただし、決済処理のための業務委託先は除きます。</p>
+                <h4 class="font-bold text-text-main mt-4">4. 安全管理措置</h4>
+                <p>個人情報の漏洩、滅失またはき損の防止、その他の個人情報の安全管理のために必要かつ適切なセキュリティ措置を講じます。</p>
+                <p class="mt-4 pt-4 border-t border-dark-border">お問い合わせ窓口: oichi.equipment@gmail.com</p>
+            </div>
+
+            <div id="tab-terms" class="tab-content bg-dark-card p-6 border border-dark-border rounded-lg text-sm text-text-sub space-y-4">
+                <h3 class="font-bold text-text-main text-lg mb-2 border-b border-dark-border pb-2">利用規約</h3>
+                <h4 class="font-bold text-text-main mt-4">第1条（適用）</h4>
+                <p>本規約は、ユーザーと当社との間の「Synk Mushuroom」（以下、「本ソフトウェア」）の利用に関わる一切の関係に適用されます。</p>
+                
+                <h4 class="font-bold text-text-main mt-4">第2条（本ソフトウェアの性質と禁止事項）</h4>
+                <ul class="list-decimal ml-4 space-y-1">
+                    <li>本ソフトウェアは、ユーザーのローカルPC環境における操作の統合と効率化を目的とするユーティリティツールです。</li>
+                    <li>ユーザーは、本ソフトウェアを利用して、システムへの不正アクセス、市場または他社サービスに過度な負荷をかける行為を行ってはなりません。</li>
+                    <li>ユーザーは、本ソフトウェアが投資助言や利益を保証するものではないことを完全に理解し、すべての操作およびその結果について自己の責任を負うものとします。</li>
+                </ul>
+
+                <h4 class="font-bold text-text-main mt-4">第3条（免責事項）</h4>
+                <ul class="list-decimal ml-4 space-y-1">
+                    <li>当社は、本ソフトウェアに事実上または法律上の瑕疵がないことを明示的にも黙示的にも保証いたしません。</li>
+                    <li>当社は、本ソフトウェアの使用または使用不能に起因してユーザーに生じたあらゆる損害について一切の責任を負いません。</li>
+                    <li>ユーザーの操作ミス、ネットワーク障害、OSのアップデート、不具合により意図しない結果が生じた場合でも、当社は一切の補償を行いません。</li>
+                </ul>
+
+                <h4 class="font-bold text-text-main mt-4">第4条・第5条（利用制限・規約変更）</h4>
+                <p>当社は違反者への利用制限を行う権利を有し、本規約は事前の通知なく変更される場合があります。</p>
+            </div>
+
+        </div>
+    </section>
+
+</main>
+
+<footer class="bg-dark-base border-t border-dark-border text-text-muted py-8 text-center text-sm">
+    <div class="max-w-6xl mx-auto px-4">
+        <div class="mb-4">
+            会社名：Oichi Equipment | お問い合わせ：oichi.equipment@gmail.com
+        </div>
+        <p>&copy; 2026 Synk Mushuroom. All rights reserved.</p>
     </div>
-  </div>
+</footer>
 
-  <!-- Strengths -->
-  <div class="section">
-    <h2>Why Choose Synk Mushroom</h2>
-    <div class="grid">
-      <div class="card">
-        <h3>Use your existing broker</h3>
-        <p>Works with any MetaTrader 5 broker, regardless of account type.</p>
-      </div>
-      <div class="card">
-        <h3>Supports high leverage accounts</h3>
-        <p>Fully compatible with high leverage trading environments.</p>
-      </div>
-      <div class="card">
-        <h3>No VPS required</h3>
-        <p>Runs entirely on your local machine with no additional setup.</p>
-      </div>
-      <div class="card">
-        <h3>Fully integrated with TradingView</h3>
-        <p>Analyze and execute trades without leaving the chart.</p>
-      </div>
-      <div class="card">
-        <h3>Minimizable panel</h3>
-        <p>Hide the panel when not in use to keep your chart clean.</p>
-      </div>
-      <div class="card">
-        <h3>Draggable interface</h3>
-        <p>Move the panel freely to match your workflow.</p>
-      </div>
-    </div>
-  </div>
-
-  <!-- Core Features -->
-  <div class="section">
-    <h2>Core Features</h2>
-
-    <div class="card">
-      <h3>Native Panel Integrated with TradingView</h3>
-      <p>
-        Deploys the execution panel directly over your chart, allowing you to complete analysis and order placement
-        without shifting your visual focus.
-      </p>
-      <img src="assets/images/ui-panel-position.png" alt="Panel UI" class="img-responsive-card">
-    </div>
-
-    <div class="card">
-      <h3>Automatic symbol synchronization</h3>
-      <p>
-        The system detects the symbol selected in TradingView and automatically maps it to the correct MT5 instrument.
-        Works with suffix brokers and multi-chart setups.
-      </p>
-      <img src="assets/images/ui-symbol-sync.png" alt="Symbol Sync" class="img-responsive-card"
-        style="width:100%; margin:20px auto 0;">
-    </div>
-
-    <div class="card">
-      <h3>Fail-Safe Design</h3>
-      <p>
-        Equipped with multiple sophisticated lock mechanisms to strictly prevent accidental or erroneous orders.
-      </p>
-    </div>
-
-    <div class="card">
-      <h3>Full Status Management</h3>
-      <p>
-        View and manage all your positions and active orders in a comprehensive list for immediate action.
-      </p>
-      <img src="assets/images/ui-fullstatus.png" alt="Position UI" class="img-responsive-card">
-    </div>
-
-    <div class="card">
-      <h3>PWA Support</h3>
-      <p>
-        Fully adaptable to multi-monitor setups through Progressive Web App installation.
-      </p>
-    </div>
-
-  </div>
-
-  <div class="section" style="text-align:center; margin:24px 0;">
-    <a href="#" class="btn btn-large">Get Started</a>
-  </div>
-
-  <!-- Safety First Design -->
-  <div class="section">
-    <h2>Designed for safe trading</h2>
-    <p style="color:#aaa;margin-bottom:30px;line-height:1.7;font-size:16px;">The system continuously monitors connection
-      status, symbols, and execution conditions to prevent unintended trades.</p>
-
-    <div class="pricing" style="margin-top:0;">
-      <div class="card">
-        <img src="assets/images/ui-oneclick-toggle.png" alt="One-click execution requires manual permission"
-          class="img-responsive-card" style="margin-top:0; margin-bottom:15px;">
-        <p style="font-weight:600;margin:0;">One-click trading requires manual activation</p>
-      </div>
-
-      <div class="card">
-        <img src="assets/images/ui-symbol-notfound.png" alt="Invalid symbols are automatically locked"
-          class="img-responsive-card" style="margin-top:0; margin-bottom:15px;">
-        <p style="font-weight:600;margin:0;">Invalid symbols are automatically locked</p>
-      </div>
-
-      <div class="card">
-        <img src="assets/images/ui-mt5-disconnected.png" alt="Orders are disabled when MT5 is disconnected"
-          class="img-responsive-card" style="margin-top:0; margin-bottom:15px;">
-        <p style="font-weight:600;margin:0;">Trading is disabled when MT5 is not connected</p>
-      </div>
-
-      <div class="card" style="grid-column: 1 / -1; text-align: center; padding: 20px;">
-        <p style="font-weight:600;margin:0;">Positions can still be closed even if the symbol is not synced, as long as
-          MT5 is connected</p>
-      </div>
-    </div>
-  </div>
-
-  <!-- Problem / Solution -->
-  <div class="section">
-    <h2>Conventional Challenges & Solutions</h2>
-
-    <div class="card">
-      <h3>Fragmented Focus and Operation</h3>
-      <p>Separation of analysis and execution causes operational delays.</p>
-      <p>→ Consolidated into a single screen to eliminate latency.</p>
-    </div>
-
-    <div class="card">
-      <h3>Complex Configuration</h3>
-      <p>Order errors caused by incorrect manual symbol settings.</p>
-      <p>→ No setup required with automatic symbol detection and synchronization.</p>
-    </div>
-
-    <div class="card">
-      <h3>Unclear Connections</h3>
-      <p>Risk of placing orders on the wrong account or broker.</p>
-      <p>→ Visualized connection status coupled with lock mechanisms.</p>
-    </div>
-
-    <div class="card">
-      <h3>Inconsistent UI</h3>
-      <p>Operational stress from using completely disparate external tools.</p>
-      <p>→ Completely integrated into the TradingView interface.</p>
-    </div>
-
-  </div>
-
-  <!-- Philosophy -->
-  <div class="section">
-    <h2>Design Philosophy</h2>
-
-    <p>
-      In trading, what truly matters is not just market analysis, but <strong>Execution Precision</strong>.<br><br>
-      Synk Mushroom specializes exclusively in this critical aspect,<br>
-      fundamentally redesigning your trading environment from the ground up.
-    </p>
-
-  </div>
-
-  <!-- Pricing -->
-  <div class="section">
-    <h2>Pricing Plans</h2>
-
-    <div class="pricing">
-
-      <div class="price-card">
-        <h3>Monthly</h3>
-        <div class="price">¥7,980</div>
-        <p>Billed monthly</p>
-      </div>
-
-      <div class="price-card">
-        <h3>Annual</h3>
-        <div class="price">¥79,800</div>
-        <p>2 months free</p>
-      </div>
-
-      <div class="price-card">
-        <h3>Lifetime</h3>
-        <div class="price">¥198,000</div>
-        <p>Permanent license</p>
-      </div>
-
-    </div>
-
-
-
-    <p style="margin-top:10px;color:#aaa;">
-      * Includes a 7-day free trial (Credit card required, auto-renews if not canceled)
-    </p>
-
-    <!-- Bottom CTA -->
-    <div class="section" style="text-align:center; margin:24px 0;">
-      <a href="#" class="btn btn-large">Buy Synk Mushroom</a>
-    </div>
-
-  </div>
-
-  <!-- Disclaimer -->
-  <div class="section">
-    <div class="notice">
-      <strong>Disclaimer:</strong> This software does NOT provide investment advice, automated trading features, or
-      trading signals.<br>
-      All trading and investment decisions are strictly your own responsibility.
-    </div>
-  </div>
-
-  <footer>
-    <p>© Oichi Equipment</p>
-    <p>
-      <a href="legal.html">Legal Notice</a>
-      <a href="privacy.html">Privacy Policy</a>
-      <a href="terms.html">Terms of Service</a>
-    </p>
-  </footer>
-  <script>
-    const toggle = document.getElementById("menuToggle");
-    const nav = document.getElementById("navMenu");
-
-    toggle.addEventListener("click", () => {
-      nav.classList.toggle("active");
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    
+    const accBtns = document.querySelectorAll('.accordion-btn');
+    accBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            this.classList.toggle('text-uguisu');
+            const content = this.nextElementSibling;
+            if (content.style.maxHeight) {
+                content.style.maxHeight = null;
+                this.querySelector('span').textContent = '▼';
+            } else {
+                content.style.maxHeight = content.scrollHeight + "px";
+                this.querySelector('span').textContent = '▲';
+            }
+        });
     });
-  </script>
-</body>
 
+    Chart.defaults.color = '#9ca3af';
+
+    const ctx = document.getElementById('efficiencyChart').getContext('2d');
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['画面切り替え回数', 'マウス移動量目安', '操作ステップ数'],
+            datasets: [
+                {
+                    label: '従来の分断環境',
+                    data: [15, 100, 8],
+                    backgroundColor: '#4b5563', // ダークグレー
+                    borderRadius: 4
+                },
+                {
+                    label: 'Synk Mushuroom統合環境',
+                    data: [0, 20, 3],
+                    backgroundColor: '#52662c', // 変更された鶯系カラー
+                    borderRadius: 4
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { 
+                    position: 'bottom',
+                    labels: { color: '#e5e7eb' }
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            return context.dataset.label + ': ' + context.parsed.y + (context.dataIndex === 1 ? '%' : '回');
+                        }
+                    }
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    grid: { color: '#2a2f2a' },
+                    ticks: { color: '#9ca3af' }
+                },
+                x: {
+                    grid: { display: false },
+                    ticks: { color: '#9ca3af' }
+                }
+            }
+        }
+    });
+});
+
+function switchTab(tabId, element) {
+    
+    document.querySelectorAll('.tab-content').forEach(tab => {
+        tab.classList.remove('active');
+    });
+    
+    const tabs = element.parentElement.children;
+    for(let i=0; i<tabs.length; i++) {
+        tabs[i].classList.remove('border-b-2', 'border-uguisu', 'text-uguisu', 'font-bold', 'bg-dark-card');
+        tabs[i].classList.add('text-text-sub', 'font-medium');
+    }
+    
+    document.getElementById(tabId).classList.add('active');
+    
+    element.classList.remove('text-text-sub', 'font-medium');
+    element.classList.add('border-b-2', 'border-uguisu', 'text-uguisu', 'font-bold', 'bg-dark-card');
+}
+</script>
+
+</body>
 </html>
