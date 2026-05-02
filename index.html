@@ -162,6 +162,15 @@ transform:scale(1.4);
     <section id="hero" class="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pt-32 pb-24 text-center overflow-hidden">
 <img src="assets/images/hero.png"
 class="absolute inset-0 w-full h-full object-cover opacity-20 pointer-events-none">
+
+<!-- 左フェード -->
+
+<div class="pointer-events-none absolute left-0 top-0 h-full w-40 bg-gradient-to-r from-dark-base to-transparent"></div>
+
+<!-- 右フェード -->
+
+<div class="pointer-events-none absolute right-0 top-0 h-full w-40 bg-gradient-to-l from-dark-base to-transparent"></div>
+
 <div class="relative z-10">
         <div class="inline-block mb-8 px-4 py-1.5 bg-dark-card border border-dark-border rounded-full text-xs font-bold tracking-[0.2em] text-uguisu-light">
             SYNK MUSHROOM
@@ -296,8 +305,18 @@ class="absolute inset-0 w-full h-full object-cover opacity-20 pointer-events-non
 
 <!-- メイン -->
 
-<div class="ui-glow border border-dark-border rounded overflow-hidden bg-dark-base mb-10">
-  <img src="assets/images/ui-main.png" class="w-full">
+<div class="relative overflow-hidden mb-10">
+
+  <img src="assets/images/ui-main.png" class="w-full h-auto object-cover block">
+
+  <!-- 左フェード -->
+
+  <div class="pointer-events-none absolute left-0 top-0 h-full w-40 bg-gradient-to-r from-dark-base to-transparent"></div>
+
+  <!-- 右フェード -->
+
+  <div class="pointer-events-none absolute right-0 top-0 h-full w-40 bg-gradient-to-l from-dark-base to-transparent"></div>
+
 </div>
 
 <!-- 2カラム -->

@@ -79,6 +79,59 @@ display: none;
 -ms-overflow-style: none;
 scrollbar-width: none;
 }
+.cf-item{
+position:absolute;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%) scale(0.6);
+opacity:0;
+transition:all 0.5s ease;
+width:70%;
+border-radius:12px;
+}
+
+.cf-center{
+transform:translate(-50%,-50%) scale(1);
+opacity:1;
+z-index:10;
+}
+
+.cf-left{
+transform:translate(-120%,-50%) scale(0.8);
+opacity:0.7;
+z-index:5;
+}
+
+.cf-right{
+transform:translate(20%,-50%) scale(0.8);
+opacity:0.7;
+z-index:5;
+}
+
+.cf-far-left{
+transform:translate(-200%,-50%) scale(0.6);
+opacity:0.3;
+}
+
+.cf-far-right{
+transform:translate(100%,-50%) scale(0.6);
+opacity:0.3;
+}
+
+.dot{
+width:8px;
+height:8px;
+border-radius:9999px;
+background:#52525b;
+opacity:0.4;
+transition:all 0.3s ease;
+}
+
+.dot.active{
+background:#8ba36b;
+opacity:1;
+transform:scale(1.4);
+}
 </style>
 <meta name="google-site-verification" content="_BJ8SMDc7Ya_Lg_R5Nz0q-lN7LTn7AlXJ-XfUaDphx4" />
 </head>
@@ -109,6 +162,15 @@ scrollbar-width: none;
     <section id="hero" class="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pt-32 pb-24 text-center overflow-hidden">
 <img src="assets/images/hero.png"
 class="absolute inset-0 w-full h-full object-cover opacity-20 pointer-events-none">
+
+<!-- 左フェード -->
+
+<div class="pointer-events-none absolute left-0 top-0 h-full w-40 bg-gradient-to-r from-dark-base to-transparent"></div>
+
+<!-- 右フェード -->
+
+<div class="pointer-events-none absolute right-0 top-0 h-full w-40 bg-gradient-to-l from-dark-base to-transparent"></div>
+
 <div class="relative z-10">
         <div class="inline-block mb-8 px-4 py-1.5 bg-dark-card border border-dark-border rounded-full text-xs font-bold tracking-[0.2em] text-uguisu-light">
             SYNK MUSHROOM
@@ -243,43 +305,47 @@ class="absolute inset-0 w-full h-full object-cover opacity-20 pointer-events-non
 
 <!-- メイン -->
 
-<div class="ui-glow border border-dark-border rounded overflow-hidden bg-dark-base mb-10">
-  <img src="assets/images/ui-main.png" class="w-full">
+<div class="relative ui-glow border border-dark-border rounded overflow-hidden bg-dark-base mb-10">
+
+  <img src="assets/images/ui-main.png" class="w-full h-auto object-cover">
+
+  <!-- 左 -->
+
+  <div class="pointer-events-none absolute left-0 top-0 h-full w-16 bg-gradient-to-r from-dark-base/70 to-transparent"></div>
+
+  <!-- 右 -->
+
+  <div class="pointer-events-none absolute right-0 top-0 h-full w-16 bg-gradient-to-l from-dark-base/70 to-transparent"></div>
+
 </div>
 
 <!-- 2カラム -->
 
-<div class="relative max-w-5xl mx-auto overflow-hidden">
+<div class="relative w-full max-w-4xl mx-auto h-[400px] flex items-center justify-center">
 
-  <div id="carousel" class="flex transition-transform duration-500">
+  <div id="coverflow" class="relative w-full h-full">
 
-<img src="assets/images/ui-fullstatus.png"
-     class="w-[80%] mx-[10%] shrink-0 rounded-xl">
-
-<img src="assets/images/ui-oneclick-warning.png"
-     class="w-[80%] mx-[10%] shrink-0 rounded-xl">
-
-<img src="assets/images/ui-mt5-disconnected.png"
-     class="w-[80%] mx-[10%] shrink-0 rounded-xl">
-
-<img src="assets/images/ui-main.png"
-     class="w-[80%] mx-[10%] shrink-0 rounded-xl">
+<img src="assets/images/ui-fullstatus.png" class="cf-item">
+<img src="assets/images/ui-oneclick-warning.png" class="cf-item">
+<img src="assets/images/ui-mt5-disconnected.png" class="cf-item">
+<img src="assets/images/ui-main.png" class="cf-item">
 
   </div>
 
   <!-- 左 -->
 
-<button onclick="moveSlide(-1)"
- class="absolute left-2 top-1/2 -translate-y-1/2 z-10 bg-black/50 px-3 py-2 rounded">
+<button onclick="moveCF(-1)"
+ class="absolute left-0 top-1/2 -translate-y-1/2 z-20 bg-black/50 px-3 py-2 rounded">
 ‹ </button>
 
   <!-- 右 -->
 
-<button onclick="moveSlide(1)"
- class="absolute right-2 top-1/2 -translate-y-1/2 z-10 bg-black/50 px-3 py-2 rounded">
+<button onclick="moveCF(1)"
+ class="absolute right-0 top-1/2 -translate-y-1/2 z-20 bg-black/50 px-3 py-2 rounded">
 › </button>
 
 </div>
+<div id="dots" class="flex justify-center gap-2 mt-6"></div>
         </div>
     </section>
 
@@ -654,18 +720,77 @@ function switchTab(tabId, element) {
 </script>
 
 <script>
-let index = 0;
+let cfIndex = 0;
 
-function moveSlide(dir){
-  const carousel = document.getElementById("carousel");
-  const total = carousel.children.length;
+function updateCF(){
+  const items = document.querySelectorAll('.cf-item');
+  const total = items.length;
 
-  index += dir;
-  if(index < 0) index = total - 1;
-  if(index >= total) index = 0;
+  // cfIndexを常に正規化
+  cfIndex = ((cfIndex % total) + total) % total;
 
-  carousel.style.transform = `translateX(-${index * 100}%)`;
+  items.forEach((el,i)=>{
+    el.className = 'cf-item';
+
+    let diff = i - cfIndex;
+
+    // ループ補正（ここが重要）
+    if(diff > total/2) diff -= total;
+    if(diff < -total/2) diff += total;
+
+    if(diff === 0) el.classList.add('cf-center');
+    else if(diff === -1) el.classList.add('cf-left');
+    else if(diff === 1) el.classList.add('cf-right');
+    else if(diff === -2) el.classList.add('cf-far-left');
+    else if(diff === 2) el.classList.add('cf-far-right');
+  });
+
+  updateDots();
 }
+
+function moveCF(dir){
+  const items = document.querySelectorAll('.cf-item');
+  const total = items.length;
+
+  cfIndex = (cfIndex + dir + total) % total;
+
+  updateCF();
+}
+
+function createDots(){
+  const items = document.querySelectorAll('.cf-item');
+  const dotsContainer = document.getElementById('dots');
+
+  dotsContainer.innerHTML = '';
+
+  items.forEach((_,i)=>{
+    const dot = document.createElement('div');
+    dot.className = 'dot';
+
+    dot.onclick = ()=>{
+      const items = document.querySelectorAll('.cf-item');
+      const total = items.length;
+
+      cfIndex = ((i % total) + total) % total;
+
+      updateCF();
+    };
+
+    dotsContainer.appendChild(dot);
+  });
+}
+
+function updateDots(){
+  const dots = document.querySelectorAll('.dot');
+  dots.forEach((d,i)=>{
+    d.classList.toggle('active', i === cfIndex);
+  });
+}
+
+window.onload = () => {
+  createDots();
+  updateCF();
+};
 </script>
 
 </body>
