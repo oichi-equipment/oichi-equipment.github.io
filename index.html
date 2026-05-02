@@ -68,6 +68,70 @@ html {
 .ui-glow {
     box-shadow: 0 0 40px -10px rgba(82, 102, 44, 0.2);
 }
+img{
+border-radius:8px;
+box-shadow:0 0 40px rgba(82,102,44,0.15);
+}
+.no-scrollbar::-webkit-scrollbar {
+display: none;
+}
+.no-scrollbar {
+-ms-overflow-style: none;
+scrollbar-width: none;
+}
+.cf-item{
+position:absolute;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%) scale(0.6);
+opacity:0;
+transition:all 0.5s ease;
+width:70%;
+border-radius:12px;
+}
+
+.cf-center{
+transform:translate(-50%,-50%) scale(1);
+opacity:1;
+z-index:10;
+}
+
+.cf-left{
+transform:translate(-120%,-50%) scale(0.8);
+opacity:0.7;
+z-index:5;
+}
+
+.cf-right{
+transform:translate(20%,-50%) scale(0.8);
+opacity:0.7;
+z-index:5;
+}
+
+.cf-far-left{
+transform:translate(-200%,-50%) scale(0.6);
+opacity:0.3;
+}
+
+.cf-far-right{
+transform:translate(100%,-50%) scale(0.6);
+opacity:0.3;
+}
+
+.dot{
+width:8px;
+height:8px;
+border-radius:9999px;
+background:#52525b;
+opacity:0.4;
+transition:all 0.3s ease;
+}
+
+.dot.active{
+background:#8ba36b;
+opacity:1;
+transform:scale(1.4);
+}
 </style>
 <meta name="google-site-verification" content="_BJ8SMDc7Ya_Lg_R5Nz0q-lN7LTn7AlXJ-XfUaDphx4" />
 </head>
@@ -95,7 +159,10 @@ html {
 <main class="pt-16">
 
     <!-- ヒーロー -->
-    <section id="hero" class="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pt-32 pb-24 text-center">
+    <section id="hero" class="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pt-32 pb-24 text-center overflow-hidden">
+<img src="assets/images/hero.png"
+class="absolute inset-0 w-full h-full object-cover opacity-20 pointer-events-none">
+<div class="relative z-10">
         <div class="inline-block mb-8 px-4 py-1.5 bg-dark-card border border-dark-border rounded-full text-xs font-bold tracking-[0.2em] text-uguisu-light">
             SYNK MUSHROOM
         </div>
@@ -113,6 +180,7 @@ html {
                 View Plans
             </a>
         </div>
+</div>
     </section>
 
     <!-- 問題提起 -->
@@ -172,13 +240,9 @@ html {
             <div class="space-y-16">
                 <div class="flex flex-col md:flex-row gap-12 items-center">
                     <div class="md:w-5/12">
-                        <div class="aspect-video rounded bg-dark-base border border-dark-border flex items-center justify-center p-6">
-                            <div class="w-full space-y-3 opacity-60">
-                                <div class="h-2 bg-dark-border rounded w-1/3"></div>
-                                <div class="h-16 bg-dark-border rounded"></div>
-                                <div class="h-16 border border-uguisu/50 bg-uguisu-bg rounded"></div>
-                            </div>
-                        </div>
+<div class="aspect-video rounded overflow-hidden border border-dark-border">
+  <img src="assets/images/feature-window.png" class="w-full h-full object-cover">
+</div>
                     </div>
                     <div class="md:w-7/12">
                         <div class="text-uguisu-light text-xs font-mono tracking-widest mb-2">WINDOW MANAGEMENT</div>
@@ -191,13 +255,9 @@ html {
 
                 <div class="flex flex-col md:flex-row-reverse gap-12 items-center">
                     <div class="md:w-5/12">
-                        <div class="aspect-video rounded bg-dark-base border border-dark-border flex items-center justify-center p-6">
-                            <div class="w-full flex items-center justify-between opacity-60">
-                                <div class="w-12 h-12 bg-dark-border rounded"></div>
-                                <div class="flex-1 h-px bg-dark-border mx-4"></div>
-                                <div class="w-12 h-12 border border-uguisu/50 bg-uguisu-bg rounded"></div>
-                            </div>
-                        </div>
+<div class="aspect-video rounded overflow-hidden border border-dark-border">
+  <img src="assets/images/feature-input.png" class="w-full h-full object-cover">
+</div>
                     </div>
                     <div class="md:w-7/12">
                         <div class="text-uguisu-light text-xs font-mono tracking-widest mb-2">INPUT PROCESSING</div>
@@ -210,12 +270,9 @@ html {
 
                 <div id="architecture" class="flex flex-col md:flex-row gap-12 items-center">
                     <div class="md:w-5/12">
-                        <div class="aspect-video rounded bg-dark-base border border-dark-border flex items-center justify-center p-6">
-                            <div class="w-full h-full border border-dark-border rounded flex items-center justify-center relative overflow-hidden">
-                                <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-dark-border to-transparent opacity-50"></div>
-                                <span class="text-text-muted font-mono text-sm relative z-10">LOCAL HOST</span>
-                            </div>
-                        </div>
+<div class="aspect-video rounded overflow-hidden border border-dark-border">
+  <img src="assets/images/feature-local.png" class="w-full h-full object-cover">
+</div>
                     </div>
                     <div class="md:w-7/12">
                         <div class="text-uguisu-light text-xs font-mono tracking-widest mb-2">LOCAL ENVIRONMENT</div>
@@ -237,26 +294,39 @@ html {
         <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h2 class="text-3xl font-bold text-text-main mb-12">インターフェース</h2>
 
-            <!-- メイン -->
-            <div class="ui-glow border border-dark-border rounded overflow-hidden bg-dark-base mb-10">
-                <img src="assets/images/ui-main.png" alt="Main UI" class="w-full h-auto object-cover">
-            </div>
+<!-- メイン -->
 
-            <!-- 2カラム -->
-            <div class="grid md:grid-cols-2 gap-6 mb-10">
-                <div class="border border-dark-border rounded overflow-hidden bg-dark-base">
-                    <img src="assets/images/ui-fullstatus.png" alt="Full Status" class="w-full h-auto object-cover">
-                </div>
+<div class="ui-glow border border-dark-border rounded overflow-hidden bg-dark-base mb-10">
+  <img src="assets/images/ui-main.png" class="w-full">
+</div>
 
-                <div class="border border-dark-border rounded overflow-hidden bg-dark-base">
-                    <img src="assets/images/ui-oneclick-warning.png" alt="Warning UI" class="w-full h-auto object-cover">
-                </div>
-            </div>
+<!-- 2カラム -->
 
-            <!-- 下部 -->
-            <div class="border border-dark-border rounded overflow-hidden bg-dark-base max-w-3xl mx-auto">
-                <img src="assets/images/ui-mt5-disconnected.png" alt="Disconnected UI" class="w-full h-auto object-cover">
-            </div>
+<div class="relative w-full max-w-4xl mx-auto h-[400px] flex items-center justify-center">
+
+  <div id="coverflow" class="relative w-full h-full">
+
+<img src="assets/images/ui-fullstatus.png" class="cf-item">
+<img src="assets/images/ui-oneclick-warning.png" class="cf-item">
+<img src="assets/images/ui-mt5-disconnected.png" class="cf-item">
+<img src="assets/images/ui-main.png" class="cf-item">
+
+  </div>
+
+  <!-- 左 -->
+
+<button onclick="moveCF(-1)"
+ class="absolute left-0 top-1/2 -translate-y-1/2 z-20 bg-black/50 px-3 py-2 rounded">
+‹ </button>
+
+  <!-- 右 -->
+
+<button onclick="moveCF(1)"
+ class="absolute right-0 top-1/2 -translate-y-1/2 z-20 bg-black/50 px-3 py-2 rounded">
+› </button>
+
+</div>
+<div id="dots" class="flex justify-center gap-2 mt-6"></div>
         </div>
     </section>
 
@@ -628,6 +698,80 @@ function switchTab(tabId, element) {
     element.classList.remove('border-transparent', 'text-text-sub', 'font-medium');
     element.classList.add('border-text-main', 'text-text-main', 'font-bold');
 }
+</script>
+
+<script>
+let cfIndex = 0;
+
+function updateCF(){
+  const items = document.querySelectorAll('.cf-item');
+  const total = items.length;
+
+  // cfIndexを常に正規化
+  cfIndex = ((cfIndex % total) + total) % total;
+
+  items.forEach((el,i)=>{
+    el.className = 'cf-item';
+
+    let diff = i - cfIndex;
+
+    // ループ補正（ここが重要）
+    if(diff > total/2) diff -= total;
+    if(diff < -total/2) diff += total;
+
+    if(diff === 0) el.classList.add('cf-center');
+    else if(diff === -1) el.classList.add('cf-left');
+    else if(diff === 1) el.classList.add('cf-right');
+    else if(diff === -2) el.classList.add('cf-far-left');
+    else if(diff === 2) el.classList.add('cf-far-right');
+  });
+
+  updateDots();
+}
+
+function moveCF(dir){
+  const items = document.querySelectorAll('.cf-item');
+  const total = items.length;
+
+  cfIndex = (cfIndex + dir + total) % total;
+
+  updateCF();
+}
+
+function createDots(){
+  const items = document.querySelectorAll('.cf-item');
+  const dotsContainer = document.getElementById('dots');
+
+  dotsContainer.innerHTML = '';
+
+  items.forEach((_,i)=>{
+    const dot = document.createElement('div');
+    dot.className = 'dot';
+
+    dot.onclick = ()=>{
+      const items = document.querySelectorAll('.cf-item');
+      const total = items.length;
+
+      cfIndex = ((i % total) + total) % total;
+
+      updateCF();
+    };
+
+    dotsContainer.appendChild(dot);
+  });
+}
+
+function updateDots(){
+  const dots = document.querySelectorAll('.dot');
+  dots.forEach((d,i)=>{
+    d.classList.toggle('active', i === cfIndex);
+  });
+}
+
+window.onload = () => {
+  createDots();
+  updateCF();
+};
 </script>
 
 </body>
