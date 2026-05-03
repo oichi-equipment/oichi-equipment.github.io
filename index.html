@@ -380,7 +380,7 @@
                 <!-- 2カラム -->
 
                 <div class="hidden md:block">
-                    <div class="relative w-full max-w-4xl mx-auto h-[400px] flex items-center justify-center">
+                    <div class="relative w-full max-w-4xl mx-auto h-[400px] flex items-center justify-center overflow-hidden">
 
                         <div id="coverflow" class="relative w-full h-full">
 
@@ -388,20 +388,12 @@
                             <img src="assets/images/ui-oneclick-warning.png" class="cf-item">
                             <img src="assets/images/ui-mt5-disconnected.png" class="cf-item">
                             <img src="assets/images/ui-main.png" class="cf-item">
+                            <img src="assets/images/ui-fullstatus.png" class="cf-item">
+                            <img src="assets/images/ui-oneclick-warning.png" class="cf-item">
+                            <img src="assets/images/ui-mt5-disconnected.png" class="cf-item">
+                            <img src="assets/images/ui-main.png" class="cf-item">
 
                         </div>
-
-                        <!-- 左 -->
-
-                        <button onclick="moveCF(-1)"
-                            class="absolute left-0 top-1/2 -translate-y-1/2 z-20 bg-black/50 px-3 py-2 rounded">
-                            ‹ </button>
-
-                        <!-- 右 -->
-
-                        <button onclick="moveCF(1)"
-                            class="absolute right-0 top-1/2 -translate-y-1/2 z-20 bg-black/50 px-3 py-2 rounded">
-                            › </button>
 
                     </div>
                     <div id="dots" class="flex justify-center gap-2 mt-6"></div>
@@ -885,6 +877,11 @@
                 // ループ補正（ここが重要）
                 if (diff > total / 2) diff -= total;
                 if (diff < -total / 2) diff += total;
+
+                el.onclick = () => {
+                    if (diff === -1) moveCF(-1);
+                    if (diff === 1) moveCF(1);
+                };
 
                 if (diff === 0) el.classList.add('cf-center');
                 else if (diff === -1) el.classList.add('cf-left');
