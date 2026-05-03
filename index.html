@@ -367,31 +367,49 @@
 
                 <!-- 2カラム -->
 
-                <div class="relative w-full max-w-4xl mx-auto h-[400px] flex items-center justify-center">
+                <div class="hidden md:block">
+                    <div class="relative w-full max-w-4xl mx-auto h-[400px] flex items-center justify-center">
 
-                    <div id="coverflow" class="relative w-full h-full overflow-x-auto snap-x snap-mandatory flex md:block no-scrollbar">
+                        <div id="coverflow" class="relative w-full h-full">
 
-                        <img src="assets/images/ui-fullstatus.png" class="cf-item snap-center shrink-0 max-md:!relative max-md:!transform-none max-md:!opacity-100 max-md:!top-auto max-md:!left-auto w-[80vw] md:w-auto">
-                        <img src="assets/images/ui-oneclick-warning.png" class="cf-item snap-center shrink-0 max-md:!relative max-md:!transform-none max-md:!opacity-100 max-md:!top-auto max-md:!left-auto w-[80vw] md:w-auto">
-                        <img src="assets/images/ui-mt5-disconnected.png" class="cf-item snap-center shrink-0 max-md:!relative max-md:!transform-none max-md:!opacity-100 max-md:!top-auto max-md:!left-auto w-[80vw] md:w-auto">
-                        <img src="assets/images/ui-main.png" class="cf-item snap-center shrink-0 max-md:!relative max-md:!transform-none max-md:!opacity-100 max-md:!top-auto max-md:!left-auto w-[80vw] md:w-auto">
+                            <img src="assets/images/ui-fullstatus.png" class="cf-item">
+                            <img src="assets/images/ui-oneclick-warning.png" class="cf-item">
+                            <img src="assets/images/ui-mt5-disconnected.png" class="cf-item">
+                            <img src="assets/images/ui-main.png" class="cf-item">
+
+                        </div>
+
+                        <!-- 左 -->
+
+                        <button onclick="moveCF(-1)"
+                            class="absolute left-0 top-1/2 -translate-y-1/2 z-20 bg-black/50 px-3 py-2 rounded">
+                            ‹ </button>
+
+                        <!-- 右 -->
+
+                        <button onclick="moveCF(1)"
+                            class="absolute right-0 top-1/2 -translate-y-1/2 z-20 bg-black/50 px-3 py-2 rounded">
+                            › </button>
 
                     </div>
+                    <div id="dots" class="flex justify-center gap-2 mt-6"></div>
+                </div>
 
-                    <!-- 左 -->
+                <div class="flex md:hidden overflow-x-auto gap-4 px-4 snap-x snap-mandatory no-scrollbar">
 
-                    <button onclick="moveCF(-1)"
-                        class="absolute left-0 top-1/2 -translate-y-1/2 z-20 bg-black/50 px-3 py-2 rounded">
-                        ‹ </button>
+                    <img src="assets/images/ui-fullstatus.png"
+                        class="snap-center w-[85%] shrink-0 rounded-lg">
 
-                    <!-- 右 -->
+                    <img src="assets/images/ui-oneclick-warning.png"
+                        class="snap-center w-[85%] shrink-0 rounded-lg">
 
-                    <button onclick="moveCF(1)"
-                        class="absolute right-0 top-1/2 -translate-y-1/2 z-20 bg-black/50 px-3 py-2 rounded">
-                        › </button>
+                    <img src="assets/images/ui-mt5-disconnected.png"
+                        class="snap-center w-[85%] shrink-0 rounded-lg">
+
+                    <img src="assets/images/ui-main.png"
+                        class="snap-center w-[85%] shrink-0 rounded-lg">
 
                 </div>
-                <div id="dots" class="flex justify-center gap-2 mt-6"></div>
             </div>
         </section>
 
