@@ -114,25 +114,43 @@
         }
 
         .cf-left {
-            transform: translate(-120%, -50%) scale(0.8);
-            opacity: 0.7;
+            transform: translate(-110%, -50%) scale(0.8);
+            opacity: 1;
             z-index: 5;
         }
 
         .cf-right {
-            transform: translate(20%, -50%) scale(0.8);
-            opacity: 0.7;
+            transform: translate(10%, -50%) scale(0.8);
+            opacity: 1;
             z-index: 5;
         }
 
         .cf-far-left {
-            transform: translate(-200%, -50%) scale(0.6);
-            opacity: 0.5;
+            transform: translate(-160%, -50%) scale(0.68);
+            opacity: 1;
         }
 
         .cf-far-right {
-            transform: translate(100%, -50%) scale(0.6);
-            opacity: 0.5;
+            transform: translate(60%, -50%) scale(0.68);
+            opacity: 1;
+        }
+
+        .overlay {
+            position: absolute;
+            inset: 0;
+            background: transparent;
+            pointer-events: none;
+            transition: background 0.5s ease;
+        }
+
+        .cf-left .overlay,
+        .cf-right .overlay {
+            background: rgba(0,0,0,0.3);
+        }
+
+        .cf-far-left .overlay,
+        .cf-far-right .overlay {
+            background: rgba(0,0,0,0.55);
         }
 
         .dot {
@@ -390,43 +408,51 @@
                         <div id="coverflow" class="relative w-full h-full">
 
                             <div class="cf-item">
-                                <div class="aspect-video overflow-hidden rounded-lg">
+                                <div class="aspect-video overflow-hidden rounded-lg relative">
                                     <img src="assets/images/ui-fullstatus.png" class="w-full h-full object-cover">
+                                    <div class="overlay"></div>
                                 </div>
                             </div>
                             <div class="cf-item">
-                                <div class="aspect-video overflow-hidden rounded-lg">
+                                <div class="aspect-video overflow-hidden rounded-lg relative">
                                     <img src="assets/images/ui-oneclick-warning.png" class="w-full h-full object-cover">
+                                    <div class="overlay"></div>
                                 </div>
                             </div>
                             <div class="cf-item">
-                                <div class="aspect-video overflow-hidden rounded-lg">
+                                <div class="aspect-video overflow-hidden rounded-lg relative">
                                     <img src="assets/images/ui-mt5-disconnected.png" class="w-full h-full object-cover">
+                                    <div class="overlay"></div>
                                 </div>
                             </div>
                             <div class="cf-item">
-                                <div class="aspect-video overflow-hidden rounded-lg">
+                                <div class="aspect-video overflow-hidden rounded-lg relative">
                                     <img src="assets/images/ui-main.png" class="w-full h-full object-cover">
+                                    <div class="overlay"></div>
                                 </div>
                             </div>
                             <div class="cf-item">
-                                <div class="aspect-video overflow-hidden rounded-lg">
+                                <div class="aspect-video overflow-hidden rounded-lg relative">
                                     <img src="assets/images/ui-fullstatus.png" class="w-full h-full object-cover">
+                                    <div class="overlay"></div>
                                 </div>
                             </div>
                             <div class="cf-item">
-                                <div class="aspect-video overflow-hidden rounded-lg">
+                                <div class="aspect-video overflow-hidden rounded-lg relative">
                                     <img src="assets/images/ui-oneclick-warning.png" class="w-full h-full object-cover">
+                                    <div class="overlay"></div>
                                 </div>
                             </div>
                             <div class="cf-item">
-                                <div class="aspect-video overflow-hidden rounded-lg">
+                                <div class="aspect-video overflow-hidden rounded-lg relative">
                                     <img src="assets/images/ui-mt5-disconnected.png" class="w-full h-full object-cover">
+                                    <div class="overlay"></div>
                                 </div>
                             </div>
                             <div class="cf-item">
-                                <div class="aspect-video overflow-hidden rounded-lg">
+                                <div class="aspect-video overflow-hidden rounded-lg relative">
                                     <img src="assets/images/ui-main.png" class="w-full h-full object-cover">
+                                    <div class="overlay"></div>
                                 </div>
                             </div>
 
