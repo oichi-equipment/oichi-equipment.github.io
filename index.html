@@ -205,21 +205,23 @@
                     class="inline-block mb-8 px-4 py-1.5 bg-dark-card border border-dark-border rounded-full text-xs font-bold tracking-[0.2em] text-uguisu-light">
                     Synk Mushroom
                 </div>
-                <h1 class="text-2xl md:text-4xl lg:text-6xl font-bold text-text-main leading-[1.2] mb-8">
-                    Synk Mushroom<br>
-                    この速さは、もう戻れない
+                <h1 class="text-5xl md:text-7xl font-bold text-text-main leading-tight mb-4">
+                    Synk Mushroom
                 </h1>
-                <p class="mt-4 max-w-2xl mx-auto text-base md:text-xl text-text-sub mb-12 leading-relaxed">
+                <p class="text-2xl md:text-3xl font-medium text-text-main tracking-wide leading-snug mb-6">
+                    この速さは、もう戻れない
+                </p>
+                <p class="text-base md:text-lg text-text-sub leading-loose max-w-3xl mx-auto mb-10">
                     Synk Mushroomは、複数のアプリケーション環境における画面操作や入力処理を統合し、<br>
                     無駄のないPC操作を実現するデスクトップユーティリティです。
                 </p>
                 <div class="flex flex-col sm:flex-row justify-center items-center gap-4">
                     <a href="#pricing"
-                        class="w-full sm:w-auto px-10 py-3.5 bg-uguisu text-white font-medium rounded hover:bg-uguisu-hover transition">
+                        class="w-full sm:w-auto px-10 py-3.5 bg-uguisu text-white font-medium rounded hover:bg-uguisu-hover hover:brightness-110 transition">
                         Get Started
                     </a>
                     <a href="#pricing"
-                        class="w-full sm:w-auto px-10 py-3.5 bg-transparent text-text-main border border-dark-border font-medium rounded hover:bg-dark-card transition">
+                        class="w-full sm:w-auto px-10 py-3.5 bg-transparent text-text-main border border-dark-border font-medium rounded hover:bg-dark-card opacity-70 hover:opacity-100 transition">
                         View Plans
                     </a>
                 </div>
@@ -227,10 +229,10 @@
         </section>
 
         <!-- 問題提起 -->
-        <section id="problem" class="py-16 md:py-24 bg-dark-card border-t border-dark-border">
+        <section id="problem" class="py-24 md:py-24 bg-dark-card border-t border-dark-border">
             <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-16">
-                    <h2 class="text-3xl font-bold text-text-main mb-6">分断された操作による遅延</h2>
+                    <h2 class="text-3xl font-bold text-text-main mb-6 tracking-wide">分断された操作による遅延</h2>
                     <p class="text-text-sub leading-relaxed max-w-3xl mx-auto">
                         複数のアプリケーションを同時に操作する際、画面間での視線移動、マウスの移動、ウィンドウのアクティブ化などの物理的なステップが、思考と入力の間に遅延を生み出しています。
                     </p>
@@ -238,7 +240,7 @@
 
                 <div class="grid sm:grid-cols-3 gap-8">
                     <div
-                        class="p-4 md:p-8 bg-dark-base border border-dark-border rounded-lg hover:border-text-muted transition">
+                        class="p-4 md:p-8 bg-dark-base border border-dark-border rounded-lg hover:border-text-muted shadow-lg hover:shadow-xl hover:-translate-y-1 transition">
                         <div class="text-text-muted font-mono text-sm mb-4">01.</div>
                         <h3 class="text-lg font-bold text-text-main mb-3">画面切替えで手が止まる</h3>
                         <p class="text-sm text-text-sub leading-relaxed">
@@ -247,7 +249,7 @@
                         </p>
                     </div>
                     <div
-                        class="p-4 md:p-8 bg-dark-base border border-dark-border rounded-lg hover:border-text-muted transition">
+                        class="p-4 md:p-8 bg-dark-base border border-dark-border rounded-lg hover:border-text-muted shadow-lg hover:shadow-xl hover:-translate-y-1 transition">
                         <div class="text-text-muted font-mono text-sm mb-4">02.</div>
                         <h3 class="text-lg font-bold text-text-main mb-3">同じ操作の繰り返し</h3>
                         <p class="text-sm text-text-sub leading-relaxed">
@@ -256,7 +258,7 @@
                         </p>
                     </div>
                     <div
-                        class="p-4 md:p-8 bg-dark-base border border-dark-border rounded-lg hover:border-text-muted transition">
+                        class="p-4 md:p-8 bg-dark-base border border-dark-border rounded-lg hover:border-text-muted shadow-lg hover:shadow-xl hover:-translate-y-1 transition">
                         <div class="text-text-muted font-mono text-sm mb-4">03.</div>
                         <h3 class="text-lg font-bold text-text-main mb-3">入力までの遅れ</h3>
                         <p class="text-sm text-text-sub leading-relaxed">
@@ -274,7 +276,7 @@
                 class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-uguisu-bg to-dark-base opacity-50">
             </div>
             <div class="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                <h2 class="text-3xl font-bold text-uguisu-light mb-6">環境のシームレスな統合</h2>
+                <h2 class="text-3xl font-bold text-uguisu-light mb-6 tracking-wide">環境のシームレスな統合</h2>
                 <p class="text-text-main leading-relaxed mb-10 text-lg">
                     Synk Mushroomは、これらの物理的な操作の障壁を取り除くためのユーティリティです。
                     ユーザーの手動操作をトリガーとして、ローカルアプリケーションのウィンドウ制御と
@@ -289,71 +291,60 @@
         </section>
 
         <!-- 機能（詳細） -->
-        <section id="features" class="py-16 md:py-24 bg-dark-card border-y border-dark-border">
+        <section id="features" class="py-24 md:py-24 bg-dark-card border-y border-dark-border">
             <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="mb-20 text-center">
-                    <h2 class="text-3xl font-bold text-text-main mb-4">テクニカル・フィーチャー</h2>
+                    <h2 class="text-3xl font-bold text-text-main mb-4 tracking-wide">テクニカル・フィーチャー</h2>
                     <p class="text-text-sub">操作性を向上させるための技術的アプローチ</p>
                 </div>
 
                 <div class="space-y-16">
                     <div class="flex flex-col md:flex-row gap-12 items-center">
                         <div class="md:w-5/12">
-                            <div class="aspect-video rounded overflow-hidden border border-dark-border">
+                            <div class="aspect-video rounded overflow-hidden border border-dark-border shadow-2xl">
                                 <img src="assets/images/feature-window.png" class="w-full h-full object-cover">
                             </div>
                         </div>
                         <div class="md:w-7/12">
-                            <div class="text-uguisu-light text-xs font-mono tracking-widest mb-2">WINDOW MANAGEMENT
+                            <div class="text-uguisu text-xs font-mono tracking-[0.2em] mb-2">WINDOW MANAGEMENT
                             </div>
-                            <h3 class="text-2xl font-bold text-text-main mb-4">操作の集約</h3>
+                            <h3 class="text-2xl font-bold text-text-main mb-4">すべてを一箇所で操作する</h3>
                             <p class="text-text-sub leading-relaxed">
-                                複数の画面を見ながらでも、
-                                操作はすべて同じ場所から行えます。
-
-                                必要な操作をまとめて扱えるため、
-                                画面を行き来する回数を減らせます。
+                                複数の画面を見ながらでも、操作はすべて同じ場所から行えます。必要な操作をまとめて扱えるため、画面を行き来する回数を減らせます。
                             </p>
                         </div>
                     </div>
 
                     <div class="flex flex-col md:flex-row-reverse gap-12 items-center">
                         <div class="md:w-5/12">
-                            <div class="aspect-video rounded overflow-hidden border border-dark-border">
+                            <div class="aspect-video rounded overflow-hidden border border-dark-border shadow-2xl">
                                 <img src="assets/images/feature-input.png" class="w-full h-full object-cover">
                             </div>
                         </div>
                         <div class="md:w-7/12">
-                            <div class="text-uguisu-light text-xs font-mono tracking-widest mb-2">INPUT PROCESSING</div>
-                            <h3 class="text-2xl font-bold text-text-main mb-4">入力処理の最適化</h3>
+                            <div class="text-uguisu text-xs font-mono tracking-[0.2em] mb-2">INPUT PROCESSING</div>
+                            <h3 class="text-2xl font-bold text-text-main mb-4">操作をその場で完結させる</h3>
                             <p class="text-text-sub leading-relaxed">
-                                操作はすべてパネル上で行います。
-
-                                よく使う操作をあらかじめ配置しておくことで、
-                                毎回同じ動きを繰り返す必要がなくなります。
-
-                                マウスの移動や画面の切り替えを減らしながら、
-                                必要な操作だけをその場で実行できます。
+                                操作はすべてパネル上で行います。よく使う操作をあらかじめ配置しておくことで、毎回同じ動きを繰り返す必要がなくなります。マウスの移動や画面の切り替えを減らしながら、必要な操作だけをその場で実行できます。
                             </p>
                         </div>
                     </div>
 
                     <div id="architecture" class="flex flex-col md:flex-row gap-12 items-center">
                         <div class="md:w-5/12">
-                            <div class="aspect-video rounded overflow-hidden border border-dark-border">
+                            <div class="aspect-video rounded overflow-hidden border border-dark-border shadow-2xl">
                                 <img src="assets/images/feature-local.png" class="w-full h-full object-cover">
                             </div>
                         </div>
                         <div class="md:w-7/12">
-                            <div class="text-uguisu-light text-xs font-mono tracking-widest mb-2">LOCAL ENVIRONMENT
+                            <div class="text-uguisu text-xs font-mono tracking-[0.2em] mb-2">LOCAL ENVIRONMENT
                             </div>
-                            <h3 class="text-2xl font-bold text-text-main mb-4">純粋なローカル処理</h3>
+                            <h3 class="text-2xl font-bold text-text-main mb-4">遅延を挟まない</h3>
                             <p class="text-text-sub leading-relaxed">
                                 すべての処理はローカル環境で完結します。
                             </p>
                             <p class="text-text-sub leading-relaxed mt-4">
-                                外部との常時通信に依存しないため、
-                                操作に対して安定した反応が得られます。
+                                外部との常時通信に依存しないため、操作に対して安定した反応が得られます。
                             </p>
                         </div>
                     </div>
@@ -364,11 +355,11 @@
         <!-- UIイメージ -->
         <section id="ui-image" class="py-16 md:py-24 bg-dark-base border-b border-dark-border">
             <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                <h2 class="text-3xl font-bold text-text-main mb-12">インターフェース</h2>
+                <h2 class="text-3xl font-bold text-text-main mb-12 tracking-wide">インターフェース</h2>
 
                 <!-- メイン -->
 
-                <div class="relative overflow-hidden mb-10">
+                <div class="relative overflow-hidden mb-10 shadow-2xl">
 
                     <img src="assets/images/ui-main.png" class="w-full h-auto object-cover block max-w-5xl mx-auto">
 
@@ -438,7 +429,7 @@
         <section id="pricing" class="py-16 md:py-24 bg-dark-card">
             <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-16">
-                    <h2 class="text-3xl font-bold text-text-main mb-4">料金プラン</h2>
+                    <h2 class="text-3xl font-bold text-text-main mb-4 tracking-wide">料金プラン</h2>
                     <p class="text-text-sub text-sm">※ すべての決済はセキュリティ基準を満たした外部決済サービスを通じて行われます。</p>
                 </div>
 
@@ -493,7 +484,7 @@
         <!-- 導入手順 -->
         <section id="onboarding" class="py-20 bg-[#0e0f0e] border-y border-dark-border">
             <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-                <h2 class="text-2xl font-bold mb-12 text-center text-text-main">導入ステップ</h2>
+                <h2 class="text-2xl font-bold mb-12 text-center text-text-main tracking-wide">導入ステップ</h2>
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
                     <div class="p-6 border-l-2 border-dark-border hover:border-uguisu-light transition">
                         <div class="text-text-muted font-mono text-sm mb-2">Step 01</div>
@@ -524,7 +515,7 @@
             <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
 
                 <div class="text-center mb-16">
-                    <h2 class="text-3xl font-bold text-text-main mb-4">よくあるご質問</h2>
+                    <h2 class="text-3xl font-bold text-text-main mb-4 tracking-wide">よくあるご質問</h2>
                 </div>
 
                 <div class="space-y-4 mb-20">
@@ -593,7 +584,7 @@
                 </div>
 
                 <div id="contact" class="py-12 text-center border-t border-dark-border scroll-mt-24">
-                    <h2 class="text-2xl font-bold text-text-main mb-4">お問い合わせ</h2>
+                    <h2 class="text-2xl font-bold text-text-main mb-4 tracking-wide">お問い合わせ</h2>
                     <p class="text-text-sub mb-4">
                         ご質問やサポートが必要な場合は、以下のメールアドレスまでご連絡ください。
                     </p>
