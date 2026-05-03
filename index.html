@@ -149,6 +149,11 @@
             opacity: 1;
             transform: scale(1.4);
         }
+
+        #cf-modal {
+            backdrop-filter: blur(4px);
+            cursor: zoom-out;
+        }
     </style>
     <meta name="google-site-verification" content="_BJ8SMDc7Ya_Lg_R5Nz0q-lN7LTn7AlXJ-XfUaDphx4" />
 </head>
@@ -380,7 +385,7 @@
                 <!-- 2カラム -->
 
                 <div class="hidden md:block">
-                    <div class="relative w-full max-w-6xl mx-auto h-[340px] flex items-center justify-center overflow-hidden">
+                    <div class="relative w-full max-w-6xl mx-auto h-[340px] flex items-center justify-center overflow-visible">
 
                         <div id="coverflow" class="relative w-full h-full">
 
@@ -842,6 +847,11 @@
         </div>
     </footer>
 
+    <!-- モーダル要素 -->
+    <div id="cf-modal" class="fixed inset-0 bg-black/80 flex items-center justify-center z-50 hidden">
+        <img id="cf-modal-img" class="max-w-[90%] max-h-[90%] rounded-lg shadow-2xl">
+    </div>
+
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             // モバイルメニュー
@@ -910,16 +920,25 @@
                 if (diff > total / 2) diff -= total;
                 if (diff < -total / 2) diff += total;
 
-                el.onclick = () => {
-                    if (diff === -1) moveCF(-1);
-                    if (diff === 1) moveCF(1);
-                };
+                el.onclick = null;
 
-                if (diff === 0) el.classList.add('cf-center');
-                else if (diff === -1) el.classList.add('cf-left');
-                else if (diff === 1) el.classList.add('cf-right');
-                else if (diff === -2) el.classList.add('cf-far-left');
-                else if (diff === 2) el.classList.add('cf-far-right');
+                if (diff === 0) {
+                    el.classList.add('cf-center');
+                    el.onclick = () => {
+                        const imgSrc = el.querySelector('img').src;
+                        openModal(imgSrc);
+                    };
+                } else if (diff === -1) {
+                    el.classList.add('cf-left');
+                    el.onclick = () => moveCF(-1);
+                } else if (diff === 1) {
+                    el.classList.add('cf-right');
+                    el.onclick = () => moveCF(1);
+                } else if (diff === -2) {
+                    el.classList.add('cf-far-left');
+                } else if (diff === 2) {
+                    el.classList.add('cf-far-right');
+                }
             });
 
             updateDots();
@@ -963,6 +982,17 @@
                 d.classList.toggle('active', i === cfIndex);
             });
         }
+
+        function openModal(src) {
+            const modal = document.getElementById('cf-modal');
+            const img = document.getElementById('cf-modal-img');
+            img.src = src;
+            modal.classList.remove('hidden');
+        }
+
+        document.getElementById('cf-modal').addEventListener('click', () => {
+            document.getElementById('cf-modal').classList.add('hidden');
+        });
 
         window.onload = () => {
             createDots();
