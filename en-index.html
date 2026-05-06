@@ -40,7 +40,6 @@
         }
     </script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&display=swap');
 
         body {
             font-family: 'Inter', 'Noto Sans', sans-serif;
@@ -507,15 +506,15 @@
                 <div class="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
                     <div class="border border-dark-border rounded-lg p-4 md:p-8 bg-dark-base flex flex-col">
                         <h3 class="text-lg font-bold text-text-main mb-2">Monthly Plan</h3>
-                        <div class="text-3xl font-bold text-text-main mb-6">¥7,980 <span
+                        <div class="text-3xl font-bold text-text-main mb-6">$59 <span
                                 class="text-sm font-normal text-text-muted">/ month</span></div>
                         <ul class="space-y-4 text-sm text-text-sub mb-8 flex-grow">
                             <li class="flex items-start"><span class="text-uguisu-light mr-3">✓</span> 7-day free trial</li>
                             <li class="flex items-start"><span class="text-uguisu-light mr-3">✓</span> Full access to all features</li>
                             <li class="flex items-start"><span class="text-uguisu-light mr-3">✓</span> Continuous updates</li>
                         </ul>
-                        <button
-                            class="w-full py-3 border border-dark-border text-text-main font-medium rounded hover:bg-dark-card transition">Select Plan</button>
+                        <a href="#"
+                            class="block text-center w-full py-3 border border-dark-border text-text-main font-medium rounded hover:bg-dark-card transition">Select Plan</a>
                     </div>
 
                     <div
@@ -524,7 +523,7 @@
                             class="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-uguisu text-white px-3 py-1 rounded-full text-[10px] font-bold tracking-widest">
                             RECOMMENDED</div>
                         <h3 class="text-lg font-bold text-text-main mb-2">Annual Plan</h3>
-                        <div class="text-3xl font-bold text-uguisu mb-6">¥79,800 <span
+                        <div class="text-3xl font-bold text-uguisu mb-6">$540 <span
                                 class="text-sm font-normal text-text-muted">/ year</span></div>
                         <ul class="space-y-4 text-sm text-text-main mb-8 flex-grow">
                             <li class="flex items-start"><span class="text-uguisu-light mr-3">✓</span> 7-day free trial</li>
@@ -532,21 +531,21 @@
                             <li class="flex items-start"><span class="text-uguisu-light mr-3">✓</span> Continuous updates</li>
                             <li class="flex items-start"><span class="text-uguisu-light mr-3">✓</span> Better value compared to monthly</li>
                         </ul>
-                        <button
-                            class="w-full py-3 bg-uguisu text-dark-base font-bold rounded hover:bg-uguisu-hover transition">Select Plan</button>
+                        <a href="#"
+                            class="block text-center w-full py-3 bg-uguisu text-dark-base font-bold rounded hover:bg-uguisu-hover transition">Select Plan</a>
                     </div>
 
                     <div class="border border-dark-border rounded-lg p-4 md:p-8 bg-dark-base flex flex-col">
                         <h3 class="text-lg font-bold text-text-main mb-2">Lifetime Plan</h3>
-                        <div class="text-3xl font-bold text-text-main mb-6">¥198,000 <span
-                                class="text-sm font-normal text-text-muted">/ one-time</span></div>
+                        <div class="text-3xl font-bold text-text-main mb-6">$1,300 <span
+                                class="text-sm font-normal text-text-muted">one-time</span></div>
                         <ul class="space-y-4 text-sm text-text-sub mb-8 flex-grow">
                             <li class="flex items-start"><span class="text-uguisu-light mr-3">✓</span> Lifetime license</li>
                             <li class="flex items-start"><span class="text-uguisu-light mr-3">✓</span> Full access to all features</li>
                             <li class="flex items-start"><span class="text-uguisu-light mr-3">✓</span> Includes major updates</li>
                         </ul>
-                        <button
-                            class="w-full py-3 border border-dark-border text-text-main font-medium rounded hover:bg-dark-card transition">Select Plan</button>
+                        <a href="#"
+                            class="block text-center w-full py-3 border border-dark-border text-text-main font-medium rounded hover:bg-dark-card transition">Select Plan</a>
                     </div>
                 </div>
             </div>
@@ -727,7 +726,7 @@
                             <div class="font-medium text-text-main border-t border-dark-border pt-4">Email</div>
                             <div class="sm:col-span-2 text-text-sub border-t border-dark-border pt-4"><a href="mailto:support@oichi-equipment.com" class="hover:text-uguisu transition">support@oichi-equipment.com</a></div>
                             <div class="font-medium text-text-main border-t border-dark-border pt-4">Pricing</div>
-                            <div class="sm:col-span-2 text-text-sub border-t border-dark-border pt-4">Monthly ¥7,980 / Annual ¥79,800 / Lifetime ¥198,000</div>
+                            <div class="sm:col-span-2 text-text-sub border-t border-dark-border pt-4">Monthly $59 / Annual $540 / Lifetime $1,300</div>
                             <div class="font-medium text-text-main border-t border-dark-border pt-4">Additional Costs</div>
                             <div class="sm:col-span-2 text-text-sub border-t border-dark-border pt-4">Internet communication fees</div>
                             <div class="font-medium text-text-main border-t border-dark-border pt-4">Payment Method</div>
@@ -736,8 +735,12 @@
                             <div class="sm:col-span-2 text-text-sub border-t border-dark-border pt-4">Available immediately after payment</div>
                             <div class="font-medium text-text-main border-t border-dark-border pt-4">Refund Policy</div>
                             <div class="sm:col-span-2 text-text-sub border-t border-dark-border pt-4 leading-relaxed">
-                                Due to the nature of digital products, no refunds are provided after purchase.<br>
+                                <p class="leading-relaxed mb-4">
+                                Due to the nature of digital products, no refunds are provided after purchase.
+                                </p>
+                                <p class="leading-relaxed">
                                 Subscription plans can be canceled anytime, but no partial refunds are issued.
+                                </p>
                             </div>
                         </div>
                     </div>
