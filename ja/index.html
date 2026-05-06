@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Synk Mushroom - Desktop Workflow Utility</title>
+    <title>Synk Mushroom - デスクトップ操作支援ソフトウェア</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -19,13 +19,13 @@
                             bg: '#161a11',
                         },
                         enji: {
-                            DEFAULT: '#7a2d2d', // Subdued red with reduced saturation
+                            DEFAULT: '#7a2d2d', // 彩度を落とした渋い赤
                             light: '#9b3f3f',
                             pale: '#d69e9e',
-                            bg: '#1c1212', // Dark red background almost black
+                            bg: '#1c1212', // ほぼ黒に近い赤背景
                         },
                         dark: {
-                            base: '#0c0d0c', // Tighter black
+                            base: '#0c0d0c', // より引き締まった黒
                             card: '#141614',
                             border: '#242824',
                         },
@@ -40,9 +40,10 @@
         }
     </script>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&display=swap');
 
         body {
-            font-family: 'Inter', 'Noto Sans', sans-serif;
+            font-family: 'Noto Sans JP', sans-serif;
             background-color: #0c0d0c;
             color: #f3f4f6;
         }
@@ -76,7 +77,7 @@
             }
         }
 
-        /* Gradient for UI image */
+        /* UIイメージ用のグラデーション */
         .ui-glow {
             box-shadow: 0 0 40px -10px rgba(82, 102, 44, 0.2);
         }
@@ -178,7 +179,6 @@
         }
     </style>
     <meta name="google-site-verification" content="_BJ8SMDc7Ya_Lg_R5Nz0q-lN7LTn7AlXJ-XfUaDphx4" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
 </head>
 
@@ -190,20 +190,20 @@
                 <div class="flex items-center justify-between w-full md:w-auto">
                     <a href="#hero" class="text-xl font-semibold tracking-[0.08em] text-uguisu hover:text-uguisu-hover transition logo-text">OICHI EQUIPMENT</a>
                     <div class="flex items-center gap-3">
-                        <div class="md:hidden text-sm font-medium text-text-sub"><a href="index.html" class="text-text-sub hover:text-uguisu transition">JA</a> / <a href="en-index.html" class="text-text-main hover:text-uguisu transition">EN</a></div>
+                        <div class="md:hidden text-sm font-medium text-text-sub"><a href="index.html" class="text-text-main hover:text-uguisu transition">JA</a> / <a href="../index.html" class="hover:text-uguisu transition">EN</a></div>
                         <button id="mobile-menu-btn" class="md:hidden text-text-main p-2 focus:outline-none">
                             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
                         </button>
                     </div>
                 </div>
                 <div id="nav-menu" class="hidden md:flex flex-col md:flex-row items-center space-y-4 md:space-y-0 space-x-0 md:space-x-5 text-sm font-medium absolute md:static top-16 left-0 w-full md:w-auto bg-dark-base/95 md:bg-transparent pb-4 md:pb-0 border-b border-dark-border md:border-none z-50">
-                    <a href="#problem" class="text-text-sub hover:text-uguisu transition">Overview</a>
-                    <a href="#features" class="text-text-sub hover:text-uguisu transition">Features</a>
-                    <a href="#interface" class="text-text-sub hover:text-uguisu transition">Interface</a>
-                    <a href="#pricing" class="text-text-sub hover:text-uguisu transition">Pricing</a>
+                    <a href="#problem" class="text-text-sub hover:text-uguisu transition">概要</a>
+                    <a href="#features" class="text-text-sub hover:text-uguisu transition">機能</a>
+                    <a href="#interface" class="text-text-sub hover:text-uguisu transition">システム</a>
+                    <a href="#pricing" class="text-text-sub hover:text-uguisu transition">料金</a>
                     <a href="#faq-section" class="text-text-sub hover:text-uguisu transition">FAQ</a>
-                    <a href="#legal-section" class="text-text-sub hover:text-uguisu transition">Legal</a>
-                    <div class="hidden md:block text-sm font-medium text-text-sub"><a href="index.html" class="text-text-sub hover:text-uguisu transition">JA</a> / <a href="en-index.html" class="text-text-main hover:text-uguisu transition">EN</a></div>
+                    <a href="#legal-section" class="text-text-sub hover:text-uguisu transition">法務表記</a>
+                    <div class="hidden md:block text-sm font-medium text-text-sub"><a href="index.html" class="text-text-main hover:text-uguisu transition">JA</a> / <a href="../index.html" class="hover:text-uguisu transition">EN</a></div>
                     <a href="#pricing"
                         class="bg-text-main text-dark-base px-5 py-2 rounded transition hover:bg-gray-300">Get
                         Started</a>
@@ -214,19 +214,19 @@
 
     <main class="pt-16">
 
-        <!-- Hero -->
+        <!-- ヒーロー -->
         <section id="hero"
             class="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pt-32 pb-16 md:pb-24 text-center overflow-hidden">
-            <img src="assets/images/hero.png"
+            <img src="../assets/images/hero.png"
                 class="absolute inset-0 w-full h-full object-cover opacity-20 pointer-events-none">
 
-            <!-- Left Fade -->
+            <!-- 左フェード -->
 
             <div
                 class="pointer-events-none absolute left-0 top-0 h-full w-40 bg-gradient-to-r from-dark-base to-transparent">
             </div>
 
-            <!-- Right Fade -->
+            <!-- 右フェード -->
 
             <div
                 class="pointer-events-none absolute right-0 top-0 h-full w-40 bg-gradient-to-l from-dark-base to-transparent">
@@ -241,10 +241,11 @@
                     Synk Mushroom
                 </h1>
                 <p class="text-2xl md:text-3xl font-medium text-text-main tracking-wide leading-snug mb-6">
-                    Once you experience this speed, there’s no going back.
+                    この速さは、もう戻れない
                 </p>
                 <p class="text-base md:text-lg text-text-sub leading-loose max-w-3xl mx-auto mb-10">
-                    Synk Mushroom is a desktop utility that streamlines on-screen operations and input handling across multiple applications, enabling more efficient and uninterrupted workflows.
+                    Synk Mushroomは、複数のアプリケーション環境における画面操作や入力処理を統合し、<br>
+                    無駄のないPC操作を実現するデスクトップユーティリティです。
                 </p>
                 <div class="flex flex-col sm:flex-row justify-center items-center gap-4">
                     <a href="#pricing"
@@ -259,14 +260,13 @@
             </div>
         </section>
 
-        <!-- Problem Statement -->
+        <!-- 問題提起 -->
         <section id="problem" class="py-24 md:py-24 bg-dark-card border-t border-dark-border">
             <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-16">
-                    <h2 class="text-3xl font-bold text-text-main mb-6 tracking-wide">Delays Caused by Fragmented Operations</h2>
+                    <h2 class="text-3xl font-bold text-text-main mb-6 tracking-wide">分断された操作による遅延</h2>
                     <p class="text-text-sub leading-relaxed max-w-3xl mx-auto">
-                        When working across multiple applications, switching screens, moving the cursor, and activating windows introduce small but constant interruptions.
-                        These physical steps create friction between intention and execution.
+                        複数のアプリケーションを同時に操作する際、画面間での視線移動、マウスの移動、ウィンドウのアクティブ化などの物理的なステップが、思考と入力の間に遅延を生み出しています。
                     </p>
                 </div>
 
@@ -274,71 +274,75 @@
                     <div
                         class="p-4 md:p-8 bg-dark-base border border-dark-border rounded-lg hover:border-text-muted shadow-lg hover:shadow-xl hover:-translate-y-1 transition">
                         <div class="text-text-muted font-mono text-sm mb-4">01.</div>
-                        <h3 class="text-lg font-bold text-text-main mb-3">Context Switching Interrupts Flow</h3>
+                        <h3 class="text-lg font-bold text-text-main mb-3">画面切替えで手が止まる</h3>
                         <p class="text-sm text-text-sub leading-relaxed">
-                            Each time you switch windows, your workflow is momentarily disrupted.
+                            画面を切り替えるたびに、操作の流れが一度途切れます。
+                            大きな問題ではないものの、その積み重ねがリズムを崩します。
                         </p>
                     </div>
                     <div
                         class="p-4 md:p-8 bg-dark-base border border-dark-border rounded-lg hover:border-text-muted shadow-lg hover:shadow-xl hover:-translate-y-1 transition">
                         <div class="text-text-muted font-mono text-sm mb-4">02.</div>
-                        <h3 class="text-lg font-bold text-text-main mb-3">Repetitive Actions Add Up</h3>
+                        <h3 class="text-lg font-bold text-text-main mb-3">同じ操作の繰り返し</h3>
                         <p class="text-sm text-text-sub leading-relaxed">
-                            Similar operations must be repeated across different environments, increasing unnecessary steps.
+                            別の画面でも同じような操作を繰り返す場面が出てきます。
+                            慣れていても、その分だけ動きは増えていきます。
                         </p>
                     </div>
                     <div
                         class="p-4 md:p-8 bg-dark-base border border-dark-border rounded-lg hover:border-text-muted shadow-lg hover:shadow-xl hover:-translate-y-1 transition">
                         <div class="text-text-muted font-mono text-sm mb-4">03.</div>
-                        <h3 class="text-lg font-bold text-text-main mb-3">Inconsistent Operating Environments</h3>
+                        <h3 class="text-lg font-bold text-text-main mb-3">操作環境に差がある</h3>
                         <p class="text-sm text-text-sub leading-relaxed">
-                            Differences in setup and configuration can lead to inconsistent user experiences and reduced efficiency.
+                            利用する環境や構成によっては、想定している操作環境がそのまま適用できない場合があります。
+                            同じ操作であっても、環境ごとに差が生じることで、一貫した操作性を保つことが難しくなります。
                         </p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Solution -->
+        <!-- ソリューション -->
         <section id="solution" class="py-16 md:py-24 bg-dark-base relative overflow-hidden">
             <div
                 class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-uguisu-bg to-dark-base opacity-50">
             </div>
             <div class="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                <h2 class="text-3xl font-bold text-uguisu-light mb-6 tracking-wide">Seamless Integration of Your Workspace</h2>
+                <h2 class="text-3xl font-bold text-uguisu-light mb-6 tracking-wide">環境のシームレスな統合</h2>
                 <p class="text-text-main leading-relaxed mb-10 text-lg">
-                    Synk Mushroom reduces these physical barriers by unifying window control and input handling into a single, streamlined interface.
-                    All operations are triggered directly by user actions, ensuring full control at all times.
+                    Synk Mushroomは、これらの物理的な操作の障壁を取り除くためのユーティリティです。
+                    ユーザーの手動操作をトリガーとして、ローカルアプリケーションのウィンドウ制御と
+                    入力処理を統合的かつスムーズに処理します。
                 </p>
                 <div
                     class="inline-flex items-center gap-3 p-4 border border-dark-border bg-dark-card rounded text-sm text-text-sub">
                     <span class="text-uguisu-light font-bold">i</span>
-                    <span>This software does not perform any automated decision-making or execution.</span>
+                    <span>本ソフトウェアはユーザーの操作を補助するものであり、判断や自動処理は行いません。</span>
                 </div>
             </div>
         </section>
 
-        <!-- Features (Details) -->
+        <!-- 機能（詳細） -->
         <section id="features" data-section="features" class="py-24 md:py-24 bg-dark-card border-y border-dark-border">
             <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="mb-20 text-center">
                     <h2 class="text-3xl font-bold text-text-main mb-4 tracking-wide">Technical Features</h2>
-                    <p class="text-text-sub">Designed to improve operational efficiency through structured control and input handling.</p>
+                    <p class="text-text-sub">操作性を向上させるための技術的アプローチ</p>
                 </div>
 
                 <div class="space-y-16">
                     <div class="flex flex-col md:flex-row gap-12 items-center">
                         <div class="md:w-5/12">
                             <div class="aspect-video rounded overflow-hidden border border-dark-border shadow-2xl">
-                                <img src="assets/images/feature-window.png" class="w-full h-full object-cover">
+                                <img src="../assets/images/feature-window.png" class="w-full h-full object-cover">
                             </div>
                         </div>
                         <div class="md:w-7/12">
                             <div class="text-uguisu text-xs font-mono tracking-[0.2em] mb-2">WINDOW MANAGEMENT
                             </div>
-                            <h3 class="text-2xl font-bold text-text-main mb-4">Operate Everything from One Place</h3>
+                            <h3 class="text-2xl font-bold text-text-main mb-4">すべてを一箇所で操作する</h3>
                             <p class="text-text-sub leading-relaxed">
-                                Access and control multiple application windows from a single interface, reducing the need for constant switching.
+                                複数の画面を見ながらでも、操作はすべて同じ場所から行えます。必要な操作をまとめて扱えるため、画面を行き来する回数を減らせます。
                             </p>
                         </div>
                     </div>
@@ -346,14 +350,14 @@
                     <div class="flex flex-col md:flex-row-reverse gap-12 items-center">
                         <div class="md:w-5/12">
                             <div class="aspect-video rounded overflow-hidden border border-dark-border shadow-2xl">
-                                <img src="assets/images/feature-input.png" class="w-full h-full object-cover">
+                                <img src="../assets/images/feature-input.png.png" class="w-full h-full object-cover">
                             </div>
                         </div>
                         <div class="md:w-7/12">
                             <div class="text-uguisu text-xs font-mono tracking-[0.2em] mb-2">INPUT PROCESSING</div>
-                            <h3 class="text-2xl font-bold text-text-main mb-4">Complete Actions Instantly</h3>
+                            <h3 class="text-2xl font-bold text-text-main mb-4">操作をその場で完結させる</h3>
                             <p class="text-text-sub leading-relaxed">
-                                Execute frequently used operations directly from the panel, minimizing repetitive movements and improving speed.
+                                操作はすべてパネル上で行います。よく使う操作をあらかじめ配置しておくことで、毎回同じ動きを繰り返す必要がなくなります。マウスの移動や画面の切り替えを減らしながら、必要な操作だけをその場で実行できます。
                             </p>
                         </div>
                     </div>
@@ -361,41 +365,43 @@
                     <div class="flex flex-col md:flex-row gap-12 items-center">
                         <div class="md:w-5/12">
                             <div class="aspect-video rounded overflow-hidden border border-dark-border shadow-2xl">
-                                <img src="assets/images/feature-local.png" class="w-full h-full object-cover">
+                                <img src="../assets/images/feature-local.png" class="w-full h-full object-cover">
                             </div>
                         </div>
                         <div class="md:w-7/12">
                             <div class="text-uguisu text-xs font-mono tracking-[0.2em] mb-2">LOCAL ENVIRONMENT
                             </div>
-                            <h3 class="text-2xl font-bold text-text-main mb-4">No External Latency</h3>
+                            <h3 class="text-2xl font-bold text-text-main mb-4">遅延を挟まない</h3>
                             <p class="text-text-sub leading-relaxed">
-                                All processes run locally, ensuring consistent and stable responsiveness without reliance on continuous external communication.
+                                すべての処理はローカル環境で完結します。
                             </p>
-                            
+                            <p class="text-text-sub leading-relaxed mt-4">
+                                外部との常時通信に依存しないため、操作に対して安定した反応が得られます。
+                            </p>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- UI Image -->
+        <!-- UIイメージ -->
         <section id="interface" class="py-16 md:py-24 bg-dark-base border-b border-dark-border">
             <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
                 <h2 class="text-3xl font-bold text-text-main mb-12 tracking-wide">Interface</h2>
 
-                <!-- Main -->
+                <!-- メイン -->
 
                 <div class="relative overflow-hidden mb-10 shadow-2xl">
 
-                    <img src="assets/images/ui-main.png" class="w-full h-auto object-cover block max-w-5xl mx-auto">
+                    <img src="../assets/images/ui-main.png" class="w-full h-auto object-cover block max-w-5xl mx-auto">
 
-                    <!-- Left Fade -->
+                    <!-- 左フェード -->
 
                     <div
                         class="pointer-events-none absolute left-0 top-0 h-full w-40 bg-gradient-to-r from-dark-base to-transparent">
                     </div>
 
-                    <!-- Right Fade -->
+                    <!-- 右フェード -->
 
                     <div
                         class="pointer-events-none absolute right-0 top-0 h-full w-40 bg-gradient-to-l from-dark-base to-transparent">
@@ -403,7 +409,7 @@
 
                 </div>
 
-                <!-- 2 Columns -->
+                <!-- 2カラム -->
 
                 <div class="hidden md:block">
                     <div class="relative w-full max-w-6xl mx-auto h-[340px] flex items-center justify-center overflow-visible">
@@ -412,49 +418,49 @@
 
                             <div class="cf-item">
                                 <div class="aspect-video overflow-hidden rounded-lg relative">
-                                    <img src="assets/images/01_overview.png" class="w-full h-full object-cover">
+                                    <img src="../assets/images/01_overview.png" class="w-full h-full object-cover">
                                     <div class="overlay"></div>
                                 </div>
                             </div>
                             <div class="cf-item">
                                 <div class="aspect-video overflow-hidden rounded-lg relative">
-                                    <img src="assets/images/02_trade_buttons.png" class="w-full h-full object-cover">
+                                    <img src="../assets/images/02_trade_buttons.png" class="w-full h-full object-cover">
                                     <div class="overlay"></div>
                                 </div>
                             </div>
                             <div class="cf-item">
                                 <div class="aspect-video overflow-hidden rounded-lg relative">
-                                    <img src="assets/images/03_floating_pl.png" class="w-full h-full object-cover">
+                                    <img src="../assets/images/03_floating_pl.png" class="w-full h-full object-cover">
                                     <div class="overlay"></div>
                                 </div>
                             </div>
                             <div class="cf-item">
                                 <div class="aspect-video overflow-hidden rounded-lg relative">
-                                    <img src="assets/images/04_balance_equity.png" class="w-full h-full object-cover">
+                                    <img src="../assets/images/04_balance_equity.png" class="w-full h-full object-cover">
                                     <div class="overlay"></div>
                                 </div>
                             </div>
                             <div class="cf-item">
                                 <div class="aspect-video overflow-hidden rounded-lg relative">
-                                    <img src="assets/images/05_positions_list.png" class="w-full h-full object-cover">
+                                    <img src="../assets/images/05_positions_list.png" class="w-full h-full object-cover">
                                     <div class="overlay"></div>
                                 </div>
                             </div>
                             <div class="cf-item">
                                 <div class="aspect-video overflow-hidden rounded-lg relative">
-                                    <img src="assets/images/06_full_status.png" class="w-full h-full object-cover">
+                                    <img src="../assets/images/06_full_status.png" class="w-full h-full object-cover">
                                     <div class="overlay"></div>
                                 </div>
                             </div>
                             <div class="cf-item">
                                 <div class="aspect-video overflow-hidden rounded-lg relative">
-                                    <img src="assets/images/07_workflow.png" class="w-full h-full object-cover">
+                                    <img src="../assets/images/07_workflow.png" class="w-full h-full object-cover">
                                     <div class="overlay"></div>
                                 </div>
                             </div>
                             <div class="cf-item">
                                 <div class="aspect-video overflow-hidden rounded-lg relative">
-                                    <img src="assets/images/08_clean_ui.png" class="w-full h-full object-cover">
+                                    <img src="../assets/images/08_clean_ui.png" class="w-full h-full object-cover">
                                     <div class="overlay"></div>
                                 </div>
                             </div>
@@ -467,54 +473,54 @@
 
                 <div class="flex md:hidden overflow-x-auto gap-4 px-4 snap-x snap-mandatory no-scrollbar">
 
-                    <img src="assets/images/01_overview.png"
+                    <img src="../assets/images/01_overview.png"
                         class="snap-center w-[85%] shrink-0 rounded-lg">
 
-                    <img src="assets/images/02_trade_buttons.png"
+                    <img src="../assets/images/02_trade_buttons.png"
                         class="snap-center w-[85%] shrink-0 rounded-lg">
 
-                    <img src="assets/images/03_floating_pl.png"
+                    <img src="../assets/images/03_floating_pl.png"
                         class="snap-center w-[85%] shrink-0 rounded-lg">
 
-                    <img src="assets/images/04_balance_equity.png"
+                    <img src="../assets/images/04_balance_equity.png"
                         class="snap-center w-[85%] shrink-0 rounded-lg">
 
-                    <img src="assets/images/05_positions_list.png"
+                    <img src="../assets/images/05_positions_list.png"
                         class="snap-center w-[85%] shrink-0 rounded-lg">
 
-                    <img src="assets/images/06_full_status.png"
+                    <img src="../assets/images/06_full_status.png"
                         class="snap-center w-[85%] shrink-0 rounded-lg">
 
-                    <img src="assets/images/07_workflow.png"
+                    <img src="../assets/images/07_workflow.png"
                         class="snap-center w-[85%] shrink-0 rounded-lg">
 
-                    <img src="assets/images/08_clean_ui.png"
+                    <img src="../assets/images/08_clean_ui.png"
                         class="snap-center w-[85%] shrink-0 rounded-lg">
 
                 </div>
             </div>
         </section>
 
-        <!-- Pricing -->
+        <!-- 料金 -->
         <section id="pricing" class="py-16 md:py-24 bg-dark-card">
             <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-16">
-                    <h2 class="text-3xl font-bold text-text-main mb-4 tracking-wide">Pricing Plans</h2>
-                    <p class="text-text-sub text-sm">All payments are securely processed through trusted external payment providers.</p>
+                    <h2 class="text-3xl font-bold text-text-main mb-4 tracking-wide">料金プラン</h2>
+                    <p class="text-text-sub text-sm">※ すべての決済はセキュリティ基準を満たした外部決済サービスを通じて行われます。</p>
                 </div>
 
                 <div class="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
                     <div class="border border-dark-border rounded-lg p-4 md:p-8 bg-dark-base flex flex-col">
-                        <h3 class="text-lg font-bold text-text-main mb-2">Monthly Plan</h3>
-                        <div class="text-3xl font-bold text-text-main mb-6">$59 <span
-                                class="text-sm font-normal text-text-muted">/ month</span></div>
+                        <h3 class="text-lg font-bold text-text-main mb-2">月額プラン</h3>
+                        <div class="text-3xl font-bold text-text-main mb-6">¥7,980 <span
+                                class="text-sm font-normal text-text-muted">/ 月</span></div>
                         <ul class="space-y-4 text-sm text-text-sub mb-8 flex-grow">
-                            <li class="flex items-start"><span class="text-uguisu-light mr-3">✓</span> 7-day free trial</li>
-                            <li class="flex items-start"><span class="text-uguisu-light mr-3">✓</span> Full access to all features</li>
-                            <li class="flex items-start"><span class="text-uguisu-light mr-3">✓</span> Continuous updates</li>
+                            <li class="flex items-start"><span class="text-uguisu-light mr-3">✓</span> 7日間無料トライアル</li>
+                            <li class="flex items-start"><span class="text-uguisu-light mr-3">✓</span> 全機能へのアクセス</li>
+                            <li class="flex items-start"><span class="text-uguisu-light mr-3">✓</span> 継続的なアップデート</li>
                         </ul>
-                        <a href="#"
-                            class="block text-center w-full py-3 border border-dark-border text-text-main font-medium rounded hover:bg-dark-card transition">Select Plan</a>
+                        <button
+                            class="w-full py-3 border border-dark-border text-text-main font-medium rounded hover:bg-dark-card transition">プランを選択</button>
                     </div>
 
                     <div
@@ -522,230 +528,355 @@
                         <div
                             class="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-uguisu text-white px-3 py-1 rounded-full text-[10px] font-bold tracking-widest">
                             RECOMMENDED</div>
-                        <h3 class="text-lg font-bold text-text-main mb-2">Annual Plan</h3>
-                        <div class="text-3xl font-bold text-uguisu mb-6">$540 <span
-                                class="text-sm font-normal text-text-muted">/ year</span></div>
+                        <h3 class="text-lg font-bold text-text-main mb-2">年額プラン</h3>
+                        <div class="text-3xl font-bold text-uguisu mb-6">¥79,800 <span
+                                class="text-sm font-normal text-text-muted">/ 年</span></div>
                         <ul class="space-y-4 text-sm text-text-main mb-8 flex-grow">
-                            <li class="flex items-start"><span class="text-uguisu-light mr-3">✓</span> 7-day free trial</li>
-                            <li class="flex items-start"><span class="text-uguisu-light mr-3">✓</span> Full access to all features</li>
-                            <li class="flex items-start"><span class="text-uguisu-light mr-3">✓</span> Continuous updates</li>
-                            <li class="flex items-start"><span class="text-uguisu-light mr-3">✓</span> Better value compared to monthly</li>
+                            <li class="flex items-start"><span class="text-uguisu-light mr-3">✓</span> 7日間無料トライアル</li>
+                            <li class="flex items-start"><span class="text-uguisu-light mr-3">✓</span> 全機能へのアクセス</li>
+                            <li class="flex items-start"><span class="text-uguisu-light mr-3">✓</span> 継続的なアップデート</li>
+                            <li class="flex items-start"><span class="text-uguisu-light mr-3">✓</span> 月額換算でお得</li>
                         </ul>
-                        <a href="#"
-                            class="block text-center w-full py-3 bg-uguisu text-dark-base font-bold rounded hover:bg-uguisu-hover transition">Select Plan</a>
+                        <button
+                            class="w-full py-3 bg-uguisu text-dark-base font-bold rounded hover:bg-uguisu-hover transition">プランを選択</button>
                     </div>
 
                     <div class="border border-dark-border rounded-lg p-4 md:p-8 bg-dark-base flex flex-col">
-                        <h3 class="text-lg font-bold text-text-main mb-2">Lifetime Plan</h3>
-                        <div class="text-3xl font-bold text-text-main mb-6">$1,300 <span
-                                class="text-sm font-normal text-text-muted">one-time</span></div>
+                        <h3 class="text-lg font-bold text-text-main mb-2">買い切りプラン</h3>
+                        <div class="text-3xl font-bold text-text-main mb-6">¥198,000 <span
+                                class="text-sm font-normal text-text-muted">/ 一括</span></div>
                         <ul class="space-y-4 text-sm text-text-sub mb-8 flex-grow">
-                            <li class="flex items-start"><span class="text-uguisu-light mr-3">✓</span> Lifetime license</li>
-                            <li class="flex items-start"><span class="text-uguisu-light mr-3">✓</span> Full access to all features</li>
-                            <li class="flex items-start"><span class="text-uguisu-light mr-3">✓</span> Includes major updates</li>
+                            <li class="flex items-start"><span class="text-uguisu-light mr-3">✓</span> 永続ライセンス</li>
+                            <li class="flex items-start"><span class="text-uguisu-light mr-3">✓</span> 全機能へのアクセス</li>
+                            <li class="flex items-start"><span class="text-uguisu-light mr-3">✓</span> メジャーアップデート対応</li>
                         </ul>
-                        <a href="#"
-                            class="block text-center w-full py-3 border border-dark-border text-text-main font-medium rounded hover:bg-dark-card transition">Select Plan</a>
+                        <button
+                            class="w-full py-3 border border-dark-border text-text-main font-medium rounded hover:bg-dark-card transition">プランを選択</button>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Onboarding -->
+        <!-- 導入手順 -->
         <section id="onboarding" class="py-20 bg-[#0e0f0e] border-y border-dark-border">
             <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-                <h2 class="text-2xl font-bold mb-12 text-center text-text-main tracking-wide">Getting Started</h2>
+                <h2 class="text-2xl font-bold mb-12 text-center text-text-main tracking-wide">導入ステップ</h2>
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
                     <div class="p-6 border-l-2 border-dark-border hover:border-[#52662c] transition group">
                         <div class="text-text-muted font-mono text-sm mb-2 group-hover:text-[#52662c] transition">Step 01</div>
-                        <h4 class="font-bold text-text-main mb-2">Create an Account</h4>
-                        <p class="text-xs text-text-sub leading-relaxed">Register your email address on the website to create an account.</p>
+                        <h4 class="font-bold text-text-main mb-2">アカウント登録</h4>
+                        <p class="text-xs text-text-sub leading-relaxed">Webサイトからメールアドレスを登録し、アカウントを作成します。</p>
                     </div>
                     <div class="p-6 border-l-2 border-dark-border hover:border-[#52662c] transition group">
                         <div class="text-text-muted font-mono text-sm mb-2 group-hover:text-[#52662c] transition">Step 02</div>
-                        <h4 class="font-bold text-text-main mb-2">Select Plan & Payment</h4>
-                        <p class="text-xs text-text-sub leading-relaxed">Complete the payment process using a secure external payment provider.</p>
+                        <h4 class="font-bold text-text-main mb-2">プラン選択・決済</h4>
+                        <p class="text-xs text-text-sub leading-relaxed">希望のプランを選択し、外部決済サービスにて手続きを完了させます。</p>
                     </div>
                     <div class="p-6 border-l-2 border-dark-border hover:border-[#52662c] transition group">
                         <div class="text-text-muted font-mono text-sm mb-2 group-hover:text-[#52662c] transition">Step 03</div>
-                        <h4 class="font-bold text-text-main mb-2">Download Software</h4>
-                        <p class="text-xs text-text-sub leading-relaxed">Download and install the software from your personal page.</p>
+                        <h4 class="font-bold text-text-main mb-2">ソフトウェア取得</h4>
+                        <p class="text-xs text-text-sub leading-relaxed">マイページよりインストーラーをダウンロードしインストールします。</p>
                     </div>
                     <div class="p-6 border-l-2 border-dark-border hover:border-[#52662c] transition group">
                         <div class="text-text-muted font-mono text-sm mb-2 group-hover:text-[#52662c] transition">Step 04</div>
-                        <h4 class="font-bold text-text-main mb-2">Local Setup</h4>
-                        <p class="text-xs text-text-sub leading-relaxed">Configure target windows and key bindings to start using the software.</p>
+                        <h4 class="font-bold text-text-main mb-2">ローカル設定</h4>
+                        <p class="text-xs text-text-sub leading-relaxed">対象のウィンドウやキーバインドを設定して利用を開始します。</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- FAQ Area -->
+        <!-- FAQエリア -->
         <section id="faq-section" class="py-16 md:py-24 bg-dark-base">
             <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
 
                 <div class="text-center mb-16">
-                    <h2 class="text-3xl font-bold text-text-main mb-4 tracking-wide">FAQ</h2>
+                    <h2 class="text-3xl font-bold text-text-main mb-4 tracking-wide">よくあるご質問</h2>
                 </div>
 
                 <div class="space-y-4 mb-20">
                     <div class="border border-dark-border rounded bg-dark-card hover:border-text-muted transition">
                         <button
                             class="accordion-btn w-full px-6 py-5 text-left font-bold text-text-main flex justify-between items-center focus:outline-none">
-                            Does this software perform automated actions or decisions?
+                            このソフトウェアは自動で処理や判断を行ってくれますか？
                             <span class="text-text-muted font-mono text-lg font-normal">+</span>
                         </button>
                         <div class="accordion-content bg-dark-base px-6">
                             <p class="py-5 text-text-sub text-sm leading-relaxed border-t border-dark-border">
-                                No. This software does not include any automation, bots, or decision-making functions. All actions are executed manually by the user.
+                                いいえ。本ソフトウェアに自動化、bot、AIによる判断機能などは一切搭載されていません。ユーザー自身の物理的な手動操作があって初めて動作するインターフェースツールです。
                             </p>
                         </div>
                     </div>
                     <div class="border border-dark-border rounded bg-dark-card hover:border-text-muted transition">
                         <button
                             class="accordion-btn w-full px-6 py-5 text-left font-bold text-text-main flex justify-between items-center focus:outline-none">
-                            Does it communicate with external servers?
+                            外部サーバーとの通信は発生しますか？
                             <span class="text-text-muted font-mono text-lg font-normal">+</span>
                         </button>
                         <div class="accordion-content bg-dark-base px-6">
                             <p class="py-5 text-text-sub text-sm leading-relaxed border-t border-dark-border">
-                                Communication occurs only for license verification and update checks. No operational data is transmitted externally.
+                                起動時のライセンス有効性確認およびアップデート確認のためにのみ通信を行います。操作内容やデータが外部へ送信されることはありません。
                             </p>
                         </div>
                     </div>
                     <div class="border border-dark-border rounded bg-dark-card hover:border-text-muted transition">
                         <button
                             class="accordion-btn w-full px-6 py-5 text-left font-bold text-text-main flex justify-between items-center focus:outline-none">
-                            What environments does it support?
+                            具体的にどのような環境と連携できますか？
                             <span class="text-text-muted font-mono text-lg font-normal">+</span>
                         </button>
                         <div class="accordion-content bg-dark-base px-6">
                             <p class="py-5 text-text-sub text-sm leading-relaxed border-t border-dark-border">
-                                It is designed for general desktop applications.
+                                本ソフトウェアは、OS上で動作する一般的なウィンドウアプリケーションを対象とします。<br>
+                                例として、ブラウザベースの分析ツール（例：TradingView）の画面配置と、ローカルアプリケーション（例：MetaTrader
+                                5）の操作入力を配置や操作の効率化を補助する用途などにご利用いただけます。
                             </p>
                         </div>
                     </div>
                     <div class="border border-dark-border rounded bg-dark-card hover:border-text-muted transition">
                         <button
                             class="accordion-btn w-full px-6 py-5 text-left font-bold text-text-main flex justify-between items-center focus:outline-none">
-                            Does it include API or external integrations?
+                            APIや外部システムとの接続機能はありますか？
                             <span class="text-text-muted font-mono text-lg font-normal">+</span>
                         </button>
                         <div class="accordion-content bg-dark-base px-6">
                             <p class="py-5 text-text-sub text-sm leading-relaxed border-t border-dark-border">
-                                No. This software does not provide direct API connections or external system integrations.
+                                本ソフトウェアは外部サービスと直接接続するAPI機能は提供していません。OS上のウィンドウ操作と入力補助に限定されたローカルツールです。
+                            </p>
+                        </div>
+                    </div>
+                    <div class="border border-dark-border rounded bg-dark-card hover:border-text-muted transition">
+                        <button
+                            class="accordion-btn w-full px-6 py-5 text-left font-bold text-text-main flex justify-between items-center focus:outline-none">
+                            このソフトは特定の用途に限定されていますか？
+                            <span class="text-text-muted font-mono text-lg font-normal">+</span>
+                        </button>
+                        <div class="accordion-content bg-dark-base px-6">
+                            <p class="py-5 text-text-sub text-sm leading-relaxed border-t border-dark-border">
+                                本ソフトウェアは特定の用途に限定されず、複数のアプリケーションを扱う環境で操作性を向上させるための汎用ユーティリティです。
                             </p>
                         </div>
                     </div>
                 </div>
 
                 <div id="contact" class="py-12 text-center border-t border-dark-border scroll-mt-24">
-                    <h2 class="text-2xl font-bold text-text-main mb-4 tracking-wide">Contact</h2>
+                    <h2 class="text-2xl font-bold text-text-main mb-4 tracking-wide">お問い合わせ</h2>
                     <p class="text-text-sub mb-4">
-                        If you have any questions or need support, please contact us at the following email address.
+                        ご質問やサポートが必要な場合は、以下のメールアドレスまでご連絡ください。
                     </p>
                     <p class="text-lg text-text-main">
                         support@oichi-equipment.com
                     </p>
                 </div>
 
-                <!-- Notices -->
+                <!-- 注意事項 -->
                 <div id="legal-section" class="scroll-mt-24"></div>
                 <div class="mb-16 p-4 md:p-8 border border-enji-light/30 bg-enji-bg rounded-lg">
                     <div class="flex items-center gap-3 mb-6 border-b border-enji-light/20 pb-4">
                         <span
                             class="flex items-center justify-center w-6 h-6 rounded-full bg-enji-light/20 text-enji-pale text-xs font-bold">!</span>
-                        <h2 class="text-lg font-bold text-white tracking-wide">Compliance and Disclaimer</h2>
+                        <h2 class="text-lg font-bold text-white tracking-wide">コンプライアンスと免責事項</h2>
                     </div>
                     <ul class="space-y-4 text-sm text-text-sub list-none">
                         <li class="flex items-start">
                             <span class="text-enji-pale mr-3 mt-0.5">-</span>
-                            <span>This software is a general-purpose utility designed to improve operational efficiency within a local PC environment.</span>
+                            <span>本製品は、ローカルPC環境におけるアプリケーション間の操作性を向上させるための汎用ユーティリティソフトウェアです。</span>
                         </li>
                         <li class="flex items-start">
                             <span class="text-enji-pale mr-3 mt-0.5">-</span>
-                            <span>It does not provide financial advice, data services, or investment-related functionality of any kind.</span>
+                            <span>いかなる形においても、金融商品取引法に基づく投資助言、データ提供、投資運用、またはそれに類するサービスを提供するものではありません。</span>
                         </li>
                         <li class="flex items-start">
                             <span class="text-enji-pale mr-3 mt-0.5">-</span>
-                            <span>The software does not include any features intended to automate trading, guarantee outcomes, or execute transactions on behalf of the user.</span>
+                            <span>本ソフトウェアには、市場の優位性を高める機能、利益を保証する機能、または取引処理を自動化・代行する機能（EA、自動売買bot等）は一切含まれていません。</span>
                         </li>
                         <li class="flex items-start">
                             <span class="text-enji-pale mr-3 mt-0.5">-</span>
-                            <span>All operations are performed solely based on the user’s manual input and responsibility.</span>
+                            <span>連携先アプリケーションに対する操作の入力およびソフトウェアへの反映は、すべてユーザーご自身の完全な判断と責任において実行されます。</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-enji-pale mr-3 mt-0.5">-</span>
+                            <span>本ソフトウェアの利用、設定の誤り、または利用不能によって生じたいかなる直接的・間接的な損害についても、開発者およびOichi
+                                Equipmentは一切の責任を負いません。</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-enji-pale mr-3 mt-0.5">-</span>
+                            <span>本ソフトウェアは金融市場データの提供、注文処理、またはブローカーとの直接的な通信機能を提供しません。</span>
                         </li>
                     </ul>
                 </div>
 
-                <!-- Legal Tabs -->
+                <!-- 法務タブ -->
                 <div class="border-t border-dark-border pt-16">
                     <div class="flex flex-wrap border-b border-dark-border mb-8" id="legalTabs">
                         <button
                             class="px-5 py-3 font-bold text-text-main border-b-2 border-text-main bg-transparent focus:outline-none transition text-sm"
-                            onclick="switchTab('tab-terms', this)">Terms of Service</button>
+                            onclick="switchTab('tab-terms', this)">利用規約</button>
                         <button
                             class="px-5 py-3 font-medium text-text-sub hover:text-text-main border-b-2 border-transparent focus:outline-none transition text-sm"
-                            onclick="switchTab('tab-privacy', this)">Privacy Policy</button>
+                            onclick="switchTab('tab-privacy', this)">プライバシーポリシー</button>
                         <button
                             class="px-5 py-3 font-medium text-text-sub hover:text-text-main border-b-2 border-transparent focus:outline-none transition text-sm"
-                            onclick="switchTab('tab-tokushoho', this)">Legal Disclosure</button>
+                            onclick="switchTab('tab-tokushoho', this)">特定商取引法表記</button>
                     </div>
 
                     <div id="tab-terms" class="tab-content active text-sm text-text-sub space-y-6 p-2">
                         <div>
-                            <p class="leading-relaxed mb-4">This agreement defines the terms of use for the software "Synk Mushroom" provided by Oichi Equipment.</p>
-                            <p class="leading-relaxed mb-4">The software is a utility tool designed to improve operational efficiency within a local PC environment. It does not provide financial advice or investment-related services.</p>
-                            <p class="leading-relaxed mb-4">Users are granted a non-exclusive, non-transferable license for personal use only.</p>
-                            <p class="leading-relaxed mb-4">Users are responsible for managing their accounts and licenses. Unauthorized use may result in suspension.</p>
-                            <p class="leading-relaxed mb-4">The company may modify or discontinue the software without prior notice.</p>
-                            <p class="leading-relaxed mb-4">All intellectual property rights belong to Oichi Equipment.</p>
-                            <p class="leading-relaxed mb-4">The company does not guarantee accuracy, reliability, or outcomes. All usage is at the user's own risk.</p>
+                            <h4 class="font-bold text-text-main mb-2">第1条（目的と適用）</h4>
+                            <p class="leading-relaxed">本規約は、Oichi Equipment（以下「当社」といいます）が提供するソフトウェア「Synk
+                                Mushroom」（以下「本ソフトウェア」）の利用条件を定めるものです。ユーザーは本規約に同意したうえで本ソフトウェアを利用するものとします。</p>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-text-main mb-2">第2条（本ソフトウェアの性質）</h4>
+                            <p class="leading-relaxed">
+                                本ソフトウェアは、ユーザーのローカルPC環境における操作性を向上させるためのユーティリティツールです。投資助言、金融データ提供、投資運用、またはそれに類するサービスを提供するものではありません。
+                            </p>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-text-main mb-2">第3条（利用許諾）</h4>
+                            <p class="leading-relaxed">
+                                当社は、ユーザーに対し、本ソフトウェアを非独占的・譲渡不能・再許諾不可の条件で使用する権利を付与します。ユーザーは本ソフトウェアを自己の利用目的の範囲内でのみ使用することができます。
+                            </p>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-text-main mb-2">第4条（アカウントおよびライセンス管理）</h4>
+                            <p class="leading-relaxed">
+                                ユーザーは、自己の責任においてアカウントおよびライセンス情報を管理するものとします。不正使用が確認された場合、当社は利用停止措置を講じることがあります。</p>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-text-main mb-2">第5条（料金および支払）</h4>
+                            <p class="leading-relaxed">
+                                本ソフトウェアの利用には、当社が定める料金が発生します。支払は外部決済サービスを通じて行われます。サブスクリプションプランは自動更新され、解約しない限り継続されます。</p>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-text-main mb-2">第6条（禁止事項）</h4>
+                            <p class="leading-relaxed">ユーザーは以下の行為を行ってはなりません。</p>
+                            <ul class="list-none space-y-2 mt-2">
+                                <li class="flex"><span
+                                        class="mr-2 text-text-muted">・</span><span>法令または公序良俗に違反する行為</span></li>
+                                <li class="flex"><span
+                                        class="mr-2 text-text-muted">・</span><span>本ソフトウェアの改変、リバースエンジニアリング</span></li>
+                                <li class="flex"><span
+                                        class="mr-2 text-text-muted">・</span><span>不正アクセスまたは過度な負荷をかける行為</span></li>
+                                <li class="flex"><span class="mr-2 text-text-muted">・</span><span>第三者の権利を侵害する行為</span>
+                                </li>
+                                <li class="flex"><span
+                                        class="mr-2 text-text-muted">・</span><span>本ソフトウェアを利用した不正行為</span></li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-text-main mb-2">第7条（サービスの変更・停止）</h4>
+                            <p class="leading-relaxed">当社は、事前の通知なく本ソフトウェアの内容を変更、または提供を停止することができます。</p>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-text-main mb-2">第8条（知的財産権）</h4>
+                            <p class="leading-relaxed">本ソフトウェアに関する著作権その他の知的財産権は、すべて当社に帰属します。</p>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-text-main mb-2">第9条（免責事項）</h4>
+                            <p class="leading-relaxed">
+                                当社は、本ソフトウェアの完全性、有用性、正確性を保証しません。ユーザーの操作およびその結果については、すべてユーザー自身の責任とします。当社は本ソフトウェアの利用により生じたいかなる損害についても責任を負いません。
+                            </p>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-text-main mb-2">第10条（契約解除）</h4>
+                            <p class="leading-relaxed">ユーザーが本規約に違反した場合、当社は事前通知なく利用停止または契約解除を行うことができます。</p>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-text-main mb-2">第11条（準拠法および管轄）</h4>
+                            <p class="leading-relaxed">本規約は日本法に準拠し、本サービスに関して生じる紛争については当社所在地を管轄する裁判所を専属的合意管轄とします。</p>
                         </div>
                     </div>
 
                     <div id="tab-privacy" class="tab-content text-sm text-text-sub space-y-6 p-2">
+                        <p class="leading-relaxed">Oichi
+                            Equipment（以下「当社」）は、提供するソフトウェアおよびサービスにおける個人情報の取り扱いについて、以下のとおり定めます。</p>
                         <div>
-                            <p class="leading-relaxed mb-4">We collect basic account information such as email addresses and payment-related data through external services.</p>
-                            <p class="leading-relaxed mb-4">Collected data is used for service operation, license management, support, and fraud prevention.</p>
-                            <p class="leading-relaxed mb-4">We do not share personal data with third parties except when required by law or necessary for payment processing.</p>
-                            <p class="leading-relaxed mb-4">We may use cookies to improve user experience.</p>
-                            <p class="leading-relaxed mb-4">User data is stored only as long as necessary.</p>
-                            <p class="leading-relaxed mb-4">We implement reasonable security measures to protect data.</p>
-                            <p class="leading-relaxed mb-4">Users may request access, correction, or deletion of their data.</p>
+                            <h4 class="font-bold text-text-main mb-2">1. 収集する情報</h4>
+                            <ul class="list-none space-y-2">
+                                <li class="flex"><span
+                                        class="mr-2 text-text-muted">・</span><span>メールアドレス等のアカウント情報</span></li>
+                                <li class="flex"><span
+                                        class="mr-2 text-text-muted">・</span><span>決済に関連する情報（外部決済サービスを通じて取得）</span></li>
+                                <li class="flex"><span
+                                        class="mr-2 text-text-muted">・</span><span>ログ情報（IPアドレス、アクセス履歴、エラーログ等）</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-text-main mb-2">2. 利用目的</h4>
+                            <ul class="list-none space-y-2">
+                                <li class="flex"><span class="mr-2 text-text-muted">・</span><span>サービス提供および運営</span>
+                                </li>
+                                <li class="flex"><span class="mr-2 text-text-muted">・</span><span>ライセンス管理</span></li>
+                                <li class="flex"><span class="mr-2 text-text-muted">・</span><span>サポート対応</span></li>
+                                <li class="flex"><span class="mr-2 text-text-muted">・</span><span>不正利用の防止</span></li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-text-main mb-2">3. 第三者提供</h4>
+                            <p class="leading-relaxed">法令に基づく場合を除き、ユーザーの同意なく第三者へ提供しません。ただし決済処理等に必要な業務委託先は除きます。</p>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-text-main mb-2">4. Cookie等の利用</h4>
+                            <p class="leading-relaxed">当社は、サービスの利便性向上のためCookie等を使用する場合があります。</p>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-text-main mb-2">5. データ保存期間</h4>
+                            <p class="leading-relaxed">収集した情報は、利用目的の達成に必要な期間保持します。</p>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-text-main mb-2">6. セキュリティ</h4>
+                            <p class="leading-relaxed">当社は、情報の漏洩防止のため合理的な安全対策を講じます。</p>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-text-main mb-2">7. ユーザーの権利</h4>
+                            <p class="leading-relaxed">ユーザーは自己の個人情報について、開示・訂正・削除を求めることができます。</p>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-text-main mb-2">8. 改定</h4>
+                            <p class="leading-relaxed">本ポリシーは必要に応じて変更されることがあります。</p>
                         </div>
                     </div>
 
                     <div id="tab-tokushoho" class="tab-content text-sm text-text-sub">
                         <div class="grid grid-cols-1 sm:grid-cols-3 gap-y-4 gap-x-4 p-2">
-                            <div class="font-medium text-text-main">Business Name</div>
+                            <div class="font-medium text-text-main">販売事業者名</div>
                             <div class="sm:col-span-2 text-text-sub">Oichi Equipment</div>
-                            <div class="font-medium text-text-main border-t border-dark-border pt-4">Representative</div>
-                            <div class="sm:col-span-2 text-text-sub border-t border-dark-border pt-4">Tadayoshi Nishikawa</div>
-                            <div class="font-medium text-text-main border-t border-dark-border pt-4">Address</div>
-                            <div class="sm:col-span-2 text-text-sub border-t border-dark-border pt-4">Kumamoto, Japan</div>
-                            <div class="font-medium text-text-main border-t border-dark-border pt-4">Email</div>
-                            <div class="sm:col-span-2 text-text-sub border-t border-dark-border pt-4"><a href="mailto:support@oichi-equipment.com" class="hover:text-uguisu transition">support@oichi-equipment.com</a></div>
-                            <div class="font-medium text-text-main border-t border-dark-border pt-4">Pricing</div>
-                            <div class="sm:col-span-2 text-text-sub border-t border-dark-border pt-4">Monthly $59 / Annual $540 / Lifetime $1,300</div>
-                            <div class="font-medium text-text-main border-t border-dark-border pt-4">Additional Costs</div>
-                            <div class="sm:col-span-2 text-text-sub border-t border-dark-border pt-4">Internet communication fees</div>
-                            <div class="font-medium text-text-main border-t border-dark-border pt-4">Payment Method</div>
-                            <div class="sm:col-span-2 text-text-sub border-t border-dark-border pt-4">External payment providers</div>
-                            <div class="font-medium text-text-main border-t border-dark-border pt-4">Delivery</div>
-                            <div class="sm:col-span-2 text-text-sub border-t border-dark-border pt-4">Available immediately after payment</div>
-                            <div class="font-medium text-text-main border-t border-dark-border pt-4">Refund Policy</div>
+                            <div class="font-medium text-text-main border-t border-dark-border pt-4">代表責任者</div>
+                            <div class="sm:col-span-2 text-text-sub border-t border-dark-border pt-4">西川忠孝</div>
+                            <div class="font-medium text-text-main border-t border-dark-border pt-4">所在地</div>
+                            <div class="sm:col-span-2 text-text-sub border-t border-dark-border pt-4">〒868-0092
+                                熊本県球磨郡山江村山田丁2435</div>
+                            <div class="font-medium text-text-main border-t border-dark-border pt-4">電話番号</div>
+                            <div class="sm:col-span-2 text-text-sub border-t border-dark-border pt-4">080-1775-6028
+                            </div>
+                            <div class="font-medium text-text-main border-t border-dark-border pt-4">メールアドレス</div>
+                            <div class="sm:col-span-2 text-text-sub border-t border-dark-border pt-4">
+                                support@oichi-equipment.com</div>
+                            <div class="font-medium text-text-main border-t border-dark-border pt-4">販売価格</div>
+                            <div class="sm:col-span-2 text-text-sub border-t border-dark-border pt-4">月額 ¥7,980、年額
+                                ¥79,800、買い切り ¥198,000</div>
+                            <div class="font-medium text-text-main border-t border-dark-border pt-4">必要料金</div>
+                            <div class="sm:col-span-2 text-text-sub border-t border-dark-border pt-4">
+                                ソフトウェアのダウンロードおよび利用に伴うインターネット通信料</div>
+                            <div class="font-medium text-text-main border-t border-dark-border pt-4">支払方法</div>
+                            <div class="sm:col-span-2 text-text-sub border-t border-dark-border pt-4">
+                                外部決済サービスによるクレジットカード決済等</div>
+                            <div class="font-medium text-text-main border-t border-dark-border pt-4">支払時期</div>
+                            <div class="sm:col-span-2 text-text-sub border-t border-dark-border pt-4">
+                                月額/年額プラン：7日間の無料トライアル終了後に初回決済。<br>買い切りプラン：購入申し込み時に一括決済。</div>
+                            <div class="font-medium text-text-main border-t border-dark-border pt-4">引渡時期</div>
+                            <div class="sm:col-span-2 text-text-sub border-t border-dark-border pt-4">
+                                決済手続き完了後、マイページより直ちにダウンロード可能。</div>
+                            <div class="font-medium text-text-main border-t border-dark-border pt-4">返品・キャンセル</div>
                             <div class="sm:col-span-2 text-text-sub border-t border-dark-border pt-4 leading-relaxed">
-                                <p class="leading-relaxed mb-4">
-                                Due to the nature of digital products, no refunds are provided after purchase.
-                                </p>
-                                <p class="leading-relaxed">
-                                Subscription plans can be canceled anytime, but no partial refunds are issued.
-                                </p>
+                                デジタルコンテンツという商品の性質上、購入後の返品・返金には一切応じられません。<br>
+                                ・月額/年額プラン：解約はいつでも可能。解約後の日割り計算等の返金はいたしません。<br>
+                                ・買い切りプラン：購入後のキャンセル・返金不可。
                             </div>
                         </div>
                     </div>
-
-                </div>
 
                 </div>
 
@@ -753,7 +884,7 @@
         </section>
 
         <div class="mb-2 text-center">
-            <div class="text-xs font-medium text-text-sub"><a href="index.html" class="text-text-sub hover:text-uguisu transition">JA</a> / <a href="en-index.html" class="text-text-main hover:text-uguisu transition">EN</a></div>
+            <div class="text-xs font-medium text-text-sub"><a href="index.html" class="text-text-main hover:text-uguisu transition">JA</a> / <a href="../index.html" class="hover:text-uguisu transition">EN</a></div>
         </div>
 
     </main>
@@ -768,14 +899,14 @@
         </div>
     </footer>
 
-    <!-- Modal Element -->
+    <!-- モーダル要素 -->
     <div id="cf-modal" class="fixed inset-0 bg-black/80 flex items-center justify-center z-50 hidden">
         <img id="cf-modal-img" class="max-w-[90%] max-h-[90%] rounded-lg shadow-2xl">
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            // Mobile Menu
+            // モバイルメニュー
             const mobileBtn = document.getElementById('mobile-menu-btn');
             const navMenu = document.getElementById('nav-menu');
             if (mobileBtn && navMenu) {
@@ -784,7 +915,7 @@
                     navMenu.classList.toggle('flex');
                 });
 
-                // Close menu on nav link click
+                // ナビメニュー内のリンククリック時にメニューを閉じる
                 const navLinks = navMenu.querySelectorAll('a');
                 navLinks.forEach(link => {
                     link.addEventListener('click', () => {
@@ -794,7 +925,7 @@
                 });
             }
 
-            // Accordion behavior
+            // アコーディオンの挙動
             const accBtns = document.querySelectorAll('.accordion-btn');
             accBtns.forEach(btn => {
                 btn.addEventListener('click', function () {
@@ -812,7 +943,7 @@
             });
         });
 
-        // Tab switching
+        // タブの切り替え
         function switchTab(tabId, element) {
             document.querySelectorAll('.tab-content').forEach(tab => {
                 tab.classList.remove('active');
@@ -838,7 +969,7 @@
             const items = document.querySelectorAll('.cf-item');
             const total = items.length;
 
-            // Always normalize cfIndex
+            // cfIndexを常に正規化
             cfIndex = ((cfIndex % total) + total) % total;
 
             items.forEach((el, i) => {
@@ -846,7 +977,7 @@
 
                 let diff = i - cfIndex;
 
-                // Loop correction (important)
+                // ループ補正（ここが重要）
                 if (diff > total / 2) diff -= total;
                 if (diff < -total / 2) diff += total;
 
