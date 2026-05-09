@@ -205,7 +205,11 @@ export default function SynkAnalyze() {
       <header className={`h-12 border-b ${THEME.panelBorder} ${THEME.panel} flex items-center px-4 justify-between shrink-0`}>
         <div className="flex items-center gap-4">
           <div className={`flex items-center gap-2 ${THEME.textPrimary} font-semibold`}>
-            <img src="/analyze/logo-mark.png" className="w-5 h-5 object-contain" alt="Synk Logo" />
+            <img 
+              src="/analyze/logo-mark.png" 
+              alt="Synk Mushroom" 
+              className="w-8 h-8 object-contain" 
+            />
             <span className="tracking-tight text-sm">
               Synk Mushroom <span className={`${THEME.textSecondary} font-normal tracking-wide ml-1`}>Analyze</span>
             </span>
