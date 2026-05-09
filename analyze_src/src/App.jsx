@@ -1,576 +1,491 @@
-import { useMemo, useState } from "react";
+import React, { useState, useMemo, useRef } from 'react';
+import { 
+  Activity, Upload, AlertTriangle, Server, 
+  Search, BarChart3, Database,
+  AlertCircle, ArrowRightLeft, Crosshair, X, Network
+} from 'lucide-react';
+import { 
+  LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, 
+  ResponsiveContainer, ReferenceLine
+} from 'recharts';
 
-export default function SynkMushroomAnalyze() {
-  const [events, setEvents] = useState([]);
-  const [currentFile, setCurrentFile] = useState(null);
-  const [history, setHistory] = useState([]);
+// 純粋なダークグレー（Zinc系）で統一したパレット
+const THEME = {
+  bg: 'bg-[#09090B]', 
+  panel: 'bg-[#121214]', 
+  panelBorder: 'border-[#27272A]', 
+  radius: 'rounded-[3px]', 
+  textPrimary: 'text-[#F1F5F9]',
+  textSecondary: 'text-[#94A3B8]', 
+  textMuted: 'text-[#52525B]', 
+  synk: { 
+    text: 'text-[#708B4B]', 
+    bg: 'bg-[#708B4B]',
+  },
+  normal: { 
+    text: 'text-[#E2E8F0]', 
+    bg: 'bg-[#52525B]',
+  },
+  warning: { 
+    text: 'text-[#D97706]', 
+    bg: 'bg-[#B45309]',
+  },
+  error: { 
+    text: 'text-[#DC2626]', 
+    bg: 'bg-[#991B1B]' 
+  }
+};
 
-  const handleFile = async (file) => {
+const getLatencyColor = (ms) => {
+  if (ms > 400) return THEME.error.text;
+  if (ms > 200) return THEME.warning.text;
+  return THEME.textPrimary;
+};
+
+const CustomTooltip = ({ active, payload, label }) => {
+  if (active && payload && payload.length) {
+    return (
+      <div className={`${THEME.panel} border ${THEME.panelBorder} ${THEME.radius} p-3 font-mono text-xs shadow-none`}>
+        <div className={`${THEME.textSecondary} mb-2 border-b ${THEME.panelBorder} pb-1`}>
+          {label && !isNaN(new Date(label).getTime()) ? new Date(label).toLocaleTimeString() : label}
+        </div>
+        <div className="flex justify-between gap-6 items-center mt-1">
+          <span className={THEME.textPrimary}>MT5/Broker:</span>
+          <span className={`${THEME.textPrimary} font-medium`}>{payload[0].value} ms</span>
+        </div>
+        <div className="flex justify-between gap-6 items-center">
+          <span className={THEME.synk.text}>Synk Engine:</span>
+          <span className={`${THEME.synk.text} font-medium`}>{payload[1].value} ms</span>
+        </div>
+        <div className={`flex justify-between gap-6 items-center mt-2 pt-1 border-t ${THEME.panelBorder}`}>
+          <span className={THEME.textSecondary}>Total:</span>
+          <span className={`${THEME.textSecondary} font-medium`}>{(payload[0].value + payload[1].value).toFixed(2)} ms</span>
+        </div>
+      </div>
+    );
+  }
+  return null;
+};
+
+export default function SynkAnalyze() {
+  const [sessions, setSessions] = useState([]);
+  const [activeSessionId, setActiveSessionId] = useState(null);
+  const [compareMode, setCompareMode] = useState(false);
+  const [isUploading, setIsUploading] = useState(false);
+  const [isDragging, setIsDragging] = useState(false);
+
+  const handleFileUpload = async (file) => {
     if (!file) return;
+    setIsUploading(true);
 
-    const text = await file.text();
+    try {
+      const text = await file.text();
+      const parsed = text
+        .split("\n")
+        .filter(Boolean)
+        .map((line) => {
+          try { return JSON.parse(line); } catch { return null; }
+        })
+        .filter(Boolean)
+        .sort((a, b) => new Date(a.timestamp || 0).getTime() - new Date(b.timestamp || 0).getTime());
 
-    const parsed = text
-      .split("\n")
-      .filter(Boolean)
-      .map((line) => {
-        try {
-          return JSON.parse(line);
-        } catch {
-          return null;
-        }
-      })
-      .filter(Boolean);
+      if (parsed.length === 0) {
+        alert("No valid JSON logs found in the file.");
+        setIsUploading(false);
+        return;
+      }
 
-    const payload = {
-      name: file.name,
-      events: parsed,
-      loadedAt: new Date().toISOString(),
+      const sessionId = `ses_${Date.now().toString().slice(-6)}`;
+      
+      const newSession = {
+        id: sessionId,
+        name: file.name,
+        data: parsed,
+        stats: calculateStats(parsed)
+      };
+      
+      setSessions(prev => [newSession, ...prev]);
+      setActiveSessionId(sessionId);
+    } catch (err) {
+      console.error(err);
+      alert("Failed to parse log file.");
+    } finally {
+      setIsUploading(false);
+    }
+  };
+
+  const calculateStats = (data) => {
+    if (!data || !data.length) return {
+      count: 0, volume: "0.00", errors: 0, avgSynk: "0.00", avgMt5: "0.00",
+      avgTotal: "0.00", last50Avg: "0.00", last10Avg: "0.00", synkRatio: "0.00", mt5Ratio: "0.00"
     };
-
-    setCurrentFile(payload);
-
-    setHistory((prev) => {
-      const next = [payload, ...prev.filter((x) => x.name !== file.name)];
-      return next.slice(0, 6);
+    
+    let totalSynk = 0, totalMt5 = 0, totalVol = 0, errCount = 0;
+    
+    data.forEach(d => {
+      totalSynk += (d.timings?.synk_processing_ms || 0);
+      totalMt5 += (d.timings?.mt5_send_ms || 0);
+      totalVol += (d.volume || 0);
+      if (d.status !== 'filled') errCount++;
     });
 
-    setEvents(parsed);
-  };
+    const last50 = data.slice(-50);
+    const last10 = data.slice(-10);
+    const last50Total = last50.reduce((acc, d) => acc + (d.timings?.total_execution_ms || 0), 0);
+    const last10Total = last10.reduce((acc, d) => acc + (d.timings?.total_execution_ms || 0), 0);
 
-  const metrics = useMemo(() => {
-    if (!events.length) {
-      return {
-        avgSynk: 0,
-        avgMt5: 0,
-        avgTotal: 0,
-        successRate: 0,
-        bottleneckRate: 0,
-      };
-    }
-
-    const avg = (arr) =>
-      arr.reduce((a, b) => a + b, 0) / arr.length;
-
-    const avgSynk = avg(
-      events.map((e) => e.timings?.synk_processing_ms || 0)
-    );
-
-    const avgMt5 = avg(
-      events.map((e) => e.timings?.mt5_send_ms || 0)
-    );
-
-    const avgTotal = avg(
-      events.map((e) => e.timings?.total_execution_ms || 0)
-    );
-
-    const successRate =
-      (events.filter((e) => e.status === "filled").length /
-        events.length) *
-      100;
-
-    const bottleneckRate =
-      (events.filter(
-        (e) => e.bottleneck_stage === "mt5_terminal"
-      ).length /
-        events.length) *
-      100;
+    const avgSynk = totalSynk / data.length;
+    const avgMt5 = totalMt5 / data.length;
+    const avgTotal = avgSynk + avgMt5;
 
     return {
-      avgSynk: avgSynk.toFixed(1),
-      avgMt5: avgMt5.toFixed(1),
-      avgTotal: avgTotal.toFixed(1),
-      successRate: successRate.toFixed(1),
-      bottleneckRate: bottleneckRate.toFixed(1),
+      count: data.length,
+      volume: totalVol.toFixed(2),
+      errors: errCount,
+      avgSynk: avgSynk.toFixed(2),
+      avgMt5: avgMt5.toFixed(2),
+      avgTotal: avgTotal.toFixed(2),
+      last50Avg: last50.length ? (last50Total / last50.length).toFixed(2) : "0.00",
+      last10Avg: last10.length ? (last10Total / last10.length).toFixed(2) : "0.00",
+      synkRatio: avgTotal > 0 ? ((avgSynk / avgTotal) * 100).toFixed(2) : "0.00",
+      mt5Ratio: avgTotal > 0 ? ((avgMt5 / avgTotal) * 100).toFixed(2) : "0.00"
     };
-  }, [events]);
+  };
 
-  const latest = events[events.length - 1];
+  const activeSession = sessions.find(s => s.id === activeSessionId);
+  const isWarningStatus = activeSession ? activeSession.stats.avgMt5 > 150 : false;
+  
+  const timelineData = useMemo(() => {
+    if (!activeSession) return [];
+    const factor = Math.ceil(activeSession.data.length / 120); 
+    return activeSession.data.filter((_, i) => i % factor === 0).map(d => ({
+      time: d.timestamp,
+      synk: d.timings?.synk_processing_ms || 0,
+      mt5: d.timings?.mt5_send_ms || 0,
+      warnThreshold: 200
+    }));
+  }, [activeSession]);
+
+  const worstIncidents = useMemo(() => {
+    if (!activeSession) return [];
+    return [...activeSession.data]
+      .sort((a, b) => (b.timings?.total_execution_ms || 0) - (a.timings?.total_execution_ms || 0))
+      .slice(0, 50);
+  }, [activeSession]);
 
   return (
-    <div className="min-h-screen bg-[#050505] text-white overflow-hidden">
-      <div className="max-w-[1720px] mx-auto px-6 py-5 h-screen flex flex-col gap-4">
-
-        {/* top bar */}
-        <div className="h-[76px] shrink-0 rounded-[24px] border border-white/8 bg-[#0b0f17]/90 backdrop-blur-xl px-6 flex items-center justify-between shadow-2xl">
-
-          <div className="flex items-center gap-10">
-            <div>
-              <div className="flex items-center gap-3">
-                <div className="text-2xl">🍄</div>
-
-                <div>
-                  <div className="text-[22px] font-semibold tracking-tight">
-                    Synk Mushroom Analyze
-                  </div>
-
-                  <div className="text-white/35 text-sm">
-                    Execution Forensics Tool
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="hidden xl:flex items-center gap-5 text-sm text-white/45">
-              <div>
-                Current Log
-              </div>
-
-              <div className="text-white font-medium text-base">
-                {currentFile?.name || "No log loaded"}
-              </div>
-
-              <div>
-                {events.length} events
-              </div>
-            </div>
+    <div 
+      className={`relative h-screen w-screen ${THEME.bg} text-slate-200 font-sans flex flex-col overflow-hidden selection:bg-[#708B4B] selection:text-white`}
+      onDragOver={(e) => { e.preventDefault(); setIsDragging(true); }}
+      onDragLeave={() => setIsDragging(false)}
+      onDrop={(e) => {
+        e.preventDefault();
+        setIsDragging(false);
+        if(e.dataTransfer.files[0]) handleFileUpload(e.dataTransfer.files[0]);
+      }}
+    >
+      {isDragging && (
+        <div className="absolute inset-0 z-50 bg-[#09090B]/80 backdrop-blur-sm border-2 border-dashed border-[#708B4B] m-4 rounded-xl flex items-center justify-center">
+          <div className="flex flex-col items-center gap-4 text-[#708B4B]">
+            <Upload className="w-16 h-16 animate-bounce" />
+            <h2 className="text-2xl font-bold tracking-widest uppercase">Drop Execution Log Here</h2>
           </div>
+        </div>
+      )}
 
-          <div className="flex items-center gap-3">
-            <label className="h-11 px-5 rounded-2xl border border-white/10 bg-white/5 hover:bg-white/10 transition flex items-center cursor-pointer text-sm font-medium">
-              Upload Log
-
-              <input
-                type="file"
-                className="hidden"
-                onChange={(e) => handleFile(e.target.files[0])}
-              />
-            </label>
-
-            <button className="h-11 px-5 rounded-2xl border border-white/10 bg-[#111827] text-sm text-white/60">
-              Compare
-            </button>
+      <header className={`h-12 border-b ${THEME.panelBorder} ${THEME.panel} flex items-center px-4 justify-between shrink-0`}>
+        <div className="flex items-center gap-4">
+          <div className={`flex items-center gap-2 ${THEME.textPrimary} font-semibold`}>
+            <img src="/analyze/logo-mark.png" className="w-5 h-5 object-contain" alt="Synk Logo" />
+            <span className="tracking-tight text-sm">
+              Synk Mushroom <span className={`${THEME.textSecondary} font-normal tracking-wide ml-1`}>Analyze</span>
+            </span>
+          </div>
+          <div className={`h-4 w-px bg-[#27272A]`}></div>
+          <div className="flex items-center gap-2">
+            {sessions.map(s => (
+              <button
+                key={s.id}
+                onClick={() => setActiveSessionId(s.id)}
+                className={`px-3 py-1 text-xs font-mono flex items-center gap-2 border transition-none ${THEME.radius} ${
+                  activeSessionId === s.id 
+                    ? `bg-[#27272A] ${THEME.textPrimary} border-[#3F3F46]` 
+                    : `${THEME.textSecondary} border-transparent hover:bg-[#27272A]`
+                }`}
+              >
+                <Database className="w-3 h-3" />
+                <span className="max-w-[150px] truncate">{s.name}</span>
+              </button>
+            ))}
           </div>
         </div>
 
-        {/* hero */}
-        <div className="grid grid-cols-[1.3fr_0.7fr] gap-4 shrink-0 h-[240px]">
+        <div className="flex items-center gap-3">
+          <button 
+            onClick={() => setCompareMode(!compareMode)}
+            className={`px-3 py-1.5 text-xs font-medium border flex items-center gap-1.5 transition-none ${THEME.radius} ${
+              compareMode ? `bg-[#27272A] border-[#3F3F46] ${THEME.textPrimary}` : `border-[#27272A] ${THEME.textSecondary} hover:bg-[#27272A]`
+            }`}
+          >
+            <ArrowRightLeft className="w-3.5 h-3.5" />
+            Compare
+          </button>
+          
+          <label className={`cursor-pointer px-4 py-1.5 text-xs font-medium border ${THEME.panelBorder} ${THEME.textPrimary} hover:bg-[#27272A] flex items-center gap-2 disabled:opacity-50 transition-none ${THEME.radius}`}>
+            <Upload className="w-3.5 h-3.5" />
+            {isUploading ? 'Parsing...' : 'Upload .jsonl Log'}
+            <input type="file" className="hidden" accept=".jsonl,.json,.txt" onChange={(e) => handleFileUpload(e.target.files[0])} />
+          </label>
+        </div>
+      </header>
 
-          <div className="rounded-[32px] border border-orange-500/10 bg-gradient-to-br from-[#111111] via-[#0b0f17] to-[#080808] p-7 shadow-[0_0_80px_rgba(0,0,0,0.55)] relative overflow-hidden">
-
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(249,115,22,0.12),transparent_35%)]"></div>
-
-            <div className="relative z-10 h-full flex flex-col justify-between">
-
-              <div>
-                <div className="text-orange-400/80 text-sm tracking-[0.2em] uppercase mb-4">
-                  Analysis Result
-                </div>
-
-                <div className="text-[54px] leading-none font-semibold tracking-tight mb-4">
-                  MT5 / Broker Delay
-                </div>
-
-                <div className="flex items-end gap-4">
-                  <div className="text-[92px] leading-[0.9] font-semibold text-orange-300">
-                    {metrics.avgMt5}
-                  </div>
-
-                  <div className="text-orange-200/60 text-2xl pb-4">
-                    ms
-                  </div>
-                </div>
-              </div>
-
-              <div className="flex items-center gap-10 text-sm">
-                <div>
-                  <div className="text-white/35 mb-1">
-                    Synk internal routing
-                  </div>
-
-                  <div className="text-emerald-400 text-2xl font-semibold">
-                    {metrics.avgSynk}ms
-                  </div>
-                </div>
-
-                <div>
-                  <div className="text-white/35 mb-1">
-                    Bottleneck ratio
-                  </div>
-
-                  <div className="text-orange-300 text-2xl font-semibold">
-                    {metrics.bottleneckRate}%
-                  </div>
-                </div>
-
-                <div>
-                  <div className="text-white/35 mb-1">
-                    Status
-                  </div>
-
-                  <div className="text-white text-2xl font-semibold capitalize">
-                    {latest?.status || "waiting"}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* side */}
-          <div className="rounded-[32px] border border-white/8 bg-[#0b0f17] p-6 flex flex-col justify-between">
-
-            <div>
-              <div className="text-white/40 text-sm mb-5 uppercase tracking-[0.18em]">
-                Responsibility Breakdown
-              </div>
-
-              <div className="space-y-4">
-
-                <Breakdown
-                  label="TradingView → Synk"
-                  value={`${metrics.avgSynk}ms`}
-                  accent="emerald"
-                  width="8%"
-                />
-
-                <Breakdown
-                  label="MT5 / Broker"
-                  value={`${metrics.avgMt5}ms`}
-                  accent="orange"
-                  width="92%"
-                />
-              </div>
-            </div>
-
-            <div className="grid grid-cols-2 gap-3 mt-6">
-              <MiniCard
-                label="Executions"
-                value={events.length}
-              />
-
-              <MiniCard
-                label="Success"
-                value={`${metrics.successRate}%`}
-              />
-
-              <MiniCard
-                label="Avg Total"
-                value={`${metrics.avgTotal}ms`}
-              />
-
-              <MiniCard
-                label="Current"
-                value={latest?.symbol || "-"}
-              />
-            </div>
+      {!activeSession ? (
+        <div className="flex-1 flex items-center justify-center">
+          <div className={`text-center flex flex-col items-center ${THEME.textMuted}`}>
+            <img src="/analyze/logo-mark.png" className="w-12 h-12 mb-4 opacity-50 object-contain grayscale" alt="Synk Logo" />
+            <p className="font-mono text-xs uppercase tracking-widest mb-4">Waiting for execution log</p>
+            <p className="text-sm">Drag and drop a .jsonl file anywhere, or use the Upload button.</p>
           </div>
         </div>
-
-        {/* main */}
-        <div className="grid grid-cols-[1.15fr_0.85fr] gap-4 min-h-0 flex-1">
-
-          {/* left */}
-          <div className="flex flex-col gap-4 min-h-0">
-
-            <div className="rounded-[30px] border border-white/8 bg-[#0b0f17] p-6 shrink-0">
-
-              <div className="flex items-center justify-between mb-6">
-                <div>
-                  <div className="text-2xl font-semibold tracking-tight">
-                    Execution Pipeline
+      ) : (
+        <main className="flex-1 flex flex-col p-3 gap-3 overflow-hidden">
+          
+          <div className="flex gap-3 shrink-0 h-48">
+            
+            {/* Left Panel: Responsibility & Pipeline (w-[35%] に調整しタブ幅と調和) */}
+            <div className={`${THEME.panel} border ${THEME.panelBorder} ${THEME.radius} w-[35%] flex flex-col overflow-hidden`}>
+              <div className={`p-2.5 px-3 border-b ${THEME.panelBorder} flex justify-between items-center bg-[#09090B]`}>
+                <h2 className={`text-xs font-semibold ${THEME.textSecondary} uppercase tracking-widest flex items-center gap-2`}>
+                  <Crosshair className="w-4 h-4" />
+                  Responsibility Breakdown
+                </h2>
+              </div>
+              
+              <div className="p-4 flex-1 flex flex-col justify-center">
+                <div className="flex justify-between items-end mb-2.5">
+                  <div className="flex items-center gap-2">
+                    <Network className={`w-4 h-4 ${THEME.synk.text}`} />
+                    <span className={`text-sm font-mono ${THEME.synk.text}`}>Synk: {activeSession.stats.avgSynk}ms</span>
                   </div>
-
-                  <div className="text-white/35 mt-1 text-sm">
-                    Responsibility boundary visualization
+                  <div className="flex items-center gap-2">
+                    <span className={`text-sm font-mono ${THEME.textPrimary}`}>MT5/Broker: {activeSession.stats.avgMt5}ms</span>
+                    <Server className={`w-4 h-4 ${THEME.textSecondary}`} />
                   </div>
                 </div>
-
-                <div className="text-right">
-                  <div className="text-white/35 text-sm">
-                    Total Execution
-                  </div>
-
-                  <div className="text-4xl font-semibold text-orange-300">
-                    {metrics.avgTotal}ms
-                  </div>
+                
+                <div className="flex justify-between text-[10px] uppercase font-mono tracking-widest mb-1.5">
+                  <span className={THEME.synk.text}>Synk {activeSession.stats.synkRatio}%</span>
+                  <span className={THEME.textSecondary}>External {activeSession.stats.mt5Ratio}%</span>
+                </div>
+                <div className={`h-2.5 w-full bg-[#09090B] flex ${THEME.radius} overflow-hidden`}>
+                  <div 
+                    style={{ width: `${Math.max(Number(activeSession.stats.synkRatio), 1)}%` }} 
+                    className={`${THEME.synk.bg}`} 
+                  />
+                  <div 
+                    style={{ width: `${100 - Math.max(Number(activeSession.stats.synkRatio), 1)}%` }} 
+                    className={`${THEME.normal.bg}`} 
+                  />
                 </div>
               </div>
 
-              <div className="grid grid-cols-4 gap-4 items-center">
-
-                <PipeNode
-                  title="Alert"
-                  value="0ms"
-                  desc="Webhook received"
-                  accent="white"
-                />
-
-                <PipeNode
-                  title="Synk"
-                  value={`${latest?.timings?.synk_processing_ms || 0}ms`}
-                  desc="Local routing"
-                  accent="emerald"
-                />
-
-                <PipeNode
-                  title="MT5"
-                  value={`${latest?.timings?.mt5_send_ms || 0}ms`}
-                  desc="Trade server"
-                  accent="orange"
-                  problem
-                />
-
-                <PipeNode
-                  title="Filled"
-                  value={`${latest?.timings?.total_execution_ms || 0}ms`}
-                  desc="Execution complete"
-                  accent="cyan"
-                />
+              {/* Compact Pipeline inside Left Panel */}
+              <div className={`p-2 px-4 border-t ${THEME.panelBorder} bg-[#121214] flex flex-col justify-center h-[72px] shrink-0`}>
+                <div className="flex items-center justify-between relative w-full mt-1">
+                  <div className={`absolute left-4 right-4 top-[35%] -translate-y-1/2 h-[1px] ${THEME.panelBorder}`}></div>
+                  <div className={`absolute left-[12%] w-[18%] top-[35%] -translate-y-1/2 h-[2px] ${THEME.synk.bg}`}></div>
+                  <div className={`absolute left-[45%] w-[35%] top-[35%] -translate-y-1/2 h-[2px] ${isWarningStatus ? THEME.warning.bg : THEME.normal.bg}`}></div>
+                  
+                  <div className="relative z-10 flex flex-col items-center bg-[#121214] px-1.5">
+                    <Activity className={`w-3.5 h-3.5 mb-1 ${THEME.textSecondary}`} />
+                    <span className={`text-[8px] font-mono ${THEME.textSecondary}`}>TV</span>
+                  </div>
+                  <div className="relative z-10 flex flex-col items-center bg-[#121214] px-1.5">
+                    <div className={`w-4 h-4 border border-[#708B4B] flex items-center justify-center ${THEME.synk.text} bg-[#09090B] ${THEME.radius} mb-1`}>
+                      <img src="/analyze/logo-mark.png" className="w-2.5 h-2.5 object-contain" alt="logo" />
+                    </div>
+                    <span className={`text-[8px] font-mono font-medium ${THEME.synk.text}`}>Synk</span>
+                  </div>
+                  <div className="relative z-10 flex flex-col items-center bg-[#121214] px-1.5 mt-[-8px]">
+                    <span className={`text-[8px] font-mono mb-0.5 px-1 bg-[#09090B] border ${THEME.panelBorder} ${THEME.radius} ${isWarningStatus ? THEME.warning.text : THEME.textPrimary}`}>
+                      {activeSession.stats.avgMt5}ms
+                    </span>
+                  </div>
+                  <div className="relative z-10 flex flex-col items-center bg-[#121214] px-1.5">
+                    <Server className={`w-3.5 h-3.5 mb-1 ${isWarningStatus ? THEME.warning.text : THEME.textPrimary}`} />
+                    <span className={`text-[8px] font-mono ${isWarningStatus ? THEME.warning.text : THEME.textSecondary}`}>MT5</span>
+                  </div>
+                  <div className="relative z-10 flex flex-col items-center bg-[#121214] px-1.5">
+                    <Database className={`w-3.5 h-3.5 mb-1 ${THEME.textSecondary}`} />
+                    <span className={`text-[8px] font-mono ${THEME.textSecondary}`}>Broker</span>
+                  </div>
+                </div>
               </div>
             </div>
 
-            <div className="grid grid-cols-[1fr_0.8fr] gap-4 min-h-0 flex-1">
-
-              {/* heatmap */}
-              <div className="rounded-[30px] border border-white/8 bg-[#0b0f17] p-6 overflow-hidden flex flex-col">
-
-                <div className="flex items-center justify-between mb-6 shrink-0">
-                  <div>
-                    <div className="text-xl font-semibold">
-                      Latency Heatmap
-                    </div>
-
-                    <div className="text-white/35 text-sm mt-1">
-                      Historical execution density
-                    </div>
-                  </div>
-
-                  <div className="text-xs text-white/35">
-                    0ms → 1000ms+
+            {/* Right Panel: Primary Status (w-[65%] に調整し十分な余白を確保) */}
+            <div className={`${THEME.panel} border ${THEME.panelBorder} ${THEME.radius} w-[65%] flex flex-col`}>
+              <div className={`p-2.5 px-3 border-b ${THEME.panelBorder} flex justify-between items-center bg-[#09090B]`}>
+                <h2 className={`text-xs font-semibold ${THEME.textSecondary} uppercase tracking-widest flex items-center gap-2`}>
+                  <Activity className="w-4 h-4" />
+                  Execution Latency Status
+                </h2>
+                <div className="flex gap-4 text-[10px] font-mono">
+                  <span className={`flex items-center gap-1.5 ${THEME.textSecondary}`}><span className={`w-2 h-2 bg-[#52525B] ${THEME.radius}`}></span> Normal</span>
+                  <span className={`flex items-center gap-1.5 ${THEME.warning.text}`}><span className={`w-2 h-2 ${THEME.warning.bg} ${THEME.radius}`}></span> Degraded</span>
+                </div>
+              </div>
+              
+              <div className="flex-1 p-6 flex items-center justify-between gap-6">
+                <div className="flex-1 flex flex-col justify-center">
+                  <div className={`text-xs font-mono mb-2 ${THEME.textSecondary} uppercase tracking-widest`}>Session Avg</div>
+                  <div className={`text-5xl font-light font-mono ${THEME.textPrimary} tracking-tight`}>
+                    {activeSession.stats.avgTotal}<span className={`text-xl ${THEME.textMuted} ml-1`}>ms</span>
                   </div>
                 </div>
+                <div className="w-px h-24 bg-[#27272A]"></div>
+                <div className="flex-1 flex flex-col justify-center">
+                  <div className={`text-xs font-mono mb-2 ${THEME.textSecondary} uppercase tracking-widest`}>Last 50 Avg</div>
+                  <div className={`text-5xl font-light font-mono ${getLatencyColor(activeSession.stats.last50Avg)} tracking-tight`}>
+                    {activeSession.stats.last50Avg}<span className={`text-xl ${THEME.textMuted} ml-1`}>ms</span>
+                  </div>
+                </div>
+                <div className="w-px h-24 bg-[#27272A]"></div>
+                <div className="flex-1 flex flex-col justify-center">
+                  <div className={`text-xs font-mono mb-2 ${THEME.textSecondary} uppercase tracking-widest`}>Last 10 Avg</div>
+                  <div className={`text-5xl font-light font-mono ${getLatencyColor(activeSession.stats.last10Avg)} tracking-tight`}>
+                    {activeSession.stats.last10Avg}<span className={`text-xl ${THEME.textMuted} ml-1`}>ms</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
 
-                <div className="grid grid-cols-12 gap-[6px] flex-1">
-                  {Array.from({ length: 84 }).map((_, i) => {
-                    const colors = [
-                      "bg-emerald-500/80",
-                      "bg-lime-500/80",
-                      "bg-yellow-500/80",
-                      "bg-orange-500/80",
-                      "bg-red-500/80",
-                    ];
+          <div className={`${THEME.panel} border ${THEME.panelBorder} ${THEME.radius} flex-1 min-h-[220px] flex flex-col`}>
+            <div className={`p-2.5 px-3 border-b ${THEME.panelBorder} flex justify-between items-center bg-[#09090B] shrink-0`}>
+              <h2 className={`text-xs font-semibold ${THEME.textSecondary} uppercase tracking-widest flex items-center gap-2`}>
+                <BarChart3 className="w-4 h-4" />
+                Latency Distribution
+              </h2>
+              <div className="flex gap-4 text-[10px] font-mono">
+                <span className={THEME.textSecondary}>Points: {activeSession.stats.count}</span>
+                <span className={activeSession.stats.errors > 0 ? THEME.error.text : THEME.textSecondary}>
+                  Errors: {activeSession.stats.errors}
+                </span>
+              </div>
+            </div>
+            
+            <div className="flex-1 p-2 pb-0 w-full relative">
+              <div className="absolute top-3 left-4 z-10 pointer-events-none bg-[#09090B] border border-[#27272A] p-2">
+                <div className={`text-xs font-mono ${THEME.textPrimary} flex items-center gap-2 mb-1`}><div className="w-3 h-0.5 bg-[#94A3B8]"></div> MT5 External</div>
+                <div className={`text-xs font-mono ${THEME.synk.text} flex items-center gap-2`}><div className={`w-3 h-0.5 ${THEME.synk.bg}`}></div> Synk Base</div>
+              </div>
 
-                    const c = colors[Math.floor((i % 12) / 3)];
+              <ResponsiveContainer width="100%" height="100%">
+                <LineChart data={timelineData} margin={{ top: 15, right: 10, left: -20, bottom: 5 }}>
+                  <CartesianGrid strokeDasharray="2 2" stroke="#27272A" vertical={false} />
+                  <XAxis dataKey="time" hide />
+                  <YAxis 
+                    stroke="#27272A" 
+                    tick={{ fill: '#94A3B8', fontSize: 10, fontFamily: 'monospace' }} 
+                    axisLine={false}
+                    tickLine={false}
+                    domain={[0, 'auto']}
+                  />
+                  <Tooltip content={<CustomTooltip />} cursor={{ stroke: '#52525B', strokeWidth: 1 }} />
+                  <ReferenceLine y={200} stroke="#D97706" strokeDasharray="3 3" label={{ position: 'insideTopLeft', value: 'Warn: 200ms', fill: '#D97706', fontSize: 10 }} />
+                  
+                  <Line type="monotone" dataKey="mt5" stroke="#94A3B8" strokeWidth={1.5} dot={false} isAnimationActive={false} />
+                  <Line type="monotone" dataKey="synk" stroke="#708B4B" strokeWidth={1.5} dot={false} isAnimationActive={false} />
+                </LineChart>
+              </ResponsiveContainer>
+            </div>
+          </div>
 
+          <div className={`${THEME.panel} border ${THEME.panelBorder} ${THEME.radius} h-[38%] min-h-[240px] flex flex-col shrink-0 overflow-hidden`}>
+            <div className={`p-2.5 px-3 border-b ${THEME.panelBorder} flex justify-between items-center bg-[#09090B] shrink-0`}>
+              <h2 className={`text-xs font-semibold ${THEME.textSecondary} uppercase tracking-widest flex items-center gap-2`}>
+                <AlertTriangle className="w-4 h-4" />
+                Event Logs (Sort: Total Latency)
+              </h2>
+              <div className="relative">
+                <Search className={`w-3 h-3 ${THEME.textMuted} absolute left-2.5 top-1/2 -translate-y-1/2`} />
+                <input 
+                  type="text" 
+                  placeholder="ID search..." 
+                  className={`bg-[#09090B] border ${THEME.panelBorder} ${THEME.radius} text-xs px-2 py-1 pl-7 ${THEME.textPrimary} focus:outline-none focus:border-[#475569] w-48 font-mono placeholder:text-[#475569]`}
+                />
+              </div>
+            </div>
+            
+            <div className="flex-1 overflow-auto bg-[#09090B]">
+              <table className="w-full text-left border-collapse">
+                <thead className={`sticky top-0 bg-[#121214] z-10 text-xs uppercase tracking-widest ${THEME.textSecondary} border-b ${THEME.panelBorder} font-mono shadow-sm`}>
+                  <tr>
+                    <th className="py-2.5 px-4 font-normal">Time</th>
+                    <th className="py-2.5 px-4 font-normal">Event ID</th>
+                    <th className="py-2.5 px-4 font-normal">Symbol</th>
+                    <th className="py-2.5 px-4 font-normal">Side</th>
+                    <th className="py-2.5 px-4 font-normal text-right">Synk Ms</th>
+                    <th className="py-2.5 px-4 font-normal text-right">MT5 Ms</th>
+                    <th className="py-2.5 px-4 font-normal text-right">Total Ms</th>
+                    <th className="py-2.5 px-4 font-normal pl-6">Bottleneck</th>
+                    <th className="py-2.5 px-4 font-normal">Status</th>
+                  </tr>
+                </thead>
+                <tbody className="font-mono divide-y divide-[#27272A] text-sm">
+                  {worstIncidents.map((incident, idx) => {
+                    const mt5Ms = incident.timings?.mt5_send_ms || 0;
+                    const synkMs = incident.timings?.synk_processing_ms || 0;
+                    const totalMs = incident.timings?.total_execution_ms || 0;
+                    const mt5Color = getLatencyColor(mt5Ms);
+                    const isWarnOrErr = mt5Ms > 200;
+                    const isRejected = incident.status !== 'filled';
+                    const timeStr = incident.timestamp && !isNaN(new Date(incident.timestamp).getTime()) 
+                                      ? new Date(incident.timestamp).toISOString().split('T')[1].replace('Z','') 
+                                      : '-';
+                    
                     return (
-                      <div
-                        key={i}
-                        className={`rounded-md ${c} border border-black/10`}>
-                      </div>
+                      <tr key={idx} className="hover:bg-[#18181B] cursor-pointer transition-colors duration-75">
+                        <td className={`py-2.5 px-4 ${THEME.textSecondary} whitespace-nowrap`}>{timeStr}</td>
+                        <td className={`py-2.5 px-4 ${THEME.textSecondary}`}>{incident.event_id || '-'}</td>
+                        <td className={`py-2.5 px-4 text-slate-200 font-light`}>{incident.symbol || '-'}</td>
+                        <td className="py-2.5 px-4">
+                          <span className={`px-1.5 py-0.5 text-xs border ${THEME.panelBorder} ${THEME.textSecondary}`}>
+                            {incident.side || '-'}
+                          </span>
+                        </td>
+                        <td className={`py-2.5 px-4 text-right ${THEME.synk.text}`}>{synkMs}</td>
+                        <td className={`py-2.5 px-4 text-right ${mt5Color}`}>{mt5Ms}</td>
+                        <td className={`py-2.5 px-4 text-right ${isWarnOrErr ? THEME.textPrimary : THEME.textSecondary} text-sm font-light`}>{totalMs}</td>
+                        <td className="py-2.5 px-4 pl-6">
+                          {incident.bottleneck_stage && incident.bottleneck_stage !== 'none' ? (
+                            <span className={`flex items-center gap-1.5 ${THEME.warning.text}`}>
+                              <AlertCircle className="w-3.5 h-3.5" /> {incident.bottleneck_stage.replace('_', ' ')}
+                            </span>
+                          ) : (
+                            <span className={THEME.textMuted}>-</span>
+                          )}
+                        </td>
+                        <td className="py-2.5 px-4">
+                          {isRejected ? (
+                            <span className={`${THEME.error.text} flex items-center gap-1.5`} title={incident.mt5?.comment || 'Rejected'}>
+                              <X className="w-3.5 h-3.5" /> Failed
+                            </span>
+                          ) : (
+                            <span className={THEME.textSecondary}>Filled</span>
+                          )}
+                        </td>
+                      </tr>
                     );
                   })}
-                </div>
-              </div>
-
-              {/* logs */}
-              <div className="flex flex-col gap-4 min-h-0">
-
-                <div className="rounded-[30px] border border-white/8 bg-[#0b0f17] p-6 shrink-0">
-
-                  <div className="text-xl font-semibold mb-5">
-                    Latest Event
-                  </div>
-
-                  <div className="space-y-3 text-sm">
-                    <Row
-                      label="Symbol"
-                      value={latest?.symbol || "-"}
-                    />
-
-                    <Row
-                      label="Retcode"
-                      value={latest?.mt5?.retcode || "-"}
-                    />
-
-                    <Row
-                      label="Bottleneck"
-                      value={latest?.bottleneck_stage || "-"}
-                      accent="orange"
-                    />
-                  </div>
-                </div>
-
-                <div className="rounded-[30px] border border-white/8 bg-[#0b0f17] p-6 min-h-0 flex flex-col overflow-hidden">
-
-                  <div className="flex items-center justify-between mb-5 shrink-0">
-                    <div>
-                      <div className="text-xl font-semibold">
-                        Errors
-                      </div>
-
-                      <div className="text-white/35 text-sm mt-1">
-                        Reject / failure analysis
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="space-y-3 overflow-auto pr-1">
-                    {events
-                      .filter((e) => e.status !== "filled")
-                      .slice(0, 12)
-                      .map((e, i) => (
-                        <div
-                          key={i}
-                          className="rounded-2xl border border-red-500/10 bg-red-500/[0.03] p-4 flex items-center justify-between gap-4">
-
-                          <div>
-                            <div className="font-medium text-sm mb-1">
-                              {e.symbol}
-                            </div>
-
-                            <div className="text-red-300/80 text-xs">
-                              {e.mt5?.comment}
-                            </div>
-                          </div>
-
-                          <div className="text-white/35 text-sm">
-                            {e.mt5?.retcode}
-                          </div>
-                        </div>
-                      ))}
-                  </div>
-                </div>
-              </div>
+                </tbody>
+              </table>
             </div>
           </div>
-
-          {/* right side logs */}
-          <div className="rounded-[30px] border border-white/8 bg-[#0b0f17] p-6 overflow-hidden flex flex-col">
-
-            <div className="flex items-center justify-between mb-6 shrink-0">
-              <div>
-                <div className="text-2xl font-semibold">
-                  Loaded Sessions
-                </div>
-
-                <div className="text-white/35 text-sm mt-1">
-                  Compare previous log sessions
-                </div>
-              </div>
-            </div>
-
-            <div className="space-y-3 overflow-auto pr-1">
-              {history.map((item, i) => {
-                const avg = (
-                  item.events.reduce(
-                    (a, b) =>
-                      a +
-                      (b.timings?.total_execution_ms || 0),
-                    0
-                  ) / item.events.length
-                ).toFixed(1);
-
-                return (
-                  <div
-                    key={i}
-                    className="rounded-[24px] border border-white/8 bg-black/20 p-5 hover:bg-white/[0.03] transition cursor-pointer">
-
-                    <div className="flex items-start justify-between mb-4">
-                      <div>
-                        <div className="font-medium text-base mb-1">
-                          {item.name}
-                        </div>
-
-                        <div className="text-white/35 text-sm">
-                          {item.events.length} executions
-                        </div>
-                      </div>
-
-                      <div className="text-orange-300 text-2xl font-semibold">
-                        {avg}ms
-                      </div>
-                    </div>
-
-                    <div className="h-2 rounded-full bg-white/5 overflow-hidden">
-                      <div
-                        className="h-full bg-orange-400 rounded-full"
-                        style={{ width: `${Math.min(avg / 6, 100)}%` }}
-                      />
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function Breakdown({ label, value, accent, width }) {
-  const colors = {
-    emerald: "bg-emerald-400",
-    orange: "bg-orange-400",
-  };
-
-  return (
-    <div>
-      <div className="flex items-center justify-between mb-2 text-sm">
-        <div className="text-white/60">{label}</div>
-        <div className="font-medium">{value}</div>
-      </div>
-
-      <div className="h-2 rounded-full bg-white/5 overflow-hidden">
-        <div
-          className={`h-full ${colors[accent]} rounded-full`}
-          style={{ width }}
-        />
-      </div>
-    </div>
-  );
-}
-
-function MiniCard({ label, value }) {
-  return (
-    <div className="rounded-2xl border border-white/8 bg-black/20 p-4">
-      <div className="text-white/35 text-xs mb-2">{label}</div>
-      <div className="text-xl font-semibold truncate">{value}</div>
-    </div>
-  );
-}
-
-function PipeNode({ title, value, desc, accent, problem }) {
-  const accents = {
-    white: "border-white/10 bg-white/5",
-    emerald: "border-emerald-500/20 bg-emerald-500/10",
-    orange: "border-orange-500/20 bg-orange-500/10",
-    cyan: "border-cyan-500/20 bg-cyan-500/10",
-  };
-
-  return (
-    <div className="relative">
-      <div className={`rounded-[24px] border ${accents[accent]} p-5 h-full`}>
-
-        <div className="flex items-center justify-between mb-4">
-          <div className="text-white/40 text-sm">{title}</div>
-
-          {problem && (
-            <div className="text-[10px] tracking-[0.18em] text-orange-300 uppercase">
-              Delay
-            </div>
-          )}
-        </div>
-
-        <div className="text-3xl font-semibold mb-2">
-          {value}
-        </div>
-
-        <div className="text-white/35 text-xs">
-          {desc}
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function Row({ label, value, accent }) {
-  return (
-    <div className="flex items-center justify-between gap-4 border-b border-white/5 pb-3">
-      <div className="text-white/35">{label}</div>
-      <div className={accent === "orange" ? "text-orange-300" : ""}>
-        {value}
-      </div>
+          
+        </main>
+      )}
     </div>
   );
 }
