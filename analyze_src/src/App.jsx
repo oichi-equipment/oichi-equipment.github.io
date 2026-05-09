@@ -74,41 +74,45 @@ export default function SynkAnalyze() {
   const [isUploading, setIsUploading] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
 
-  const handleFileUpload = async (file) => {
-    if (!file) return;
+  const handleFileUpload = async (files) => {
+    if (!files || files.length === 0) return;
     setIsUploading(true);
+    
+    const newSessions = [];
 
     try {
-      const text = await file.text();
-      const parsed = text
-        .split("\n")
-        .filter(Boolean)
-        .map((line) => {
-          try { return JSON.parse(line); } catch { return null; }
-        })
-        .filter(Boolean)
-        .sort((a, b) => new Date(a.timestamp || 0).getTime() - new Date(b.timestamp || 0).getTime());
+      for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+        const text = await file.text();
+        const parsed = text
+          .split("\n")
+          .filter(Boolean)
+          .map((line) => {
+            try { return JSON.parse(line); } catch { return null; }
+          })
+          .filter(Boolean)
+          .sort((a, b) => new Date(a.timestamp || 0).getTime() - new Date(b.timestamp || 0).getTime());
 
-      if (parsed.length === 0) {
-        alert("No valid JSON logs found in the file.");
-        setIsUploading(false);
-        return;
+        if (parsed.length > 0) {
+          const sessionId = `ses_${Date.now().toString().slice(-6)}_${i}`;
+          newSessions.push({
+            id: sessionId,
+            name: file.name,
+            data: parsed,
+            stats: calculateStats(parsed)
+          });
+        }
       }
 
-      const sessionId = `ses_${Date.now().toString().slice(-6)}`;
-      
-      const newSession = {
-        id: sessionId,
-        name: file.name,
-        data: parsed,
-        stats: calculateStats(parsed)
-      };
-      
-      setSessions(prev => [newSession, ...prev]);
-      setActiveSessionId(sessionId);
+      if (newSessions.length === 0) {
+        alert("No valid JSON logs found in the selected files.");
+      } else {
+        setSessions(prev => [...newSessions, ...prev]);
+        setActiveSessionId(newSessions[0].id);
+      }
     } catch (err) {
       console.error(err);
-      alert("Failed to parse log file.");
+      alert("Failed to parse log files.");
     } finally {
       setIsUploading(false);
     }
@@ -131,8 +135,10 @@ export default function SynkAnalyze() {
 
     const last50 = data.slice(-50);
     const last10 = data.slice(-10);
-    const last50Total = last50.reduce((acc, d) => acc + (d.timings?.total_execution_ms || 0), 0);
-    const last10Total = last10.reduce((acc, d) => acc + (d.timings?.total_execution_ms || 0), 0);
+    const last50Synk = last50.reduce((acc, d) => acc + (d.timings?.synk_processing_ms || 0), 0);
+    const last50Mt5 = last50.reduce((acc, d) => acc + (d.timings?.mt5_send_ms || 0), 0);
+    const last10Synk = last10.reduce((acc, d) => acc + (d.timings?.synk_processing_ms || 0), 0);
+    const last10Mt5 = last10.reduce((acc, d) => acc + (d.timings?.mt5_send_ms || 0), 0);
 
     const avgSynk = totalSynk / data.length;
     const avgMt5 = totalMt5 / data.length;
@@ -145,8 +151,10 @@ export default function SynkAnalyze() {
       avgSynk: avgSynk.toFixed(2),
       avgMt5: avgMt5.toFixed(2),
       avgTotal: avgTotal.toFixed(2),
-      last50Avg: last50.length ? (last50Total / last50.length).toFixed(2) : "0.00",
-      last10Avg: last10.length ? (last10Total / last10.length).toFixed(2) : "0.00",
+      last50SynkAvg: last50.length ? (last50Synk / last50.length).toFixed(2) : "0.00",
+      last50Mt5Avg: last50.length ? (last50Mt5 / last50.length).toFixed(2) : "0.00",
+      last10SynkAvg: last10.length ? (last10Synk / last10.length).toFixed(2) : "0.00",
+      last10Mt5Avg: last10.length ? (last10Mt5 / last10.length).toFixed(2) : "0.00",
       synkRatio: avgTotal > 0 ? ((avgSynk / avgTotal) * 100).toFixed(2) : "0.00",
       mt5Ratio: avgTotal > 0 ? ((avgMt5 / avgTotal) * 100).toFixed(2) : "0.00"
     };
@@ -181,7 +189,7 @@ export default function SynkAnalyze() {
       onDrop={(e) => {
         e.preventDefault();
         setIsDragging(false);
-        if(e.dataTransfer.files[0]) handleFileUpload(e.dataTransfer.files[0]);
+        if(e.dataTransfer.files.length > 0) handleFileUpload(e.dataTransfer.files);
       }}
     >
       {isDragging && (
@@ -235,7 +243,7 @@ export default function SynkAnalyze() {
           <label className={`cursor-pointer px-4 py-1.5 text-xs font-medium border ${THEME.panelBorder} ${THEME.textPrimary} hover:bg-[#27272A] flex items-center gap-2 disabled:opacity-50 transition-none ${THEME.radius}`}>
             <Upload className="w-3.5 h-3.5" />
             {isUploading ? 'Parsing...' : 'Upload .jsonl Log'}
-            <input type="file" className="hidden" accept=".jsonl,.json,.txt" onChange={(e) => handleFileUpload(e.target.files[0])} />
+            <input type="file" className="hidden" accept=".jsonl,.json,.txt" multiple onChange={(e) => handleFileUpload(e.target.files)} />
           </label>
         </div>
       </header>
@@ -257,7 +265,7 @@ export default function SynkAnalyze() {
             <label className={`cursor-pointer px-6 py-3 text-sm font-semibold border ${THEME.panelBorder} text-[#F1F5F9] bg-[#121214] hover:bg-[#27272A] flex items-center gap-2 transition-colors ${THEME.radius} shadow-lg`}>
               <Upload className="w-4 h-4" />
               Select JSONL File
-              <input type="file" className="hidden" accept=".jsonl,.json,.txt" onChange={(e) => handleFileUpload(e.target.files[0])} />
+              <input type="file" className="hidden" accept=".jsonl,.json,.txt" multiple onChange={(e) => handleFileUpload(e.target.files)} />
             </label>
           </div>
         </div>
@@ -279,17 +287,20 @@ export default function SynkAnalyze() {
                 <div className="flex justify-between items-end mb-2.5">
                   <div className="flex items-center gap-2">
                     <Network className={`w-5 h-5 ${THEME.synk.text}`} />
-                    <span className={`text-xl font-mono font-medium ${THEME.synk.text}`}>Synk: {activeSession.stats.avgSynk}ms</span>
+                    <span className={`text-2xl font-mono font-semibold ${THEME.synk.text}`}>Synk: {activeSession.stats.avgSynk}ms</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <span className={`text-2xl font-mono font-semibold ${THEME.textPrimary}`}>MT5/Broker: {activeSession.stats.avgMt5}ms</span>
+                    <span className={`text-2xl font-mono font-semibold ${THEME.textPrimary}`}>External: {activeSession.stats.avgMt5}ms</span>
                     <Server className={`w-5 h-5 ${THEME.textSecondary}`} />
                   </div>
                 </div>
                 
-                <div className="flex justify-between text-xs uppercase font-mono tracking-widest mb-2 font-medium mt-1">
-                  <span className={THEME.synk.text}>Synk {activeSession.stats.synkRatio}%</span>
-                  <span className={THEME.textSecondary}>External {activeSession.stats.mt5Ratio}%</span>
+                <div className="flex justify-between items-end mb-2 mt-1">
+                  <span className={`text-[10px] uppercase font-mono tracking-widest ${THEME.synk.text}`}>Latency Composition</span>
+                  <div className="flex gap-4 text-xs uppercase font-mono tracking-widest font-medium">
+                    <span className={THEME.synk.text} title="Synk internal processing ratio">Synk {activeSession.stats.synkRatio}%</span>
+                    <span className={THEME.textSecondary} title="External execution ratio">Ext {activeSession.stats.mt5Ratio}%</span>
+                  </div>
                 </div>
                 <div className={`h-2.5 w-full bg-[#09090B] flex ${THEME.radius} overflow-hidden`}>
                   <div 
@@ -351,25 +362,49 @@ export default function SynkAnalyze() {
                 </div>
               </div>
               
-              <div className="flex-1 p-6 flex items-center justify-between gap-6">
-                <div className="flex-1 flex flex-col justify-center">
-                  <div className={`text-xs font-mono mb-2 ${THEME.textSecondary} uppercase tracking-widest`}>Session Avg</div>
-                  <div className={`text-5xl font-light font-mono ${THEME.textPrimary} tracking-tight`}>
-                    {activeSession.stats.avgTotal}<span className={`text-xl ${THEME.textMuted} ml-1`}>ms</span>
+              <div className="flex-1 px-6 py-4 flex items-center justify-between gap-6">
+                <div className="flex-1 flex flex-col">
+                  <div className={`text-sm font-semibold mb-3 ${THEME.textSecondary} uppercase tracking-widest`}>Session Avg</div>
+                  <div className="flex gap-4 items-end">
+                    <div className="flex flex-col">
+                      <span className={`text-[10px] font-mono mb-1 ${THEME.synk.text}`}>Synk</span>
+                      <div className={`text-3xl font-light font-mono ${THEME.synk.text} tracking-tight`}>{activeSession.stats.avgSynk}<span className="text-sm opacity-50 ml-0.5">ms</span></div>
+                    </div>
+                    <div className="w-px h-8 bg-[#27272A] mb-1"></div>
+                    <div className="flex flex-col">
+                      <span className={`text-[10px] font-mono mb-1 ${THEME.textSecondary}`}>External</span>
+                      <div className={`text-3xl font-light font-mono ${getLatencyColor(activeSession.stats.avgMt5)} tracking-tight`}>{activeSession.stats.avgMt5}<span className="text-sm opacity-50 ml-0.5">ms</span></div>
+                    </div>
                   </div>
                 </div>
-                <div className="w-px h-24 bg-[#27272A]"></div>
-                <div className="flex-1 flex flex-col justify-center">
-                  <div className={`text-xs font-mono mb-2 ${THEME.textSecondary} uppercase tracking-widest`}>Last 50 Avg</div>
-                  <div className={`text-5xl font-light font-mono ${getLatencyColor(activeSession.stats.last50Avg)} tracking-tight`}>
-                    {activeSession.stats.last50Avg}<span className={`text-xl ${THEME.textMuted} ml-1`}>ms</span>
+                <div className="w-px h-20 bg-[#27272A]"></div>
+                <div className="flex-1 flex flex-col">
+                  <div className={`text-sm font-semibold mb-3 ${THEME.textSecondary} uppercase tracking-widest`}>Last 50 Avg</div>
+                  <div className="flex gap-4 items-end">
+                    <div className="flex flex-col">
+                      <span className={`text-[10px] font-mono mb-1 ${THEME.synk.text}`}>Synk</span>
+                      <div className={`text-3xl font-light font-mono ${THEME.synk.text} tracking-tight`}>{activeSession.stats.last50SynkAvg}<span className="text-sm opacity-50 ml-0.5">ms</span></div>
+                    </div>
+                    <div className="w-px h-8 bg-[#27272A] mb-1"></div>
+                    <div className="flex flex-col">
+                      <span className={`text-[10px] font-mono mb-1 ${THEME.textSecondary}`}>External</span>
+                      <div className={`text-3xl font-light font-mono ${getLatencyColor(activeSession.stats.last50Mt5Avg)} tracking-tight`}>{activeSession.stats.last50Mt5Avg}<span className="text-sm opacity-50 ml-0.5">ms</span></div>
+                    </div>
                   </div>
                 </div>
-                <div className="w-px h-24 bg-[#27272A]"></div>
-                <div className="flex-1 flex flex-col justify-center">
-                  <div className={`text-xs font-mono mb-2 ${THEME.textSecondary} uppercase tracking-widest`}>Last 10 Avg</div>
-                  <div className={`text-5xl font-light font-mono ${getLatencyColor(activeSession.stats.last10Avg)} tracking-tight`}>
-                    {activeSession.stats.last10Avg}<span className={`text-xl ${THEME.textMuted} ml-1`}>ms</span>
+                <div className="w-px h-20 bg-[#27272A]"></div>
+                <div className="flex-1 flex flex-col">
+                  <div className={`text-sm font-semibold mb-3 ${THEME.textSecondary} uppercase tracking-widest`}>Last 10 Avg</div>
+                  <div className="flex gap-4 items-end">
+                    <div className="flex flex-col">
+                      <span className={`text-[10px] font-mono mb-1 ${THEME.synk.text}`}>Synk</span>
+                      <div className={`text-3xl font-light font-mono ${THEME.synk.text} tracking-tight`}>{activeSession.stats.last10SynkAvg}<span className="text-sm opacity-50 ml-0.5">ms</span></div>
+                    </div>
+                    <div className="w-px h-8 bg-[#27272A] mb-1"></div>
+                    <div className="flex flex-col">
+                      <span className={`text-[10px] font-mono mb-1 ${THEME.textSecondary}`}>External</span>
+                      <div className={`text-3xl font-light font-mono ${getLatencyColor(activeSession.stats.last10Mt5Avg)} tracking-tight`}>{activeSession.stats.last10Mt5Avg}<span className="text-sm opacity-50 ml-0.5">ms</span></div>
+                    </div>
                   </div>
                 </div>
               </div>
