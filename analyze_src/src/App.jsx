@@ -1,312 +1,576 @@
-import { useMemo, useState, useRef } from "react";
-import { Upload, FileJson, Clock, Activity, AlertCircle, CheckCircle2, Zap, Server, ShieldAlert, Crosshair, AlertTriangle } from 'lucide-react';
+import { useMemo, useState } from "react";
 
-export default function App() {
+export default function SynkMushroomAnalyze() {
   const [events, setEvents] = useState([]);
-  const [fileName, setFileName] = useState("");
+  const [currentFile, setCurrentFile] = useState(null);
+  const [history, setHistory] = useState([]);
 
   const handleFile = async (file) => {
     if (!file) return;
-    setFileName(file.name);
+
     const text = await file.text();
+
     const parsed = text
       .split("\n")
       .filter(Boolean)
       .map((line) => {
-        try { return JSON.parse(line); } catch { return null; }
+        try {
+          return JSON.parse(line);
+        } catch {
+          return null;
+        }
       })
       .filter(Boolean);
+
+    const payload = {
+      name: file.name,
+      events: parsed,
+      loadedAt: new Date().toISOString(),
+    };
+
+    setCurrentFile(payload);
+
+    setHistory((prev) => {
+      const next = [payload, ...prev.filter((x) => x.name !== file.name)];
+      return next.slice(0, 6);
+    });
+
     setEvents(parsed);
   };
 
   const metrics = useMemo(() => {
     if (!events.length) {
-      return { avgSynk: 0, avgMt5: 0, avgTotal: 0, successRate: 0, bottleneckRate: 0, errorEvents: [] };
+      return {
+        avgSynk: 0,
+        avgMt5: 0,
+        avgTotal: 0,
+        successRate: 0,
+        bottleneckRate: 0,
+      };
     }
 
-    const avg = (arr) => arr.length ? arr.reduce((a, b) => a + b, 0) / arr.length : 0;
+    const avg = (arr) =>
+      arr.reduce((a, b) => a + b, 0) / arr.length;
 
-    const synkMsArr = events.map((e) => e.timings?.synk_processing_ms || 0);
-    const mt5MsArr = events.map((e) => e.timings?.mt5_send_ms || 0);
-    const totalMsArr = events.map((e) => e.timings?.total_execution_ms || 0);
+    const avgSynk = avg(
+      events.map((e) => e.timings?.synk_processing_ms || 0)
+    );
 
-    const synk = avg(synkMsArr);
-    const mt5 = avg(mt5MsArr);
-    const total = avg(totalMsArr);
+    const avgMt5 = avg(
+      events.map((e) => e.timings?.mt5_send_ms || 0)
+    );
 
-    const filledEvents = events.filter((e) => e.status === "filled");
-    const success = (filledEvents.length / events.length) * 100;
-    
-    const mt5Pct = total > 0 ? (mt5 / total) * 100 : 0;
-    const synkPct = total > 0 ? (synk / total) * 100 : 0;
+    const avgTotal = avg(
+      events.map((e) => e.timings?.total_execution_ms || 0)
+    );
+
+    const successRate =
+      (events.filter((e) => e.status === "filled").length /
+        events.length) *
+      100;
+
+    const bottleneckRate =
+      (events.filter(
+        (e) => e.bottleneck_stage === "mt5_terminal"
+      ).length /
+        events.length) *
+      100;
 
     return {
-      avgSynk: synk.toFixed(1),
-      avgMt5: mt5.toFixed(1),
-      avgTotal: total.toFixed(1),
-      successRate: success.toFixed(1),
-      mt5Pct: mt5Pct.toFixed(1),
-      synkPct: synkPct.toFixed(1),
-      errorEvents: events.filter((e) => e.status !== "filled"),
-      count: events.length
+      avgSynk: avgSynk.toFixed(1),
+      avgMt5: avgMt5.toFixed(1),
+      avgTotal: avgTotal.toFixed(1),
+      successRate: successRate.toFixed(1),
+      bottleneckRate: bottleneckRate.toFixed(1),
     };
   }, [events]);
 
   const latest = events[events.length - 1];
 
-  // Empty State
-  if (!events.length) {
-    return (
-      <div className="min-h-screen bg-[#0A0A0C] text-zinc-300 flex flex-col items-center justify-center p-8 selection:bg-rose-500/30">
-        <div className="max-w-2xl w-full text-center space-y-8">
-          <ShieldAlert className="w-24 h-24 text-zinc-800 mx-auto" />
-          <h1 className="text-5xl font-black text-white tracking-tighter">Execution Forensics</h1>
-          <p className="text-lg text-zinc-500 font-medium">Drop your JSONL execution logs to instantly identify routing latency and isolate Broker/MT5 bottlenecks.</p>
-          
-          <label className="inline-flex cursor-pointer items-center justify-center rounded-lg bg-white text-black hover:bg-zinc-200 transition-all px-10 py-4 font-bold shadow-[0_0_40px_rgba(255,255,255,0.2)]">
-            Load Execution Log
-            <input type="file" className="hidden" accept=".jsonl,.json,.txt" onChange={(e) => handleFile(e.target.files[0])} />
-          </label>
-        </div>
-      </div>
-    );
-  }
-
   return (
-    <div className="min-h-screen bg-[#0A0A0C] text-zinc-300 font-sans selection:bg-rose-500/30 pb-20">
-      
-      {/* Persistent Compact Toolbar */}
-      <div className="sticky top-0 z-50 bg-[#0A0A0C]/90 backdrop-blur-xl border-b border-white/[0.04]">
-        <div className="max-w-[1800px] mx-auto px-8 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <ShieldAlert className="w-5 h-5 text-zinc-300" />
-            <span className="font-bold tracking-widest uppercase text-[11px] text-zinc-300">Execution Forensics</span>
-          </div>
-          
-          <div className="flex items-center gap-6">
-            <div className="flex items-center gap-3">
-              <FileJson className="w-4 h-4 text-zinc-600" />
-              <span className="text-sm font-bold text-white tracking-tight">{fileName}</span>
-              <span className="text-zinc-700 text-sm mx-1">|</span>
-              <span className="text-[11px] font-bold tracking-widest uppercase text-emerald-400 bg-emerald-400/10 border border-emerald-400/20 px-2 py-1 rounded">
-                {metrics.count} Executions
-              </span>
-            </div>
-            
-            <label className="cursor-pointer text-[11px] font-bold uppercase tracking-widest border border-white/10 hover:bg-white/5 text-white px-4 py-1.5 rounded transition-colors">
-              Upload New
-              <input type="file" className="hidden" accept=".jsonl,.json,.txt" onChange={(e) => handleFile(e.target.files[0])} />
-            </label>
-          </div>
-        </div>
-      </div>
+    <div className="min-h-screen bg-[#050505] text-white overflow-hidden">
+      <div className="max-w-[1720px] mx-auto px-6 py-5 h-screen flex flex-col gap-4">
 
-      <div className="max-w-[1800px] mx-auto px-8 py-8">
-        
-        {/* Tier 1: Analysis Result (Main Focus) */}
-        <div className="grid grid-cols-1 xl:grid-cols-[1.3fr_0.7fr] gap-6 mb-6">
-          
-          {/* Main Forensic Result */}
-          <div className="bg-[#121214] border border-white/[0.04] rounded-3xl p-12 flex flex-col justify-center relative overflow-hidden shadow-2xl">
-            {/* Background warning pattern if broker is bottleneck */}
-            {parseFloat(metrics.avgMt5) > 50 && (
-              <div className="absolute -top-32 -right-32 w-[500px] h-[500px] bg-rose-500/10 blur-[120px] rounded-full pointer-events-none"></div>
-            )}
-            
-            <div className="text-rose-500 font-bold tracking-widest uppercase text-xs mb-8 flex items-center gap-2">
-              <AlertTriangle className="w-4 h-4" />
-              Detected Delay Source
-            </div>
+        {/* top bar */}
+        <div className="h-[76px] shrink-0 rounded-[24px] border border-white/8 bg-[#0b0f17]/90 backdrop-blur-xl px-6 flex items-center justify-between shadow-2xl">
 
-            <div className="mb-14 relative z-10">
-              <h2 className="text-7xl md:text-8xl font-black text-white tracking-tighter mb-6">MT5 / Broker</h2>
-              <div className="flex items-end gap-5">
-                <span className="text-6xl font-mono text-rose-500 font-bold leading-none">{metrics.avgMt5}<span className="text-4xl text-rose-500/50 ml-1">ms</span></span>
-                <span className="text-xl text-zinc-500 font-bold pb-1">Average Latency <span className="text-zinc-600 font-normal">({metrics.mt5Pct}% of total execution)</span></span>
-              </div>
-            </div>
+          <div className="flex items-center gap-10">
+            <div>
+              <div className="flex items-center gap-3">
+                <div className="text-2xl">🍄</div>
 
-            <div className="border-t border-white/[0.04] pt-8 flex items-center gap-16 relative z-10">
-              <div>
-                <div className="text-[11px] text-zinc-500 uppercase tracking-widest mb-2 font-bold">Synk Internal Routing</div>
-                <div className="flex items-baseline gap-3">
-                  <span className="text-3xl font-mono text-emerald-400 font-bold">{metrics.avgSynk}ms</span>
-                  <span className="text-zinc-500 text-sm font-medium border border-white/5 bg-white/[0.02] px-2 py-0.5 rounded">Ultra-Fast ({metrics.synkPct}%)</span>
+                <div>
+                  <div className="text-[22px] font-semibold tracking-tight">
+                    Synk Mushroom Analyze
+                  </div>
+
+                  <div className="text-white/35 text-sm">
+                    Execution Forensics Tool
+                  </div>
                 </div>
               </div>
-              <div className="w-px h-12 bg-white/[0.04]"></div>
+            </div>
+
+            <div className="hidden xl:flex items-center gap-5 text-sm text-white/45">
               <div>
-                <div className="text-[11px] text-zinc-500 uppercase tracking-widest mb-2 font-bold">Responsibility Source</div>
-                <div className="text-2xl font-bold text-white tracking-tight">External Environment</div>
+                Current Log
+              </div>
+
+              <div className="text-white font-medium text-base">
+                {currentFile?.name || "No log loaded"}
+              </div>
+
+              <div>
+                {events.length} events
               </div>
             </div>
           </div>
 
-          {/* Responsibility Breakdown & Pipeline */}
-          <div className="bg-[#121214] border border-white/[0.04] rounded-3xl p-10 flex flex-col shadow-2xl">
-            <div className="flex items-center justify-between mb-10">
-              <h3 className="text-xs font-bold tracking-widest uppercase text-zinc-500">Execution Pipeline Forensics</h3>
-              <span className="text-[10px] uppercase tracking-widest text-zinc-600 font-bold border border-white/5 px-2 py-1 rounded">Latest Event</span>
-            </div>
-            
-            <div className="flex-1 flex flex-col justify-center max-w-sm mx-auto w-full relative">
-               <PipelineNode stage="Alert Received" ms="0.0" isFast={true} />
-               <PipelineEdge ms={latest?.timings?.synk_processing_ms} />
-               
-               <PipelineNode stage="Synk Routing Engine" ms={latest?.timings?.synk_processing_ms} isFast={true} />
-               <PipelineEdge ms={latest?.timings?.mt5_send_ms} isProblem={true} />
-               
-               <PipelineNode stage="MT5 Terminal / Broker" ms={latest?.timings?.mt5_send_ms} isFast={false} isProblem={true} />
-               <PipelineEdge ms={0} />
+          <div className="flex items-center gap-3">
+            <label className="h-11 px-5 rounded-2xl border border-white/10 bg-white/5 hover:bg-white/10 transition flex items-center cursor-pointer text-sm font-medium">
+              Upload Log
 
-               <PipelineNode stage={latest?.status === 'filled' ? 'Order Filled' : 'Order Rejected'} ms={latest?.timings?.total_execution_ms} isFast={latest?.status === 'filled'} isFinal={true} />
-            </div>
+              <input
+                type="file"
+                className="hidden"
+                onChange={(e) => handleFile(e.target.files[0])}
+              />
+            </label>
+
+            <button className="h-11 px-5 rounded-2xl border border-white/10 bg-[#111827] text-sm text-white/60">
+              Compare
+            </button>
           </div>
         </div>
 
-        {/* Tier 2 & 3: Compact KPI and Errors */}
-        <div className="grid grid-cols-1 xl:grid-cols-[0.8fr_1.2fr] gap-6 mb-6">
-          
-          {/* Compact KPIs */}
-          <div className="grid grid-cols-2 gap-6">
-             <SmallKpi label="Success Rate" value={`${metrics.successRate}%`} highlight={parseFloat(metrics.successRate) > 90 ? 'emerald' : 'rose'} />
-             <SmallKpi label="Total Executions" value={metrics.count} />
-             <SmallKpi label="Avg End-to-End" value={`${metrics.avgTotal}ms`} />
-             <SmallKpi label="Avg Routing (Synk)" value={`${metrics.avgSynk}ms`} highlight="emerald" />
-          </div>
+        {/* hero */}
+        <div className="grid grid-cols-[1.3fr_0.7fr] gap-4 shrink-0 h-[240px]">
 
-          {/* Error Diagnostics (Crucial for support) */}
-          <div className="bg-[#121214] border border-white/[0.04] rounded-3xl p-8 flex flex-col h-[300px] shadow-2xl">
-            <div className="flex items-center justify-between mb-6 pb-4 border-b border-white/[0.04]">
-              <h3 className="text-xs font-bold tracking-widest uppercase text-zinc-500 flex items-center gap-2">
-                 <AlertCircle className="w-4 h-4" /> Reject Diagnostics
-              </h3>
-              <span className="text-[11px] font-bold uppercase tracking-widest text-rose-500 bg-rose-500/10 px-2 py-1 rounded">
-                {metrics.errorEvents.length} Issues Found
-              </span>
-            </div>
-            
-            <div className="flex-1 overflow-y-auto pr-3 space-y-3 custom-scrollbar">
-              {metrics.errorEvents.length === 0 ? (
-                 <div className="h-full flex items-center justify-center text-emerald-500/40 text-xs font-bold tracking-widest uppercase">
-                   No execution errors recorded
-                 </div>
-              ) : (
-                metrics.errorEvents.map((err, i) => (
-                  <div key={i} className="flex flex-col gap-1.5 p-4 bg-rose-500/[0.03] border border-rose-500/10 rounded-xl hover:bg-rose-500/[0.05] transition-colors">
-                    <div className="flex items-center justify-between">
-                      <span className="font-bold text-zinc-200 text-sm tracking-tight">{err.symbol}</span>
-                      <span className="text-xs font-mono font-bold text-rose-400 bg-rose-500/10 border border-rose-500/20 px-2 py-0.5 rounded shadow-sm">
-                        CODE: {err.mt5?.retcode || 'UNKNOWN'}
-                      </span>
-                    </div>
-                    <span className="text-sm text-zinc-400 font-medium">{err.mt5?.comment}</span>
+          <div className="rounded-[32px] border border-orange-500/10 bg-gradient-to-br from-[#111111] via-[#0b0f17] to-[#080808] p-7 shadow-[0_0_80px_rgba(0,0,0,0.55)] relative overflow-hidden">
+
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(249,115,22,0.12),transparent_35%)]"></div>
+
+            <div className="relative z-10 h-full flex flex-col justify-between">
+
+              <div>
+                <div className="text-orange-400/80 text-sm tracking-[0.2em] uppercase mb-4">
+                  Analysis Result
+                </div>
+
+                <div className="text-[54px] leading-none font-semibold tracking-tight mb-4">
+                  MT5 / Broker Delay
+                </div>
+
+                <div className="flex items-end gap-4">
+                  <div className="text-[92px] leading-[0.9] font-semibold text-orange-300">
+                    {metrics.avgMt5}
                   </div>
-                ))
-              )}
+
+                  <div className="text-orange-200/60 text-2xl pb-4">
+                    ms
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-10 text-sm">
+                <div>
+                  <div className="text-white/35 mb-1">
+                    Synk internal routing
+                  </div>
+
+                  <div className="text-emerald-400 text-2xl font-semibold">
+                    {metrics.avgSynk}ms
+                  </div>
+                </div>
+
+                <div>
+                  <div className="text-white/35 mb-1">
+                    Bottleneck ratio
+                  </div>
+
+                  <div className="text-orange-300 text-2xl font-semibold">
+                    {metrics.bottleneckRate}%
+                  </div>
+                </div>
+
+                <div>
+                  <div className="text-white/35 mb-1">
+                    Status
+                  </div>
+
+                  <div className="text-white text-2xl font-semibold capitalize">
+                    {latest?.status || "waiting"}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* side */}
+          <div className="rounded-[32px] border border-white/8 bg-[#0b0f17] p-6 flex flex-col justify-between">
+
+            <div>
+              <div className="text-white/40 text-sm mb-5 uppercase tracking-[0.18em]">
+                Responsibility Breakdown
+              </div>
+
+              <div className="space-y-4">
+
+                <Breakdown
+                  label="TradingView → Synk"
+                  value={`${metrics.avgSynk}ms`}
+                  accent="emerald"
+                  width="8%"
+                />
+
+                <Breakdown
+                  label="MT5 / Broker"
+                  value={`${metrics.avgMt5}ms`}
+                  accent="orange"
+                  width="92%"
+                />
+              </div>
+            </div>
+
+            <div className="grid grid-cols-2 gap-3 mt-6">
+              <MiniCard
+                label="Executions"
+                value={events.length}
+              />
+
+              <MiniCard
+                label="Success"
+                value={`${metrics.successRate}%`}
+              />
+
+              <MiniCard
+                label="Avg Total"
+                value={`${metrics.avgTotal}ms`}
+              />
+
+              <MiniCard
+                label="Current"
+                value={latest?.symbol || "-"}
+              />
             </div>
           </div>
         </div>
 
-        {/* Tier 3: Historical Heatmap */}
-        <div className="bg-[#121214] border border-white/[0.04] rounded-3xl p-8 shadow-2xl">
-           <h3 className="text-xs font-bold tracking-widest uppercase text-zinc-600 mb-6 flex justify-between">
-             <span>Historical Latency Density (Total ms)</span>
-             <span className="text-zinc-700">Latest 150 Executions</span>
-           </h3>
-           <div className="flex items-end gap-[2px] h-28">
-             {events.slice(-150).map((e, i) => {
-                const lat = e.timings?.total_execution_ms || 0;
-                const heightPct = Math.max(8, Math.min(100, (lat / 500) * 100));
-                
-                let color = 'bg-emerald-500/90';
-                if(lat > 250) color = 'bg-rose-500/90 shadow-[0_0_10px_rgba(244,63,94,0.3)] z-10';
-                else if(lat > 100) color = 'bg-amber-500/90';
-                else if(lat === 0) color = 'bg-zinc-800';
-                
+        {/* main */}
+        <div className="grid grid-cols-[1.15fr_0.85fr] gap-4 min-h-0 flex-1">
+
+          {/* left */}
+          <div className="flex flex-col gap-4 min-h-0">
+
+            <div className="rounded-[30px] border border-white/8 bg-[#0b0f17] p-6 shrink-0">
+
+              <div className="flex items-center justify-between mb-6">
+                <div>
+                  <div className="text-2xl font-semibold tracking-tight">
+                    Execution Pipeline
+                  </div>
+
+                  <div className="text-white/35 mt-1 text-sm">
+                    Responsibility boundary visualization
+                  </div>
+                </div>
+
+                <div className="text-right">
+                  <div className="text-white/35 text-sm">
+                    Total Execution
+                  </div>
+
+                  <div className="text-4xl font-semibold text-orange-300">
+                    {metrics.avgTotal}ms
+                  </div>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-4 gap-4 items-center">
+
+                <PipeNode
+                  title="Alert"
+                  value="0ms"
+                  desc="Webhook received"
+                  accent="white"
+                />
+
+                <PipeNode
+                  title="Synk"
+                  value={`${latest?.timings?.synk_processing_ms || 0}ms`}
+                  desc="Local routing"
+                  accent="emerald"
+                />
+
+                <PipeNode
+                  title="MT5"
+                  value={`${latest?.timings?.mt5_send_ms || 0}ms`}
+                  desc="Trade server"
+                  accent="orange"
+                  problem
+                />
+
+                <PipeNode
+                  title="Filled"
+                  value={`${latest?.timings?.total_execution_ms || 0}ms`}
+                  desc="Execution complete"
+                  accent="cyan"
+                />
+              </div>
+            </div>
+
+            <div className="grid grid-cols-[1fr_0.8fr] gap-4 min-h-0 flex-1">
+
+              {/* heatmap */}
+              <div className="rounded-[30px] border border-white/8 bg-[#0b0f17] p-6 overflow-hidden flex flex-col">
+
+                <div className="flex items-center justify-between mb-6 shrink-0">
+                  <div>
+                    <div className="text-xl font-semibold">
+                      Latency Heatmap
+                    </div>
+
+                    <div className="text-white/35 text-sm mt-1">
+                      Historical execution density
+                    </div>
+                  </div>
+
+                  <div className="text-xs text-white/35">
+                    0ms → 1000ms+
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-12 gap-[6px] flex-1">
+                  {Array.from({ length: 84 }).map((_, i) => {
+                    const colors = [
+                      "bg-emerald-500/80",
+                      "bg-lime-500/80",
+                      "bg-yellow-500/80",
+                      "bg-orange-500/80",
+                      "bg-red-500/80",
+                    ];
+
+                    const c = colors[Math.floor((i % 12) / 3)];
+
+                    return (
+                      <div
+                        key={i}
+                        className={`rounded-md ${c} border border-black/10`}>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* logs */}
+              <div className="flex flex-col gap-4 min-h-0">
+
+                <div className="rounded-[30px] border border-white/8 bg-[#0b0f17] p-6 shrink-0">
+
+                  <div className="text-xl font-semibold mb-5">
+                    Latest Event
+                  </div>
+
+                  <div className="space-y-3 text-sm">
+                    <Row
+                      label="Symbol"
+                      value={latest?.symbol || "-"}
+                    />
+
+                    <Row
+                      label="Retcode"
+                      value={latest?.mt5?.retcode || "-"}
+                    />
+
+                    <Row
+                      label="Bottleneck"
+                      value={latest?.bottleneck_stage || "-"}
+                      accent="orange"
+                    />
+                  </div>
+                </div>
+
+                <div className="rounded-[30px] border border-white/8 bg-[#0b0f17] p-6 min-h-0 flex flex-col overflow-hidden">
+
+                  <div className="flex items-center justify-between mb-5 shrink-0">
+                    <div>
+                      <div className="text-xl font-semibold">
+                        Errors
+                      </div>
+
+                      <div className="text-white/35 text-sm mt-1">
+                        Reject / failure analysis
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="space-y-3 overflow-auto pr-1">
+                    {events
+                      .filter((e) => e.status !== "filled")
+                      .slice(0, 12)
+                      .map((e, i) => (
+                        <div
+                          key={i}
+                          className="rounded-2xl border border-red-500/10 bg-red-500/[0.03] p-4 flex items-center justify-between gap-4">
+
+                          <div>
+                            <div className="font-medium text-sm mb-1">
+                              {e.symbol}
+                            </div>
+
+                            <div className="text-red-300/80 text-xs">
+                              {e.mt5?.comment}
+                            </div>
+                          </div>
+
+                          <div className="text-white/35 text-sm">
+                            {e.mt5?.retcode}
+                          </div>
+                        </div>
+                      ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* right side logs */}
+          <div className="rounded-[30px] border border-white/8 bg-[#0b0f17] p-6 overflow-hidden flex flex-col">
+
+            <div className="flex items-center justify-between mb-6 shrink-0">
+              <div>
+                <div className="text-2xl font-semibold">
+                  Loaded Sessions
+                </div>
+
+                <div className="text-white/35 text-sm mt-1">
+                  Compare previous log sessions
+                </div>
+              </div>
+            </div>
+
+            <div className="space-y-3 overflow-auto pr-1">
+              {history.map((item, i) => {
+                const avg = (
+                  item.events.reduce(
+                    (a, b) =>
+                      a +
+                      (b.timings?.total_execution_ms || 0),
+                    0
+                  ) / item.events.length
+                ).toFixed(1);
+
                 return (
-                  <div key={i} className="flex-1 group relative flex justify-center h-full items-end">
-                    <div className={`w-full rounded-[1px] transition-all hover:brightness-125 ${color}`} style={{ height: `${heightPct}%` }}></div>
-                    <div className="absolute bottom-full mb-2 opacity-0 group-hover:opacity-100 whitespace-nowrap bg-black border border-white/10 text-white font-mono font-bold text-[10px] py-1 px-2 rounded pointer-events-none z-20 shadow-xl">
-                      {lat}ms
+                  <div
+                    key={i}
+                    className="rounded-[24px] border border-white/8 bg-black/20 p-5 hover:bg-white/[0.03] transition cursor-pointer">
+
+                    <div className="flex items-start justify-between mb-4">
+                      <div>
+                        <div className="font-medium text-base mb-1">
+                          {item.name}
+                        </div>
+
+                        <div className="text-white/35 text-sm">
+                          {item.events.length} executions
+                        </div>
+                      </div>
+
+                      <div className="text-orange-300 text-2xl font-semibold">
+                        {avg}ms
+                      </div>
+                    </div>
+
+                    <div className="h-2 rounded-full bg-white/5 overflow-hidden">
+                      <div
+                        className="h-full bg-orange-400 rounded-full"
+                        style={{ width: `${Math.min(avg / 6, 100)}%` }}
+                      />
                     </div>
                   </div>
-                )
-             })}
-           </div>
+                );
+              })}
+            </div>
+          </div>
         </div>
-
       </div>
     </div>
   );
 }
 
-// ----------------------------------------
-// Components for Forensic Report UI
-// ----------------------------------------
-
-function SmallKpi({ label, value, highlight }) {
-  let color = 'text-white';
-  if (highlight === 'emerald') color = 'text-emerald-400';
-  if (highlight === 'rose') color = 'text-rose-400';
+function Breakdown({ label, value, accent, width }) {
+  const colors = {
+    emerald: "bg-emerald-400",
+    orange: "bg-orange-400",
+  };
 
   return (
-    <div className="bg-[#121214] border border-white/[0.04] rounded-3xl p-6 flex flex-col justify-center shadow-lg hover:border-white/10 transition-colors">
-       <div className="text-[10px] font-bold tracking-widest uppercase text-zinc-500 mb-2.5">{label}</div>
-       <div className={`text-3xl font-mono font-bold tracking-tighter ${color}`}>{value}</div>
-    </div>
-  )
-}
+    <div>
+      <div className="flex items-center justify-between mb-2 text-sm">
+        <div className="text-white/60">{label}</div>
+        <div className="font-medium">{value}</div>
+      </div>
 
-function PipelineNode({ stage, ms, isFast, isProblem, isFinal }) {
-  let dotStyle = "border-zinc-700 bg-[#121214]";
-  let textStyle = "text-zinc-300";
-  let msStyle = "text-zinc-600";
-
-  if (isProblem) {
-    dotStyle = "border-rose-500 bg-rose-500 shadow-[0_0_15px_rgba(244,63,94,0.6)] scale-125";
-    textStyle = "text-rose-400 font-bold";
-    msStyle = "text-rose-400 font-bold bg-rose-500/10 px-2 py-0.5 rounded";
-  } else if (isFast && !isFinal) {
-    dotStyle = "border-emerald-500 bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.3)]";
-    msStyle = "text-emerald-500 font-bold bg-emerald-500/10 px-2 py-0.5 rounded";
-  } else if (isFinal && isFast) {
-    dotStyle = "border-emerald-500 bg-emerald-500 shadow-[0_0_15px_rgba(16,185,129,0.6)] scale-125";
-    textStyle = "text-white font-bold";
-    msStyle = "text-white font-bold bg-emerald-500/20 px-2 py-0.5 rounded border border-emerald-500/30";
-  } else if (isFinal && !isFast) {
-    dotStyle = "border-zinc-600 bg-zinc-600";
-    textStyle = "text-zinc-400 font-bold";
-    msStyle = "text-zinc-500 font-bold";
-  }
-
-  return (
-    <div className="flex items-center gap-5 relative z-10 w-full">
-      <div className={`w-3 h-3 rounded-full border-[3px] shrink-0 transition-all ${dotStyle}`}></div>
-      <div className="flex-1 flex items-center justify-between bg-black/30 border border-white/5 p-3.5 rounded-xl">
-         <span className={`text-[13px] tracking-wide ${textStyle}`}>{stage}</span>
-         {ms !== undefined && <span className={`text-xs font-mono ${msStyle}`}>{ms}ms</span>}
+      <div className="h-2 rounded-full bg-white/5 overflow-hidden">
+        <div
+          className={`h-full ${colors[accent]} rounded-full`}
+          style={{ width }}
+        />
       </div>
     </div>
-  )
+  );
 }
 
-function PipelineEdge({ ms, isProblem }) {
+function MiniCard({ label, value }) {
   return (
-    <div className="ml-[5px] py-3.5 border-l-2 border-dashed border-white/10 flex items-center w-full">
-      <div className="pl-8 h-full flex items-center">
-         {isProblem ? (
-           <div className="flex items-center gap-2.5 text-rose-400 font-bold bg-rose-500/10 px-3.5 py-1.5 rounded-lg border border-rose-500/20 text-xs shadow-lg">
-             <AlertTriangle className="w-3.5 h-3.5" />
-             ↓ {ms}ms delay
-             <span className="ml-2 font-black uppercase tracking-widest text-[9px] bg-rose-500 text-white px-2 py-0.5 rounded">Problem Area</span>
-           </div>
-         ) : (
-           <div className="text-xs font-mono text-emerald-500/60 font-semibold flex items-center gap-2">
-             ↓ {ms}ms
-           </div>
-         )}
+    <div className="rounded-2xl border border-white/8 bg-black/20 p-4">
+      <div className="text-white/35 text-xs mb-2">{label}</div>
+      <div className="text-xl font-semibold truncate">{value}</div>
+    </div>
+  );
+}
+
+function PipeNode({ title, value, desc, accent, problem }) {
+  const accents = {
+    white: "border-white/10 bg-white/5",
+    emerald: "border-emerald-500/20 bg-emerald-500/10",
+    orange: "border-orange-500/20 bg-orange-500/10",
+    cyan: "border-cyan-500/20 bg-cyan-500/10",
+  };
+
+  return (
+    <div className="relative">
+      <div className={`rounded-[24px] border ${accents[accent]} p-5 h-full`}>
+
+        <div className="flex items-center justify-between mb-4">
+          <div className="text-white/40 text-sm">{title}</div>
+
+          {problem && (
+            <div className="text-[10px] tracking-[0.18em] text-orange-300 uppercase">
+              Delay
+            </div>
+          )}
+        </div>
+
+        <div className="text-3xl font-semibold mb-2">
+          {value}
+        </div>
+
+        <div className="text-white/35 text-xs">
+          {desc}
+        </div>
       </div>
     </div>
-  )
+  );
+}
+
+function Row({ label, value, accent }) {
+  return (
+    <div className="flex items-center justify-between gap-4 border-b border-white/5 pb-3">
+      <div className="text-white/35">{label}</div>
+      <div className={accent === "orange" ? "text-orange-300" : ""}>
+        {value}
+      </div>
+    </div>
+  );
 }
