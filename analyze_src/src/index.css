@@ -1,0 +1,31 @@
+@import "tailwindcss";
+
+@theme {
+  --color-graphite: #1c1c1e;
+  --color-graphite-dark: #121214;
+}
+
+@layer base {
+  body {
+    @apply bg-zinc-950 text-zinc-300 antialiased;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  }
+}
+
+/* Custom scrollbar for terminal look */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-zinc-900;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-zinc-700 rounded;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-zinc-600;
+}
