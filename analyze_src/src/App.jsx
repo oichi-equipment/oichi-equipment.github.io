@@ -60,13 +60,13 @@ function App() {
     let errorEvents = []
 
     logs.forEach(log => {
-      totalSynkMs += (log.synk_processing_ms || 0)
-      totalMt5Ms += (log.mt5_send_ms || 0)
-      totalExecMs += (log.total_execution_ms || 0)
+      totalSynkMs += (log.timings?.synk_processing_ms || 0)
+      totalMt5Ms += (log.timings?.mt5_send_ms || 0)
+      totalExecMs += (log.timings?.total_execution_ms || 0)
       
-      if (log.status === 'success') {
+      if (log.status === 'success' || log.status === 'filled') {
         successCount++
-      } else if (log.status === 'error') {
+      } else if (log.status === 'error' || log.status === 'rejected') {
         errorEvents.push(log)
       }
     })
@@ -182,8 +182,8 @@ function App() {
                   {logs.slice(0, 50).map((log, i) => {
                     // Calculate visual bar widths. Max cap for visual sanity.
                     const maxVisualMs = 500; 
-                    const synkMs = Math.min(log.synk_processing_ms || 1, maxVisualMs);
-                    const mt5Ms = Math.min(log.mt5_send_ms || 1, maxVisualMs);
+                    const synkMs = Math.min(log.timings?.synk_processing_ms || 1, maxVisualMs);
+                    const mt5Ms = Math.min(log.timings?.mt5_send_ms || 1, maxVisualMs);
                     const totalVisual = synkMs + mt5Ms;
                     
                     const synkPct = (synkMs / maxVisualMs) * 100;
@@ -192,21 +192,28 @@ function App() {
                     return (
                       <div key={log.event_id || i} className="group flex flex-col space-y-1">
                         <div className="flex justify-between text-[10px] text-zinc-500">
-                          <span>{log.event_id || `evt_${i}`} | {log.symbol} | {log.action}</span>
-                          <span>{log.total_execution_ms}ms total</span>
+                          <span className="flex items-center">
+                            {log.event_id || `evt_${i}`} | {log.symbol}
+                            {log.bottleneck_stage && (
+                              <span className="ml-2 px-1.5 py-0.5 rounded bg-rose-500/10 text-rose-400 text-[9px] uppercase tracking-wider font-semibold border border-rose-500/20">
+                                BOTTLENECK: {log.bottleneck_stage.replace('_', ' ')}
+                              </span>
+                            )}
+                          </span>
+                          <span>{log.timings?.total_execution_ms}ms total</span>
                         </div>
                         <div className="flex w-full h-2 bg-zinc-950 rounded overflow-hidden">
                           {/* Synk execution bar (usually very small) */}
                           <div 
                             className="bg-emerald-500 group-hover:brightness-110 transition-all"
                             style={{ width: `${Math.max(synkPct, 0.5)}%` }}
-                            title={`Synk: ${log.synk_processing_ms}ms`}
+                            title={`Synk: ${log.timings?.synk_processing_ms}ms`}
                           ></div>
                           {/* Broker execution bar */}
                           <div 
                             className="bg-rose-500 group-hover:brightness-110 transition-all"
                             style={{ width: `${mt5Pct}%` }}
-                            title={`MT5/Broker: ${log.mt5_send_ms}ms`}
+                            title={`MT5/Broker: ${log.timings?.mt5_send_ms}ms`}
                           ></div>
                         </div>
                       </div>
@@ -230,7 +237,7 @@ function App() {
                      {Array.from({length: 50}).map((_, i) => {
                         // Generate mock heatmap distribution based on logs
                         const logIndex = i % logs.length;
-                        const lat = logs[logIndex]?.total_execution_ms || 0;
+                        const lat = logs[logIndex]?.timings?.total_execution_ms || 0;
                         let bg = 'bg-zinc-800';
                         if (lat > 200) bg = 'bg-rose-500/80';
                         else if (lat > 100) bg = 'bg-amber-500/80';
