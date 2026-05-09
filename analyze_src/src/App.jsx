@@ -185,10 +185,11 @@ export default function SynkAnalyze() {
       }}
     >
       {isDragging && (
-        <div className="absolute inset-0 z-50 bg-[#09090B]/80 backdrop-blur-sm border-2 border-dashed border-[#708B4B] m-4 rounded-xl flex items-center justify-center">
-          <div className="flex flex-col items-center gap-4 text-[#708B4B]">
-            <Upload className="w-16 h-16 animate-bounce" />
-            <h2 className="text-2xl font-bold tracking-widest uppercase">Drop Execution Log Here</h2>
+        <div className="absolute inset-0 z-50 bg-[#09090B]/90 backdrop-blur-md border-4 border-dashed border-[#708B4B] m-6 rounded-2xl flex items-center justify-center shadow-[0_0_100px_rgba(112,139,75,0.2)]">
+          <div className="flex flex-col items-center gap-6 text-[#708B4B]">
+            <Upload className="w-20 h-20 animate-bounce" />
+            <h2 className="text-4xl font-bold tracking-tight">Drop Execution Log Here</h2>
+            <p className="font-mono text-sm uppercase tracking-widest opacity-80">Instant Local Parsing</p>
           </div>
         </div>
       )}
@@ -241,10 +242,23 @@ export default function SynkAnalyze() {
 
       {!activeSession ? (
         <div className="flex-1 flex items-center justify-center">
-          <div className={`text-center flex flex-col items-center ${THEME.textMuted}`}>
-            <img src="/analyze/logo-mark.png" className="w-12 h-12 mb-4 opacity-50 object-contain grayscale" alt="Synk Logo" />
-            <p className="font-mono text-xs uppercase tracking-widest mb-4">Waiting for execution log</p>
-            <p className="text-sm">Drag and drop a .jsonl file anywhere, or use the Upload button.</p>
+          <div className={`text-center flex flex-col items-center ${THEME.textMuted} max-w-lg`}>
+            <div className="w-20 h-20 border border-[#27272A] bg-[#121214] rounded-xl flex items-center justify-center mb-6 shadow-xl">
+              <Upload className="w-8 h-8 text-[#94A3B8]" />
+            </div>
+            <h1 className="text-2xl font-semibold text-[#F1F5F9] tracking-tight mb-2">Drop Synk Mushroom telemetry logs</h1>
+            <p className="text-sm text-[#94A3B8] mb-8">Local browser analysis only. No upload. No cloud. No telemetry leaves your PC.</p>
+            
+            <div className="flex items-center justify-center gap-6 text-xs font-mono tracking-widest uppercase mb-10 text-[#52525B]">
+              <div className="flex items-center gap-2"><Search className="w-3.5 h-3.5"/> Multiple logs</div>
+              <div className="flex items-center gap-2"><ArrowRightLeft className="w-3.5 h-3.5"/> Compare sessions</div>
+            </div>
+            
+            <label className={`cursor-pointer px-6 py-3 text-sm font-semibold border ${THEME.panelBorder} text-[#F1F5F9] bg-[#121214] hover:bg-[#27272A] flex items-center gap-2 transition-colors ${THEME.radius} shadow-lg`}>
+              <Upload className="w-4 h-4" />
+              Select JSONL File
+              <input type="file" className="hidden" accept=".jsonl,.json,.txt" onChange={(e) => handleFileUpload(e.target.files[0])} />
+            </label>
           </div>
         </div>
       ) : (
@@ -264,16 +278,16 @@ export default function SynkAnalyze() {
               <div className="p-4 flex-1 flex flex-col justify-center">
                 <div className="flex justify-between items-end mb-2.5">
                   <div className="flex items-center gap-2">
-                    <Network className={`w-4 h-4 ${THEME.synk.text}`} />
-                    <span className={`text-sm font-mono ${THEME.synk.text}`}>Synk: {activeSession.stats.avgSynk}ms</span>
+                    <Network className={`w-5 h-5 ${THEME.synk.text}`} />
+                    <span className={`text-xl font-mono font-medium ${THEME.synk.text}`}>Synk: {activeSession.stats.avgSynk}ms</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <span className={`text-sm font-mono ${THEME.textPrimary}`}>MT5/Broker: {activeSession.stats.avgMt5}ms</span>
-                    <Server className={`w-4 h-4 ${THEME.textSecondary}`} />
+                    <span className={`text-2xl font-mono font-semibold ${THEME.textPrimary}`}>MT5/Broker: {activeSession.stats.avgMt5}ms</span>
+                    <Server className={`w-5 h-5 ${THEME.textSecondary}`} />
                   </div>
                 </div>
                 
-                <div className="flex justify-between text-[10px] uppercase font-mono tracking-widest mb-1.5">
+                <div className="flex justify-between text-xs uppercase font-mono tracking-widest mb-2 font-medium mt-1">
                   <span className={THEME.synk.text}>Synk {activeSession.stats.synkRatio}%</span>
                   <span className={THEME.textSecondary}>External {activeSession.stats.mt5Ratio}%</span>
                 </div>
@@ -296,28 +310,28 @@ export default function SynkAnalyze() {
                   <div className={`absolute left-[12%] w-[18%] top-[35%] -translate-y-1/2 h-[2px] ${THEME.synk.bg}`}></div>
                   <div className={`absolute left-[45%] w-[35%] top-[35%] -translate-y-1/2 h-[2px] ${isWarningStatus ? THEME.warning.bg : THEME.normal.bg}`}></div>
                   
-                  <div className="relative z-10 flex flex-col items-center bg-[#121214] px-1.5">
-                    <Activity className={`w-3.5 h-3.5 mb-1 ${THEME.textSecondary}`} />
-                    <span className={`text-[8px] font-mono ${THEME.textSecondary}`}>TV</span>
+                  <div className="relative z-10 flex flex-col items-center bg-[#121214] px-2">
+                    <Activity className={`w-4 h-4 mb-1.5 ${THEME.textSecondary}`} />
+                    <span className={`text-[10px] font-mono ${THEME.textSecondary}`}>TV</span>
                   </div>
-                  <div className="relative z-10 flex flex-col items-center bg-[#121214] px-1.5">
-                    <div className={`w-4 h-4 border border-[#708B4B] flex items-center justify-center ${THEME.synk.text} bg-[#09090B] ${THEME.radius} mb-1`}>
-                      <img src="/analyze/logo-mark.png" className="w-2.5 h-2.5 object-contain" alt="logo" />
+                  <div className="relative z-10 flex flex-col items-center bg-[#121214] px-2">
+                    <div className={`w-5 h-5 border border-[#708B4B] flex items-center justify-center ${THEME.synk.text} bg-[#09090B] ${THEME.radius} mb-1.5`}>
+                      <img src="/analyze/logo-mark.png" className="w-3 h-3 object-contain" alt="logo" />
                     </div>
-                    <span className={`text-[8px] font-mono font-medium ${THEME.synk.text}`}>Synk</span>
+                    <span className={`text-[10px] font-mono font-medium ${THEME.synk.text}`}>Synk</span>
                   </div>
-                  <div className="relative z-10 flex flex-col items-center bg-[#121214] px-1.5 mt-[-8px]">
-                    <span className={`text-[8px] font-mono mb-0.5 px-1 bg-[#09090B] border ${THEME.panelBorder} ${THEME.radius} ${isWarningStatus ? THEME.warning.text : THEME.textPrimary}`}>
+                  <div className="relative z-10 flex flex-col items-center bg-[#121214] px-2 mt-[-10px]">
+                    <span className={`text-xs font-mono font-bold mb-0.5 px-1.5 py-0.5 bg-[#09090B] border ${THEME.panelBorder} ${THEME.radius} ${activeSession.stats.avgMt5 > 400 ? THEME.error.text : isWarningStatus ? THEME.warning.text : THEME.textPrimary} shadow-sm`}>
                       {activeSession.stats.avgMt5}ms
                     </span>
                   </div>
-                  <div className="relative z-10 flex flex-col items-center bg-[#121214] px-1.5">
-                    <Server className={`w-3.5 h-3.5 mb-1 ${isWarningStatus ? THEME.warning.text : THEME.textPrimary}`} />
-                    <span className={`text-[8px] font-mono ${isWarningStatus ? THEME.warning.text : THEME.textSecondary}`}>MT5</span>
+                  <div className="relative z-10 flex flex-col items-center bg-[#121214] px-2">
+                    <Server className={`w-4 h-4 mb-1.5 ${activeSession.stats.avgMt5 > 400 ? THEME.error.text : isWarningStatus ? THEME.warning.text : THEME.textPrimary}`} />
+                    <span className={`text-[10px] font-mono ${activeSession.stats.avgMt5 > 400 ? THEME.error.text : isWarningStatus ? THEME.warning.text : THEME.textSecondary}`}>MT5</span>
                   </div>
-                  <div className="relative z-10 flex flex-col items-center bg-[#121214] px-1.5">
-                    <Database className={`w-3.5 h-3.5 mb-1 ${THEME.textSecondary}`} />
-                    <span className={`text-[8px] font-mono ${THEME.textSecondary}`}>Broker</span>
+                  <div className="relative z-10 flex flex-col items-center bg-[#121214] px-2">
+                    <Database className={`w-4 h-4 mb-1.5 ${THEME.textSecondary}`} />
+                    <span className={`text-[10px] font-mono ${THEME.textSecondary}`}>Broker</span>
                   </div>
                 </div>
               </div>
@@ -333,6 +347,7 @@ export default function SynkAnalyze() {
                 <div className="flex gap-4 text-[10px] font-mono">
                   <span className={`flex items-center gap-1.5 ${THEME.textSecondary}`}><span className={`w-2 h-2 bg-[#52525B] ${THEME.radius}`}></span> Normal</span>
                   <span className={`flex items-center gap-1.5 ${THEME.warning.text}`}><span className={`w-2 h-2 ${THEME.warning.bg} ${THEME.radius}`}></span> Degraded</span>
+                  <span className={`flex items-center gap-1.5 ${THEME.error.text}`}><span className={`w-2 h-2 ${THEME.error.bg} ${THEME.radius}`}></span> Critical</span>
                 </div>
               </div>
               
