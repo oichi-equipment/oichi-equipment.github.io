@@ -1,38 +1,38 @@
 import React, { useState, useMemo, useRef } from 'react';
-import { 
-  Activity, Upload, AlertTriangle, Server, 
+import {
+  Activity, Upload, AlertTriangle, Server,
   Search, BarChart3, Database,
   AlertCircle, ArrowRightLeft, Crosshair, X, Network
 } from 'lucide-react';
-import { 
-  LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, 
+import {
+  LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip,
   ResponsiveContainer, ReferenceLine
 } from 'recharts';
 
 // 純粋なダークグレー（Zinc系）で統一したパレット
 const THEME = {
-  bg: 'bg-[#09090B]', 
-  panel: 'bg-[#121214]', 
-  panelBorder: 'border-[#27272A]', 
-  radius: 'rounded-[3px]', 
+  bg: 'bg-[#09090B]',
+  panel: 'bg-[#121214]',
+  panelBorder: 'border-[#27272A]',
+  radius: 'rounded-[3px]',
   textPrimary: 'text-[#F1F5F9]',
-  textSecondary: 'text-[#94A3B8]', 
-  textMuted: 'text-[#52525B]', 
-  synk: { 
-    text: 'text-[#708B4B]', 
+  textSecondary: 'text-[#94A3B8]',
+  textMuted: 'text-[#52525B]',
+  synk: {
+    text: 'text-[#708B4B]',
     bg: 'bg-[#708B4B]',
   },
-  normal: { 
-    text: 'text-[#E2E8F0]', 
+  normal: {
+    text: 'text-[#E2E8F0]',
     bg: 'bg-[#52525B]',
   },
-  warning: { 
-    text: 'text-[#D97706]', 
+  warning: {
+    text: 'text-[#D97706]',
     bg: 'bg-[#B45309]',
   },
-  error: { 
-    text: 'text-[#DC2626]', 
-    bg: 'bg-[#991B1B]' 
+  error: {
+    text: 'text-[#DC2626]',
+    bg: 'bg-[#991B1B]'
   }
 };
 
@@ -77,7 +77,7 @@ export default function SynkAnalyze() {
   const handleFileUpload = async (files) => {
     if (!files || files.length === 0) return;
     setIsUploading(true);
-    
+
     const newSessions = [];
 
     try {
@@ -123,9 +123,9 @@ export default function SynkAnalyze() {
       count: 0, volume: "0.00", errors: 0, avgSynk: "0.00", avgMt5: "0.00",
       avgTotal: "0.00", last50Avg: "0.00", last10Avg: "0.00", synkRatio: "0.00", mt5Ratio: "0.00"
     };
-    
+
     let totalSynk = 0, totalMt5 = 0, totalVol = 0, errCount = 0;
-    
+
     data.forEach(d => {
       totalSynk += (d.timings?.synk_processing_ms || 0);
       totalMt5 += (d.timings?.mt5_send_ms || 0);
@@ -162,10 +162,10 @@ export default function SynkAnalyze() {
 
   const activeSession = sessions.find(s => s.id === activeSessionId);
   const isWarningStatus = activeSession ? activeSession.stats.avgMt5 > 150 : false;
-  
+
   const timelineData = useMemo(() => {
     if (!activeSession) return [];
-    const factor = Math.ceil(activeSession.data.length / 120); 
+    const factor = Math.ceil(activeSession.data.length / 120);
     return activeSession.data.filter((_, i) => i % factor === 0).map(d => ({
       time: d.timestamp,
       synk: d.timings?.synk_processing_ms || 0,
@@ -182,14 +182,14 @@ export default function SynkAnalyze() {
   }, [activeSession]);
 
   return (
-    <div 
+    <div
       className={`relative h-screen w-screen ${THEME.bg} text-slate-200 font-sans flex flex-col overflow-hidden selection:bg-[#708B4B] selection:text-white`}
       onDragOver={(e) => { e.preventDefault(); setIsDragging(true); }}
       onDragLeave={() => setIsDragging(false)}
       onDrop={(e) => {
         e.preventDefault();
         setIsDragging(false);
-        if(e.dataTransfer.files.length > 0) handleFileUpload(e.dataTransfer.files);
+        if (e.dataTransfer.files.length > 0) handleFileUpload(e.dataTransfer.files);
       }}
     >
       {isDragging && (
@@ -205,10 +205,10 @@ export default function SynkAnalyze() {
       <header className={`h-12 border-b ${THEME.panelBorder} ${THEME.panel} flex items-center px-4 justify-between shrink-0`}>
         <div className="flex items-center gap-4">
           <div className={`flex items-center gap-2 ${THEME.textPrimary} font-semibold`}>
-            <img 
-              src="/analyze/logo-mark.png" 
-              alt="Synk Mushroom" 
-              className="w-8 h-8 object-contain" 
+            <img
+              src="/analyze/logo-mark.png"
+              alt="Synk Mushroom"
+              className="w-8 h-8 object-contain"
             />
             <span className="tracking-tight text-sm">
               Synk Mushroom <span className={`${THEME.textSecondary} font-normal tracking-wide ml-1`}>Analyze</span>
@@ -220,11 +220,10 @@ export default function SynkAnalyze() {
               <button
                 key={s.id}
                 onClick={() => setActiveSessionId(s.id)}
-                className={`px-3 py-1 text-xs font-mono flex items-center gap-2 border transition-none ${THEME.radius} ${
-                  activeSessionId === s.id 
-                    ? `bg-[#27272A] ${THEME.textPrimary} border-[#3F3F46]` 
+                className={`px-3 py-1 text-xs font-mono flex items-center gap-2 border transition-none ${THEME.radius} ${activeSessionId === s.id
+                    ? `bg-[#27272A] ${THEME.textPrimary} border-[#3F3F46]`
                     : `${THEME.textSecondary} border-transparent hover:bg-[#27272A]`
-                }`}
+                  }`}
               >
                 <Database className="w-3 h-3" />
                 <span className="max-w-[150px] truncate">{s.name}</span>
@@ -234,16 +233,15 @@ export default function SynkAnalyze() {
         </div>
 
         <div className="flex items-center gap-3">
-          <button 
+          <button
             onClick={() => setCompareMode(!compareMode)}
-            className={`px-3 py-1.5 text-xs font-medium border flex items-center gap-1.5 transition-none ${THEME.radius} ${
-              compareMode ? `bg-[#27272A] border-[#3F3F46] ${THEME.textPrimary}` : `border-[#27272A] ${THEME.textSecondary} hover:bg-[#27272A]`
-            }`}
+            className={`px-3 py-1.5 text-xs font-medium border flex items-center gap-1.5 transition-none ${THEME.radius} ${compareMode ? `bg-[#27272A] border-[#3F3F46] ${THEME.textPrimary}` : `border-[#27272A] ${THEME.textSecondary} hover:bg-[#27272A]`
+              }`}
           >
             <ArrowRightLeft className="w-3.5 h-3.5" />
             Compare
           </button>
-          
+
           <label className={`cursor-pointer px-4 py-1.5 text-xs font-medium border ${THEME.panelBorder} ${THEME.textPrimary} hover:bg-[#27272A] flex items-center gap-2 disabled:opacity-50 transition-none ${THEME.radius}`}>
             <Upload className="w-3.5 h-3.5" />
             {isUploading ? 'Parsing...' : 'Upload .jsonl Log'}
@@ -260,12 +258,12 @@ export default function SynkAnalyze() {
             </div>
             <h1 className="text-2xl font-semibold text-[#F1F5F9] tracking-tight mb-2">Drop Synk Mushroom telemetry logs</h1>
             <p className="text-sm text-[#94A3B8] mb-8">Local browser analysis only. No upload. No cloud. No telemetry leaves your PC.</p>
-            
+
             <div className="flex items-center justify-center gap-6 text-xs font-mono tracking-widest uppercase mb-10 text-[#52525B]">
-              <div className="flex items-center gap-2"><Search className="w-3.5 h-3.5"/> Multiple logs</div>
-              <div className="flex items-center gap-2"><ArrowRightLeft className="w-3.5 h-3.5"/> Compare sessions</div>
+              <div className="flex items-center gap-2"><Search className="w-3.5 h-3.5" /> Multiple logs</div>
+              <div className="flex items-center gap-2"><ArrowRightLeft className="w-3.5 h-3.5" /> Compare sessions</div>
             </div>
-            
+
             <label className={`cursor-pointer px-6 py-3 text-sm font-semibold border ${THEME.panelBorder} text-[#F1F5F9] bg-[#121214] hover:bg-[#27272A] flex items-center gap-2 transition-colors ${THEME.radius} shadow-lg`}>
               <Upload className="w-4 h-4" />
               Select JSONL File
@@ -275,9 +273,9 @@ export default function SynkAnalyze() {
         </div>
       ) : (
         <main className="flex-1 flex flex-col p-3 gap-3 overflow-hidden">
-          
+
           <div className="flex gap-3 shrink-0 h-48">
-            
+
             {/* Left Panel: Responsibility & Pipeline (w-[35%] に調整しタブ幅と調和) */}
             <div className={`${THEME.panel} border ${THEME.panelBorder} ${THEME.radius} w-[35%] flex flex-col overflow-hidden`}>
               <div className={`p-2.5 px-3 border-b ${THEME.panelBorder} flex justify-between items-center bg-[#09090B]`}>
@@ -286,7 +284,7 @@ export default function SynkAnalyze() {
                   Responsibility Breakdown
                 </h2>
               </div>
-              
+
               <div className="p-4 flex-1 flex flex-col justify-center">
                 <div className="flex justify-between items-end mb-2.5">
                   <div className="flex items-center gap-2">
@@ -298,7 +296,7 @@ export default function SynkAnalyze() {
                     <Server className={`w-5 h-5 ${THEME.textSecondary}`} />
                   </div>
                 </div>
-                
+
                 <div className="flex justify-between items-end mb-2 mt-1">
                   <span className={`text-[10px] uppercase font-mono tracking-widest ${THEME.synk.text}`}>Latency Composition</span>
                   <div className="flex gap-4 text-xs uppercase font-mono tracking-widest font-medium">
@@ -307,13 +305,13 @@ export default function SynkAnalyze() {
                   </div>
                 </div>
                 <div className={`h-2.5 w-full bg-[#09090B] flex ${THEME.radius} overflow-hidden`}>
-                  <div 
-                    style={{ width: `${Math.max(Number(activeSession.stats.synkRatio), 1)}%` }} 
-                    className={`${THEME.synk.bg}`} 
+                  <div
+                    style={{ width: `${Math.max(Number(activeSession.stats.synkRatio), 1)}%` }}
+                    className={`${THEME.synk.bg}`}
                   />
-                  <div 
-                    style={{ width: `${100 - Math.max(Number(activeSession.stats.synkRatio), 1)}%` }} 
-                    className={`${THEME.normal.bg}`} 
+                  <div
+                    style={{ width: `${100 - Math.max(Number(activeSession.stats.synkRatio), 1)}%` }}
+                    className={`${THEME.normal.bg}`}
                   />
                 </div>
               </div>
@@ -324,7 +322,7 @@ export default function SynkAnalyze() {
                   <div className={`absolute left-4 right-4 top-[35%] -translate-y-1/2 h-[1px] ${THEME.panelBorder}`}></div>
                   <div className={`absolute left-[12%] w-[18%] top-[35%] -translate-y-1/2 h-[2px] ${THEME.synk.bg}`}></div>
                   <div className={`absolute left-[45%] w-[35%] top-[35%] -translate-y-1/2 h-[2px] ${isWarningStatus ? THEME.warning.bg : THEME.normal.bg}`}></div>
-                  
+
                   <div className="relative z-10 flex flex-col items-center bg-[#121214] px-2">
                     <Activity className={`w-4 h-4 mb-1.5 ${THEME.textSecondary}`} />
                     <span className={`text-[10px] font-mono ${THEME.textSecondary}`}>TV</span>
@@ -365,7 +363,7 @@ export default function SynkAnalyze() {
                   <span className={`flex items-center gap-1.5 ${THEME.error.text}`}><span className={`w-2 h-2 ${THEME.error.bg} ${THEME.radius}`}></span> Critical</span>
                 </div>
               </div>
-              
+
               <div className="flex-1 px-6 py-4 flex items-center justify-between gap-6">
                 <div className="flex-1 flex flex-col">
                   <div className={`text-sm font-semibold mb-3 ${THEME.textSecondary} uppercase tracking-widest`}>Session Avg</div>
@@ -428,7 +426,7 @@ export default function SynkAnalyze() {
                 </span>
               </div>
             </div>
-            
+
             <div className="flex-1 p-2 pb-0 w-full relative">
               <div className="absolute top-3 left-4 z-10 pointer-events-none bg-[#09090B] border border-[#27272A] p-2">
                 <div className={`text-xs font-mono ${THEME.textPrimary} flex items-center gap-2 mb-1`}><div className="w-3 h-0.5 bg-[#94A3B8]"></div> MT5 External</div>
@@ -439,16 +437,16 @@ export default function SynkAnalyze() {
                 <LineChart data={timelineData} margin={{ top: 15, right: 10, left: -20, bottom: 5 }}>
                   <CartesianGrid strokeDasharray="2 2" stroke="#27272A" vertical={false} />
                   <XAxis dataKey="time" hide />
-                  <YAxis 
-                    stroke="#27272A" 
-                    tick={{ fill: '#94A3B8', fontSize: 10, fontFamily: 'monospace' }} 
+                  <YAxis
+                    stroke="#27272A"
+                    tick={{ fill: '#94A3B8', fontSize: 10, fontFamily: 'monospace' }}
                     axisLine={false}
                     tickLine={false}
                     domain={[0, 'auto']}
                   />
                   <Tooltip content={<CustomTooltip />} cursor={{ stroke: '#52525B', strokeWidth: 1 }} />
                   <ReferenceLine y={200} stroke="#D97706" strokeDasharray="3 3" label={{ position: 'insideTopLeft', value: 'Warn: 200ms', fill: '#D97706', fontSize: 10 }} />
-                  
+
                   <Line type="monotone" dataKey="mt5" stroke="#94A3B8" strokeWidth={1.5} dot={false} isAnimationActive={false} />
                   <Line type="monotone" dataKey="synk" stroke="#708B4B" strokeWidth={1.5} dot={false} isAnimationActive={false} />
                 </LineChart>
@@ -464,14 +462,14 @@ export default function SynkAnalyze() {
               </h2>
               <div className="relative">
                 <Search className={`w-3 h-3 ${THEME.textMuted} absolute left-2.5 top-1/2 -translate-y-1/2`} />
-                <input 
-                  type="text" 
-                  placeholder="ID search..." 
+                <input
+                  type="text"
+                  placeholder="ID search..."
                   className={`bg-[#09090B] border ${THEME.panelBorder} ${THEME.radius} text-xs px-2 py-1 pl-7 ${THEME.textPrimary} focus:outline-none focus:border-[#475569] w-48 font-mono placeholder:text-[#475569]`}
                 />
               </div>
             </div>
-            
+
             <div className="flex-1 overflow-auto bg-[#09090B]">
               <table className="w-full text-left border-collapse">
                 <thead className={`sticky top-0 bg-[#121214] z-10 text-xs uppercase tracking-widest ${THEME.textSecondary} border-b ${THEME.panelBorder} font-mono shadow-sm`}>
@@ -495,10 +493,10 @@ export default function SynkAnalyze() {
                     const mt5Color = getLatencyColor(mt5Ms);
                     const isWarnOrErr = mt5Ms > 200;
                     const isRejected = incident.status !== 'filled';
-                    const timeStr = incident.timestamp && !isNaN(new Date(incident.timestamp).getTime()) 
-                                      ? new Date(incident.timestamp).toISOString().split('T')[1].replace('Z','') 
-                                      : '-';
-                    
+                    const timeStr = incident.timestamp && !isNaN(new Date(incident.timestamp).getTime())
+                      ? new Date(incident.timestamp).toISOString().split('T')[1].replace('Z', '')
+                      : '-';
+
                     return (
                       <tr key={idx} className="hover:bg-[#18181B] cursor-pointer transition-colors duration-75">
                         <td className={`py-2.5 px-4 ${THEME.textSecondary} whitespace-nowrap`}>{timeStr}</td>
@@ -537,7 +535,7 @@ export default function SynkAnalyze() {
               </table>
             </div>
           </div>
-          
+
         </main>
       )}
     </div>
