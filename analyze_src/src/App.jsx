@@ -61,18 +61,38 @@ export default function SynkAnalyze() {
     const submissionData = activeSession.data.map(event => maskForSubmission(event));
     
     // Convert back to JSONL
-    const jsonlString = submissionData.map(ev => JSON.stringify(ev)).join('\n');
+    let jsonlString = submissionData.map(ev => JSON.stringify(ev)).join('\n');
     
+    // ----------------------------------------------------------------
+    // VALUE-BASED STRING REPLACEMENT FOR ABSOLUTE SAFETY
+    // Replace all known path patterns directly in the final string
+    // ----------------------------------------------------------------
+    
+    // Windows paths (C:\..., C:/...)
+    jsonlString = jsonlString.replace(/(["']?)(?:[A-Z]:\\\\|[A-Z]:\/).*?(["']?)(?=[,}])/gi, '$1[MASKED_LOCAL_PATH]$2');
+    
+    // Common directories
+    jsonlString = jsonlString.replace(/(["']?).*?(?:\\\\Users\\\\|\/Users\/|Documents\\\\SynkMushroom|Documents\/SynkMushroom).*?(["']?)(?=[,}])/gi, '$1[MASKED_LOCAL_PATH]$2');
+    
+    // Unix/Mac paths
+    jsonlString = jsonlString.replace(/(["']?)(?:\/home\/|\/mnt\/|\/var\/|\/tmp\/).*?(["']?)(?=[,}])/gi, '$1[MASKED_LOCAL_PATH]$2');
+
     // Quick post-mask validation
     const suspiciousPatterns = [
-      /C:\\/i, /C:\//i, /\\\\Users\\\\/i, /\/Users\//i, 
-      /Documents\\\\SynkMushroom/i, /"balance"\s*:/i, 
-      /"equity"\s*:/i, /"profit"\s*:/i
+      /[A-Z]:\\\\/i, /[A-Z]:\//i, /\\\\Users\\\\/i, /\/Users\//i, 
+      /Documents\\\\SynkMushroom/i, /Documents\/SynkMushroom/i,
+      /SynkMushroom\\\\logs/i, /SynkMushroom\/logs/i,
+      /"log_path"\s*:\s*"(?!\[MASKED_LOCAL_PATH\])[^"]+"/i,
+      /"balance"\s*:/i, /"equity"\s*:/i, /"profit"\s*:/i
     ];
     
     for (const regex of suspiciousPatterns) {
       if (regex.test(jsonlString)) {
         console.warn(`[Synk Analyzer Warning] Potential unmasked sensitive data detected matching: ${regex}`);
+        // Force replace if anything slipped through matching C:\ or similar
+        if (/[A-Z]:\\\\/i.test(jsonlString) || /[A-Z]:\//i.test(jsonlString)) {
+           jsonlString = jsonlString.replace(/"[^"]*?[A-Z]:(?:\\\\|\/)[^"]*?"/gi, '"[MASKED_LOCAL_PATH]"');
+        }
       }
     }
     
