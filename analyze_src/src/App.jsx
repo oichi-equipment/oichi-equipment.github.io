@@ -5,10 +5,12 @@ import { maskForSubmission } from './utils/maskSensitive';
 import { calculateStats } from './utils/stats';
 import { determinePrimaryBottleneck } from './utils/diagnostics';
 import { extractMeasuredEvidence } from './utils/evidence';
+import { extractCommandChains, extractRetcodeSummary, extractPollingSummary } from './utils/commandForensics';
 
 import DiagnosticCards from './components/DiagnosticCards';
 import ResponsibilityBreakdown from './components/ResponsibilityBreakdown';
 import LayerLatencyOverview from './components/LayerLatencyOverview';
+import CommandForensics from './components/CommandForensics';
 import MeasuredEvidence from './components/MeasuredEvidence';
 
 export default function SynkAnalyze() {
@@ -108,8 +110,8 @@ export default function SynkAnalyze() {
     URL.revokeObjectURL(url);
   };
 
-  const { stats, bottleneck, evidence } = useMemo(() => {
-    if (!activeSession) return { stats: null, bottleneck: null, evidence: [] };
+  const { stats, bottleneck, evidence, commandChains, retcodeSummary, pollingSummary } = useMemo(() => {
+    if (!activeSession) return { stats: null, bottleneck: null, evidence: [], commandChains: [], retcodeSummary: [], pollingSummary: null };
     
     const latencies = extractLatencies(activeSession.data);
     
@@ -122,8 +124,12 @@ export default function SynkAnalyze() {
 
     const primaryBottleneck = determinePrimaryBottleneck(aggregatedStats);
     const measuredEvidence = extractMeasuredEvidence(activeSession.data);
+    
+    const chains = extractCommandChains(activeSession.data);
+    const retcodes = extractRetcodeSummary(activeSession.data);
+    const polling = extractPollingSummary(chains);
 
-    return { stats: aggregatedStats, bottleneck: primaryBottleneck, evidence: measuredEvidence };
+    return { stats: aggregatedStats, bottleneck: primaryBottleneck, evidence: measuredEvidence, commandChains: chains, retcodeSummary: retcodes, pollingSummary: polling };
   }, [activeSession]);
 
   return (
@@ -212,10 +218,13 @@ export default function SynkAnalyze() {
         />
         
         {/* Analysis Row */}
-        <div className="flex flex-col xl:flex-row gap-5 px-5 py-2 shrink-0">
+        <div className="flex flex-col xl:flex-row gap-5 px-5 py-2 shrink-0 mb-4">
           <LayerLatencyOverview stats={stats} />
           <ResponsibilityBreakdown events={activeSession ? activeSession.data : []} />
         </div>
+
+        {/* Command Forensics (Phase B / B.1) */}
+        <CommandForensics chains={commandChains} retcodeSummary={retcodeSummary} pollingSummary={pollingSummary} />
 
         {/* Evidence Data Table */}
         <MeasuredEvidence evidence={evidence} />
