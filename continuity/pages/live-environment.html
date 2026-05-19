@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Environment - Oichi Equipment Archive</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@700&family=Space+Grotesk:wght@300;400;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        black: '#030303',
+                        textMain: '#a1a1aa',
+                        textHeading: '#f4f4f5',
+                        accent: '#52662C',
+                        customGreen: '#739735',
+                    },
+                    fontFamily: {
+                        serif: ['"Cormorant Garamond"', 'serif'],
+                        mono: ['"Space Grotesk"', 'sans-serif'],
+                        sans: ['"Inter"', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #030303;
+            color: #a1a1aa;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+        .noise-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            pointer-events: none;
+            z-index: 50;
+            opacity: 0.03;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+        .terminal-link {
+            transition: color 0.4s ease;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+        }
+        .terminal-link:hover {
+            color: #739735;
+        }
+    </style>
+</head>
+<body class="font-sans antialiased selection:bg-accent selection:text-white relative">
+    <div class="noise-overlay"></div>
+
+    <main class="w-full min-h-screen px-6 py-20 flex flex-col items-center">
+        <div class="w-full max-w-2xl flex flex-col items-start">
+            
+            <!-- Navigation -->
+            <a href="../index.html" class="terminal-link font-mono text-[0.7rem] text-[#739735] tracking-[0.2em] uppercase flex items-center gap-2 mb-16 inline-flex">
+                <span>←</span> BACK TO INDEX
+            </a>
+
+            <!-- Document Meta Label -->
+            <div class="font-mono text-[0.65rem] text-[#739735] tracking-[0.25em] uppercase mb-4">
+                ARCHIVE DOCUMENT // REF_ENV // OICHI EQUIPMENT
+            </div>
+
+            <!-- Page Title -->
+            <h1 class="font-serif text-3xl md:text-4xl text-zinc-100 font-light tracking-wide mb-6">
+                Live Environment
+            </h1>
+
+            <!-- Divider -->
+            <div class="w-full h-[1px] bg-zinc-900 mb-10"></div>
+
+            <!-- Quiet Document Flow -->
+            <div class="font-sans text-sm md:text-base text-zinc-400 leading-relaxed space-y-8 max-w-full text-justify">
+                <p>
+                    Synk Mushroom is designed around a local operating environment. It does not require VPS operation by default. The system runs in the user’s own PC environment, connecting the TradingView browser environment with a running MetaTrader 5 environment.
+                </p>
+                <p>
+                    The core assumption is that the trader already works from a real desktop trading environment. TradingView remains the analytical surface. MT5 remains the execution environment. Synk Mushroom exists between them as a continuity layer.
+                </p>
+                <p>
+                    Any broker that supports MetaTrader 5 can be used in principle, as long as the user’s MT5 terminal operates normally. Broker-side specifications, symbols, execution conditions, leverage, permissions, and account restrictions remain dependent on the broker.
+                </p>
+                <p>
+                    Synk Mushroom does not replace the broker, does not replace MetaTrader 5, and does not provide trade decisions. It preserves the local workflow between analysis and execution.
+                </p>
+                <p class="text-zinc-500 italic text-sm border-l border-zinc-800 pl-4 py-1">
+                    This page may later include links to real operating videos and environment demonstrations.
+                </p>
+            </div>
+
+            <!-- Discrete Footer Navigation -->
+            <div class="w-full h-[1px] bg-zinc-900 mt-24 mb-10"></div>
+            <a href="../index.html" class="terminal-link font-mono text-[0.65rem] text-zinc-600 hover:text-[#739735] tracking-[0.2em] uppercase mb-16 self-center">
+                [ RETURN TO SYSTEM INDEX ]
+            </a>
+
+            <!-- Footer -->
+            <footer class="w-full flex flex-col items-center">
+                <div class="font-mono text-[0.7rem] text-[#739735] tracking-[0.2em] uppercase mb-2">Oichi Equipment</div>
+                <div class="font-mono text-[0.6rem] text-[#71717a] tracking-[0.2em] uppercase leading-relaxed text-center">
+                    &copy; 2026 Oichi Equipment. All rights reserved.
+                </div>
+            </footer>
+        </div>
+    </main>
+</body>
+</html>
