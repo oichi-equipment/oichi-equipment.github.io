@@ -1,4 +1,4 @@
-import { maskSensitive } from './maskSensitive';
+import { maskForLocalView } from './maskSensitive';
 
 export const parseLogFile = async (file) => {
   const text = await file.text();
@@ -7,7 +7,7 @@ export const parseLogFile = async (file) => {
   const parsedEvents = rawLines.map((line) => {
     try {
       const parsed = JSON.parse(line);
-      const masked = maskSensitive(parsed);
+      const masked = maskForLocalView(parsed);
       
       // Calculate derived latencies if fields exist
       if (typeof masked.server_send_epoch_ms === 'number' && typeof masked.client_receive_epoch_ms === 'number') {
