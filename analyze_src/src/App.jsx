@@ -63,6 +63,19 @@ export default function SynkAnalyze() {
     // Convert back to JSONL
     const jsonlString = submissionData.map(ev => JSON.stringify(ev)).join('\n');
     
+    // Quick post-mask validation
+    const suspiciousPatterns = [
+      /C:\\/i, /C:\//i, /\\\\Users\\\\/i, /\/Users\//i, 
+      /Documents\\\\SynkMushroom/i, /"balance"\s*:/i, 
+      /"equity"\s*:/i, /"profit"\s*:/i
+    ];
+    
+    for (const regex of suspiciousPatterns) {
+      if (regex.test(jsonlString)) {
+        console.warn(`[Synk Analyzer Warning] Potential unmasked sensitive data detected matching: ${regex}`);
+      }
+    }
+    
     const blob = new Blob([jsonlString], { type: 'application/jsonl' });
     const url = URL.createObjectURL(blob);
     

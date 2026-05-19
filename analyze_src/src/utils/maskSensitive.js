@@ -12,6 +12,29 @@ const SENSITIVE_FINANCIAL_KEYS = new Set([
   'credit'
 ]);
 
+const SENSITIVE_PATH_KEYS = new Set([
+  'log_path', 'logpath', 'file_path', 'filepath',
+  'local_path', 'localpath', 'output_path', 'outputpath',
+  'source_path', 'sourcepath', 'directory', 'dir',
+  'folder', 'root', 'cwd'
+]);
+
+const PATH_SUBSTRINGS = [
+  'C:\\', 'C:/', '\\Users\\', '/Users/',
+  'Documents\\', 'Documents/', 'AppData\\', 'AppData/',
+  'SynkMushroom\\logs', 'SynkMushroom/logs',
+  '/home/', '/mnt/', '/var/', '/tmp/'
+];
+
+const containsPathSubstring = (str) => {
+  if (typeof str !== 'string') return false;
+  // Use simple substring search
+  for (const sub of PATH_SUBSTRINGS) {
+    if (str.includes(sub)) return true;
+  }
+  return false;
+};
+
 export const maskForLocalView = (obj) => {
   if (obj === null || typeof obj !== 'object') {
     return obj;
@@ -58,6 +81,10 @@ export const maskForSubmission = (obj) => {
       maskedObj[key] = '[MASKED_LOGIN]';
     } else if (SENSITIVE_FINANCIAL_KEYS.has(lowerKey)) {
       maskedObj[key] = '[MASKED_FINANCIAL_OR_PATH]';
+    } else if (SENSITIVE_PATH_KEYS.has(lowerKey)) {
+      maskedObj[key] = '[MASKED_LOCAL_PATH]';
+    } else if (typeof value === 'string' && containsPathSubstring(value)) {
+      maskedObj[key] = '[MASKED_LOCAL_PATH]';
     } else {
       maskedObj[key] = maskForSubmission(value);
     }
