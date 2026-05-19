@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trading Environment - DTP Magazine Mockup</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@700&family=Space+Grotesk:wght@300;400;600&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        black: '#030303',
+                        textMain: '#a1a1aa', // zinc-400
+                        textHeading: '#f4f4f5', // zinc-100
+                        accent: '#52662C', // muted green
+                        customGreen: '#739735', // Slightly brightened olive green
+                    },
+                    fontFamily: {
+                        serif: ['"Cormorant Garamond"', 'serif'],
+                        mono: ['"Space Grotesk"', 'sans-serif'],
+                        sans: ['"Inter"', 'sans-serif'],
+                    },
+                    fontSize: {
+                        'giant': '12rem',
+                        'super': '8rem',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #030303;
+            color: #a1a1aa;
+            overflow-x: hidden;
+            /* DTP-like smooth scrolling */
+            scroll-behavior: smooth;
+        }
+
+        /* Left border line mimicking the reference image */
+        .page-border {
+            border-left: 4px solid #3f3f46; /* Slightly thicker and visible against black */
+        }
+        
+        /* Subtle noise overlay for editorial feel */
+        .noise-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            pointer-events: none;
+            z-index: 50;
+            opacity: 0.03;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        /* The invisible trunk styling */
+        .trunk-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            position: relative;
+        }
+
+        /* Subtle center guide line (optional, kept very faint) */
+        .trunk-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            width: 1px;
+            background-color: rgba(255,255,255,0.03);
+            z-index: 0;
+        }
+
+        .node-block {
+            width: 100%;
+            max-w: 800px;
+            position: relative;
+            z-index: 10;
+            /* Default tighter spacing to maintain flow */
+            margin-bottom: 5.5rem; 
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Lightweight optical density group system */
+        .node-block.spacing-airy {
+            /* Adds a slight breathing space for visually lighter nodes (short title, standard digits, short desc) */
+            margin-bottom: 7rem; 
+        }
+        
+        .node-block.spacing-dense {
+            /* Tighter margin for extremely heavy/descender-rich nodes if needed */
+            margin-bottom: 4.5rem; 
+        }
+
+        .number-core {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(9rem, 18vw, 16rem);
+            font-weight: 700;
+            line-height: 0.8;
+            color: #d1d1d6;
+            letter-spacing: -0.03em;
+            text-align: center;
+            
+            /* 文字が途切れないように下部の描画領域を確保 */
+            padding-bottom: 0.2em; 
+            /* MODIFIED: 通常数字の optical spacing を微調整し、少しbreathing spaceを戻す */
+            margin-bottom: -0.16em; 
+        }
+
+        /* 数字特性補正: ディセンダー (3, 4, 5, 7, 9) を含む場合 */
+        .number-core.digit-descender {
+            /* スワッシュが長い分、さらに描画領域を確保 */
+            padding-bottom: 0.35em;
+            /* タイトルとの衝突を避けるギリギリのラインまで引き上げ（微調整・現状維持） */
+            margin-bottom: -0.15em; 
+            
+            /* 本当のスワッシュの先端（拡張したpaddingの最下部付近）に対してフェードをかける */
+            /* 80%まで不透明を維持し、そこから先端にかけて素早くフェードさせる */
+            -webkit-mask-image: linear-gradient(to bottom, black 80%, rgba(0,0,0,0.15) 95%);
+            mask-image: linear-gradient(to bottom, black 80%, rgba(0,0,0,0.15) 95%);
+        }
+
+        .title-core {
+            font-family: 'Inter', sans-serif;
+            font-size: clamp(1.1rem, 2.5vw, 1.75rem);
+            font-weight: 300;
+            color: #e4e4e7;
+            text-align: center;
+            letter-spacing: 0.02em;
+            margin-bottom: 2rem;
+            max-width: 80%;
+        }
+
+        .branch {
+            /* Gridレイアウトに変更し、中央の真芯を正確に構築 */
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            column-gap: 0.5rem;
+            width: 100%;
+            max-width: 800px;
+        }
+
+        .text-fragment {
+            width: 100%;
+            max-width: 280px; /* テキストブロックの幅を抑え、エディトリアル感を出す */
+        }
+
+        .branch.left .text-fragment {
+            grid-column: 1 / 2;
+            justify-self: end; /* 中央の軸（右側）へピタッと寄せる */
+            text-align: right; 
+        }
+
+        .branch.right .text-fragment {
+            grid-column: 2 / 3;
+            justify-self: start; /* 中央の軸（左側）へピタッと寄せる */
+            text-align: left; 
+        }
+
+        /* Tiny details */
+        .fragment-meta {
+            font-family: 'Space Grotesk', monospace;
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #739735; 
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .branch.left .fragment-meta {
+            justify-content: flex-end;
+        }
+        
+        .branch.right .fragment-meta {
+            justify-content: flex-start;
+        }
+
+        .fragment-line {
+            height: 1px;
+            width: 12px;
+            background-color: #739735; 
+            opacity: 0.5;
+        }
+
+        /* Subtle terminal link hover */
+        .terminal-link {
+            transition: color 0.4s ease; 
+            opacity: 0.95; 
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        .terminal-link:hover {
+            color: #739735; 
+        }
+
+        .fragment-desc {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.85rem;
+            line-height: 1.6;
+            color: #a1a1aa;
+        }
+    </style>
+</head>
+<body class="font-sans antialiased selection:bg-accent selection:text-white relative">
+
+    <div class="noise-overlay"></div>
+
+    <main class="w-full min-h-screen relative pb-8 overflow-hidden">
+        
+        <!-- Hero: Underground Terminal Opener -->
+        <header class="w-full h-screen flex flex-col items-center justify-center relative mb-24">
+            <div class="absolute inset-0 z-0">
+                <img src="https://placehold.co/2000x1200/0a0a0a/1a1a1a?text=+" alt="Dark environment" class="w-full h-full object-cover opacity-40 mix-blend-screen grayscale">
+                <!-- Vignette effect -->
+                <div class="absolute inset-0 bg-gradient-to-b from-black via-transparent to-black"></div>
+                <div class="absolute inset-0 bg-gradient-to-r from-black via-transparent to-black"></div>
+            </div>
+            
+            <div class="z-10 text-center mix-blend-difference -mt-20">
+                <div class="font-mono text-xs text-[#739735] tracking-[0.2em] uppercase mb-6 opacity-70">Synk Mushroom</div>
+                <h1 class="font-serif text-4xl md:text-6xl text-zinc-300 font-light tracking-widest uppercase">
+                    The Continuity<br>Layer
+                </h1>
+            </div>
+            
+            <!-- Scroll indicator leading to the trunk -->
+            <div class="absolute bottom-12 z-10 flex flex-col items-center opacity-40">
+                <div class="w-[1px] h-16 bg-white"></div>
+            </div>
+        </header>
+
+        <div class="trunk-container px-4">
+
+            <!-- Node 01: Default density -->
+            <div class="node-block">
+                <div class="number-core">01</div>
+                <div class="title-core">Real TradingView</div>
+                <div class="branch left">
+                    <div class="text-fragment">
+                        <div class="fragment-meta">
+                            <span>Environment</span>
+                            <div class="fragment-line"></div>
+                        </div>
+                        <p class="fragment-desc">Trade on actual TradingView.<br>Not inside restricted broker terminals.<br>Not inside simplified execution interfaces.<br>The chart environment remains intact<br>throughout the entire workflow.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Node 02: Default density -->
+            <div class="node-block">
+                <div class="number-core">02</div>
+                <div class="title-core">High Leverage Compatibility</div>
+                <div class="branch right">
+                    <div class="text-fragment">
+                        <div class="fragment-meta">
+                            <div class="fragment-line"></div>
+                            <span>Freedom</span>
+                        </div>
+                        <p class="fragment-desc">Execution conditions should not collapse<br>the moment you choose a better charting environment.<br>Maintain leverage flexibility.<br>Maintain execution freedom.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Node 03: Default density (descender) -->
+            <div class="node-block">
+                <div class="number-core digit-descender">03</div>
+                <div class="title-core">MT5 Continuity</div>
+                <div class="branch left">
+                    <div class="text-fragment">
+                        <div class="fragment-meta">
+                            <span>Execution</span>
+                            <div class="fragment-line"></div>
+                        </div>
+                        <p class="fragment-desc">TradingView for analysis.<br>MT5 for execution.<br>Without breaking rhythm between them.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Node 04: Default density (descender) -->
+            <div class="node-block">
+                <!-- MODIFIED: 4を含むためディセンダーとして扱い、理想的な見え方を維持 -->
+                <div class="number-core digit-descender">04</div>
+                <div class="title-core">Broker Independence</div>
+                <div class="branch right">
+                    <div class="text-fragment">
+                        <div class="fragment-meta">
+                            <div class="fragment-line"></div>
+                            <span>Sovereignty</span>
+                        </div>
+                        <p class="fragment-desc">Execution environments should be selected<br>by trader preference.<br>Not by platform limitations<br>or broker partnerships.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Node 05: Default density (descender) -->
+            <div class="node-block">
+                <div class="number-core digit-descender">05</div>
+                <div class="title-core">No Fake WebTrader</div>
+                <div class="branch left">
+                    <div class="text-fragment">
+                        <div class="fragment-meta">
+                            <span>Interface</span>
+                            <div class="fragment-line"></div>
+                        </div>
+                        <p class="fragment-desc">Many execution systems replace<br>the analytical environment itself.<br>Synk Mushroom avoids that transition completely.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Node 06: spacing-airy (standard digit, short visual blocks) -->
+            <div class="node-block spacing-airy">
+                <div class="number-core">06</div>
+                <div class="title-core">Workflow Continuity</div>
+                <div class="branch right">
+                    <div class="text-fragment">
+                        <div class="fragment-meta">
+                            <div class="fragment-line"></div>
+                            <span>Flow</span>
+                        </div>
+                        <p class="fragment-desc">Analysis.<br>Decision.<br>Execution.<br>The transition between them<br>should feel continuous.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Node 07: Default density (descender) -->
+            <div class="node-block">
+                <div class="number-core digit-descender">07</div>
+                <div class="title-core">Execution Friction</div>
+                <div class="branch left">
+                    <div class="text-fragment">
+                        <div class="fragment-meta">
+                            <span>Disruption</span>
+                            <div class="fragment-line"></div>
+                        </div>
+                        <p class="fragment-desc">Every interface switch<br>creates cognitive interruption.<br>Most platforms underestimate this completely.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Node 08: Default density -->
+            <div class="node-block">
+                <div class="number-core">08</div>
+                <div class="title-core">Trading Rhythm</div>
+                <div class="branch right">
+                    <div class="text-fragment">
+                        <div class="fragment-meta">
+                            <div class="fragment-line"></div>
+                            <span>Rhythm</span>
+                        </div>
+                        <p class="fragment-desc">Experienced discretionary traders<br>operate through rhythm recognition.<br>Execution timing deteriorates<br>when the workflow is disrupted.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Node 09: Default density (descender) -->
+            <div class="node-block">
+                <div class="number-core digit-descender">09</div>
+                <div class="title-core">Chart Integrity</div>
+                <div class="branch left">
+                    <div class="text-fragment">
+                        <div class="fragment-meta">
+                            <span>Preserve</span>
+                            <div class="fragment-line"></div>
+                        </div>
+                        <p class="fragment-desc">The chart environment that produced the decision<br>should remain untouched during execution.<br>Environment stability<br>directly affects confidence.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Node 10: Default density -->
+            <div class="node-block">
+                <div class="number-core">10</div>
+                <div class="title-core">TradingView Native</div>
+                <div class="branch right">
+                    <div class="text-fragment">
+                        <div class="fragment-meta">
+                            <div class="fragment-line"></div>
+                            <span>Native</span>
+                        </div>
+                        <p class="fragment-desc">Synk Mushroom does not relocate the trader<br>into a different platform structure.<br>It exists directly inside<br>the TradingView environment itself.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Node 11: Default density -->
+            <div class="node-block">
+                <div class="number-core">11</div>
+                <div class="title-core">Chrome Extension Layer</div>
+                <div class="branch left">
+                    <div class="text-fragment">
+                        <div class="fragment-meta">
+                            <span>Structure</span>
+                            <div class="fragment-line"></div>
+                        </div>
+                        <p class="fragment-desc">No separate execution terminal.<br>No detached browser workflow.<br>The infrastructure remains<br>inside the chart layer.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Node 12: spacing-airy (short title, standard digit, short desc) -->
+            <div class="node-block spacing-airy">
+                <div class="number-core">12</div>
+                <div class="title-core">Local Execution Layer</div>
+                <div class="branch right">
+                    <div class="text-fragment">
+                        <div class="fragment-meta">
+                            <div class="fragment-line"></div>
+                            <span>Local</span>
+                        </div>
+                        <p class="fragment-desc">Execution routing remains local.<br>No external cloud relay<br>between decision and execution.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Node 13: Default density (descender) -->
+            <div class="node-block">
+                <div class="number-core digit-descender">13</div>
+                <div class="title-core">No Cloud Dependency</div>
+                <div class="branch left">
+                    <div class="text-fragment">
+                        <div class="fragment-meta">
+                            <span>Topology</span>
+                            <div class="fragment-line"></div>
+                        </div>
+                        <p class="fragment-desc">Every additional routing layer<br>introduces latency,<br>dependency,<br>and structural uncertainty.<br>Topology matters.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Node 14: Default density (descender) -->
+            <div class="node-block">
+                <div class="number-core digit-descender">14</div>
+                <div class="title-core">Webhook Rejection</div>
+                <div class="branch right">
+                    <div class="text-fragment">
+                        <div class="fragment-meta">
+                            <div class="fragment-line"></div>
+                            <span>Routing</span>
+                        </div>
+                        <p class="fragment-desc">Execution continuity should not depend<br>on unstable cloud relay architecture.<br>Synk Mushroom was designed<br>around local persistence instead.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Node 15: Default density (descender) -->
+            <div class="node-block">
+                <div class="number-core digit-descender">15</div>
+                <div class="title-core">Background Synchronization</div>
+                <div class="branch left">
+                    <div class="text-fragment">
+                        <div class="fragment-meta">
+                            <span>Sync</span>
+                            <div class="fragment-line"></div>
+                        </div>
+                        <p class="fragment-desc">Synchronization should not become<br>the center of attention.<br>The environment should simply remain connected.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Node 16: Default density -->
+            <div class="node-block">
+                <div class="number-core">16</div>
+                <div class="title-core">Silent Interface</div>
+                <div class="branch right">
+                    <div class="text-fragment">
+                        <div class="fragment-meta">
+                            <div class="fragment-line"></div>
+                            <span>Silence</span>
+                        </div>
+                        <p class="fragment-desc">Interfaces that constantly demand attention<br>destroy concentration.<br>The ideal interface<br>fades into the workflow itself.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Node 17: Default density (descender) -->
+            <div class="node-block">
+                <div class="number-core digit-descender">17</div>
+                <div class="title-core">Invisible Infrastructure</div>
+                <div class="branch left">
+                    <div class="text-fragment">
+                        <div class="fragment-meta">
+                            <span>Infrastructure</span>
+                            <div class="fragment-line"></div>
+                        </div>
+                        <p class="fragment-desc">The strongest infrastructure<br>operates below conscious awareness.<br>Reliable systems become invisible over time.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Node 18: spacing-airy (standard digit, short desc) -->
+            <div class="node-block spacing-airy">
+                <div class="number-core">18</div>
+                <div class="title-core">Execution Confidence</div>
+                <div class="branch right">
+                    <div class="text-fragment">
+                        <div class="fragment-meta">
+                            <div class="fragment-line"></div>
+                            <span>Confidence</span>
+                        </div>
+                        <p class="fragment-desc">Confidence is not psychological optimism.<br>Confidence emerges when<br>the execution environment remains stable.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Node 19: Default density (descender) -->
+            <div class="node-block">
+                <div class="number-core digit-descender">19</div>
+                <div class="title-core">State Persistence</div>
+                <div class="branch left">
+                    <div class="text-fragment">
+                        <div class="fragment-meta">
+                            <span>State</span>
+                            <div class="fragment-line"></div>
+                        </div>
+                        <p class="fragment-desc">The analytical state should survive<br>throughout the execution process.<br>No relocation.<br>No fragmentation.<br>No reset.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Node 20: Default density -->
+            <div class="node-block">
+                <div class="number-core">20</div>
+                <div class="title-core">Discretion Remains Human</div>
+                <div class="branch right">
+                    <div class="text-fragment">
+                        <div class="fragment-meta">
+                            <div class="fragment-line"></div>
+                            <span>Discretion</span>
+                        </div>
+                        <p class="fragment-desc">Synk Mushroom does not replace<br>discretionary decision-making.<br>Responsibility remains human.<br>Execution remains human.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Node 21: Default density -->
+            <div class="node-block">
+                <div class="number-core">21</div>
+                <div class="title-core">Not Trading Automation</div>
+                <div class="branch left">
+                    <div class="text-fragment">
+                        <div class="fragment-meta">
+                            <span>Position</span>
+                            <div class="fragment-line"></div>
+                        </div>
+                        <p class="fragment-desc">This is not a system<br>designed to replace the trader.<br>It exists to preserve<br>the trader's existing environment.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Node 22: Default density -->
+            <div class="node-block">
+                <div class="number-core">22</div>
+                <div class="title-core">Environment Preservation</div>
+                <div class="branch right">
+                    <div class="text-fragment">
+                        <div class="fragment-meta">
+                            <div class="fragment-line"></div>
+                            <span>Preserve</span>
+                        </div>
+                        <p class="fragment-desc">Most trading systems attempt<br>to replace the workflow.<br>Synk Mushroom was built<br>to protect it instead.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Node 23: Default density (descender) -->
+            <div class="node-block">
+                <div class="number-core digit-descender">23</div>
+                <div class="title-core">Execution Freedom</div>
+                <div class="branch left">
+                    <div class="text-fragment">
+                        <div class="fragment-meta">
+                            <span>Freedom</span>
+                            <div class="fragment-line"></div>
+                        </div>
+                        <p class="fragment-desc">TradingView freedom<br>should not require sacrificing<br>MT5 flexibility.<br>Both environments should coexist naturally.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Node 24: Default density (descender) -->
+            <div class="node-block">
+                <div class="number-core digit-descender">24</div>
+                <div class="title-core">Underground Routing</div>
+                <div class="branch right">
+                    <div class="text-fragment">
+                        <div class="fragment-meta">
+                            <div class="fragment-line"></div>
+                            <span>Network</span>
+                        </div>
+                        <p class="fragment-desc">The visible interface remains calm.<br>Execution continuity operates<br>beneath the surface layer.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Node 25: Default density (descender) -->
+            <div class="node-block">
+                <div class="number-core digit-descender">25</div>
+                <div class="title-core">Local Network</div>
+                <div class="branch left">
+                    <div class="text-fragment">
+                        <div class="fragment-meta">
+                            <span>Topology</span>
+                            <div class="fragment-line"></div>
+                        </div>
+                        <p class="fragment-desc">Shorter execution paths<br>create stronger continuity.<br>Local structure matters<br>more than visual complexity.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Node 26: spacing-airy (standard digit, short desc) -->
+            <div class="node-block spacing-airy">
+                <div class="number-core">26</div>
+                <div class="title-core">Interface Silence</div>
+                <div class="branch right">
+                    <div class="text-fragment">
+                        <div class="fragment-meta">
+                            <div class="fragment-line"></div>
+                            <span>Focus</span>
+                        </div>
+                        <p class="fragment-desc">Operational noise accumulates gradually.<br>Focus survives only when<br>the environment remains quiet.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Node 27: Default density (descender) -->
+            <div class="node-block">
+                <div class="number-core digit-descender">27</div>
+                <div class="title-core">Execution Memory</div>
+                <div class="branch left">
+                    <div class="text-fragment">
+                        <div class="fragment-meta">
+                            <span>Memory</span>
+                            <div class="fragment-line"></div>
+                        </div>
+                        <p class="fragment-desc">Discretionary execution eventually becomes<br>physical memory.<br>Workflow consistency preserves that rhythm.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Node 28: spacing-airy (standard digit, short desc) -->
+            <div class="node-block spacing-airy">
+                <div class="number-core">28</div>
+                <div class="title-core">Discretionary Infrastructure</div>
+                <div class="branch right">
+                    <div class="text-fragment">
+                        <div class="fragment-meta">
+                            <div class="fragment-line"></div>
+                            <span>Core</span>
+                        </div>
+                        <p class="fragment-desc">Synk Mushroom is not<br>an automation platform.<br>It is discretionary trading infrastructure.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Node 29: Default density (descender) -->
+            <div class="node-block">
+                <div class="number-core digit-descender">29</div>
+                <div class="title-core">The Continuity Layer</div>
+                <div class="branch left">
+                    <div class="text-fragment">
+                        <div class="fragment-meta">
+                            <span>Layer</span>
+                            <div class="fragment-line"></div>
+                        </div>
+                        <p class="fragment-desc">A stable execution layer<br>between analysis and action.<br>Built to preserve<br>workflow continuity itself.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Node 30: Default density (descender) -->
+            <div class="node-block">
+                <div class="number-core digit-descender">30</div>
+                <div class="title-core">The Local Network</div>
+                <div class="branch right">
+                    <div class="text-fragment">
+                        <div class="fragment-meta">
+                            <div class="fragment-line"></div>
+                            <span>Terminal</span>
+                        </div>
+                        <p class="fragment-desc">Built for discretionary traders<br>who refuse to abandon<br>their preferred environment.<br>The chart remains.<br>The workflow remains.<br>The rhythm remains.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FAQ -->
+            <div class="node-block mt-16 pt-16">
+                <div class="font-serif text-2xl md:text-4xl text-[#d1d1d6] font-light tracking-widest mb-16 uppercase text-center w-full">FAQ</div>
+                <div class="branch left mb-12">
+                    <div class="text-fragment flex flex-col gap-3">
+                        <a href="#" class="terminal-link fragment-desc block">Automation Systems.</a>
+                        <a href="#" class="terminal-link fragment-desc block">Local Execution.</a>
+                        <a href="#" class="terminal-link fragment-desc block">Installation Flow.</a>
+                        <a href="#" class="terminal-link fragment-desc block">Deployment Questions.</a>
+                    </div>
+                </div>
+                <div class="branch right mb-12">
+                    <div class="text-fragment flex flex-col gap-3">
+                        <a href="#" class="terminal-link fragment-desc block">Live Environment.</a>
+                        <a href="#" class="terminal-link fragment-desc block">Real Workflow.</a>
+                        <a href="https://www.youtube.com/" target="_blank" rel="noopener noreferrer" class="terminal-link fragment-desc block">Execution Archive.</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PRICING -->
+            <div class="node-block mt-16 pt-16">
+                <div class="font-serif text-2xl md:text-4xl text-[#d1d1d6] font-light tracking-widest mb-16 uppercase text-center w-full">Pricing</div>
+                <div class="branch right mb-12">
+                    <div class="text-fragment flex flex-col gap-3">
+                        <a href="#" class="terminal-link fragment-desc block">Monthly Access.</a>
+                        <a href="#" class="terminal-link fragment-desc block">Annual Access.</a>
+                        <a href="#" class="terminal-link fragment-desc block">Lifetime Infrastructure.</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CONTACT -->
+            <div class="node-block mt-16 pt-16">
+                <div class="font-serif text-2xl md:text-4xl text-[#d1d1d6] font-light tracking-widest mb-16 uppercase text-center w-full">Contact</div>
+                <div class="branch left mb-12">
+                    <div class="text-fragment flex flex-col gap-3">
+                        <a href="#" class="terminal-link fragment-desc block">Support Channel.</a>
+                        <a href="#" class="terminal-link fragment-desc block">Deployment Contact.</a>
+                        <a href="#" class="terminal-link fragment-desc block">Infrastructure Inquiry.</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- LEGAL -->
+            <div class="node-block mt-16 pt-16">
+                <div class="font-serif text-2xl md:text-4xl text-[#d1d1d6] font-light tracking-widest mb-16 uppercase text-center w-full">Legal</div>
+                <div class="branch right mb-12">
+                    <div class="text-fragment flex flex-col gap-3">
+                        <a href="#" class="terminal-link fragment-desc block">Terms of Service.</a>
+                        <a href="#" class="terminal-link fragment-desc block">Privacy Policy.</a>
+                        <a href="#" class="terminal-link fragment-desc block">Legal Disclosure.</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ABOUT -->
+            <div class="node-block mt-16 pt-16 mb-64">
+                <div class="font-serif text-2xl md:text-4xl text-[#d1d1d6] font-light tracking-widest mb-16 uppercase text-center w-full">About</div>
+                <div class="branch left">
+                    <div class="text-fragment flex flex-col gap-3">
+                        <a href="#" class="terminal-link fragment-desc block">Oichi Equipment.</a>
+                        <a href="#" class="terminal-link fragment-desc block">Origin Archive.</a>
+                        <a href="#" class="terminal-link fragment-desc block">Continuity Philosophy.</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FOOTER -->
+            <footer class="node-block mt-16 pt-16 flex flex-col items-center mb-0">
+                <div class="font-mono text-xs text-[#739735] tracking-[0.2em] uppercase mb-2">Oichi Equipment</div>
+                <div class="font-mono text-[0.65rem] text-[#a1a1aa] tracking-[0.1em] uppercase mb-4">Discretionary Trading Infrastructure</div>
+                <div class="font-mono text-[0.55rem] text-[#71717a] tracking-[0.2em] uppercase leading-relaxed text-center">
+                    &copy; 2026 Oichi Equipment.<br>All rights reserved.
+                </div>
+            </footer>
+
+        </div>
+    </main>
+
+</body>
+</html>
