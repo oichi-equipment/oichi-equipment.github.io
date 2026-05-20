@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { ShieldCheck, Activity, Maximize2, Minimize2, CheckCircle2, AlertTriangle, XCircle, Info, FileJson } from 'lucide-react';
+import { Activity, Maximize2, Minimize2, CheckCircle2, AlertTriangle, Info } from 'lucide-react';
+import VisualDiagnostics from './VisualDiagnostics';
 
 const formatTime = (ts) => {
   if (!ts || ts === '-') return '-';
@@ -8,66 +9,45 @@ const formatTime = (ts) => {
   return d.toISOString().split('T')[1].replace('Z', '');
 };
 
-const RetcodeSummary = ({ summary }) => {
-  if (!summary || summary.length === 0) return null;
-
-  return (
-    <div className="bg-[#111922] border border-[rgba(148,163,184,0.15)] rounded-[3px] p-4 flex flex-col shadow-sm flex-1 min-w-[300px]">
-      <h3 className="text-[11px] font-bold text-slate-300 uppercase tracking-widest mb-3 border-b border-[rgba(148,163,184,0.15)] pb-2 flex items-center gap-2">
-        <ShieldCheck className="w-4 h-4 text-emerald-500/80" />
-        MT5 Retcode Summary
-      </h3>
-      <div className="flex flex-col gap-2">
-        {summary.map((item, idx) => {
-          const isSuccess = item.retcode === 10009 || item.retcode === 0;
-          const isReject = item.retcode === 10006 || item.retcode === 10015 || item.retcode === 10016;
-          
-          return (
-            <div key={idx} className={`flex items-center gap-3 px-3 py-1.5 border rounded-[3px] ${isSuccess ? 'border-emerald-500/30 bg-emerald-500/5' : isReject ? 'border-amber-500/30 bg-amber-500/5' : 'border-red-500/30 bg-red-500/5'}`}>
-              <div className="flex flex-col flex-1">
-                <span className={`text-base font-bold font-mono leading-none ${isSuccess ? 'text-emerald-400' : isReject ? 'text-amber-400' : 'text-red-400'}`}>
-                  {item.retcode}
-                </span>
-                <span className="text-[9px] text-slate-500 uppercase tracking-widest leading-none mt-1">{item.comment}</span>
-              </div>
-              <div className="text-xl font-mono text-slate-200 border-l border-[rgba(148,163,184,0.15)] pl-3">
-                {item.count}
-              </div>
-            </div>
-          );
-        })}
-      </div>
-    </div>
-  );
-};
-
 const PollingSummaryPanel = ({ summary }) => {
-  if (!summary || summary.chainCount === 0) return null;
+  if (!summary || summary.chainCount === 0) {
+    return (
+      <div className="bg-dark-card border border-dark-border rounded-[3px] p-4 flex flex-col shadow-sm flex-1 min-w-[250px]">
+        <h3 className="text-[13px] font-sans font-bold text-text-sub uppercase tracking-wider mb-3 border-b border-dark-border pb-2 flex items-center gap-2">
+          <Activity className="w-4 h-4 text-uguisu-light/80" />
+          Polling & Status Activity
+        </h3>
+        <div className="flex items-center justify-center flex-1 min-h-[80px] text-text-muted text-[13px] font-sans">
+          Waiting for JSONL
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <div className="bg-[#111922] border border-[rgba(148,163,184,0.15)] rounded-[3px] p-4 flex flex-col shadow-sm flex-1 min-w-[250px]">
-      <h3 className="text-[11px] font-bold text-slate-300 uppercase tracking-widest mb-3 border-b border-[rgba(148,163,184,0.15)] pb-2 flex items-center gap-2">
-        <Activity className="w-4 h-4 text-cyan-500/80" />
+    <div className="bg-dark-card border border-dark-border rounded-[3px] p-4 flex flex-col shadow-sm flex-1 min-w-[250px]">
+      <h3 className="text-[13px] font-sans font-bold text-text-sub uppercase tracking-wider mb-3 border-b border-dark-border pb-2 flex items-center gap-2">
+        <Activity className="w-4 h-4 text-uguisu-light/80" />
         Polling & Status Activity
       </h3>
-      <div className="grid grid-cols-2 gap-x-4 gap-y-2 font-mono text-[10px]">
-        <div className="flex justify-between items-center text-slate-400">
-          <span>Polling Chains</span><span className="text-slate-200 font-bold">{summary.chainCount}</span>
+      <div className="grid grid-cols-2 gap-x-4 gap-y-2.5 font-sans text-[13px]">
+        <div className="flex justify-between items-center text-text-sub">
+          <span>Polling Chains</span><span className="text-text-main font-mono font-bold">{summary.chainCount}</span>
         </div>
-        <div className="flex justify-between items-center text-slate-400">
-          <span>Avg Duration</span><span className="text-slate-200 font-bold">{summary.avgDuration} ms</span>
+        <div className="flex justify-between items-center text-text-sub">
+          <span>Avg Duration</span><span className="text-text-main font-mono font-bold">{summary.avgDuration} ms</span>
         </div>
-        <div className="flex justify-between items-center text-slate-400">
-          <span>Refresh</span><span className="text-cyan-400 font-bold">{summary.refreshCount}</span>
+        <div className="flex justify-between items-center text-text-sub">
+          <span>Refresh</span><span className="text-uguisu-light font-mono font-bold">{summary.refreshCount}</span>
         </div>
-        <div className="flex justify-between items-center text-slate-400">
-          <span>Max Duration</span><span className="text-slate-200">{summary.maxDuration} ms</span>
+        <div className="flex justify-between items-center text-text-sub">
+          <span>Max Duration</span><span className="text-text-main font-mono font-bold">{summary.maxDuration} ms</span>
         </div>
-        <div className="flex justify-between items-center text-slate-400">
-          <span>Override</span><span className="text-amber-400 font-bold">{summary.overrideCount}</span>
+        <div className="flex justify-between items-center text-text-sub">
+          <span>Override</span><span className="text-gold-warning font-mono font-bold">{summary.overrideCount}</span>
         </div>
-        <div className="flex justify-between items-center text-slate-400">
-          <span>Skipped</span><span className="text-slate-500">{summary.skippedCount}</span>
+        <div className="flex justify-between items-center text-text-sub">
+          <span>Skipped</span><span className="text-text-muted font-mono font-bold">{summary.skippedCount}</span>
         </div>
       </div>
     </div>
@@ -76,37 +56,67 @@ const PollingSummaryPanel = ({ summary }) => {
 
 const CommandSummaryCards = ({ chains }) => {
   const tradeChains = chains.filter(c => c.type === 'Trade');
-  const pollingChains = chains.filter(c => c.type === 'Polling');
   
   const executed = tradeChains.length;
   const failed = tradeChains.filter(c => c.retcode !== 'n/a' && c.retcode !== 10009 && c.retcode !== 0).length;
   
-  // Calculate MT5 latencies
-  const mt5Lats = tradeChains.filter(c => typeof c.latencies.mt5Execution === 'number').map(c => c.latencies.mt5Execution).sort((a,b)=>a-b);
-  const medianMt5 = mt5Lats.length > 0 ? mt5Lats[Math.floor(mt5Lats.length/2)] : 'n/a';
-  const p95Mt5 = mt5Lats.length > 0 ? mt5Lats[Math.floor(mt5Lats.length * 0.95)] : 'n/a';
+  const calcStats = (vals) => {
+    const valid = vals.filter(v => typeof v === 'number' && !isNaN(v)).sort((a,b)=>a-b);
+    return {
+      median: valid.length > 0 ? valid[Math.floor(valid.length/2)] : 'n/a',
+      p95: valid.length > 0 ? valid[Math.floor(valid.length * 0.95)] : 'n/a',
+    };
+  };
+
+  const totalStats = calcStats(tradeChains.map(c => c.latencies.totalObserved));
+  const coreStats = calcStats(tradeChains.map(c => c.latencies.coreExecution));
+  const mt5Stats = calcStats(tradeChains.map(c => c.latencies.mt5Execution));
+
+  let slowest = 'n/a';
+  let maxTotal = -1;
+  tradeChains.forEach(c => {
+    if (typeof c.latencies.totalObserved === 'number' && c.latencies.totalObserved > maxTotal) {
+      maxTotal = c.latencies.totalObserved;
+      slowest = `${maxTotal}ms (${c.action})`;
+    }
+  });
+
+  const actionCounts = {};
+  tradeChains.forEach(c => actionCounts[c.action] = (actionCounts[c.action] || 0) + 1);
+  let mostCommon = 'n/a';
+  let maxCount = 0;
+  Object.entries(actionCounts).forEach(([a, count]) => {
+    if (count > maxCount) {
+      maxCount = count;
+      mostCommon = a;
+    }
+  });
 
   return (
-    <div className="grid grid-cols-2 md:grid-cols-5 gap-3 mb-4">
-      <div className="bg-[#111922] border border-[rgba(148,163,184,0.15)] rounded-[3px] p-3 shadow-sm flex flex-col">
-        <span className="text-[9px] font-bold text-slate-400 uppercase tracking-widest">Executed Trades</span>
-        <span className="text-xl font-mono font-bold text-slate-100">{executed}</span>
+    <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3 mb-4">
+      <div className="bg-dark-card border border-dark-border rounded-[3px] p-3 shadow-sm flex flex-col justify-between">
+        <span className="text-[12px] font-sans font-bold text-text-sub uppercase tracking-wider">Executed / Failed</span>
+        <span className="text-[20px] font-mono font-bold text-text-main mt-1">{executed} <span className="text-text-muted">/</span> <span className={`${failed > 0 ? 'text-enji-light animate-pulse' : 'text-text-main'}`}>{failed}</span></span>
       </div>
-      <div className="bg-[#111922] border border-[rgba(148,163,184,0.15)] rounded-[3px] p-3 shadow-sm flex flex-col">
-        <span className="text-[9px] font-bold text-slate-400 uppercase tracking-widest">Failed Trades</span>
-        <span className={`text-xl font-mono font-bold ${failed > 0 ? 'text-amber-400' : 'text-slate-100'}`}>{failed}</span>
+      <div className="bg-dark-card border border-dark-border rounded-[3px] p-3 shadow-sm flex flex-col justify-between">
+        <span className="text-[12px] font-sans font-bold text-text-sub uppercase tracking-wider">Most Common</span>
+        <span className="text-[14px] font-sans font-bold text-uguisu-light mt-1 truncate">{mostCommon}</span>
       </div>
-      <div className="bg-[#111922] border border-[rgba(148,163,184,0.15)] rounded-[3px] p-3 shadow-sm flex flex-col">
-        <span className="text-[9px] font-bold text-slate-400 uppercase tracking-widest">Polling Chains</span>
-        <span className="text-xl font-mono font-bold text-slate-500">{pollingChains.length}</span>
+      <div className="bg-dark-card border border-dark-border rounded-[3px] p-3 shadow-sm flex flex-col justify-between">
+        <span className="text-[12px] font-sans font-bold text-text-sub uppercase tracking-wider">Total Obs (M / p95)</span>
+        <span className="text-[20px] font-mono font-bold text-text-sub mt-1">{totalStats.median} <span className="text-[12px] text-text-muted">/ {totalStats.p95}</span></span>
       </div>
-      <div className="bg-[#111922] border border-[rgba(148,163,184,0.15)] rounded-[3px] p-3 shadow-sm flex flex-col">
-        <span className="text-[9px] font-bold text-slate-400 uppercase tracking-widest">MT5 Median (Trade)</span>
-        <span className="text-xl font-mono font-bold text-cyan-400">{medianMt5} <span className="text-[10px] text-slate-500">ms</span></span>
+      <div className="bg-dark-card border border-dark-border rounded-[3px] p-3 shadow-sm flex flex-col justify-between">
+        <span className="text-[12px] font-sans font-bold text-text-sub uppercase tracking-wider">Core Exec (M / p95)</span>
+        <span className="text-[20px] font-mono font-bold text-text-sub mt-1">{coreStats.median} <span className="text-[12px] text-text-muted">/ {coreStats.p95}</span></span>
       </div>
-      <div className="bg-[#111922] border border-[rgba(148,163,184,0.15)] rounded-[3px] p-3 shadow-sm flex flex-col">
-        <span className="text-[9px] font-bold text-slate-400 uppercase tracking-widest">MT5 p95 (Trade)</span>
-        <span className="text-xl font-mono font-bold text-cyan-500">{p95Mt5} <span className="text-[10px] text-slate-500">ms</span></span>
+      <div className="bg-dark-card border border-dark-border rounded-[3px] p-3 shadow-sm flex flex-col justify-between">
+        <span className="text-[12px] font-sans font-bold text-text-sub uppercase tracking-wider">MT5 Exec (M / p95)</span>
+        <span className="text-[20px] font-mono font-bold text-uguisu-light mt-1">{mt5Stats.median} <span className="text-[12px] text-text-muted">/ {mt5Stats.p95}</span></span>
+      </div>
+      <div className="bg-dark-card border border-dark-border rounded-[3px] p-3 shadow-sm flex flex-col justify-between">
+        <span className="text-[12px] font-sans font-bold text-text-sub uppercase tracking-wider">Slowest Cmd</span>
+        <span className="text-[14px] font-sans font-bold text-gold-warning-light mt-1 truncate" title={slowest}>{slowest}</span>
       </div>
     </div>
   );
@@ -114,41 +124,74 @@ const CommandSummaryCards = ({ chains }) => {
 
 const CommandStepList = ({ events }) => {
   const startTs = new Date(events[0].timestamp).getTime();
+
+  const maxDelta = Math.max(...events.map((ev, i) => {
+    if (i === 0) return 0;
+    const currentTs = new Date(ev.timestamp).getTime();
+    const prevTs = new Date(events[i-1].timestamp).getTime();
+    if (isNaN(currentTs) || isNaN(prevTs)) return 0;
+    return Math.max(0, currentTs - prevTs);
+  }), 1);
   
   return (
-    <div className="p-4 border-l-2 border-cyan-500/50 overflow-x-auto shadow-inner bg-black/20">
-      <div className="flex items-center gap-2 mb-3 text-[10px] font-semibold text-slate-400 uppercase tracking-widest">
-        <Activity className="w-3.5 h-3.5 text-cyan-500/80" /> Command Execution Steps
+    <div className="p-4 border-l-2 border-uguisu overflow-x-auto shadow-inner bg-dark-surface">
+      <div className="flex flex-col gap-1 mb-3">
+        <div className="flex items-center gap-2 text-[12px] font-bold text-text-sub uppercase tracking-wider">
+          <Activity className="w-4 h-4 text-uguisu-light/80" /> Command Execution Steps
+        </div>
+        <div className="text-[12px] font-sans text-text-muted flex items-center gap-1.5">
+          <Info className="w-3.5 h-3.5 opacity-70" />
+          Steps are displayed in logical command order. Out-of-order timestamps are marked instead of shown as negative latency.
+        </div>
       </div>
       <table className="w-full text-left border-collapse whitespace-nowrap">
-        <thead className="text-[9px] uppercase tracking-widest text-slate-500 border-b border-[rgba(148,163,184,0.1)]">
+        <thead className="text-[12px] font-sans font-semibold uppercase tracking-wider text-text-muted border-b border-dark-border/40">
           <tr>
-            <th className="pb-2 px-3 font-normal">Step</th>
-            <th className="pb-2 px-3 font-normal">Time</th>
-            <th className="pb-2 px-3 font-normal">Event</th>
-            <th className="pb-2 px-3 font-normal text-right">Δ Prev (ms)</th>
-            <th className="pb-2 px-3 font-normal text-right">Δ Start (ms)</th>
+            <th className="pb-2 px-3 font-semibold">Step</th>
+            <th className="pb-2 px-3 font-semibold">Time</th>
+            <th className="pb-2 px-3 font-semibold">Event</th>
+            <th className="pb-2 px-3 font-semibold">Δ Timeline</th>
+            <th className="pb-2 px-3 font-semibold text-right">Δ Start (ms)</th>
           </tr>
         </thead>
-        <tbody className="font-mono text-[11px] divide-y divide-[rgba(148,163,184,0.05)]">
+        <tbody className="text-[13px] divide-y divide-dark-border/20">
           {events.map((ev, i) => {
             const currentTs = new Date(ev.timestamp).getTime();
             const prevTs = i > 0 ? new Date(events[i-1].timestamp).getTime() : currentTs;
             
             const deltaPrev = isNaN(currentTs) || isNaN(prevTs) ? '-' : (currentTs - prevTs);
-            const deltaStart = isNaN(currentTs) || isNaN(startTs) ? '-' : (currentTs - startTs);
+            const isOutOrderPrev = typeof deltaPrev === 'number' && deltaPrev < 0;
+            const displayDeltaPrev = isOutOrderPrev ? 'out-of-order' : deltaPrev;
             
-            const isHighDelta = typeof deltaPrev === 'number' && deltaPrev > 50;
+            const deltaStart = isNaN(currentTs) || isNaN(startTs) ? '-' : (currentTs - startTs);
+            const isPreStart = typeof deltaStart === 'number' && deltaStart < 0;
+            const displayDeltaStart = isPreStart ? 'pre-start' : deltaStart;
+            
+            const isHighDelta = typeof deltaPrev === 'number' && !isOutOrderPrev && deltaPrev > 50;
+            const widthPct = typeof deltaPrev === 'number' && !isOutOrderPrev ? Math.min(100, (deltaPrev / maxDelta) * 100) : 0;
 
             return (
-              <tr key={i} className="hover:bg-[rgba(148,163,184,0.05)] text-slate-300">
-                <td className="py-1.5 px-3 text-slate-500">{i + 1}</td>
-                <td className="py-1.5 px-3 text-slate-400">{formatTime(ev.timestamp)}</td>
-                <td className="py-1.5 px-3 text-cyan-400/80 font-semibold">{ev.event}</td>
-                <td className={`py-1.5 px-3 text-right ${isHighDelta ? 'text-amber-400 font-bold' : 'text-slate-400'}`}>
-                  {deltaPrev}
+              <tr key={i} className="hover:bg-dark-hover text-text-sub">
+                <td className="py-2.5 px-3 text-text-muted font-sans">{i + 1}</td>
+                <td className="py-2.5 px-3 text-text-sub font-mono">{formatTime(ev.timestamp)}</td>
+                <td className="py-2.5 px-3 text-uguisu-light font-bold font-sans">{ev.event}</td>
+                <td className="py-2.5 px-3">
+                  <div className="flex items-center gap-2">
+                    <div className="w-20 h-2 bg-dark-base rounded-full overflow-hidden shrink-0 border border-dark-border">
+                      {typeof deltaPrev === 'number' && !isOutOrderPrev && (
+                        <div className={`h-full ${isHighDelta ? 'bg-gold-warning-light' : 'bg-uguisu-light/60'}`} style={{ width: `${widthPct}%` }} />
+                      )}
+                    </div>
+                    <span className={`text-[12px] font-mono w-16 truncate ${isOutOrderPrev ? 'text-enji-light/80 italic font-sans' : isHighDelta ? 'text-gold-warning-light font-bold' : 'text-text-sub'}`} title={isOutOrderPrev ? 'Logical order differs from timestamp order' : ''}>
+                      {displayDeltaPrev}
+                    </span>
+                  </div>
                 </td>
-                <td className="py-1.5 px-3 text-right text-slate-200">{deltaStart}</td>
+                <td className="py-2.5 px-3 text-right font-mono">
+                  <span className={`${isPreStart ? 'text-enji-light/80 italic text-[11px] font-sans' : 'text-text-main'}`} title={isPreStart ? 'Occurred before start timestamp' : ''}>
+                    {displayDeltaStart}
+                  </span>
+                </td>
               </tr>
             );
           })}
@@ -158,43 +201,44 @@ const CommandStepList = ({ events }) => {
   );
 };
 
-export default function CommandForensics({ chains, retcodeSummary, pollingSummary }) {
+export default function CommandForensics({ chains, retcodeSummary, pollingSummary, events }) {
   const [expandedId, setExpandedId] = useState(null);
   const [filterType, setFilterType] = useState('Trade');
 
-  if (!chains || chains.length === 0) return null;
+  const safeChains = chains || [];
 
   const toggleRow = (id) => {
     setExpandedId(expandedId === id ? null : id);
   };
 
-  const filteredChains = chains.filter(c => {
+  const filteredChains = safeChains.filter(c => {
     if (filterType === 'All') return true;
     return c.type === filterType;
   });
 
   return (
-    <div className="flex-1 flex flex-col p-5 pt-0 bg-[#0b1117] shrink-0">
-      <CommandSummaryCards chains={chains} />
+    <div className="flex-1 flex flex-col p-5 pt-0 bg-dark-base shrink-0">
+      <CommandSummaryCards chains={safeChains} />
 
       <div className="flex flex-col md:flex-row gap-4 mb-4">
-        <RetcodeSummary summary={retcodeSummary} />
         <PollingSummaryPanel summary={pollingSummary} />
       </div>
 
-      <div className="flex-1 flex flex-col overflow-hidden bg-[#111922] border border-[rgba(148,163,184,0.15)] rounded-[3px] shadow-sm">
-        <div className="p-3 px-4 border-b border-[rgba(148,163,184,0.15)] bg-[#141f2a] flex flex-wrap items-center gap-4 shrink-0 text-xs">
+      <VisualDiagnostics chains={safeChains} retcodeSummary={retcodeSummary} events={events} />
+
+      <div className="flex-1 flex flex-col overflow-hidden bg-dark-card border border-dark-border rounded-[3px] shadow-sm">
+        <div className="p-3.5 px-4 border-b border-dark-border bg-dark-card flex flex-wrap items-center gap-4 shrink-0 text-xs">
           <div className="flex flex-col">
-            <span className="font-semibold text-slate-100 uppercase tracking-widest">Command Summary</span>
-            <span className="text-slate-400 text-[10px]">Per-command correlation forensics</span>
+            <span className="font-sans font-bold text-text-main uppercase tracking-wider text-[15px]">Command Summary</span>
+            <span className="text-text-sub text-[12px] font-sans">Per-command correlation forensics</span>
           </div>
           
-          <div className="w-px h-6 bg-[rgba(148,163,184,0.15)] mx-2"></div>
+          <div className="w-px h-6 bg-dark-border/40 mx-2"></div>
 
           <select 
             value={filterType} 
             onChange={(e) => setFilterType(e.target.value)} 
-            className="bg-[#0b1117] border border-[rgba(148,163,184,0.2)] rounded px-2 py-1 text-slate-200 focus:border-cyan-500/50 outline-none text-[10px] uppercase tracking-widest font-semibold"
+            className="bg-dark-base border border-dark-border rounded px-2.5 py-1.5 text-text-sub focus:border-uguisu-light/50 outline-none text-[12px] uppercase tracking-wider font-semibold font-sans"
           >
             <option value="Trade">Trade Commands</option>
             <option value="Polling">Polling / Status</option>
@@ -202,30 +246,32 @@ export default function CommandForensics({ chains, retcodeSummary, pollingSummar
           </select>
 
           <div className="flex-1"></div>
-          <div className="text-slate-400 font-mono">Showing {filteredChains.length} chains</div>
+          <div className="text-text-sub font-sans text-[13px]">
+            Showing <span className="font-mono font-bold text-text-main">{filteredChains.length}</span> chains
+          </div>
         </div>
 
-        <div className="flex-1 overflow-auto bg-[#0b1117] min-h-[300px]">
+        <div className="flex-1 overflow-auto bg-dark-base min-h-[300px]">
           <table className="w-full text-left border-collapse whitespace-nowrap">
-            <thead className="sticky top-0 bg-[#141f2a] z-10 text-[10px] uppercase tracking-widest text-slate-400 border-b border-[rgba(148,163,184,0.15)] font-semibold shadow-sm">
+            <thead className="sticky top-0 bg-dark-thead z-10 text-[12px] font-sans font-bold uppercase tracking-wider text-text-sub border-b border-dark-border shadow-sm">
               <tr>
-                <th className="py-2.5 px-4 font-normal">Time</th>
-                <th className="py-2.5 px-4 font-normal">Action</th>
-                <th className="py-2.5 px-4 font-normal">Correlation ID</th>
-                <th className="py-2.5 px-4 font-normal">Result</th>
-                <th className="py-2.5 px-4 font-normal text-right">Total (ms)</th>
-                <th className="py-2.5 px-4 font-normal text-right text-cyan-500/80">MT5 Exec</th>
-                <th className="py-2.5 px-4 font-normal text-right text-cyan-500/80">Status</th>
-                <th className="py-2.5 px-4 font-normal text-right text-cyan-500/80">WS</th>
-                <th className="py-2.5 px-4 font-normal text-right text-cyan-500/80">Render</th>
-                <th className="py-2.5 px-4 font-normal text-amber-500/80">Dominant Layer</th>
-                <th className="py-2.5 px-4 font-normal text-center w-16">Details</th>
+                <th className="py-3.5 px-3.5 font-semibold">Time</th>
+                <th className="py-3.5 px-3.5 font-semibold">Action</th>
+                <th className="py-3.5 px-3.5 font-semibold">Result</th>
+                <th className="py-3.5 px-3.5 font-semibold">Correlation ID</th>
+                <th className="py-3.5 px-3.5 font-semibold text-right">Total Obs</th>
+                <th className="py-3.5 px-3.5 font-semibold text-right">Core Exec</th>
+                <th className="py-3.5 px-3.5 font-semibold text-right text-uguisu-light">MT5 Exec</th>
+                <th className="py-3.5 px-3.5 font-semibold text-right">Post/UI</th>
+                <th className="py-3.5 px-3.5 font-semibold">Retcode</th>
+                <th className="py-3.5 px-3.5 font-semibold text-gold-warning-light">Dominant Layer</th>
+                <th className="py-3.5 px-3.5 font-semibold text-center w-12">Details</th>
               </tr>
             </thead>
-            <tbody className="font-mono divide-y divide-[rgba(148,163,184,0.1)] text-[11px]">
+            <tbody className="divide-y divide-dark-border/40 text-[13px] font-sans">
               {filteredChains.length === 0 ? (
                 <tr>
-                  <td colSpan={11} className="py-8 text-center text-slate-500">No chains found for the selected filter.</td>
+                  <td colSpan={11} className="py-8 text-center text-text-muted font-sans">No chains found for the selected filter.</td>
                 </tr>
               ) : filteredChains.map((chain) => {
                 const isExpanded = expandedId === chain.id;
@@ -235,44 +281,52 @@ export default function CommandForensics({ chains, retcodeSummary, pollingSummar
                 return (
                   <React.Fragment key={chain.id}>
                     <tr 
-                      className={`hover:bg-[rgba(148,163,184,0.05)] transition-colors duration-75 cursor-pointer ${isExpanded ? 'bg-cyan-900/10' : ''}`}
+                      className={`hover:bg-dark-hover transition-colors duration-75 cursor-pointer ${isExpanded ? 'bg-dark-surface animate-none' : ''}`}
                       onClick={() => toggleRow(chain.id)}
                     >
-                      <td className="py-2 px-4 text-slate-400">{formatTime(chain.startTime)}</td>
-                      <td className="py-2 px-4">
-                        <span className={`px-1.5 py-0.5 rounded border ${chain.isCloseAll ? 'bg-indigo-900/40 border-indigo-500/50 text-indigo-300' : 'bg-slate-800/50 border-slate-700/50 text-slate-200'}`}>
+                      <td className="py-3 px-3.5 text-text-sub font-mono">{formatTime(chain.startTime)}</td>
+                      <td className="py-3 px-3.5">
+                        <span className={`px-2 py-1 rounded border font-sans text-[12px] font-bold ${
+                          chain.isCloseAll 
+                            ? 'bg-dark-surface border border-uguisu/40 text-uguisu-light' 
+                            : chain.isClosePosition 
+                              ? 'bg-dark-surface border border-uguisu-hover/40 text-uguisu-light' 
+                              : 'bg-dark-base border border-dark-border text-text-sub'
+                        }`}>
                           {chain.action}
                         </span>
-                        {chain.isCloseAll && <span className="ml-2 text-[9px] text-slate-500" title="Position-count dependent">pos-dep</span>}
+                        {chain.isCloseAll && <span className="ml-2 text-[11px] font-sans text-text-muted" title="Position-count dependent">pos-dep</span>}
                       </td>
-                      <td className="py-2 px-4 text-slate-500 truncate max-w-[120px]" title={chain.id}>{chain.id}</td>
-                      <td className="py-2 px-4">
+                      <td className="py-3 px-3.5 font-sans">
                         {chain.result !== 'n/a' && (
-                          <span className={`flex items-center gap-1.5 ${isSuccess ? 'text-emerald-400' : isError ? 'text-amber-400' : 'text-slate-400'}`}>
-                            {isSuccess ? <CheckCircle2 className="w-3.5 h-3.5" /> : isError ? <AlertTriangle className="w-3.5 h-3.5" /> : <Info className="w-3.5 h-3.5" />}
-                            <span className="truncate max-w-[150px]" title={chain.result}>{chain.result}</span>
+                          <span className={`flex items-center gap-1.5 ${isSuccess ? 'text-uguisu-light' : isError ? 'text-enji-light' : 'text-text-sub'}`}>
+                            {isSuccess ? <CheckCircle2 className="w-4 h-4" /> : isError ? <AlertTriangle className="w-4 h-4" /> : <Info className="w-4 h-4" />}
+                            <span className="truncate max-w-[120px]" title={chain.result}>{chain.result}</span>
                           </span>
                         )}
-                        {chain.result === 'n/a' && <span className="text-slate-600">-</span>}
+                        {chain.result === 'n/a' && <span className="text-text-muted">-</span>}
                       </td>
-                      <td className="py-2 px-4 text-right font-bold text-slate-200">{chain.latencies.total}</td>
-                      <td className="py-2 px-4 text-right text-slate-400">{chain.latencies.mt5Execution}</td>
-                      <td className="py-2 px-4 text-right text-slate-400">{chain.latencies.statusBuild}</td>
-                      <td className="py-2 px-4 text-right text-slate-400">{chain.latencies.wsTransport}</td>
-                      <td className="py-2 px-4 text-right text-slate-400">{chain.latencies.uiRender}</td>
-                      <td className="py-2 px-4">
-                        <span className={`px-1.5 py-0.5 rounded ${chain.dominantLayer.includes('Insufficient') ? 'text-slate-600' : 'bg-amber-500/10 text-amber-400 border border-amber-500/20'}`}>
+                      <td className="py-3 px-3.5 text-text-muted font-mono truncate max-w-[120px]" title={chain.id}>{chain.id}</td>
+                      <td className="py-3 px-3.5 text-right font-mono font-bold text-text-main">{chain.latencies.totalObserved}</td>
+                      <td className="py-3 px-3.5 text-right font-mono text-text-sub">{chain.latencies.coreExecution}</td>
+                      <td className="py-3 px-3.5 text-right font-mono text-uguisu-light font-bold">{chain.latencies.mt5Execution}</td>
+                      <td className="py-3 px-3.5 text-right font-mono text-text-sub">{chain.latencies.postExecution}</td>
+                      <td className="py-3 px-3.5">
+                        <span className={`text-[13px] font-mono font-bold ${isSuccess ? 'text-uguisu-light' : isError ? 'text-enji-light' : 'text-text-muted'}`}>{chain.retcode}</span>
+                      </td>
+                      <td className="py-3 px-3.5 font-sans">
+                        <span className={`px-2 py-0.5 rounded text-[11px] font-bold ${chain.dominantLayer.includes('Insufficient') ? 'text-text-muted' : 'bg-gold-warning-bg text-gold-warning-light border border-gold-warning-border/60'}`}>
                           {chain.dominantLayer}
                         </span>
                       </td>
-                      <td className="py-2 px-4 text-center">
-                        <button className={`p-1 rounded transition-colors ${isExpanded ? 'text-cyan-400' : 'text-slate-500'}`}>
-                          {isExpanded ? <Minimize2 className="w-3.5 h-3.5" /> : <Maximize2 className="w-3.5 h-3.5" />}
+                      <td className="py-3 px-3.5 text-center">
+                        <button className={`p-1 rounded transition-colors ${isExpanded ? 'text-uguisu-light' : 'text-text-muted'}`}>
+                          {isExpanded ? <Minimize2 className="w-4 h-4" /> : <Maximize2 className="w-4 h-4" />}
                         </button>
                       </td>
                     </tr>
                     {isExpanded && (
-                      <tr className="bg-[#111922]">
+                      <tr className="bg-dark-card">
                         <td colSpan={11} className="p-0">
                           <CommandStepList events={chain.events} />
                         </td>

@@ -23,6 +23,7 @@ export const extractCommandChains = (events) => {
     let result = 'n/a';
     let retcode = 'n/a';
     let isCloseAll = false;
+    let isClosePosition = false;
     let type = 'Unknown';
 
     let hasTradeEvent = false;
@@ -32,7 +33,12 @@ export const extractCommandChains = (events) => {
     let firstTs = null;
     let lastTs = null;
     let mt5ReqTs = null;
+    let mt5ResTs = null;
     let wsRecvTs = null;
+    let finalRenderTs = null;
+    let coreReqTs = null;
+    let coreResTs = null;
+    let callbackTs = null;
 
     let mt5Execution = 'n/a';
     let wsTransport = 'n/a';
@@ -49,17 +55,22 @@ export const extractCommandChains = (events) => {
       // Action determination
       if (ev.event === 'USER_ACTION' && ev.payload?.action) {
         action = ev.payload.action;
-        if (action === 'CLOSE_ALL') isCloseAll = true;
+      } else if (ev.event === 'HTTP_COMMAND_RECEIVED' && action === 'Unknown' && ev.payload?.action) {
+        action = ev.payload.action;
       } else if (ev.event === 'SEND_TRADE' && action === 'Unknown') {
         action = ev.payload?.action || 'SEND_TRADE';
       } else if (ev.event === 'MT5_REQUEST' && action === 'Unknown') {
         action = ev.payload?.action || 'MT5_REQUEST';
       }
 
+      if (action === 'CLOSE_ALL') isCloseAll = true;
+      if (action === 'CLOSE_POSITION' || action === 'CLOSE') isClosePosition = true;
+
       // MT5 Response & Latency
       if (ev.event === 'MT5_REQUEST') {
         mt5ReqTs = ts;
       } else if (ev.event === 'MT5_RESPONSE') {
+        mt5ResTs = ts;
         if (ev.payload?.retcode !== undefined) {
           retcode = ev.payload.retcode;
           result = ev.payload.comment || `Retcode ${retcode}`;
@@ -68,6 +79,14 @@ export const extractCommandChains = (events) => {
           mt5Execution = ts - mt5ReqTs;
         }
       }
+
+      // Core Execution
+      if (ev.event === 'HTTP_COMMAND_RECEIVED') coreReqTs = ts;
+      if (ev.event === 'HTTP_COMMAND_RESPONSE_SENT') coreResTs = ts;
+
+      // Post Execution / UI
+      if (ev.event === 'COMMAND_CALLBACK_RECEIVED') callbackTs = ts;
+      if (ev.event === 'FINAL_RENDER') finalRenderTs = ts;
 
       // WS Transport
       if (typeof ev.calculated_ws_transport_ms === 'number') {
@@ -104,9 +123,24 @@ export const extractCommandChains = (events) => {
       type = 'Polling';
     }
 
-    let totalDuration = 'n/a';
+    let totalObserved = 'n/a';
     if (firstTs !== null && lastTs !== null && lastTs >= firstTs) {
-      totalDuration = lastTs - firstTs;
+      totalObserved = lastTs - firstTs;
+    }
+
+    let coreExecution = 'n/a';
+    if (coreReqTs !== null && coreResTs !== null && coreResTs >= coreReqTs) {
+      coreExecution = coreResTs - coreReqTs;
+    }
+
+    let postExecution = 'n/a';
+    if (mt5ResTs !== null) {
+      let postEndTs = null;
+      if (finalRenderTs !== null && finalRenderTs >= mt5ResTs) postEndTs = finalRenderTs;
+      if (callbackTs !== null && callbackTs >= mt5ResTs && (postEndTs === null || callbackTs > postEndTs)) postEndTs = callbackTs;
+      if (postEndTs !== null) {
+        postExecution = postEndTs - mt5ResTs;
+      }
     }
 
     // Determine Dominant Layer
@@ -122,23 +156,59 @@ export const extractCommandChains = (events) => {
       dominantLayer = 'Insufficient evidence';
     }
 
+    const LOGICAL_ORDER = {
+      'USER_ACTION': 1,
+      'LOCK_APPLIED': 2,
+      'COMMAND_SEND_START': 3,
+      'SEND_TRADE': 4,
+      'HTTP_COMMAND_RECEIVED': 5,
+      'MT5_REQUEST': 6,
+      'MT5_RESPONSE': 7,
+      'HTTP_COMMAND_MT5_DONE': 8,
+      'HTTP_COMMAND_RESPONSE_READY': 9,
+      'HTTP_COMMAND_RESPONSE_SENT': 10,
+      'HTTP_COMMAND_BROADCAST_SCHEDULED': 11,
+      'STATUS_BUILD_METRICS': 12,
+      'SERVER_SEND': 13,
+      'WS_PUSH': 14,
+      'WS_RECEIVE_PRE': 15,
+      'WS_RECEIVE': 16,
+      'STATE_UPDATE': 17,
+      'RECONCILE': 18,
+      'FINAL_RENDER': 19,
+      'COMMAND_CALLBACK_RECEIVED': 20,
+      'LOCK_RELEASED': 21,
+      'PENDING_ACTION_CLEANUP': 22
+    };
+
+    const logicalEvents = [...evs].sort((a, b) => {
+      const orderA = LOGICAL_ORDER[a.event] || 999;
+      const orderB = LOGICAL_ORDER[b.event] || 999;
+      if (orderA !== orderB) return orderA - orderB;
+      return new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime();
+    });
+
     chains.push({
       id: corrId,
       type,
       startTime: evs.length > 0 ? evs[0].timestamp : '-',
       action,
       isCloseAll,
+      isClosePosition,
       result,
       retcode,
       latencies: {
-        total: totalDuration,
+        totalObserved,
+        coreExecution,
         mt5Execution,
+        postExecution,
         statusBuild,
         wsTransport,
         uiRender
       },
       dominantLayer,
-      events: evs
+      events: logicalEvents,
+      observedEvents: evs
     });
   }
 

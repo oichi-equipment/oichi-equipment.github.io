@@ -1,98 +1,175 @@
-import React from 'react';
-import { Activity, Zap, Server, Monitor, AlertTriangle, CheckCircle2, ChevronUp, ShieldCheck } from 'lucide-react';
+import { Activity, Clock, ShieldCheck, AlertTriangle, Play, HelpCircle, Flame, Tag } from 'lucide-react';
 
 const PrimaryCard = ({ title, value, subtext }) => {
   const isHealthy = value === 'System Healthy (No obvious bottleneck)';
-  const isWarning = value !== 'Insufficient evidence' && !isHealthy;
+  const isWarning = value !== 'Insufficient evidence' && !isHealthy && value !== 'Waiting for JSONL';
   
   return (
-    <div className={`col-span-2 md:col-span-4 lg:col-span-3 bg-[#111922] border ${isWarning ? 'border-amber-500/50 shadow-[0_0_15px_rgba(245,158,11,0.05)]' : 'border-cyan-500/30'} rounded-[3px] p-5 flex flex-col relative overflow-hidden`}>
-      <div className="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-cyan-500 to-blue-600 opacity-50"></div>
-      {isWarning && <div className="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-amber-500 to-orange-600 opacity-80"></div>}
+    <div className={`col-span-1 sm:col-span-2 lg:col-span-2 bg-dark-card border ${
+      isWarning 
+        ? 'border-gold-warning-border bg-gold-warning-bg/40 shadow-[0_0_15px_rgba(184,134,43,0.03)]' 
+        : isHealthy 
+          ? 'border-uguisu/40 shadow-[0_0_15px_rgba(82,102,44,0.04)]' 
+          : 'border-dark-border'
+    } rounded-[3px] p-4 flex flex-col relative overflow-hidden transition-all select-none`}>
       
-      <div className="text-[10px] font-semibold text-slate-400 uppercase tracking-widest mb-1">{title}</div>
-      <div className={`text-3xl font-mono font-bold tracking-tight mb-2 ${isWarning ? 'text-amber-400' : 'text-slate-100'}`}>
+      <div className="text-[12px] font-sans font-bold text-text-sub uppercase tracking-wider mb-2 flex items-center gap-1.5">
+        <span className={`w-1.5 h-1.5 rounded-full ${isWarning ? 'bg-gold-warning-light animate-pulse' : 'bg-uguisu-light'}`} />
+        {title}
+      </div>
+      <div className={`text-[30px] font-sans font-bold tracking-tight mb-2 leading-tight ${
+        isWarning ? 'text-gold-warning-light' : isHealthy ? 'text-uguisu-light' : 'text-text-main'
+      }`}>
         {value}
       </div>
-      <div className="flex items-center gap-2 text-xs text-slate-500 font-mono mt-auto pt-3 border-t border-[rgba(148,163,184,0.1)]">
-        {isHealthy ? <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500/80" /> : 
-         isWarning ? <AlertTriangle className="w-3.5 h-3.5 text-amber-500/80" /> : 
-         <ChevronUp className="w-3.5 h-3.5 text-slate-500" />}
-        {subtext}
+      <div className="flex items-center gap-1.5 text-[12px] text-text-muted font-sans mt-auto pt-2 border-t border-dark-border/40">
+        {isHealthy ? <ShieldCheck className="w-4 h-4 text-uguisu-light" /> : 
+         isWarning ? <AlertTriangle className="w-4 h-4 text-gold-warning-light" /> : 
+         <HelpCircle className="w-4 h-4 text-text-muted" />}
+        <span className="truncate">{subtext}</span>
       </div>
     </div>
   );
 };
 
-const MetricCard = ({ title, value, unit, median, count, isError }) => (
-  <div className="col-span-1 md:col-span-2 lg:col-span-1 bg-[#111922] border border-[rgba(148,163,184,0.15)] rounded-[3px] p-4 flex flex-col shadow-sm hover:border-[rgba(148,163,184,0.3)] transition-colors">
-    <div className="text-[10px] font-semibold text-slate-400 uppercase tracking-widest mb-1">{title}</div>
-    <div className="flex items-baseline gap-1">
-      <span className={`text-2xl font-mono font-semibold tracking-tight ${isError && value !== 0 ? 'text-red-400' : 'text-slate-200'}`}>
+const MetricCard = ({ title, value, unit, median, count, isError, icon: Icon }) => (
+  <div className="bg-dark-card border border-dark-border rounded-[3px] p-4 flex flex-col shadow-sm hover:border-dark-border transition-colors select-none">
+    <div className="text-[12px] font-sans font-bold text-text-sub uppercase tracking-wider mb-2 flex items-center gap-1.5">
+      {Icon && <Icon className="w-3.5 h-3.5 text-text-muted" />}
+      {title}
+    </div>
+    <div className="flex items-baseline gap-0.5">
+      <span className={`text-[24px] font-mono font-bold tracking-tight ${isError ? 'text-enji-light' : 'text-text-main'}`}>
         {value}
       </span>
-      {unit && value !== 'n/a' && <span className="text-xs text-slate-500 font-mono">{unit}</span>}
+      {unit && value !== 'n/a' && <span className="text-[12px] text-text-muted font-mono ml-0.5">{unit}</span>}
     </div>
     
-    <div className="flex justify-between items-center text-[10px] text-slate-500 font-mono mt-auto pt-2 border-t border-[rgba(148,163,184,0.1)]">
-      <span>{median !== undefined ? `Median: ${median}` : 'Data Source'}</span>
-      {count !== undefined && <span className="text-cyan-500/50">C: {count}</span>}
+    <div className="flex justify-between items-center text-[12px] text-text-muted font-sans mt-auto pt-2 border-t border-dark-border/40 font-medium">
+      <span className="truncate">{median !== undefined ? `Median: ${median}` : 'Data Source'}</span>
+      {count !== undefined && <span className="text-text-sub font-mono">C: {count}</span>}
     </div>
   </div>
 );
 
-export default function DiagnosticCards({ stats, bottleneck, counts, errors }) {
-  // If no data loaded, pass defaults
+export default function DiagnosticCards({ 
+  stats, 
+  bottleneck, 
+  counts, 
+  totalObservedStats,
+  totalExecuted,
+  totalFailed,
+  slowestCommand,
+  retcodeSummary
+}) {
   const isLoaded = stats && counts > 0;
   
-  const getValue = (layerStat) => isLoaded && layerStat.p95 !== 'n/a' ? layerStat.p95 : 'n/a';
-  const getMedian = (layerStat) => isLoaded && layerStat.median !== 'n/a' ? layerStat.median : 'n/a';
+  const getObsP95 = () => isLoaded && totalObservedStats && totalObservedStats.p95 !== 'n/a' ? totalObservedStats.p95 : 'n/a';
+  const getObsMedian = () => isLoaded && totalObservedStats && totalObservedStats.median !== 'n/a' ? totalObservedStats.median : 'n/a';
+
+  const getMt5P95 = () => isLoaded && stats.mt5Execution.p95 !== 'n/a' ? stats.mt5Execution.p95 : 'n/a';
+  const getMt5Median = () => isLoaded && stats.mt5Execution.median !== 'n/a' ? stats.mt5Execution.median : 'n/a';
 
   return (
-    <div className="grid grid-cols-2 md:grid-cols-6 lg:grid-cols-8 gap-4 p-5 bg-[#0b1117] shrink-0">
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-7 gap-3 select-none">
+      
+      {/* Primary Bottleneck Card */}
       <PrimaryCard 
         title="Primary Bottleneck" 
         value={isLoaded ? bottleneck : 'Waiting for JSONL'} 
-        subtext={isLoaded ? "Determined by comparing p95 median latencies across all layers" : "Drop a log file to begin analysis"}
+        subtext={isLoaded ? "Aggregated latencies comparison" : "Upload logs to initiate diagnostics"}
       />
       
+      {/* MT5 Execution Latency Card */}
       <MetricCard 
         title="MT5 Execution p95" 
-        value={isLoaded ? getValue(stats.mt5Execution) : 'n/a'}
+        value={isLoaded ? getMt5P95() : 'n/a'}
         unit="ms"
-        median={isLoaded ? getMedian(stats.mt5Execution) : '-'}
-        count={isLoaded ? stats.mt5Execution.count : '-'}
+        median={isLoaded ? getMt5Median() : '-'}
+        count={isLoaded ? stats.mt5Execution.count : undefined}
+        icon={Activity}
       />
       
+      {/* Total Observed Latency Card */}
       <MetricCard 
-        title="WS Transport p95" 
-        value={isLoaded ? getValue(stats.wsTransport) : 'n/a'}
+        title="Total Duration p95" 
+        value={isLoaded ? getObsP95() : 'n/a'}
         unit="ms"
-        median={isLoaded ? getMedian(stats.wsTransport) : '-'}
-        count={isLoaded ? stats.wsTransport.count : '-'}
+        median={isLoaded ? getObsMedian() : '-'}
+        count={isLoaded ? totalObservedStats.count : undefined}
+        icon={Clock}
       />
       
+      {/* Executed / Failed Card */}
       <MetricCard 
-        title="UI Render p95" 
-        value={isLoaded ? getValue(stats.render) : 'n/a'}
-        unit="ms"
-        median={isLoaded ? getMedian(stats.render) : '-'}
-        count={isLoaded ? stats.render.count : '-'}
+        title="Executed / Failed" 
+        value={isLoaded ? `${totalExecuted} / ${totalFailed}` : '0 / 0'}
+        isError={isLoaded && totalFailed > 0}
+        median="Trade commands"
+        icon={Play}
       />
       
-      <MetricCard 
-        title="Status Build p95" 
-        value={isLoaded ? getValue(stats.statusBuild) : 'n/a'}
-        unit="ms"
-        median={isLoaded ? getMedian(stats.statusBuild) : '-'}
-        count={isLoaded ? stats.statusBuild.count : '-'}
-      />
+      {/* Slowest Command Card */}
+      <div className="bg-dark-card border border-dark-border rounded-[3px] p-4 flex flex-col shadow-sm hover:border-dark-border transition-colors">
+        <div className="text-[12px] font-sans font-bold text-text-sub uppercase tracking-wider mb-2 flex items-center gap-1.5">
+          <Flame className="w-3.5 h-3.5 text-text-muted" />
+          Slowest Command
+        </div>
+        {isLoaded && slowestCommand ? (
+          <div className="flex flex-col gap-0.5">
+            <span className="text-[14px] font-sans font-bold text-text-main truncate" title={slowestCommand.action}>
+              {slowestCommand.action}
+            </span>
+            <span className="text-[13px] font-mono font-bold text-gold-warning-light">
+              {slowestCommand.latencies.mt5Execution} <span className="text-[10px] text-text-muted font-mono">ms</span>
+            </span>
+          </div>
+        ) : (
+          <span className="text-[20px] font-mono font-bold text-text-muted">n/a</span>
+        )}
+        <div className="text-[12px] text-text-muted font-sans mt-auto pt-2 border-t border-dark-border/40 font-medium">
+          Core MT5 execution
+        </div>
+      </div>
 
-      <MetricCard 
-        title="Total Events" 
-        value={isLoaded ? counts : 0}
-        median="All parsed rows"
-      />
+      {/* Retcode Status Card */}
+      <div className="bg-dark-card border border-dark-border rounded-[3px] p-4 flex flex-col shadow-sm hover:border-dark-border transition-colors">
+        <div className="text-[12px] font-sans font-bold text-text-sub uppercase tracking-wider mb-2 flex items-center gap-1.5">
+          <Tag className="w-3.5 h-3.5 text-text-muted" />
+          Retcode Status
+        </div>
+        
+        {isLoaded && retcodeSummary && retcodeSummary.length > 0 ? (
+          <div className="flex flex-wrap gap-1 max-h-[36px] overflow-y-auto pr-0.5">
+            {retcodeSummary.map(r => {
+              const isSuccess = r.retcode === 10009 || r.retcode === 0;
+              const isFail = r.retcode !== 'n/a' && !isSuccess;
+              const badgeClass = isSuccess 
+                ? 'bg-dark-base text-uguisu-light border border-uguisu/30' 
+                : isFail
+                  ? 'bg-dark-base text-enji-light border border-enji/30'
+                  : 'bg-dark-base text-text-sub border border-dark-border';
+                  
+              return (
+                <span 
+                  key={`${r.retcode}_${r.comment}`}
+                  className={`px-1.5 py-0.5 rounded-[1px] text-[10px] font-mono font-bold tracking-tight leading-none ${badgeClass}`}
+                  title={`${r.retcode}: ${r.comment} (${r.count} times)`}
+                >
+                  {r.retcode}:{r.count}
+                </span>
+              );
+            })}
+          </div>
+        ) : (
+          <span className="text-[20px] font-mono font-bold text-text-muted">n/a</span>
+        )}
+        
+        <div className="text-[12px] text-text-muted font-sans mt-auto pt-2 border-t border-dark-border/40 font-medium">
+          Distribution summary
+        </div>
+      </div>
+
     </div>
   );
 }

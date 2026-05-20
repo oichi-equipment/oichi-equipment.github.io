@@ -68,12 +68,13 @@ export const extractMeasuredEvidence = (events) => {
     // E. Broker / Symbol Layer
     if (ev.event === 'SYMBOL_SNAPSHOT' && ev.payload) {
       const p = ev.payload;
-      if (p.symbol) pushEv('Broker / Symbol', 'symbol', p.symbol, '', 'SYMBOL_SNAPSHOT', corr, 'SYMBOL_SNAPSHOT.symbol', json, ts);
+      const sym = p.resolved_symbol || ev.symbol || p.requested_symbol;
+      if (sym) pushEv('Broker / Symbol', 'symbol', sym, '', 'SYMBOL_SNAPSHOT', corr, 'SYMBOL_SNAPSHOT.resolved_symbol', json, ts);
       if (p.spread !== undefined) pushEv('Broker / Symbol', 'spread', p.spread, 'points', 'SYMBOL_SNAPSHOT', corr, 'SYMBOL_SNAPSHOT.spread', json, ts);
       if (p.trade_stops_level !== undefined) pushEv('Broker / Symbol', 'trade_stops_level', p.trade_stops_level, 'points', 'SYMBOL_SNAPSHOT', corr, 'SYMBOL_SNAPSHOT.trade_stops_level', json, ts);
       if (p.trade_freeze_level !== undefined) pushEv('Broker / Symbol', 'trade_freeze_level', p.trade_freeze_level, 'points', 'SYMBOL_SNAPSHOT', corr, 'SYMBOL_SNAPSHOT.trade_freeze_level', json, ts);
-      if (p.filling_mode) pushEv('Broker / Symbol', 'filling_mode', p.filling_mode, '', 'SYMBOL_SNAPSHOT', corr, 'SYMBOL_SNAPSHOT.filling_mode', json, ts);
-      if (p.execution_mode) pushEv('Broker / Symbol', 'execution_mode', p.execution_mode, '', 'SYMBOL_SNAPSHOT', corr, 'SYMBOL_SNAPSHOT.execution_mode', json, ts);
+      if (p.filling_mode !== undefined) pushEv('Broker / Symbol', 'filling_mode', p.filling_mode, '', 'SYMBOL_SNAPSHOT', corr, 'SYMBOL_SNAPSHOT.filling_mode', json, ts);
+      if (p.trade_exemode !== undefined) pushEv('Broker / Symbol', 'execution_mode', p.trade_exemode, '', 'SYMBOL_SNAPSHOT', corr, 'SYMBOL_SNAPSHOT.trade_exemode', json, ts);
       if (p.volume_step !== undefined) pushEv('Broker / Symbol', 'volume_step', p.volume_step, 'lot', 'SYMBOL_SNAPSHOT', corr, 'SYMBOL_SNAPSHOT.volume_step', json, ts);
     }
 

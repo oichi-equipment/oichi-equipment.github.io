@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { ChevronDown, ChevronRight, FileJson } from 'lucide-react';
+import { FileJson } from 'lucide-react';
 
 const formatTime = (ts) => {
   if (!ts || ts === '-') return '-';
@@ -55,92 +55,94 @@ export default function MeasuredEvidence({ evidence }) {
   };
 
   return (
-    <div className="flex-1 flex flex-col overflow-hidden bg-[#111922] border border-[rgba(148,163,184,0.15)] rounded-[3px] m-4 mt-0 shadow-lg">
+    <div className="flex-1 flex flex-col overflow-hidden bg-dark-card border border-dark-border rounded-[3px] m-4 mt-0 shadow-lg">
       {/* Header & Filters */}
-      <div className="p-3 px-4 border-b border-[rgba(148,163,184,0.15)] bg-[#141f2a] flex flex-wrap items-center gap-4 shrink-0 text-xs">
+      <div className="p-3.5 px-4 border-b border-dark-border bg-dark-card flex flex-wrap items-center gap-4 shrink-0 text-xs">
         <div className="flex flex-col">
-          <span className="font-semibold text-slate-100 uppercase tracking-widest">Measured Evidence</span>
-          <span className="text-slate-400 text-[10px]">Event-derived diagnostic metrics</span>
+          <span className="font-sans font-bold text-text-main uppercase tracking-wider text-[15px]">Measured Evidence</span>
+          <span className="text-text-sub text-[12px] font-sans">Event-derived diagnostic metrics</span>
         </div>
         
-        <div className="w-px h-6 bg-[rgba(148,163,184,0.15)] mx-2"></div>
+        <div className="w-px h-6 bg-dark-border/40 mx-2"></div>
 
-        <select value={selectedLayer} onChange={(e) => setSelectedLayer(e.target.value)} className="bg-[#0b1117] border border-[rgba(148,163,184,0.2)] rounded px-2 py-1 text-slate-200 focus:border-cyan-500/50 outline-none">
+        <select value={selectedLayer} onChange={(e) => setSelectedLayer(e.target.value)} className="bg-dark-base border border-dark-border rounded px-2.5 py-1.5 text-text-sub focus:border-uguisu-light/50 outline-none text-[12px] uppercase font-semibold font-sans">
           <option value="">-- All Layers --</option>
           {filters.layers.map(v => <option key={v} value={v}>{v}</option>)}
         </select>
 
-        <select value={selectedMetric} onChange={(e) => setSelectedMetric(e.target.value)} className="bg-[#0b1117] border border-[rgba(148,163,184,0.2)] rounded px-2 py-1 text-slate-200 focus:border-cyan-500/50 outline-none">
+        <select value={selectedMetric} onChange={(e) => setSelectedMetric(e.target.value)} className="bg-dark-base border border-dark-border rounded px-2.5 py-1.5 text-text-sub focus:border-uguisu-light/50 outline-none text-[12px] uppercase font-semibold font-sans">
           <option value="">-- All Metrics --</option>
           {filters.metrics.map(v => <option key={v} value={v}>{v}</option>)}
         </select>
         
-        <select value={selectedEvent} onChange={(e) => setSelectedEvent(e.target.value)} className="bg-[#0b1117] border border-[rgba(148,163,184,0.2)] rounded px-2 py-1 text-slate-200 focus:border-cyan-500/50 outline-none">
+        <select value={selectedEvent} onChange={(e) => setSelectedEvent(e.target.value)} className="bg-dark-base border border-dark-border rounded px-2.5 py-1.5 text-text-sub focus:border-uguisu-light/50 outline-none text-[12px] uppercase font-semibold font-sans">
           <option value="">-- All Events --</option>
           {filters.events.map(v => <option key={v} value={v}>{v}</option>)}
         </select>
         
-        <select value={selectedCorrelation} onChange={(e) => setSelectedCorrelation(e.target.value)} className="bg-[#0b1117] border border-[rgba(148,163,184,0.2)] rounded px-2 py-1 text-slate-200 font-mono focus:border-cyan-500/50 outline-none max-w-[150px]">
+        <select value={selectedCorrelation} onChange={(e) => setSelectedCorrelation(e.target.value)} className="bg-dark-base border border-dark-border rounded px-2.5 py-1.5 text-text-sub font-mono focus:border-uguisu-light/50 outline-none max-w-[150px] text-[12px] uppercase font-semibold font-sans">
           <option value="">-- All Correlations --</option>
           {filters.correlations.map(v => <option key={v} value={v}>{v}</option>)}
         </select>
         
         <div className="flex-1"></div>
-        <div className="text-slate-400 font-mono">Showing {filteredEvidence.length} metrics</div>
+        <div className="text-text-sub font-sans text-[13px]">
+          Showing <span className="font-mono font-bold text-text-main">{filteredEvidence.length}</span> metrics
+        </div>
       </div>
 
       {/* Table */}
-      <div className="flex-1 overflow-auto relative bg-[#0b1117]">
+      <div className="flex-1 overflow-auto relative bg-dark-base">
         <table className="w-full text-left border-collapse whitespace-nowrap">
-          <thead className="sticky top-0 bg-[#141f2a] z-10 text-[10px] uppercase tracking-widest text-slate-400 border-b border-[rgba(148,163,184,0.15)] font-semibold shadow-sm">
+          <thead className="sticky top-0 bg-dark-thead z-10 text-[12px] font-sans font-bold uppercase tracking-wider text-text-sub border-b border-dark-border shadow-sm">
             <tr>
-              <th className="py-2.5 px-4 font-normal">Time</th>
-              <th className="py-2.5 px-4 font-normal">Layer</th>
-              <th className="py-2.5 px-4 font-normal">Source Event</th>
-              <th className="py-2.5 px-4 font-normal">Correlation ID</th>
-              <th className="py-2.5 px-4 font-normal text-cyan-400/80">Metric</th>
-              <th className="py-2.5 px-4 font-normal text-right text-cyan-400/80">Value</th>
-              <th className="py-2.5 px-4 font-normal">Basis / Reason</th>
-              <th className="py-2.5 px-4 font-normal text-center w-16">Details</th>
+              <th className="py-3.5 px-4 font-semibold">Time</th>
+              <th className="py-3.5 px-4 font-semibold">Layer</th>
+              <th className="py-3.5 px-4 font-semibold">Source Event</th>
+              <th className="py-3.5 px-4 font-semibold">Correlation ID</th>
+              <th className="py-3.5 px-4 font-semibold text-uguisu-light">Metric</th>
+              <th className="py-3.5 px-4 font-semibold text-right text-uguisu-light">Value</th>
+              <th className="py-3.5 px-4 font-semibold">Basis / Reason</th>
+              <th className="py-3.5 px-4 font-semibold text-center w-16">Details</th>
             </tr>
           </thead>
-          <tbody className="font-mono divide-y divide-[rgba(148,163,184,0.1)] text-[11px]">
+          <tbody className="divide-y divide-dark-border/40 text-[13px] font-sans">
             {filteredEvidence.map((ev) => {
               const isExpanded = expandedRows.has(ev.id);
               
               return (
                 <React.Fragment key={ev.id}>
-                  <tr className="hover:bg-[rgba(148,163,184,0.05)] transition-colors duration-75 text-slate-300">
-                    <td className="py-2 px-4 text-slate-400">{formatTime(ev.timestamp)}</td>
-                    <td className="py-2 px-4">
-                      <span className="px-1.5 py-0.5 rounded bg-slate-800/50 border border-slate-700/50 text-slate-300">{ev.layer}</span>
+                  <tr className="hover:bg-dark-hover transition-colors duration-75 text-text-sub">
+                    <td className="py-3 px-4 text-text-sub font-mono">{formatTime(ev.timestamp)}</td>
+                    <td className="py-3 px-4 font-sans">
+                      <span className="px-2 py-0.5 rounded bg-dark-base border border-dark-border text-text-sub font-sans text-[12px]">{ev.layer}</span>
                     </td>
-                    <td className="py-2 px-4 text-slate-400">{ev.sourceEvent}</td>
-                    <td className="py-2 px-4 text-slate-500 truncate max-w-[100px]" title={ev.correlationId}>{ev.correlationId}</td>
-                    <td className="py-2 px-4 font-semibold text-emerald-400/90">{ev.metric}</td>
-                    <td className="py-2 px-4 text-right">
-                      <span className="text-slate-100 font-bold">{ev.value}</span>
-                      {ev.unit && <span className="text-slate-500 ml-1">{ev.unit}</span>}
+                    <td className="py-3 px-4 text-text-sub font-sans">{ev.sourceEvent}</td>
+                    <td className="py-3 px-4 text-text-muted font-mono truncate max-w-[100px]" title={ev.correlationId}>{ev.correlationId}</td>
+                    <td className="py-3 px-4 font-bold text-uguisu-light/90 font-sans">{ev.metric}</td>
+                    <td className="py-3 px-4 text-right font-mono">
+                      <span className="text-text-main font-bold">{ev.value}</span>
+                      {ev.unit && <span className="text-text-muted ml-1">{ev.unit}</span>}
                     </td>
-                    <td className="py-2 px-4 text-slate-400 text-[10px] truncate max-w-[200px]" title={ev.basis}>{ev.basis}</td>
-                    <td className="py-2 px-4 text-center">
+                    <td className="py-3 px-4 text-text-sub text-[12px] font-sans truncate max-w-[200px]" title={ev.basis}>{ev.basis}</td>
+                    <td className="py-3 px-4 text-center">
                       <button 
                         onClick={() => toggleRow(ev.id)}
-                        className={`p-1 rounded transition-colors ${isExpanded ? 'bg-cyan-900/40 text-cyan-400' : 'text-slate-500 hover:text-slate-300 hover:bg-slate-800'}`}
+                        className={`p-1.5 rounded transition-colors ${isExpanded ? 'bg-dark-base text-uguisu-light border border-uguisu/30' : 'text-text-muted hover:text-text-main hover:bg-dark-hover'}`}
                         title="View Source JSON"
                       >
-                        <FileJson className="w-3.5 h-3.5" />
+                        <FileJson className="w-4 h-4" />
                       </button>
                     </td>
                   </tr>
                   {isExpanded && (
-                    <tr className="bg-[#111922]">
+                    <tr className="bg-dark-card animate-none">
                       <td colSpan={8} className="p-0">
-                        <div className="p-4 border-l-2 border-cyan-500/50 overflow-x-auto shadow-inner bg-black/20">
-                          <div className="flex items-center gap-2 mb-2 text-[10px] font-semibold text-slate-400 uppercase tracking-widest">
-                            <span className="text-cyan-500/80">Source Details</span> (Masked Financial Fields)
+                        <div className="p-4 border-l-2 border-uguisu overflow-x-auto shadow-inner bg-dark-surface">
+                          <div className="flex items-center gap-2 mb-2 text-[12px] font-sans font-bold text-text-sub uppercase tracking-wider">
+                            <span className="text-uguisu-light/80">Source Details</span> (Masked Financial Fields)
                           </div>
-                          <pre className="text-[10px] text-slate-300 font-mono leading-relaxed p-3 bg-[#0b1117] border border-[rgba(148,163,184,0.1)] rounded-[3px]">
+                          <pre className="text-[12px] text-text-sub font-mono leading-relaxed p-3 bg-dark-base border border-dark-border rounded-[3px]">
                             {JSON.stringify(ev.sourceJson, null, 2)}
                           </pre>
                         </div>
@@ -152,7 +154,7 @@ export default function MeasuredEvidence({ evidence }) {
             })}
             {filteredEvidence.length === 0 && (
               <tr>
-                <td colSpan={8} className="py-8 text-center text-slate-500">No measured evidence found matching filters.</td>
+                <td colSpan={8} className="py-8 text-center text-text-muted font-sans">No measured evidence found matching filters.</td>
               </tr>
             )}
           </tbody>
