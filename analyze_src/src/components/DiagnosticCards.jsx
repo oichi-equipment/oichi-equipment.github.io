@@ -1,53 +1,67 @@
-import { Activity, Clock, ShieldCheck, AlertTriangle, Play, HelpCircle, Flame, Tag } from 'lucide-react';
+import { Activity, Clock, ShieldCheck, AlertTriangle, Play, HelpCircle, Flame, Tag, Server, Monitor } from 'lucide-react';
 
 const PrimaryCard = ({ title, value, subtext }) => {
   const isHealthy = value === 'System Healthy (No obvious bottleneck)';
   const isWarning = value !== 'Insufficient evidence' && !isHealthy && value !== 'Waiting for JSONL';
+  const displayValue = isHealthy ? 'None (Distributed)' : (typeof value === 'string' ? value.replace(' Layer', '') : value);
   
   return (
-    <div className={`col-span-1 sm:col-span-2 lg:col-span-2 bg-dark-card border ${
+    <div className={`col-span-1 sm:col-span-2 lg:col-span-2 bg-[#111111] border ${
       isWarning 
-        ? 'border-gold-warning-border bg-gold-warning-bg/40 shadow-[0_0_15px_rgba(184,134,43,0.03)]' 
+        ? 'border-[#8c6b23]/50 bg-[#2a1f10]/30 shadow-[0_0_15px_rgba(184,134,43,0.03)]' 
         : isHealthy 
-          ? 'border-uguisu/40 shadow-[0_0_15px_rgba(82,102,44,0.04)]' 
-          : 'border-dark-border'
-    } rounded-[3px] p-4 flex flex-col relative overflow-hidden transition-all select-none`}>
+          ? 'border-[#2d2d2d] shadow-sm' 
+          : 'border-[#2d2d2d]'
+    } rounded-[3px] p-4 flex flex-col h-full relative overflow-hidden transition-all select-none`}>
       
-      <div className="text-[12px] font-sans font-bold text-text-sub uppercase tracking-wider mb-2 flex items-center gap-1.5">
-        <span className={`w-1.5 h-1.5 rounded-full ${isWarning ? 'bg-gold-warning-light animate-pulse' : 'bg-uguisu-light'}`} />
-        {title}
+      <div className="text-[12px] font-sans font-bold text-[#d4d4d8] uppercase tracking-wider mb-2 flex items-start gap-1.5 h-[32px]">
+        <span className={`w-1.5 h-1.5 rounded-full mt-1 shrink-0 ${isWarning ? 'bg-[#d4af37] animate-pulse' : 'bg-[#52662c]'}`} />
+        <span className="leading-tight line-clamp-2" title={title}>{title}</span>
       </div>
-      <div className={`text-[30px] font-sans font-bold tracking-tight mb-2 leading-tight ${
-        isWarning ? 'text-gold-warning-light' : isHealthy ? 'text-uguisu-light' : 'text-text-main'
+      
+      <div className={`text-[32px] font-sans font-bold tracking-tight mb-2 leading-none h-[28px] ${
+        isWarning ? 'text-[#d4af37]' : 'text-[#f3f4f6]'
       }`}>
-        {value}
+        <span className="truncate block" title={displayValue}>{displayValue}</span>
       </div>
-      <div className="flex items-center gap-1.5 text-[12px] text-text-muted font-sans mt-auto pt-2 border-t border-dark-border/40">
-        {isHealthy ? <ShieldCheck className="w-4 h-4 text-uguisu-light" /> : 
-         isWarning ? <AlertTriangle className="w-4 h-4 text-gold-warning-light" /> : 
-         <HelpCircle className="w-4 h-4 text-text-muted" />}
-        <span className="truncate">{subtext}</span>
+      
+      <div className="h-[34px] mb-3 flex flex-col justify-end"></div>
+      
+      <div className="flex items-start gap-1.5 text-[12px] text-[#a1a1aa] font-sans mt-auto pt-3 border-t border-[#2d2d2d]/60 min-h-[44px]">
+        {isHealthy ? <ShieldCheck className="w-4 h-4 mt-0.5 text-[#a1a1aa] shrink-0" /> : 
+         isWarning ? <AlertTriangle className="w-4 h-4 mt-0.5 text-[#d4af37] shrink-0" /> : 
+         <HelpCircle className="w-4 h-4 mt-0.5 text-[#a1a1aa] shrink-0" />}
+        <span className="leading-snug line-clamp-2">{subtext}</span>
       </div>
     </div>
   );
 };
 
-const MetricCard = ({ title, value, unit, median, count, isError, icon: Icon }) => (
-  <div className="bg-dark-card border border-dark-border rounded-[3px] p-4 flex flex-col shadow-sm hover:border-dark-border transition-colors select-none">
-    <div className="text-[12px] font-sans font-bold text-text-sub uppercase tracking-wider mb-2 flex items-center gap-1.5">
-      {Icon && <Icon className="w-3.5 h-3.5 text-text-muted" />}
-      {title}
-    </div>
-    <div className="flex items-baseline gap-0.5">
-      <span className={`text-[24px] font-mono font-bold tracking-tight ${isError ? 'text-enji-light' : 'text-text-main'}`}>
-        {value}
-      </span>
-      {unit && value !== 'n/a' && <span className="text-[12px] text-text-muted font-mono ml-0.5">{unit}</span>}
+const MetricCard = ({ title, value, unit, median, count, isError, icon: Icon, subtext }) => (
+  <div className="bg-[#111111] border border-[#2d2d2d] rounded-[3px] p-4 flex flex-col shadow-sm transition-colors select-none h-full">
+    <div className="text-[12px] font-sans font-bold text-[#d4d4d8] uppercase tracking-wider mb-2 flex items-start gap-1.5 h-[32px]">
+      {Icon && <Icon className="w-3.5 h-3.5 text-[#a1a1aa] mt-0.5 shrink-0" />}
+      <span className="leading-tight line-clamp-2" title={title}>{title}</span>
     </div>
     
-    <div className="flex justify-between items-center text-[12px] text-text-muted font-sans mt-auto pt-2 border-t border-dark-border/40 font-medium">
-      <span className="truncate">{median !== undefined ? `Median: ${median}` : 'Data Source'}</span>
-      {count !== undefined && <span className="text-text-sub font-mono">C: {count}</span>}
+    <div className="flex items-baseline gap-0.5 mb-2 h-[28px]">
+      <span className={`text-[28px] font-mono font-bold tracking-tight leading-none ${isError ? 'text-[#cc4444]' : 'text-[#f3f4f6]'}`}>
+        {value}
+      </span>
+      {unit && value !== 'n/a' && <span className="text-[14px] text-[#a1a1aa] font-mono ml-0.5">{unit}</span>}
+    </div>
+    
+    <div className="text-[12px] font-sans text-[#a1a1aa] font-medium flex flex-col gap-0.5 h-[34px] mb-3 justify-end">
+      {(median !== undefined || count !== undefined) ? (
+        <>
+          {median !== undefined && median !== '-' && median !== 'n/a' && <span>Typical {median} ms</span>}
+          {count !== undefined && <span>samples {count}</span>}
+        </>
+      ) : null}
+    </div>
+    
+    <div className="flex items-start text-[12px] text-[#a1a1aa] font-sans mt-auto pt-3 border-t border-[#2d2d2d]/60 font-medium min-h-[44px]">
+      <span className="leading-snug line-clamp-2">{subtext}</span>
     </div>
   </div>
 );
@@ -70,34 +84,64 @@ export default function DiagnosticCards({
   const getMt5P95 = () => isLoaded && stats.mt5Execution.p95 !== 'n/a' ? stats.mt5Execution.p95 : 'n/a';
   const getMt5Median = () => isLoaded && stats.mt5Execution.median !== 'n/a' ? stats.mt5Execution.median : 'n/a';
 
+  const getSmP95 = () => isLoaded && stats.coreExecution && stats.coreExecution.p95 !== 'n/a' ? stats.coreExecution.p95 : 'n/a';
+  const getSmMedian = () => isLoaded && stats.coreExecution && stats.coreExecution.median !== 'n/a' ? stats.coreExecution.median : '-';
+
+  const getPostP95 = () => isLoaded && stats.postExecution && stats.postExecution.p95 !== 'n/a' ? stats.postExecution.p95 : 'n/a';
+  const getPostMedian = () => isLoaded && stats.postExecution && stats.postExecution.median !== 'n/a' ? stats.postExecution.median : '-';
+
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-7 gap-3 select-none">
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-9 gap-3 select-none">
       
       {/* Primary Bottleneck Card */}
       <PrimaryCard 
-        title="Primary Bottleneck" 
+        title="Dominant Observed Layer" 
         value={isLoaded ? bottleneck : 'Waiting for JSONL'} 
-        subtext={isLoaded ? "Aggregated latencies comparison" : "Upload logs to initiate diagnostics"}
+        subtext={isLoaded ? "Observed latency concentration, not responsibility." : "Upload logs to initiate diagnostics"}
       />
       
       {/* MT5 Execution Latency Card */}
       <MetricCard 
-        title="MT5 Execution p95" 
+        title="MT5 Response Time" 
         value={isLoaded ? getMt5P95() : 'n/a'}
         unit="ms"
-        median={isLoaded ? getMt5Median() : '-'}
+        median={isLoaded ? getMt5Median() : undefined}
         count={isLoaded ? stats.mt5Execution.count : undefined}
         icon={Activity}
+        subtext="MT5 request → response / 95% under this value"
+      />
+
+      {/* SM Local Latency Card */}
+      <MetricCard 
+        title="Local Processing" 
+        value={isLoaded ? getSmP95() : 'n/a'}
+        unit="ms"
+        median={isLoaded ? getSmMedian() : undefined}
+        count={isLoaded && stats.coreExecution ? stats.coreExecution.count : undefined}
+        icon={Server}
+        subtext="Synk Mushroom local command handling / 95% under this value"
+      />
+
+      {/* Post-UI Reflection Card */}
+      <MetricCard 
+        title="Post-UI Reflection" 
+        value={isLoaded ? getPostP95() : 'n/a'}
+        unit="ms"
+        median={isLoaded ? getPostMedian() : undefined}
+        count={isLoaded && stats.postExecution ? stats.postExecution.count : undefined}
+        icon={Monitor}
+        subtext="After MT5 response → UI callback / 95% under this value"
       />
       
       {/* Total Observed Latency Card */}
       <MetricCard 
-        title="Total Duration p95" 
+        title="Total Observed" 
         value={isLoaded ? getObsP95() : 'n/a'}
         unit="ms"
-        median={isLoaded ? getObsMedian() : '-'}
+        median={isLoaded ? getObsMedian() : undefined}
         count={isLoaded ? totalObservedStats.count : undefined}
         icon={Clock}
+        subtext="First event → final observed event / 95% under this value"
       />
       
       {/* Executed / Failed Card */}
@@ -105,68 +149,78 @@ export default function DiagnosticCards({
         title="Executed / Failed" 
         value={isLoaded ? `${totalExecuted} / ${totalFailed}` : '0 / 0'}
         isError={isLoaded && totalFailed > 0}
-        median="Trade commands"
         icon={Play}
+        subtext="Completed trade command chains"
       />
       
       {/* Slowest Command Card */}
-      <div className="bg-dark-card border border-dark-border rounded-[3px] p-4 flex flex-col shadow-sm hover:border-dark-border transition-colors">
-        <div className="text-[12px] font-sans font-bold text-text-sub uppercase tracking-wider mb-2 flex items-center gap-1.5">
-          <Flame className="w-3.5 h-3.5 text-text-muted" />
-          Slowest Command
+      <div className="bg-[#111111] border border-[#2d2d2d] rounded-[3px] p-4 flex flex-col h-full shadow-sm transition-colors select-none">
+        <div className="text-[12px] font-sans font-bold text-[#d4d4d8] uppercase tracking-wider mb-2 flex items-start gap-1.5 h-[32px]">
+          <Flame className="w-3.5 h-3.5 text-[#a1a1aa] mt-0.5 shrink-0" />
+          <span className="leading-tight line-clamp-2">Slowest MT5 Segment</span>
         </div>
-        {isLoaded && slowestCommand ? (
-          <div className="flex flex-col gap-0.5">
-            <span className="text-[14px] font-sans font-bold text-text-main truncate" title={slowestCommand.action}>
-              {slowestCommand.action}
-            </span>
-            <span className="text-[13px] font-mono font-bold text-gold-warning-light">
-              {slowestCommand.latencies.mt5Execution} <span className="text-[10px] text-text-muted font-mono">ms</span>
-            </span>
-          </div>
-        ) : (
-          <span className="text-[20px] font-mono font-bold text-text-muted">n/a</span>
-        )}
-        <div className="text-[12px] text-text-muted font-sans mt-auto pt-2 border-t border-dark-border/40 font-medium">
-          Core MT5 execution
+        
+        <div className="flex flex-col mb-3">
+          {isLoaded && slowestCommand ? (
+            <>
+              <div className="h-[28px] mb-2 flex items-baseline gap-0.5">
+                <span className="text-[28px] font-mono font-bold tracking-tight leading-none text-[#d4af37]">
+                  {slowestCommand.latencies.mt5Execution}
+                </span>
+                <span className="text-[14px] text-[#a1a1aa] font-mono ml-0.5">ms</span>
+              </div>
+              <div className="h-[34px] flex flex-col justify-end text-[13px] font-sans font-bold text-[#f3f4f6]">
+                <span className="truncate" title={slowestCommand.action}>{slowestCommand.action}</span>
+              </div>
+            </>
+          ) : (
+            <>
+              <div className="h-[28px] mb-2 flex items-baseline">
+                <span className="text-[28px] font-mono font-bold tracking-tight leading-none text-[#a1a1aa]">n/a</span>
+              </div>
+              <div className="h-[34px] flex flex-col justify-end"></div>
+            </>
+          )}
+        </div>
+        
+        <div className="flex items-start text-[12px] text-[#a1a1aa] font-sans mt-auto pt-3 border-t border-[#2d2d2d]/60 font-medium min-h-[44px]">
+          <span className="leading-snug line-clamp-2">Measured by MT5 execution segment</span>
         </div>
       </div>
 
       {/* Retcode Status Card */}
-      <div className="bg-dark-card border border-dark-border rounded-[3px] p-4 flex flex-col shadow-sm hover:border-dark-border transition-colors">
-        <div className="text-[12px] font-sans font-bold text-text-sub uppercase tracking-wider mb-2 flex items-center gap-1.5">
-          <Tag className="w-3.5 h-3.5 text-text-muted" />
-          Retcode Status
+      <div className="bg-[#111111] border border-[#2d2d2d] rounded-[3px] p-4 flex flex-col h-full shadow-sm transition-colors select-none">
+        <div className="text-[12px] font-sans font-bold text-[#d4d4d8] uppercase tracking-wider mb-2 flex items-start gap-1.5 h-[32px]">
+          <Tag className="w-3.5 h-3.5 text-[#a1a1aa] mt-0.5 shrink-0" />
+          <span className="leading-tight line-clamp-2">MT5 Result Codes</span>
         </div>
         
-        {isLoaded && retcodeSummary && retcodeSummary.length > 0 ? (
-          <div className="flex flex-wrap gap-1 max-h-[36px] overflow-y-auto pr-0.5">
-            {retcodeSummary.map(r => {
-              const isSuccess = r.retcode === 10009 || r.retcode === 0;
-              const isFail = r.retcode !== 'n/a' && !isSuccess;
-              const badgeClass = isSuccess 
-                ? 'bg-dark-base text-uguisu-light border border-uguisu/30' 
-                : isFail
-                  ? 'bg-dark-base text-enji-light border border-enji/30'
-                  : 'bg-dark-base text-text-sub border border-dark-border';
-                  
-              return (
-                <span 
-                  key={`${r.retcode}_${r.comment}`}
-                  className={`px-1.5 py-0.5 rounded-[1px] text-[10px] font-mono font-bold tracking-tight leading-none ${badgeClass}`}
-                  title={`${r.retcode}: ${r.comment} (${r.count} times)`}
-                >
-                  {r.retcode}:{r.count}
-                </span>
-              );
-            })}
-          </div>
-        ) : (
-          <span className="text-[20px] font-mono font-bold text-text-muted">n/a</span>
-        )}
+        <div className="h-[64px] mb-3 flex flex-col overflow-hidden relative">
+          {isLoaded && retcodeSummary && retcodeSummary.length > 0 ? (
+            <div className="flex flex-col gap-1 overflow-y-auto pr-1 h-full">
+              {retcodeSummary.map(r => {
+                const isSuccess = r.retcode === 10009 || r.retcode === 0;
+                const isFail = r.retcode !== 'n/a' && !isSuccess;
+                const colorClass = isSuccess ? 'text-[#8ba36b]' : isFail ? 'text-[#cc4444]' : 'text-[#a1a1aa]';
+                    
+                return (
+                  <div key={`${r.retcode}_${r.comment}`} className="flex items-baseline justify-between gap-2 shrink-0">
+                    <div className="flex items-baseline gap-1.5 truncate">
+                      <span className={`text-[13px] font-mono font-bold ${colorClass}`}>{r.retcode}</span>
+                      <span className="text-[12px] font-sans text-[#a1a1aa] truncate" title={r.comment}>{r.comment || 'Unknown'}</span>
+                    </div>
+                    <span className={`text-[12px] font-mono font-bold ${colorClass}`}>×{r.count}</span>
+                  </div>
+                );
+              })}
+            </div>
+          ) : (
+            <span className="text-[28px] font-mono font-bold tracking-tight leading-none text-[#a1a1aa]">n/a</span>
+          )}
+        </div>
         
-        <div className="text-[12px] text-text-muted font-sans mt-auto pt-2 border-t border-dark-border/40 font-medium">
-          Distribution summary
+        <div className="flex items-start text-[12px] text-[#a1a1aa] font-sans mt-auto pt-3 border-t border-[#2d2d2d]/60 font-medium min-h-[44px]">
+          <span className="leading-snug line-clamp-2">Command execution result codes</span>
         </div>
       </div>
 

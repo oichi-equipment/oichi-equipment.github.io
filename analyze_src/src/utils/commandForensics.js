@@ -148,6 +148,8 @@ export const extractCommandChains = (events) => {
     let maxLat = -1;
     
     if (mt5Execution !== 'n/a' && mt5Execution > maxLat) { maxLat = mt5Execution; dominantLayer = 'MT5 Execution'; }
+    if (coreExecution !== 'n/a' && coreExecution > maxLat) { maxLat = coreExecution; dominantLayer = 'Synk Mushroom Local'; }
+    if (postExecution !== 'n/a' && postExecution > maxLat) { maxLat = postExecution; dominantLayer = 'Post UI Reflection'; }
     if (statusBuild !== 'n/a' && statusBuild > maxLat) { maxLat = statusBuild; dominantLayer = 'Status Build'; }
     if (wsTransport !== 'n/a' && wsTransport > maxLat) { maxLat = wsTransport; dominantLayer = 'WebSocket Transport'; }
     if (uiRender !== 'n/a' && uiRender > maxLat) { maxLat = uiRender; dominantLayer = 'UI Render'; }

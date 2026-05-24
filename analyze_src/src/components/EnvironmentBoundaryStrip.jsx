@@ -2,18 +2,18 @@ import { useState, useMemo } from 'react';
 import { User, Cpu, Target, Sliders, ChevronDown, ChevronUp, Database } from 'lucide-react';
 
 const BoundaryPanel = ({ title, data }) => (
-  <div className="flex-1 flex flex-col min-w-[200px] bg-dark-surface border border-dark-border rounded-[3px] p-4">
-    <h4 className="text-[12px] font-sans font-bold text-text-sub uppercase tracking-wider mb-2.5 border-b border-dark-border pb-2 flex items-center gap-1.5">
-      <div className="w-1.5 h-1.5 rounded-full bg-uguisu-light" />
+  <div className="flex-1 flex flex-col min-w-[200px] bg-[#161616] border border-[#2d2d2d] rounded-[3px] p-4">
+    <h4 className="text-[12px] font-sans font-bold text-[#d4d4d8] uppercase tracking-wider mb-2.5 border-b border-[#2d2d2d] pb-2 flex items-center gap-1.5">
+      <div className="w-1.5 h-1.5 rounded-full bg-[#52662c]" />
       {title}
     </h4>
     <div className="flex flex-col gap-1.5 font-sans text-[12px] flex-1">
       {Object.entries(data).map(([k, v]) => {
         const isUnknown = v === undefined || v === null || v === '' || v === 'Unknown' || v === 'n/a';
         return (
-          <div key={k} className="flex items-center justify-between group py-1 border-b border-dark-border/20 last:border-0">
-            <span className="text-text-muted group-hover:text-text-sub transition-colors truncate pr-2">{k}</span>
-            <span className={isUnknown ? 'text-text-muted font-light font-sans' : 'text-text-main font-semibold font-mono truncate max-w-[140px] text-right'} title={String(v)}>
+          <div key={k} className="flex items-center justify-between group py-1 border-b border-[#2d2d2d]/50 last:border-0">
+            <span className="text-[#a1a1aa] group-hover:text-[#d4d4d8] transition-colors truncate pr-2">{k}</span>
+            <span className={isUnknown ? 'text-[#a1a1aa] font-light font-sans' : 'text-[#f3f4f6] font-semibold font-mono truncate max-w-[140px] text-right'} title={String(v)}>
               {isUnknown ? 'n/a' : String(v)}
             </span>
           </div>
@@ -23,7 +23,7 @@ const BoundaryPanel = ({ title, data }) => (
   </div>
 );
 
-export default function EnvironmentBoundaryStrip({ events, fileName }) {
+export default function EnvironmentBoundaryStrip({ events, fileName, fileStats, isLargeLog }) {
   const [isOpen, setIsOpen] = useState(false);
 
   const breakdown = useMemo(() => {
@@ -67,8 +67,33 @@ export default function EnvironmentBoundaryStrip({ events, fileName }) {
       currency_margin: 'n/a'
     };
 
+    const financials = {
+      balance: 'n/a',
+      equity: 'n/a',
+      margin: 'n/a',
+      free_margin: 'n/a',
+      profit: 'n/a',
+      credit: 'n/a'
+    };
+
+    const sessionPeriod = { start: null, end: null, count: 0 };
+    const distinctSymbols = new Set();
+
     if (events && events.length > 0) {
       events.forEach(ev => {
+        sessionPeriod.count++;
+        if (ev.timestamp) {
+          const ts = new Date(ev.timestamp).getTime();
+          if (!isNaN(ts)) {
+            if (!sessionPeriod.start || ts < sessionPeriod.start) sessionPeriod.start = ts;
+            if (!sessionPeriod.end || ts > sessionPeriod.end) sessionPeriod.end = ts;
+          }
+        }
+
+        if (ev.symbol && ev.symbol !== '-' && ev.symbol !== 'n/a' && ev.symbol !== '') {
+          distinctSymbols.add(ev.symbol);
+        }
+
         if (ev.event === 'ACCOUNT_SNAPSHOT' && ev.payload) {
           const p = ev.payload;
           if (p.login_masked) account.login = p.login_masked;
@@ -82,6 +107,14 @@ export default function EnvironmentBoundaryStrip({ events, fileName }) {
           if (p.margin_mode !== undefined) account.margin_mode = p.margin_mode;
           if (p.trade_allowed !== undefined) account.trade_allowed = p.trade_allowed;
           if (p.trade_expert !== undefined) account.trade_expert = p.trade_expert;
+
+          if (p.balance !== undefined) financials.balance = p.balance;
+          if (p.equity !== undefined) financials.equity = p.equity;
+          if (p.margin !== undefined) financials.margin = p.margin;
+          if (p.margin_free !== undefined) financials.free_margin = p.margin_free;
+          if (p.free_margin !== undefined) financials.free_margin = p.free_margin;
+          if (p.profit !== undefined) financials.profit = p.profit;
+          if (p.credit !== undefined) financials.credit = p.credit;
         }
 
         if (ev.event === 'TERMINAL_SNAPSHOT' && ev.payload) {
@@ -100,7 +133,10 @@ export default function EnvironmentBoundaryStrip({ events, fileName }) {
           const p = ev.payload;
           if (p.requested_symbol) symbol.req_symbol = p.requested_symbol;
           const sym = p.resolved_symbol || ev.symbol || p.requested_symbol;
-          if (sym) symbol.res_symbol = sym;
+          if (sym) {
+            symbol.res_symbol = sym;
+            distinctSymbols.add(sym);
+          }
           if (p.spread !== undefined) symbol.spread = p.spread;
           if (p.trade_mode !== undefined) symbol.trade_mode = p.trade_mode;
           if (p.trade_exemode !== undefined) symbol.execution = p.trade_exemode;
@@ -117,10 +153,8 @@ export default function EnvironmentBoundaryStrip({ events, fileName }) {
       });
     }
 
-    return { account, terminal, symbol };
+    return { account, terminal, symbol, financials, sessionPeriod, symbols: Array.from(distinctSymbols) };
   }, [events]);
-
-  if (!events || events.length === 0) return null;
 
   const resolvedSymbol = isVal(breakdown.symbol.res_symbol) ? breakdown.symbol.res_symbol : breakdown.symbol.req_symbol;
   
@@ -129,23 +163,85 @@ export default function EnvironmentBoundaryStrip({ events, fileName }) {
                   isVal(breakdown.terminal.name) || 
                   isVal(resolvedSymbol);
 
+  const formatSessionPeriod = (start, end) => {
+    if (!start || !end) return { date: 'n/a', time: 'n/a' };
+    const dStart = new Date(start);
+    const dEnd = new Date(end);
+    const dateStr = dStart.toISOString().split('T')[0];
+    const timeStart = dStart.toISOString().split('T')[1].replace('Z', '').split('.')[0];
+    const timeEnd = dEnd.toISOString().split('T')[1].replace('Z', '').split('.')[0];
+    return { date: dateStr, time: `${timeStart} - ${timeEnd}` };
+  };
+
+  const formatFinancialValue = (val, currency) => {
+    if (val === undefined || val === null || val === '') return 'n/a';
+    if (typeof val === 'string' && val.includes('MASKED_FINANCIAL')) return 'Masked in source log';
+    const num = Number(val);
+    if (!isNaN(num)) {
+      const formatted = num.toLocaleString();
+      return currency && currency !== 'n/a' && currency !== 'Unknown' ? `${formatted} ${currency}` : formatted;
+    }
+    return val;
+  };
+
+  const sessionInfo = formatSessionPeriod(breakdown.sessionPeriod.start, breakdown.sessionPeriod.end);
+
+  const symbolsString = breakdown.symbols.length > 0 
+    ? breakdown.symbols.slice(0, 3).join(', ') + (breakdown.symbols.length > 3 ? ` + ${breakdown.symbols.length - 3} more` : '') 
+    : isVal(resolvedSymbol) ? resolvedSymbol : 'n/a';
+
   return (
     <div className="mx-5 mt-5 mb-5 bg-[#111111] border border-[#3a3a3a] rounded-[6px] shadow-lg flex flex-col shrink-0">
       {/* Top Header Row */}
-      <div className="px-5 py-3 flex justify-between items-center border-b border-[#222222]">
-        <div className="flex items-center gap-2">
-          <Database className="w-4 h-4 text-[#888888]" />
-          <span className="text-[14px] font-sans font-bold text-white tracking-wide uppercase">
-            Session / Environment Context
-          </span>
+      <div className="px-5 py-3 flex flex-col xl:flex-row justify-between items-center border-b border-[#222222] gap-4">
+        {/* Left: Title */}
+        <div className="flex flex-col shrink-0 self-start xl:self-auto">
+          <div className="flex items-center gap-2">
+            <Database className="w-4 h-4 text-[#f3f4f6]" />
+            <span className="text-[16px] font-sans font-bold text-[#f3f4f6] tracking-wide uppercase">
+              Session / Environment Context
+            </span>
+          </div>
+          <p className="text-[13px] font-sans text-[#a1a1aa] mt-1 mb-2">
+            Diagnosis target context.
+          </p>
+          <div className="flex flex-col gap-1.5 self-start">
+            <span className="text-[11px] font-sans text-[#a1a1aa] bg-dark-base border border-dark-border px-2 py-1 rounded-[3px]">
+              Selected upload only. Previous sessions are not merged.
+            </span>
+            {isLargeLog && (
+              <span className="text-[11px] font-sans text-[#a1a1aa] bg-dark-base border border-dark-border px-2 py-1 rounded-[3px]">
+                Large log mode: table previews are capped for browser stability.
+              </span>
+            )}
+          </div>
         </div>
-        <div className="flex items-center gap-4">
-          <span className="text-[#888888] text-[11px] font-mono hidden sm:inline-block" title="Debug Info">
-            events: {events.length}
-          </span>
+
+        {/* Center: Session Identity Summary */}
+        {hasData && (
+          <div className="flex flex-wrap justify-center items-center gap-x-4 gap-y-2 flex-1 mx-4">
+            <div className="flex items-baseline gap-2 border-r border-[#3f3f46] pr-5">
+              <span className="text-[11px] font-sans text-[#f3f4f6] tracking-wider uppercase">Loaded Files:</span>
+              <span className="text-[16px] md:text-[18px] font-mono font-bold text-[#d4d4d8] leading-none whitespace-nowrap">
+                {fileName}&nbsp;&nbsp;{sessionInfo.date !== 'n/a' ? sessionInfo.date : ''}
+              </span>
+            </div>
+            <div className="flex items-baseline gap-2 border-r border-[#3f3f46] pr-5">
+              <span className="text-[11px] font-sans text-[#f3f4f6] tracking-wider uppercase">Log Range:</span>
+              <span className="text-[16px] md:text-[18px] font-mono font-bold text-[#d4d4d8] leading-none whitespace-nowrap">{sessionInfo.time}</span>
+            </div>
+            <div className="flex items-baseline gap-2">
+              <span className="text-[11px] font-sans text-[#f3f4f6] tracking-wider uppercase">Total Events:</span>
+              <span className="text-[16px] md:text-[18px] font-mono font-bold text-[#d4d4d8] leading-none whitespace-nowrap">{breakdown.sessionPeriod.count.toLocaleString()}</span>
+            </div>
+          </div>
+        )}
+
+        {/* Right: Show Details Button */}
+        <div className="flex items-center shrink-0 self-end xl:self-auto">
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="flex items-center gap-1 px-3 py-1.5 text-[11px] font-sans font-bold border border-[#333333] text-[#aaaaaa] hover:text-white bg-[#181818] hover:bg-[#252525] transition-colors rounded-[3px]"
+            className="flex items-center gap-1 px-3 py-1.5 text-[11px] font-sans font-bold border border-[#333333] text-[#a1a1aa] hover:text-[#f3f4f6] bg-[#181818] hover:bg-[#252525] transition-colors rounded-[3px]"
           >
             {isOpen ? 'Hide Details' : 'Show Details'}
             {isOpen ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />}
@@ -157,35 +253,29 @@ export default function EnvironmentBoundaryStrip({ events, fileName }) {
       <div className="p-5 flex flex-col gap-6 bg-[#0d0d0d] rounded-b-[6px]">
         {hasData ? (
           <>
-            {/* 1st Row: Primary Context (Large) */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-              <PrimaryItem label="Log File" value={fileName} />
-              <PrimaryItem label="Broker / Company" value={breakdown.account.company} />
-              <PrimaryItem label="Server" value={breakdown.account.server} />
-              <PrimaryItem label="Symbol" value={resolvedSymbol} />
-            </div>
-
-            {/* 2nd Row: Account / Terminal (Medium) */}
-            <div className="flex flex-wrap gap-x-8 gap-y-3 pt-4 border-t border-[#1f1f1f]">
-              <MediumItem label="Account" value={breakdown.account.login} />
-              <MediumItem label="Terminal" value={breakdown.terminal.name} />
-              <MediumItem label="Build" value={breakdown.terminal.build} />
-              <MediumItem label="Currency" value={breakdown.account.currency} />
-              <MediumItem label="Leverage" value={isVal(breakdown.account.leverage) ? `1:${breakdown.account.leverage}` : null} />
-            </div>
-
-            {/* 3rd Row: Trade Conditions (Small) */}
-            <div className="flex flex-wrap gap-x-3 gap-y-3 pt-4 border-t border-[#1f1f1f]">
-              <SmallItem label="Spread" value={isVal(breakdown.symbol.spread) ? `${breakdown.symbol.spread} pts` : null} />
-              <SmallItem label="Stops" value={isVal(breakdown.symbol.stops_level) ? breakdown.symbol.stops_level : null} />
-              <SmallItem label="Freeze" value={isVal(breakdown.symbol.freeze_level) ? breakdown.symbol.freeze_level : null} />
-              <SmallItem label="Execution" value={breakdown.symbol.execution} />
-              <SmallItem label="Filling" value={breakdown.symbol.filling} />
-              <SmallItem label="Vol Step" value={breakdown.symbol.vol_step} />
+            {/* Combined Environment & Financial State */}
+            <div className="flex flex-wrap items-center gap-y-3 gap-x-4">
+              {[
+                { label: "Broker / Company", value: breakdown.account.company },
+                { label: "Server", value: breakdown.account.server },
+                { label: "Account", value: breakdown.account.login },
+                { label: "Terminal", value: breakdown.terminal.name },
+                { label: "Leverage", value: isVal(breakdown.account.leverage) ? `1:${breakdown.account.leverage}` : null },
+                { label: "Balance", value: formatFinancialValue(breakdown.financials.balance, breakdown.account.currency) },
+                { label: "Equity", value: formatFinancialValue(breakdown.financials.equity, breakdown.account.currency) },
+                { label: breakdown.symbols.length > 1 ? "Observed Symbols" : "Observed Symbol", value: symbolsString }
+              ].filter(i => isVal(i.value)).map((item, idx, arr) => (
+                <div key={item.label} className={`flex items-baseline gap-2 ${idx === arr.length - 1 ? '' : 'border-r border-[#3f3f46] pr-5'}`}>
+                  <span className="text-[12px] font-sans text-[#f3f4f6] uppercase tracking-wider whitespace-nowrap">{item.label}</span>
+                  <span className="text-[15px] font-mono font-bold text-[#7f944d] whitespace-nowrap" title={String(item.value)}>
+                    {item.value}
+                  </span>
+                </div>
+              ))}
             </div>
           </>
         ) : (
-          <div className="text-[#888888] text-[13px] font-sans italic py-2">
+          <div className="text-[#a1a1aa] text-[13px] font-sans italic py-2">
             Environment data unavailable
           </div>
         )}
@@ -197,6 +287,21 @@ export default function EnvironmentBoundaryStrip({ events, fileName }) {
           <BoundaryPanel title="Account Boundary" data={breakdown.account} />
           <BoundaryPanel title="Terminal Boundary" data={breakdown.terminal} />
           <BoundaryPanel title="Symbol Boundary" data={breakdown.symbol} />
+          <BoundaryPanel title="Financials" data={breakdown.financials} />
+          {fileStats && fileStats.length > 0 && (
+            <BoundaryPanel title="Loaded Files" data={
+              (() => {
+                const obj = {};
+                fileStats.slice(0, 10).forEach(f => {
+                  obj[f.name] = `${f.count.toLocaleString()} events`;
+                });
+                if (fileStats.length > 10) {
+                  obj[`...and ${fileStats.length - 10} more files`] = '';
+                }
+                return obj;
+              })()
+            } />
+          )}
         </div>
       )}
     </div>
@@ -205,31 +310,3 @@ export default function EnvironmentBoundaryStrip({ events, fileName }) {
 
 const isVal = (v) => v !== undefined && v !== null && v !== '' && v !== 'n/a' && v !== 'Unknown';
 
-const PrimaryItem = ({ label, value }) => (
-  <div className="flex flex-col gap-1 min-w-0">
-    <span className="text-[11px] font-sans text-[#888888] tracking-wider uppercase">{label}</span>
-    <span className="text-[15px] font-mono font-bold text-white truncate" title={isVal(value) ? value : 'n/a'}>
-      {isVal(value) ? value : 'n/a'}
-    </span>
-  </div>
-);
-
-const MediumItem = ({ label, value }) => {
-  if (!isVal(value)) return null;
-  return (
-    <div className="flex flex-col gap-0.5 min-w-[100px]">
-      <span className="text-[11px] font-sans text-[#888888] uppercase tracking-wider">{label}</span>
-      <span className="text-[13px] font-mono font-semibold text-[#e0e0e0]">{value}</span>
-    </div>
-  );
-};
-
-const SmallItem = ({ label, value }) => {
-  if (!isVal(value)) return null;
-  return (
-    <div className="flex items-center gap-1.5 bg-[#161616] border border-[#2d2d2d] px-2.5 py-1.5 rounded-[3px]">
-      <span className="text-[10px] font-sans text-[#888888] uppercase tracking-wider">{label}:</span>
-      <span className="text-[12px] font-mono font-semibold text-[#cccccc]">{value}</span>
-    </div>
-  );
-};

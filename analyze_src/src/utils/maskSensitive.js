@@ -1,22 +1,42 @@
-const SENSITIVE_FINANCIAL_KEYS = new Set([
-  'path',
-  'data_path',
-  'commondata_path',
+const SENSITIVE_ACCOUNT_KEYS = new Set([
+  'account',
+  'account_id',
+  'server',
+  'broker',
+  'company',
+  'name',
   'account_name',
   'account name',
+  'currency'
+]);
+
+const SENSITIVE_FINANCIAL_KEYS = new Set([
   'balance',
   'equity',
   'margin',
   'margin_free',
+  'free_margin',
+  'margin_level',
   'profit',
+  'total_profit',
+  'positions_profit',
+  'pnl',
+  'swap',
+  'commission',
   'credit'
 ]);
 
 const SENSITIVE_PATH_KEYS = new Set([
+  'path', 'data_path', 'commondata_path',
   'log_path', 'logpath', 'file_path', 'filepath',
   'local_path', 'localpath', 'output_path', 'outputpath',
   'source_path', 'sourcepath', 'directory', 'dir',
-  'folder', 'root', 'cwd'
+  'folder', 'root', 'cwd', 'terminal_path', 'mt5_path'
+]);
+
+const SENSITIVE_USER_KEYS = new Set([
+  'magic',
+  'comment'
 ]);
 
 const PATH_SUBSTRINGS = [
@@ -35,6 +55,14 @@ const containsPathSubstring = (str) => {
   return false;
 };
 
+const SENSITIVE_LOCAL_KEYS = new Set([
+  'path',
+  'data_path',
+  'commondata_path',
+  'account_name',
+  'account name'
+]);
+
 export const maskForLocalView = (obj) => {
   if (obj === null || typeof obj !== 'object') {
     return obj;
@@ -49,9 +77,10 @@ export const maskForLocalView = (obj) => {
   for (const [key, value] of Object.entries(obj)) {
     const lowerKey = key.toLowerCase();
     
-    // We allow login/login_masked in local view
-    if (SENSITIVE_FINANCIAL_KEYS.has(lowerKey)) {
-      maskedObj[key] = '[MASKED_FINANCIAL_OR_PATH]';
+    // In local view, we DO NOT mask financials (balance, equity, etc).
+    // We only mask paths and account names to be safe, though local view can technically show paths.
+    if (SENSITIVE_LOCAL_KEYS.has(lowerKey)) {
+      maskedObj[key] = '[MASKED_LOCAL_PATH]';
     } else {
       maskedObj[key] = maskForLocalView(value);
     }
@@ -77,12 +106,14 @@ export const maskForSubmission = (obj) => {
     // login_masked is safe, but raw login must be masked for submission
     if (lowerKey === 'login_masked') {
       maskedObj[key] = value;
-    } else if (lowerKey === 'login') {
-      maskedObj[key] = '[MASKED_LOGIN]';
+    } else if (lowerKey === 'login' || SENSITIVE_ACCOUNT_KEYS.has(lowerKey)) {
+      maskedObj[key] = '[MASKED_ACCOUNT]';
     } else if (SENSITIVE_FINANCIAL_KEYS.has(lowerKey)) {
-      maskedObj[key] = '[MASKED_FINANCIAL_OR_PATH]';
+      maskedObj[key] = '[MASKED_FINANCIAL]';
     } else if (SENSITIVE_PATH_KEYS.has(lowerKey)) {
       maskedObj[key] = '[MASKED_LOCAL_PATH]';
+    } else if (SENSITIVE_USER_KEYS.has(lowerKey)) {
+      maskedObj[key] = '[MASKED_COMMENT]';
     } else if (typeof value === 'string' && containsPathSubstring(value)) {
       maskedObj[key] = '[MASKED_LOCAL_PATH]';
     } else {

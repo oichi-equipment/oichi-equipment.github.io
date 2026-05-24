@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react';
-import { Database, UploadCloud, Shield, FileJson, Download } from 'lucide-react';
+import { Database, UploadCloud, Shield, FileJson, Download, Activity, Search } from 'lucide-react';
 import { parseLogFile, extractLatencies } from './utils/parseLogs';
 import { maskForSubmission } from './utils/maskSensitive';
 import { calculateStats } from './utils/stats';
@@ -11,7 +11,13 @@ import DiagnosticCards from './components/DiagnosticCards';
 import EnvironmentBoundaryStrip from './components/EnvironmentBoundaryStrip';
 import LayerLatencyOverview from './components/LayerLatencyOverview';
 import CommandForensics from './components/CommandForensics';
+import VisualDiagnostics from './components/VisualDiagnostics';
 import MeasuredEvidence from './components/MeasuredEvidence';
+import LiveSyncHealth from './components/LiveSyncHealth';
+import CloseResultTimeline from './components/CloseResultTimeline';
+import { extractQuoteForensics } from './utils/quoteForensics';
+import { extractProfitForensics } from './utils/profitForensics';
+import { extractCloseForensics } from './utils/closeForensics';
 
 export default function SynkAnalyze() {
   const [sessions, setSessions] = useState([]);
@@ -23,29 +29,65 @@ export default function SynkAnalyze() {
     if (!files || files.length === 0) return;
     setIsUploading(true);
 
-    const newSessions = [];
-
     try {
-      for (let i = 0; i < files.length; i++) {
-        const file = files[i];
-        const parsedEvents = await parseLogFile(file);
+      const fileStats = [];
+      const wrapperArray = [];
+      let globalIndex = 0;
 
+      // Sort files by name to parse in alphabetical order (helpful for chunked logs)
+      const sortedFiles = Array.from(files).sort((a, b) => a.name.localeCompare(b.name));
+
+      for (const file of sortedFiles) {
+        const parsedEvents = await parseLogFile(file);
         if (parsedEvents.length > 0) {
-          const sessionId = `ses_${Date.now().toString().slice(-6)}_${i}`;
-          newSessions.push({
-            id: sessionId,
-            name: file.name,
-            data: parsedEvents
-          });
+          fileStats.push({ name: file.name, count: parsedEvents.length });
+          for (const event of parsedEvents) {
+            wrapperArray.push({ event, loadOrder: globalIndex++ });
+          }
         }
       }
 
-      if (newSessions.length === 0) {
+      if (wrapperArray.length === 0) {
         alert("No valid JSON logs found.");
-      } else {
-        setSessions(prev => [...newSessions, ...prev]);
-        setActiveSessionId(newSessions[0].id);
+        setIsUploading(false);
+        return;
       }
+
+      // Safe robust sort
+      wrapperArray.sort((a, b) => {
+        const tA = a.event.timestamp ? new Date(a.event.timestamp).getTime() : NaN;
+        const tB = b.event.timestamp ? new Date(b.event.timestamp).getTime() : NaN;
+        
+        const validA = !isNaN(tA);
+        const validB = !isNaN(tB);
+
+        // Both valid -> chronological
+        if (validA && validB) {
+          if (tA !== tB) return tA - tB;
+          return a.loadOrder - b.loadOrder; // fallback to load order
+        }
+        
+        // Invalid/missing goes to the end
+        if (validA && !validB) return -1;
+        if (!validA && validB) return 1;
+        
+        // Both invalid -> preserve load order
+        return a.loadOrder - b.loadOrder;
+      });
+
+      const finalEvents = wrapperArray.map(w => w.event);
+
+      const sessionId = `ses_${Date.now().toString().slice(-6)}`;
+      const newSession = {
+        id: sessionId,
+        name: sortedFiles.length > 1 ? `${sortedFiles.length} files selected` : sortedFiles[0].name,
+        fileStats,
+        isLargeLog: finalEvents.length >= 100000,
+        data: finalEvents
+      };
+
+      setSessions([newSession]);
+      setActiveSessionId(newSession.id);
     } catch (err) {
       console.error(err);
       alert("Failed to parse log files.");
@@ -59,8 +101,58 @@ export default function SynkAnalyze() {
   const handleDownloadSubmission = () => {
     if (!activeSession) return;
     
-    // Mask the raw parsed data for submission
-    const submissionData = activeSession.data.map(event => maskForSubmission(event));
+    const ticketMap = new Map();
+    let ticketCounter = 1;
+    
+    const getAnonymousTicket = (ticketValue) => {
+      if (ticketValue === null || ticketValue === undefined || ticketValue === '') return ticketValue;
+      const key = String(ticketValue);
+      if (!ticketMap.has(key)) {
+        ticketMap.set(key, `[TICKET_${String(ticketCounter).padStart(3, '0')}]`);
+        ticketCounter++;
+      }
+      return ticketMap.get(key);
+    };
+
+    const submissionData = activeSession.data.map(event => {
+      // 1. Deep copy to avoid mutating activeSession.data
+      const copy = JSON.parse(JSON.stringify(event));
+
+      // 2. Anonymize ticket/position_ticket/order
+      const walkAndAnonymize = (obj) => {
+        if (obj === null || typeof obj !== 'object') return;
+        if (Array.isArray(obj)) {
+          obj.forEach(walkAndAnonymize);
+          return;
+        }
+        for (const [k, v] of Object.entries(obj)) {
+          if (v === null || v === undefined) continue;
+          
+          const lowerK = k.toLowerCase();
+          const isTargetKey = lowerK === 'ticket' || lowerK === 'position_ticket' || lowerK === 'order';
+          const isScalar = typeof v === 'string' || typeof v === 'number' || typeof v === 'bigint';
+          
+          if (isTargetKey && isScalar && v !== '') {
+            obj[k] = getAnonymousTicket(v);
+          } else if (typeof v === 'object') {
+            walkAndAnonymize(v);
+          }
+        }
+      };
+      walkAndAnonymize(copy);
+
+      // 3. Mask sensitive fields
+      const maskedEvent = maskForSubmission(copy);
+
+      // 4. Clean up internal parser artifacts
+      for (const k of Object.keys(maskedEvent)) {
+        if (k.startsWith('normalized_') || k.startsWith('calculated_')) {
+          delete maskedEvent[k];
+        }
+      }
+
+      return maskedEvent;
+    });
     
     // Convert back to JSONL
     let jsonlString = submissionData.map(ev => JSON.stringify(ev)).join('\n');
@@ -110,7 +202,7 @@ export default function SynkAnalyze() {
     URL.revokeObjectURL(url);
   };
 
-  const { stats, bottleneck, evidence, commandChains, retcodeSummary, pollingSummary, totalObservedStats, totalExecuted, totalFailed, slowestCommand } = useMemo(() => {
+  const { stats, bottleneck, evidence, commandChains, retcodeSummary, pollingSummary, totalObservedStats, totalExecuted, totalFailed, slowestCommand, quoteForensics, profitForensics, closeForensics } = useMemo(() => {
     if (!activeSession) {
       return { 
         stats: null, 
@@ -122,27 +214,41 @@ export default function SynkAnalyze() {
         totalObservedStats: null, 
         totalExecuted: 0, 
         totalFailed: 0, 
-        slowestCommand: null 
+        slowestCommand: null,
+        quoteForensics: null,
+        profitForensics: null,
+        closeForensics: null
       };
     }
     
+    const chains = extractCommandChains(activeSession.data);
+    const tradeChains = chains.filter(c => c.type === 'Trade');
+
     const latencies = extractLatencies(activeSession.data);
+    
+    const coreExecutionLats = tradeChains
+      .map(c => c.latencies.coreExecution)
+      .filter(val => typeof val === 'number' && !isNaN(val));
+
+    const postExecutionLats = tradeChains
+      .map(c => c.latencies.postExecution)
+      .filter(val => typeof val === 'number' && !isNaN(val));
     
     const aggregatedStats = {
       wsTransport: calculateStats(latencies.wsTransport),
       mt5Execution: calculateStats(latencies.mt5Execution),
       render: calculateStats(latencies.render),
-      statusBuild: calculateStats(latencies.statusBuild)
+      statusBuild: calculateStats(latencies.statusBuild),
+      coreExecution: calculateStats(coreExecutionLats),
+      postExecution: calculateStats(postExecutionLats)
     };
 
     const primaryBottleneck = determinePrimaryBottleneck(aggregatedStats);
     const measuredEvidence = extractMeasuredEvidence(activeSession.data);
     
-    const chains = extractCommandChains(activeSession.data);
     const retcodes = extractRetcodeSummary(activeSession.data);
     const polling = extractPollingSummary(chains);
 
-    const tradeChains = chains.filter(c => c.type === 'Trade');
     const totalObservedLats = tradeChains
       .map(c => c.latencies.totalObserved)
       .filter(val => typeof val === 'number' && !isNaN(val));
@@ -164,6 +270,10 @@ export default function SynkAnalyze() {
       return lat > slowestLat ? current : slowestDp;
     }, null);
 
+    const quoteForensics = extractQuoteForensics(activeSession.data);
+    const profitForensics = extractProfitForensics(activeSession.data);
+    const closeForensics = extractCloseForensics(activeSession.data);
+
     return { 
       stats: aggregatedStats, 
       bottleneck: primaryBottleneck, 
@@ -174,7 +284,10 @@ export default function SynkAnalyze() {
       totalObservedStats: obsStats,
       totalExecuted: executedCount,
       totalFailed: failedCount,
-      slowestCommand: slowest
+      slowestCommand: slowest,
+      quoteForensics,
+      profitForensics,
+      closeForensics
     };
   }, [activeSession]);
 
@@ -229,16 +342,16 @@ export default function SynkAnalyze() {
 
         {/* Right: Actions & Badges */}
         <div className="flex items-center gap-4">
-          <div className="flex items-center gap-3 text-[12px] font-sans tracking-wider uppercase text-text-muted border-r border-dark-border pr-4 hidden md:flex">
+          <div className="flex items-center gap-3 text-[12px] font-sans tracking-wider uppercase text-[#a1a1aa] border-r border-dark-border pr-4 hidden md:flex">
             <span className="flex items-center gap-1.5"><Shield className="w-3.5 h-3.5 text-uguisu-light/80"/> Privacy Aware</span>
-            <span className="flex items-center gap-1.5"><FileJson className="w-3.5 h-3.5 text-text-sub"/> JSONL Only</span>
+            <span className="flex items-center gap-1.5"><FileJson className="w-3.5 h-3.5 text-[#a1a1aa]"/> JSONL Only</span>
           </div>
 
           <div className="flex items-center gap-2">
             {activeSession && (
               <button 
                 onClick={handleDownloadSubmission}
-                className="px-4 py-2 text-[13px] font-sans font-semibold border border-dark-border text-text-sub hover:text-text-main bg-dark-card hover:bg-dark-hover hover:border-uguisu/40 flex items-center gap-2 transition-colors rounded-[3px] shadow-sm"
+                className="px-4 py-2 text-[13px] font-sans font-semibold border border-dark-border text-[#a1a1aa] hover:text-text-main bg-dark-card hover:bg-dark-hover hover:border-uguisu/40 flex items-center gap-2 transition-colors rounded-[3px] shadow-sm"
               >
                 <Download className="w-3.5 h-3.5" />
                 Download Submission Log
@@ -256,50 +369,117 @@ export default function SynkAnalyze() {
 
       {/* Main Dashboard Area */}
       <main className="flex-1 flex flex-col overflow-y-auto overflow-x-hidden bg-dark-base relative">
-        {/* Session / Environment Context */}
-        <EnvironmentBoundaryStrip 
-          events={activeSession ? activeSession.data : []} 
-          fileName={activeSession ? activeSession.name : ''} 
-        />
-
-        {/* Primary Verdict / KPI Row */}
-        {activeSession && (
-          <div className="px-5 pb-5 shrink-0 flex flex-col gap-4">
-            <h3 className="text-[14px] font-sans font-bold text-text-sub uppercase tracking-wider flex items-center gap-2">
+        {/* C. Primary Verdict / KPI Row */}
+        <div className="px-5 pt-5 pb-0 shrink-0 flex flex-col gap-4">
+          <div className="flex flex-col">
+            <h3 className="text-[16px] font-sans font-bold text-white uppercase tracking-wider flex items-center gap-2">
               <Shield className="w-4 h-4 text-uguisu-light" />
               Primary Verdict & Latency Metrics
             </h3>
-            
-            <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 items-stretch">
-              <div className="lg:col-span-3">
-                <DiagnosticCards 
-                  stats={stats} 
-                  bottleneck={bottleneck} 
-                  counts={activeSession ? activeSession.data.length : 0} 
-                  totalObservedStats={totalObservedStats}
-                  totalExecuted={totalExecuted}
-                  totalFailed={totalFailed}
-                  slowestCommand={slowestCommand}
-                  retcodeSummary={retcodeSummary}
-                />
-              </div>
-              <div className="lg:col-span-1">
-                <LayerLatencyOverview stats={stats} />
-              </div>
-            </div>
+            <p className="text-[13px] font-sans text-[#b5b5b5] mt-1">
+              Overall diagnosis based on measured command latency.
+            </p>
+          </div>
+          
+          <DiagnosticCards 
+            stats={stats} 
+            bottleneck={bottleneck} 
+            counts={activeSession ? activeSession.data.length : 0} 
+            totalObservedStats={totalObservedStats}
+            totalExecuted={totalExecuted}
+            totalFailed={totalFailed}
+            slowestCommand={slowestCommand}
+            retcodeSummary={retcodeSummary}
+          />
+        </div>
+
+        {/* Live Sync Health */}
+        {activeSession && quoteForensics && profitForensics && closeForensics && (
+          <LiveSyncHealth 
+            quoteStats={quoteForensics} 
+            profitStats={profitForensics} 
+            closeStats={closeForensics} 
+          />
+        )}
+
+        {/* Session / Environment Context */}
+        <EnvironmentBoundaryStrip 
+          events={activeSession ? activeSession.data : []} 
+          fileName={activeSession ? activeSession.name : ''}
+          fileStats={activeSession ? activeSession.fileStats : undefined}
+          isLargeLog={activeSession ? activeSession.isLargeLog : false}
+        />
+
+        {/* Layer Latency Breakdowns */}
+        {activeSession && (
+          <div className="px-5 pb-5 shrink-0 flex flex-col">
+            <LayerLatencyOverview stats={stats} />
           </div>
         )}
 
-        {/* Command Forensics (contains Visual Diagnostics & Table) */}
-        <CommandForensics 
-          chains={commandChains} 
-          retcodeSummary={retcodeSummary} 
-          pollingSummary={pollingSummary} 
-          events={activeSession ? activeSession.data : []}
-        />
+        {/* D. Visual Diagnostics */}
+        {activeSession && (
+          <div className="px-5 pb-5 shrink-0 flex flex-col gap-4">
+            <div className="flex flex-col">
+              <h3 className="text-[16px] font-sans font-bold text-white uppercase tracking-wider flex items-center gap-2">
+                <Activity className="w-4 h-4 text-uguisu-light" />
+                Visual Diagnostics
+              </h3>
+              <p className="text-[13px] font-sans text-[#b5b5b5] mt-1">
+                Trends, distributions, and activity density derived from command logs.
+              </p>
+            </div>
+            <VisualDiagnostics 
+              chains={commandChains} 
+              retcodeSummary={retcodeSummary} 
+              events={activeSession ? activeSession.data : []} 
+              stats={stats}
+              totalObservedStats={totalObservedStats}
+            />
+          </div>
+        )}
 
-        {/* Evidence Data Table */}
-        <MeasuredEvidence evidence={evidence} />
+        {/* E. Command Forensics (contains Visual Diagnostics & Table) */}
+        {activeSession && (
+          <div className="px-5 pb-5 shrink-0 flex flex-col gap-4">
+            <div className="flex flex-col">
+              <h3 className="text-[16px] font-sans font-bold text-white uppercase tracking-wider flex items-center gap-2">
+                <Search className="w-4 h-4 text-uguisu-light" />
+                Command Forensics
+              </h3>
+              <p className="text-[13px] font-sans text-[#b5b5b5] mt-1">
+                Per-command timing breakdown and dominant layer analysis.
+              </p>
+            </div>
+            <CommandForensics 
+              chains={commandChains} 
+              retcodeSummary={retcodeSummary} 
+              pollingSummary={pollingSummary} 
+              events={activeSession ? activeSession.data : []}
+            />
+          </div>
+        )}
+
+        {/* Close Result Timeline */}
+        {activeSession && closeForensics && (
+          <CloseResultTimeline closeForensics={closeForensics} />
+        )}
+
+        {/* F. Evidence Data Table */}
+        {activeSession && (
+          <div className="px-5 pb-5 shrink-0 flex flex-col gap-4">
+            <div className="flex flex-col">
+              <h3 className="text-[16px] font-sans font-bold text-white uppercase tracking-wider flex items-center gap-2">
+                <Database className="w-4 h-4 text-uguisu-light" />
+                Measured Evidence
+              </h3>
+              <p className="text-[13px] font-sans text-[#b5b5b5] mt-1">
+                Event-derived values used as diagnostic evidence.
+              </p>
+            </div>
+            <MeasuredEvidence evidence={evidence} />
+          </div>
+        )}
 
         {/* Upload Overlay (when no logs) */}
         {!activeSession && (
@@ -311,19 +491,26 @@ export default function SynkAnalyze() {
               <h2 className="text-[18px] font-sans font-bold text-text-main mb-2">Upload JSONL Log</h2>
               <p className="text-[14px] font-sans text-text-sub mb-8">Drop a local Synk Mushroom log file to begin analysis</p>
               
-              <label className="cursor-pointer px-6 py-2.5 text-[14px] font-sans font-semibold border border-uguisu/20 text-white bg-uguisu hover:bg-uguisu-hover transition-colors rounded-[3px] shadow-sm mb-8">
+              <label className="cursor-pointer px-6 py-2.5 text-[14px] font-sans font-semibold border border-uguisu/20 text-white bg-uguisu hover:bg-uguisu-hover transition-colors rounded-[3px] shadow-sm mb-4">
                 Select JSONL File
                 <input type="file" className="hidden" accept=".jsonl,.json,.txt" multiple onChange={(e) => handleFileUpload(e.target.files)} />
               </label>
+
+              <div className="flex flex-col items-center mb-8">
+                <span className="text-[12px] font-sans text-text-sub">Logs are usually saved under:</span>
+                <span className="text-[13px] font-mono text-text-main bg-dark-base px-3 py-1 rounded-[3px] border border-dark-border mt-1.5 shadow-inner">
+                  Documents / SynkMushroom / logs
+                </span>
+              </div>
               
               <div className="grid grid-cols-2 gap-4 w-full text-left">
                 <div className="flex flex-col gap-1">
-                  <span className="text-[12px] font-sans uppercase tracking-wider text-uguisu-light font-bold flex items-center gap-1.5"><Shield className="w-3.5 h-3.5" /> Local Analysis Only</span>
-                  <span className="text-[11px] font-sans text-text-muted">No cloud upload. Submission export available after analysis.</span>
+                  <span className="text-[13px] font-sans uppercase tracking-wider text-uguisu-light font-bold flex items-center gap-1.5"><Shield className="w-3.5 h-3.5" /> Local Analysis Only</span>
+                  <span className="text-[11px] font-sans text-[#a1a1aa]">No cloud upload. Submission export available after analysis.</span>
                 </div>
                 <div className="flex flex-col gap-1">
                   <span className="text-[12px] font-sans uppercase tracking-wider text-text-sub font-bold flex items-center gap-1.5"><FileJson className="w-3.5 h-3.5" /> JSONL Format</span>
-                  <span className="text-[11px] font-sans text-text-muted">Zip not supported in this build.</span>
+                  <span className="text-[11px] font-sans text-[#a1a1aa]">Zip not supported in this build.</span>
                 </div>
               </div>
             </div>

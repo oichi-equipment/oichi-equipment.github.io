@@ -33,10 +33,10 @@ export default function LayerLatencyOverview({ stats }) {
   };
 
   return (
-    <div className="bg-dark-card border border-dark-border rounded-[3px] p-4 flex flex-col h-full shadow-sm select-none">
+    <div className="bg-[#111111] border border-[#2d2d2d] rounded-[3px] p-4 flex flex-col shadow-sm select-none">
       {/* Header title */}
-      <h4 className="text-[12px] font-sans font-bold text-text-sub uppercase tracking-wider mb-3.5 border-b border-dark-border pb-2 flex items-center gap-1.5">
-        <Cpu className="w-3.5 h-3.5 text-uguisu-light" />
+      <h4 className="text-[12px] font-sans font-bold text-[#d4d4d8] uppercase tracking-wider mb-3.5 border-b border-[#2d2d2d] pb-2 flex items-center gap-1.5">
+        <Cpu className="w-3.5 h-3.5 text-[#52662c]" />
         Layer Latency Breakdowns
       </h4>
 
@@ -52,16 +52,16 @@ export default function LayerLatencyOverview({ stats }) {
             <div key={layer.key} className="flex flex-col gap-1">
               {/* Layer Title and Median Value */}
               <div className="flex justify-between items-baseline">
-                <span className="text-[13px] font-sans font-semibold text-text-sub truncate max-w-[200px]" title={layer.name}>
+                <span className="text-[13px] font-sans font-semibold text-[#d4d4d8] truncate max-w-[200px]" title={layer.name}>
                   {layer.name}
                 </span>
-                <span className="text-[13px] font-sans font-bold text-text-main leading-none">
-                  {median !== 'n/a' ? <span className="font-mono">{median}ms</span> : <span className="text-text-muted">n/a</span>}
+                <span className="text-[13px] font-sans font-bold text-[#f3f4f6] leading-none">
+                  {median !== 'n/a' ? <span className="font-mono">{median}ms</span> : <span className="text-[#a1a1aa]">n/a</span>}
                 </span>
               </div>
 
               {/* Range subtext */}
-              <div className="flex justify-between items-center text-[12px] text-text-muted font-mono">
+              <div className="flex justify-between items-center text-[12px] text-[#a1a1aa] font-mono">
                 <span className="truncate max-w-[170px] text-[11px] font-sans font-normal">{layer.desc}</span>
                 <span>Max: {max !== 'n/a' ? `${max}ms` : 'n/a'}</span>
               </div>

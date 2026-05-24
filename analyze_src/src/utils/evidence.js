@@ -3,6 +3,11 @@ export const extractMeasuredEvidence = (events) => {
   let idCounter = 1;
 
   const pushEv = (layer, metric, value, unit, sourceEvent, correlationId, basis, sourceJson, timestamp = '-') => {
+    const messageType = sourceJson?.normalized_message_type || sourceJson?.message_type || sourceJson?.payload?.message_type || sourceJson?.payload?.type || null;
+    const messageSource = sourceJson?.normalized_message_source || sourceJson?.payload?.source || null;
+    const originSource = sourceJson?.normalized_origin_source || sourceJson?.source || null;
+    const ticket = sourceJson?.normalized_ticket || sourceJson?.ticket || sourceJson?.payload?.ticket || sourceJson?.position_ticket || sourceJson?.payload?.position_ticket || null;
+
     evidence.push({
       id: idCounter++,
       timestamp,
@@ -13,7 +18,11 @@ export const extractMeasuredEvidence = (events) => {
       sourceEvent,
       correlationId: correlationId || '-',
       basis,
-      sourceJson
+      sourceJson,
+      messageType,
+      messageSource,
+      originSource,
+      ticket
     });
   };
 
@@ -62,6 +71,36 @@ export const extractMeasuredEvidence = (events) => {
       }
       if (typeof ev.payload.orders_get_ms === 'number') {
         pushEv('Status Build', 'orders_get', ev.payload.orders_get_ms, 'ms', 'STATUS_BUILD_METRICS', corr, 'STATUS_BUILD_METRICS.orders_get_ms', json, ts);
+      }
+    }
+
+    if (ev.event === 'QUOTE_STATUS_BUILD_METRICS' && ev.payload) {
+      if (typeof ev.payload.build_quote_ms === 'number') {
+        pushEv('Status Build', 'build_quote', ev.payload.build_quote_ms, 'ms', 'QUOTE_STATUS_BUILD_METRICS', corr, 'QUOTE_STATUS_BUILD_METRICS.build_quote_ms', json, ts);
+      }
+      if (typeof ev.payload.tick_get_ms === 'number') {
+        pushEv('Status Build', 'tick_get', ev.payload.tick_get_ms, 'ms', 'QUOTE_STATUS_BUILD_METRICS', corr, 'QUOTE_STATUS_BUILD_METRICS.tick_get_ms', json, ts);
+      }
+      if (typeof ev.payload.symbol_info_ms === 'number') {
+        pushEv('Status Build', 'symbol_info', ev.payload.symbol_info_ms, 'ms', 'QUOTE_STATUS_BUILD_METRICS', corr, 'QUOTE_STATUS_BUILD_METRICS.symbol_info_ms', json, ts);
+      }
+      if (ev.payload.mt5_api_busy !== undefined) {
+        pushEv('Status Build', 'quote_mt5_api_busy', ev.payload.mt5_api_busy ? 'true' : 'false', '', 'QUOTE_STATUS_BUILD_METRICS', corr, 'QUOTE_STATUS_BUILD_METRICS.mt5_api_busy', json, ts);
+      }
+    }
+
+    if (ev.event === 'PROFIT_STATUS_BUILD_METRICS' && ev.payload) {
+      if (typeof ev.payload.build_profit_ms === 'number') {
+        pushEv('Status Build', 'build_profit', ev.payload.build_profit_ms, 'ms', 'PROFIT_STATUS_BUILD_METRICS', corr, 'PROFIT_STATUS_BUILD_METRICS.build_profit_ms', json, ts);
+      }
+      if (typeof ev.payload.positions_get_ms === 'number') {
+        pushEv('Status Build', 'profit_positions_get', ev.payload.positions_get_ms, 'ms', 'PROFIT_STATUS_BUILD_METRICS', corr, 'PROFIT_STATUS_BUILD_METRICS.positions_get_ms', json, ts);
+      }
+      if (typeof ev.payload.positions_count === 'number') {
+        pushEv('Status Build', 'positions_count', ev.payload.positions_count, '', 'PROFIT_STATUS_BUILD_METRICS', corr, 'PROFIT_STATUS_BUILD_METRICS.positions_count', json, ts);
+      }
+      if (ev.payload.mt5_api_busy !== undefined) {
+        pushEv('Status Build', 'profit_mt5_api_busy', ev.payload.mt5_api_busy ? 'true' : 'false', '', 'PROFIT_STATUS_BUILD_METRICS', corr, 'PROFIT_STATUS_BUILD_METRICS.mt5_api_busy', json, ts);
       }
     }
 
