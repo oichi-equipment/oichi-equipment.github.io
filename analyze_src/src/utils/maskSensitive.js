@@ -7,7 +7,10 @@ const SENSITIVE_ACCOUNT_KEYS = new Set([
   'name',
   'account_name',
   'account name',
-  'currency'
+  'currency',
+  'currency_base',
+  'currency_profit',
+  'currency_margin'
 ]);
 
 const SENSITIVE_FINANCIAL_KEYS = new Set([
@@ -22,8 +25,14 @@ const SENSITIVE_FINANCIAL_KEYS = new Set([
   'positions_profit',
   'pnl',
   'swap',
+  'swap_long',
+  'swap_short',
   'commission',
-  'credit'
+  'commission_blocked',
+  'credit',
+  'margin_initial',
+  'margin_maintenance',
+  'margin_hedged'
 ]);
 
 const SENSITIVE_PATH_KEYS = new Set([

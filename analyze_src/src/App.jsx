@@ -24,6 +24,8 @@ export default function SynkAnalyze() {
   const [activeSessionId, setActiveSessionId] = useState(null);
   const [isUploading, setIsUploading] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
+  const [isGeneratingSubmission, setIsGeneratingSubmission] = useState(false);
+  const [submissionProgress, setSubmissionProgress] = useState(0);
 
   const handleFileUpload = async (files) => {
     if (!files || files.length === 0) return;
@@ -98,108 +100,140 @@ export default function SynkAnalyze() {
 
   const activeSession = sessions.find(s => s.id === activeSessionId);
 
-  const handleDownloadSubmission = () => {
-    if (!activeSession) return;
+  const handleDownloadSubmission = async () => {
+    if (!activeSession || isGeneratingSubmission) return;
     
-    const ticketMap = new Map();
-    let ticketCounter = 1;
-    
-    const getAnonymousTicket = (ticketValue) => {
-      if (ticketValue === null || ticketValue === undefined || ticketValue === '') return ticketValue;
-      const key = String(ticketValue);
-      if (!ticketMap.has(key)) {
-        ticketMap.set(key, `[TICKET_${String(ticketCounter).padStart(3, '0')}]`);
-        ticketCounter++;
-      }
-      return ticketMap.get(key);
-    };
+    setIsGeneratingSubmission(true);
+    setSubmissionProgress(0);
 
-    const submissionData = activeSession.data.map(event => {
-      // 1. Deep copy to avoid mutating activeSession.data
-      const copy = JSON.parse(JSON.stringify(event));
-
-      // 2. Anonymize ticket/position_ticket/order
-      const walkAndAnonymize = (obj) => {
-        if (obj === null || typeof obj !== 'object') return;
-        if (Array.isArray(obj)) {
-          obj.forEach(walkAndAnonymize);
-          return;
+    try {
+      const ticketMap = new Map();
+      let ticketCounter = 1;
+      
+      const getAnonymousTicket = (ticketValue) => {
+        if (ticketValue === null || ticketValue === undefined || ticketValue === '') return ticketValue;
+        const key = String(ticketValue);
+        if (!ticketMap.has(key)) {
+          ticketMap.set(key, `[TICKET_${String(ticketCounter).padStart(3, '0')}]`);
+          ticketCounter++;
         }
-        for (const [k, v] of Object.entries(obj)) {
-          if (v === null || v === undefined) continue;
-          
-          const lowerK = k.toLowerCase();
-          const isTargetKey = lowerK === 'ticket' || lowerK === 'position_ticket' || lowerK === 'order';
-          const isScalar = typeof v === 'string' || typeof v === 'number' || typeof v === 'bigint';
-          
-          if (isTargetKey && isScalar && v !== '') {
-            obj[k] = getAnonymousTicket(v);
-          } else if (typeof v === 'object') {
-            walkAndAnonymize(v);
+        return ticketMap.get(key);
+      };
+
+      const CHUNK_SIZE = 1000;
+      const blobParts = [];
+      const totalEvents = activeSession.data.length;
+
+      for (let i = 0; i < totalEvents; i += CHUNK_SIZE) {
+        const chunkEvents = activeSession.data.slice(i, i + CHUNK_SIZE);
+
+        const submissionData = chunkEvents.map(event => {
+          // 1. Deep copy to avoid mutating activeSession.data
+          const copy = JSON.parse(JSON.stringify(event));
+
+          // 2. Anonymize ticket/position_ticket/order
+          const walkAndAnonymize = (obj) => {
+            if (obj === null || typeof obj !== 'object') return;
+            if (Array.isArray(obj)) {
+              obj.forEach(walkAndAnonymize);
+              return;
+            }
+            for (const [k, v] of Object.entries(obj)) {
+              if (v === null || v === undefined) continue;
+              
+              const lowerK = k.toLowerCase();
+              const isTargetKey = lowerK === 'ticket' || lowerK === 'position_ticket' || lowerK === 'order';
+              const isScalar = typeof v === 'string' || typeof v === 'number' || typeof v === 'bigint';
+              
+              if (isTargetKey && isScalar && v !== '') {
+                obj[k] = getAnonymousTicket(v);
+              } else if (typeof v === 'object') {
+                walkAndAnonymize(v);
+              }
+            }
+          };
+          walkAndAnonymize(copy);
+
+          // 3. Mask sensitive fields
+          const maskedEvent = maskForSubmission(copy);
+
+          // 4. Clean up internal parser artifacts
+          for (const k of Object.keys(maskedEvent)) {
+            if (k.startsWith('normalized_') || k.startsWith('calculated_')) {
+              delete maskedEvent[k];
+            }
+          }
+
+          return maskedEvent;
+        });
+        
+        // Convert chunk to JSONL
+        let chunkString = submissionData.map(ev => JSON.stringify(ev)).join('\n');
+        
+        // ----------------------------------------------------------------
+        // VALUE-BASED STRING REPLACEMENT FOR ABSOLUTE SAFETY
+        // Replace all known path patterns directly in the chunk string
+        // ----------------------------------------------------------------
+        
+        // Windows paths (C:\..., C:/...)
+        chunkString = chunkString.replace(/(["']?)(?:[A-Z]:\\\\|[A-Z]:\/).*?(["']?)(?=[,}])/gi, '$1[MASKED_LOCAL_PATH]$2');
+        
+        // Common directories
+        chunkString = chunkString.replace(/(["']?).*?(?:\\\\Users\\\\|\/Users\/|Documents\\\\SynkMushroom|Documents\/SynkMushroom).*?(["']?)(?=[,}])/gi, '$1[MASKED_LOCAL_PATH]$2');
+        
+        // Unix/Mac paths
+        chunkString = chunkString.replace(/(["']?)(?:\/home\/|\/mnt\/|\/var\/|\/tmp\/).*?(["']?)(?=[,}])/gi, '$1[MASKED_LOCAL_PATH]$2');
+
+        // Quick post-mask validation
+        const suspiciousPatterns = [
+          /[A-Z]:\\\\/i, /[A-Z]:\//i, /\\\\Users\\\\/i, /\/Users\//i, 
+          /Documents\\\\SynkMushroom/i, /Documents\/SynkMushroom/i,
+          /SynkMushroom\\\\logs/i, /SynkMushroom\/logs/i,
+          /"log_path"\s*:\s*"(?!\[MASKED_LOCAL_PATH\])[^"]+"/i,
+          /"balance"\s*:/i, /"equity"\s*:/i, /"profit"\s*:/i
+        ];
+        
+        for (const regex of suspiciousPatterns) {
+          if (regex.test(chunkString)) {
+            console.warn(`[Synk Warning] Potential unmasked sensitive data detected matching: ${regex}`);
+            // Force replace if anything slipped through matching C:\ or similar
+            if (/[A-Z]:\\\\/i.test(chunkString) || /[A-Z]:\//i.test(chunkString)) {
+               chunkString = chunkString.replace(/"[^"]*?[A-Z]:(?:\\\\|\/)[^"]*?"/gi, '"[MASKED_LOCAL_PATH]"');
+            }
           }
         }
-      };
-      walkAndAnonymize(copy);
-
-      // 3. Mask sensitive fields
-      const maskedEvent = maskForSubmission(copy);
-
-      // 4. Clean up internal parser artifacts
-      for (const k of Object.keys(maskedEvent)) {
-        if (k.startsWith('normalized_') || k.startsWith('calculated_')) {
-          delete maskedEvent[k];
+        
+        if (blobParts.length > 0) {
+          blobParts.push('\n' + chunkString);
+        } else {
+          blobParts.push(chunkString);
         }
-      }
 
-      return maskedEvent;
-    });
-    
-    // Convert back to JSONL
-    let jsonlString = submissionData.map(ev => JSON.stringify(ev)).join('\n');
-    
-    // ----------------------------------------------------------------
-    // VALUE-BASED STRING REPLACEMENT FOR ABSOLUTE SAFETY
-    // Replace all known path patterns directly in the final string
-    // ----------------------------------------------------------------
-    
-    // Windows paths (C:\..., C:/...)
-    jsonlString = jsonlString.replace(/(["']?)(?:[A-Z]:\\\\|[A-Z]:\/).*?(["']?)(?=[,}])/gi, '$1[MASKED_LOCAL_PATH]$2');
-    
-    // Common directories
-    jsonlString = jsonlString.replace(/(["']?).*?(?:\\\\Users\\\\|\/Users\/|Documents\\\\SynkMushroom|Documents\/SynkMushroom).*?(["']?)(?=[,}])/gi, '$1[MASKED_LOCAL_PATH]$2');
-    
-    // Unix/Mac paths
-    jsonlString = jsonlString.replace(/(["']?)(?:\/home\/|\/mnt\/|\/var\/|\/tmp\/).*?(["']?)(?=[,}])/gi, '$1[MASKED_LOCAL_PATH]$2');
+        const processed = Math.min(i + CHUNK_SIZE, totalEvents);
+        const percent = Math.floor((processed / totalEvents) * 100);
+        setSubmissionProgress(percent);
 
-    // Quick post-mask validation
-    const suspiciousPatterns = [
-      /[A-Z]:\\\\/i, /[A-Z]:\//i, /\\\\Users\\\\/i, /\/Users\//i, 
-      /Documents\\\\SynkMushroom/i, /Documents\/SynkMushroom/i,
-      /SynkMushroom\\\\logs/i, /SynkMushroom\/logs/i,
-      /"log_path"\s*:\s*"(?!\[MASKED_LOCAL_PATH\])[^"]+"/i,
-      /"balance"\s*:/i, /"equity"\s*:/i, /"profit"\s*:/i
-    ];
-    
-    for (const regex of suspiciousPatterns) {
-      if (regex.test(jsonlString)) {
-        console.warn(`[Synk Warning] Potential unmasked sensitive data detected matching: ${regex}`);
-        // Force replace if anything slipped through matching C:\ or similar
-        if (/[A-Z]:\\\\/i.test(jsonlString) || /[A-Z]:\//i.test(jsonlString)) {
-           jsonlString = jsonlString.replace(/"[^"]*?[A-Z]:(?:\\\\|\/)[^"]*?"/gi, '"[MASKED_LOCAL_PATH]"');
-        }
+        await new Promise(resolve => setTimeout(resolve, 0));
       }
+      
+      const blob = new Blob(blobParts, { type: 'application/jsonl' });
+      const url = URL.createObjectURL(blob);
+      
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `synk-analyzer-submission-log-${activeSession.name}.jsonl`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+
+    } catch (err) {
+      console.error("Failed to generate submission log:", err);
+      alert("Failed to generate submission log. See console for details.");
+    } finally {
+      setIsGeneratingSubmission(false);
+      setSubmissionProgress(0);
     }
-    
-    const blob = new Blob([jsonlString], { type: 'application/jsonl' });
-    const url = URL.createObjectURL(blob);
-    
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `synk-analyzer-submission-log-${activeSession.name}.jsonl`;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
   };
 
   const { stats, bottleneck, evidence, commandChains, retcodeSummary, pollingSummary, totalObservedStats, totalExecuted, totalFailed, slowestCommand, quoteForensics, profitForensics, closeForensics } = useMemo(() => {
@@ -351,10 +385,15 @@ export default function SynkAnalyze() {
             {activeSession && (
               <button 
                 onClick={handleDownloadSubmission}
-                className="px-4 py-2 text-[13px] font-sans font-semibold border border-dark-border text-[#a1a1aa] hover:text-text-main bg-dark-card hover:bg-dark-hover hover:border-uguisu/40 flex items-center gap-2 transition-colors rounded-[3px] shadow-sm"
+                disabled={isGeneratingSubmission}
+                className={`px-4 py-2 text-[13px] font-sans font-semibold border flex items-center gap-2 transition-colors rounded-[3px] shadow-sm ${
+                  isGeneratingSubmission
+                    ? 'border-dark-border text-text-muted bg-dark-base cursor-not-allowed'
+                    : 'border-dark-border text-[#a1a1aa] hover:text-text-main bg-dark-card hover:bg-dark-hover hover:border-uguisu/40'
+                }`}
               >
                 <Download className="w-3.5 h-3.5" />
-                Download Submission Log
+                {isGeneratingSubmission ? `Preparing... ${submissionProgress}%` : 'Download Submission Log'}
               </button>
             )}
 
