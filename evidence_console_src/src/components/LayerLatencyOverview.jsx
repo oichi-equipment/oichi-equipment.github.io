@@ -11,7 +11,7 @@ export default function LayerLatencyOverview({ stats }) {
     },
     {
       key: 'mt5Execution',
-      name: 'MT5 Execution Latency',
+      name: 'Broker / MT5 Response Latency',
       desc: 'MT5 Terminal core transaction execution'
     },
     {

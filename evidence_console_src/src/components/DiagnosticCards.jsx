@@ -66,6 +66,20 @@ const MetricCard = ({ title, value, unit, median, count, isError, icon: Icon, su
   </div>
 );
 
+const formatLayerDisplayName = (layer) => {
+  if (!layer) return layer;
+  const mapping = {
+    'Synk Mushroom Local': 'Local Event Chain',
+    'MT5 Execution': 'Broker / MT5 Response',
+    'MT5 / Broker': 'Broker / MT5 Response',
+    'Post UI Reflection': 'Post-UI Reflection',
+    'WebSocket Transport': 'WebSocket Transport',
+    'Status Build': 'Status Build',
+    'UI Render': 'UI Render'
+  };
+  return mapping[layer] || layer;
+};
+
 export default function DiagnosticCards({ 
   stats, 
   bottleneck, 
@@ -95,9 +109,9 @@ export default function DiagnosticCards({
       
       {/* Primary Bottleneck Card */}
       <PrimaryCard 
-        title="Dominant Observed Layer" 
-        value={isLoaded ? bottleneck : 'Waiting for JSONL'} 
-        subtext={isLoaded ? "Observed latency concentration, not responsibility." : "Upload logs to initiate diagnostics"}
+        title="Primary Review Area" 
+        value={isLoaded ? formatLayerDisplayName(bottleneck) : 'Waiting for JSONL'} 
+        subtext={isLoaded ? "This highlights where delay was observed, not which component is at fault." : "Upload logs to initiate diagnostics"}
       />
       
       {/* MT5 Execution Latency Card */}
@@ -119,7 +133,7 @@ export default function DiagnosticCards({
         median={isLoaded ? getSmMedian() : undefined}
         count={isLoaded && stats.coreExecution ? stats.coreExecution.count : undefined}
         icon={Server}
-        subtext="Synk Mushroom local command handling / 95% under this value"
+        subtext="Local event chain command handling / 95% under this value"
       />
 
       {/* Post-UI Reflection Card */}

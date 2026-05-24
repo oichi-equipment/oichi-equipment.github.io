@@ -23,7 +23,7 @@ const BoundaryPanel = ({ title, data }) => (
   </div>
 );
 
-export default function EnvironmentBoundaryStrip({ events, fileName, fileStats, isLargeLog }) {
+export default function EnvironmentBoundaryStrip({ events, fileName, fileStats, isLargeLog, rotationMetadata }) {
   const [isOpen, setIsOpen] = useState(false);
 
   const breakdown = useMemo(() => {
@@ -289,11 +289,15 @@ export default function EnvironmentBoundaryStrip({ events, fileName, fileStats, 
           <BoundaryPanel title="Symbol Boundary" data={breakdown.symbol} />
           <BoundaryPanel title="Financials" data={breakdown.financials} />
           {fileStats && fileStats.length > 0 && (
-            <BoundaryPanel title="Loaded Files" data={
+            <BoundaryPanel title="Source Files" data={
               (() => {
                 const obj = {};
                 fileStats.slice(0, 10).forEach(f => {
-                  obj[f.name] = `${f.count.toLocaleString()} events`;
+                  const formatTime = (ts) => ts ? ts.split('T')[1].replace('Z', '').split('.')[0] : null;
+                  const start = formatTime(f.firstTimestamp);
+                  const end = formatTime(f.lastTimestamp);
+                  const range = start && end ? ` (${start} - ${end})` : (start || end ? ` (${start || end})` : '');
+                  obj[f.name] = `${f.count.toLocaleString()} events${range}`;
                 });
                 if (fileStats.length > 10) {
                   obj[`...and ${fileStats.length - 10} more files`] = '';
@@ -301,6 +305,20 @@ export default function EnvironmentBoundaryStrip({ events, fileName, fileStats, 
                 return obj;
               })()
             } />
+          )}
+          {rotationMetadata && (
+            <BoundaryPanel title="Log Rotation" data={{
+              'Status': rotationMetadata.status === 'enabled' ? 'Enabled' : (rotationMetadata.status === 'disabled' ? 'Disabled' : 'Unknown'),
+              'Pattern': rotationMetadata.pattern || 'n/a',
+              'Bucket Hours': rotationMetadata.bucket_hours || 'n/a',
+              'Max Lines': rotationMetadata.max_lines ? rotationMetadata.max_lines.toLocaleString() : 'n/a',
+              'Max Bytes': rotationMetadata.max_bytes ? `${(rotationMetadata.max_bytes / 1024 / 1024).toFixed(2)} MB` : 'n/a',
+              'Active File': rotationMetadata.active_log_file_name || 'n/a',
+              'Rotations': rotationMetadata.rotation_event_count,
+              ...Object.fromEntries(
+                Object.entries(rotationMetadata.rotation_reason_counts || {}).map(([k, v]) => [`Reason: ${k}`, v])
+              )
+            }} />
           )}
         </div>
       )}

@@ -19,7 +19,38 @@ import { extractQuoteForensics } from './utils/quoteForensics';
 import { extractProfitForensics } from './utils/profitForensics';
 import { extractCloseForensics } from './utils/closeForensics';
 
-export default function SynkAnalyze() {
+const normalizeRotationEnabled = (val) => {
+  if (val === true || val === "true") return true;
+  if (val === false || val === "false") return false;
+  return null;
+};
+
+const sortRotationFiles = (a, b) => {
+  const parseFilename = (name) => {
+    const match = name.match(/events_(\d{8})_(\d{4})-(\d{4})(?:_part(\d+))?\.jsonl/);
+    if (!match) return null;
+    return {
+      date: match[1],
+      start: match[2],
+      end: match[3],
+      part: match[4] ? parseInt(match[4], 10) : 0
+    };
+  };
+
+  const parsedA = parseFilename(a.name);
+  const parsedB = parseFilename(b.name);
+
+  if (parsedA && parsedB) {
+    if (parsedA.date !== parsedB.date) return parsedA.date.localeCompare(parsedB.date);
+    if (parsedA.start !== parsedB.start) return parsedA.start.localeCompare(parsedB.start);
+    if (parsedA.end !== parsedB.end) return parsedA.end.localeCompare(parsedB.end);
+    return parsedA.part - parsedB.part;
+  }
+  
+  return a.name.localeCompare(b.name);
+};
+
+export default function SynkEvidenceConsole() {
   const [sessions, setSessions] = useState([]);
   const [activeSessionId, setActiveSessionId] = useState(null);
   const [isUploading, setIsUploading] = useState(false);
@@ -36,13 +67,22 @@ export default function SynkAnalyze() {
       const wrapperArray = [];
       let globalIndex = 0;
 
-      // Sort files by name to parse in alphabetical order (helpful for chunked logs)
-      const sortedFiles = Array.from(files).sort((a, b) => a.name.localeCompare(b.name));
+      // Sort files by rotation naming convention, fallback to alphabetical
+      const sortedFiles = Array.from(files).sort(sortRotationFiles);
 
       for (const file of sortedFiles) {
         const parsedEvents = await parseLogFile(file);
         if (parsedEvents.length > 0) {
-          fileStats.push({ name: file.name, count: parsedEvents.length });
+          let firstTimestamp = null;
+          let lastTimestamp = null;
+          const validTimestamps = parsedEvents.map(e => e.timestamp ? new Date(e.timestamp).getTime() : NaN).filter(t => !isNaN(t));
+          if (validTimestamps.length > 0) {
+            const minT = Math.min(...validTimestamps);
+            const maxT = Math.max(...validTimestamps);
+            firstTimestamp = new Date(minT).toISOString();
+            lastTimestamp = new Date(maxT).toISOString();
+          }
+          fileStats.push({ name: file.name, count: parsedEvents.length, firstTimestamp, lastTimestamp });
           for (const event of parsedEvents) {
             wrapperArray.push({ event, loadOrder: globalIndex++ });
           }
@@ -79,12 +119,68 @@ export default function SynkAnalyze() {
 
       const finalEvents = wrapperArray.map(w => w.event);
 
+      // Extract rotation metadata
+      let rotationMetadata = {
+        enabled: null,
+        status: 'unknown',
+        bucket_hours: null,
+        max_lines: null,
+        max_bytes: null,
+        pattern: null,
+        active_log_file_name: null,
+        rotation_event_count: 0,
+        rotation_reason_counts: {}
+      };
+      
+      let source_time_start = null;
+      let source_time_end = null;
+
+      if (finalEvents.length > 0) {
+        // Find SESSION_SNAPSHOT (usually near the top)
+        const snapshot = finalEvents.find(e => e.event_type === 'SESSION_SNAPSHOT');
+        if (snapshot && snapshot.payload) {
+          const rawEnabled = snapshot.payload.rotation_enabled;
+          const normalizedEnabled = normalizeRotationEnabled(rawEnabled);
+          
+          rotationMetadata.enabled = normalizedEnabled;
+          if (normalizedEnabled === true) rotationMetadata.status = 'enabled';
+          else if (normalizedEnabled === false) rotationMetadata.status = 'disabled';
+          else rotationMetadata.status = 'unknown';
+
+          rotationMetadata.bucket_hours = snapshot.payload.rotation_bucket_hours;
+          rotationMetadata.max_lines = snapshot.payload.rotation_max_lines;
+          rotationMetadata.max_bytes = snapshot.payload.rotation_max_bytes;
+          rotationMetadata.pattern = snapshot.payload.log_pattern;
+          rotationMetadata.active_log_file_name = snapshot.payload.active_log_file_name;
+        }
+
+        // Count LOG_ROTATE events
+        for (const e of finalEvents) {
+          if (e.event_type === 'LOG_ROTATE' || (e.event_type === 'SYSTEM' && e.message_type === 'LOG_ROTATE')) {
+            rotationMetadata.rotation_event_count++;
+            const reason = e.payload?.reason || 'unknown';
+            rotationMetadata.rotation_reason_counts[reason] = (rotationMetadata.rotation_reason_counts[reason] || 0) + 1;
+          }
+        }
+        
+        // Find time range
+        const validTimestamps = finalEvents.map(e => e.timestamp ? new Date(e.timestamp).getTime() : NaN).filter(t => !isNaN(t));
+        if (validTimestamps.length > 0) {
+          const minT = Math.min(...validTimestamps);
+          const maxT = Math.max(...validTimestamps);
+          source_time_start = new Date(minT).toISOString();
+          source_time_end = new Date(maxT).toISOString();
+        }
+      }
+
       const sessionId = `ses_${Date.now().toString().slice(-6)}`;
       const newSession = {
         id: sessionId,
         name: sortedFiles.length > 1 ? `${sortedFiles.length} files selected` : sortedFiles[0].name,
         fileStats,
         isLargeLog: finalEvents.length >= 100000,
+        rotationMetadata,
+        timeRange: { start: source_time_start, end: source_time_end },
         data: finalEvents
       };
 
@@ -123,6 +219,30 @@ export default function SynkAnalyze() {
       const CHUNK_SIZE = 1000;
       const blobParts = [];
       const totalEvents = activeSession.data.length;
+
+      // Inject SUBMISSION_SOURCE_MANIFEST as the very first event
+      const manifestEvent = {
+        event_type: "SUBMISSION_SOURCE_MANIFEST",
+        message_type: "SUBMISSION_SOURCE_MANIFEST",
+        source: "EVIDENCE_CONSOLE",
+        timestamp: new Date().toISOString(),
+        payload: {
+          source_file_count: activeSession.fileStats?.length || 1,
+          source_files: activeSession.fileStats ? activeSession.fileStats.map(fs => fs.name) : [activeSession.name],
+          source_event_count: totalEvents, // Does not include this manifest
+          source_time_start: activeSession.timeRange?.start || null,
+          source_time_end: activeSession.timeRange?.end || null,
+          rotation_enabled: activeSession.rotationMetadata?.enabled ?? null,
+          rotation_status: activeSession.rotationMetadata?.status || "unknown",
+          rotation_bucket_hours: activeSession.rotationMetadata?.bucket_hours || null,
+          rotation_max_lines: activeSession.rotationMetadata?.max_lines || null,
+          rotation_max_bytes: activeSession.rotationMetadata?.max_bytes || null,
+          rotation_event_count: activeSession.rotationMetadata?.rotation_event_count || 0,
+          rotation_reason_counts: activeSession.rotationMetadata?.rotation_reason_counts || {},
+          submission_created_at: new Date().toISOString()
+        }
+      };
+      blobParts.push(JSON.stringify(manifestEvent));
 
       for (let i = 0; i < totalEvents; i += CHUNK_SIZE) {
         const chunkEvents = activeSession.data.slice(i, i + CHUNK_SIZE);
@@ -221,7 +341,7 @@ export default function SynkAnalyze() {
       
       const a = document.createElement('a');
       a.href = url;
-      a.download = `synk-analyzer-submission-log-${activeSession.name}.jsonl`;
+      a.download = `synk-evidence-console-submission-log-${activeSession.name}.jsonl`;
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
@@ -348,9 +468,9 @@ export default function SynkAnalyze() {
         {/* Left: Branding */}
         <div className="flex items-center gap-4">
           <div className="flex items-center gap-3 border-r border-dark-border pr-4">
-            <img src="/analyze/logo-mark.png" alt="Synk Mushroom" className="w-6 h-6 object-contain" />
+            <img src="/evidence-console/logo-mark.png" alt="Synk Mushroom" className="w-6 h-6 object-contain" />
             <div className="flex flex-col">
-              <span className="text-[16px] font-bold text-text-main tracking-tight leading-none mb-1">Synk Analyzer</span>
+              <span className="text-[16px] font-bold text-text-main tracking-tight leading-none mb-1">Synk Evidence Console</span>
               <span className="text-[11px] text-uguisu-light/80 font-sans uppercase tracking-widest leading-none mt-1">Execution Forensics</span>
             </div>
           </div>
@@ -408,12 +528,12 @@ export default function SynkAnalyze() {
 
       {/* Main Dashboard Area */}
       <main className="flex-1 flex flex-col overflow-y-auto overflow-x-hidden bg-dark-base relative">
-        {/* C. Primary Verdict / KPI Row */}
+        {/* C. Primary Observations / KPI Row */}
         <div className="px-5 pt-5 pb-0 shrink-0 flex flex-col gap-4">
           <div className="flex flex-col">
             <h3 className="text-[16px] font-sans font-bold text-white uppercase tracking-wider flex items-center gap-2">
               <Shield className="w-4 h-4 text-uguisu-light" />
-              Primary Verdict & Latency Metrics
+              Primary Observations & Latency Metrics
             </h3>
             <p className="text-[13px] font-sans text-[#b5b5b5] mt-1">
               Overall diagnosis based on measured command latency.
@@ -447,6 +567,7 @@ export default function SynkAnalyze() {
           fileName={activeSession ? activeSession.name : ''}
           fileStats={activeSession ? activeSession.fileStats : undefined}
           isLargeLog={activeSession ? activeSession.isLargeLog : false}
+          rotationMetadata={activeSession ? activeSession.rotationMetadata : undefined}
         />
 
         {/* Layer Latency Breakdowns */}

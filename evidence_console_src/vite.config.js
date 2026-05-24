@@ -8,9 +8,9 @@ export default defineConfig({
     react(),
     tailwindcss(),
   ],
-  base: '/analyze/',
+  base: '/evidence-console/',
   build: {
-    outDir: '../analyze',
+    outDir: '../evidence-console',
     emptyOutDir: true,
   }
 })

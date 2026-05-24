@@ -19,6 +19,20 @@ const getDominantLayerColor = (layer) => {
   return 'bg-transparent shadow-none text-[#a1a1aa] border border-[#2d2d2d]';
 };
 
+const formatLayerDisplayName = (layer) => {
+  if (!layer) return layer;
+  const mapping = {
+    'Synk Mushroom Local': 'Local Event Chain',
+    'MT5 Execution': 'Broker / MT5 Response',
+    'MT5 / Broker': 'Broker / MT5 Response',
+    'Post UI Reflection': 'Post-UI Reflection',
+    'WebSocket Transport': 'WebSocket Transport',
+    'Status Build': 'Status Build',
+    'UI Render': 'UI Render'
+  };
+  return mapping[layer] || layer;
+};
+
 const PollingSummaryPanel = ({ summary }) => {
   if (!summary || summary.chainCount === 0) {
     return (
@@ -421,7 +435,7 @@ export default function CommandForensics({ chains, retcodeSummary, pollingSummar
                       </td>
                       <td className="py-4 px-3.5 font-sans">
                         <span className={`px-2 py-1 rounded-[3px] text-[12px] font-bold tracking-wider whitespace-nowrap ${getDominantLayerColor(chain.dominantLayer)}`}>
-                          {chain.dominantLayer}
+                          {formatLayerDisplayName(chain.dominantLayer)}
                         </span>
                       </td>
                       <td className="py-4 px-3.5 text-center">

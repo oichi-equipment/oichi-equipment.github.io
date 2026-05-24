@@ -40,7 +40,10 @@ const SENSITIVE_PATH_KEYS = new Set([
   'log_path', 'logpath', 'file_path', 'filepath',
   'local_path', 'localpath', 'output_path', 'outputpath',
   'source_path', 'sourcepath', 'directory', 'dir',
-  'folder', 'root', 'cwd', 'terminal_path', 'mt5_path'
+  'folder', 'root', 'cwd', 'terminal_path', 'mt5_path',
+  'log_dir', 'log_directory', 'previous_file', 'new_file',
+  'current_file', 'active_file', 'active_log_file',
+  'source_file_path', 'base_dir'
 ]);
 
 const SENSITIVE_USER_KEYS = new Set([
