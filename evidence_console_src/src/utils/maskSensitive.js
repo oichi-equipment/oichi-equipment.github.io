@@ -75,6 +75,17 @@ const SENSITIVE_LOCAL_KEYS = new Set([
   'account name'
 ]);
 
+const DISPLAY_BROKER_KEYS = new Set([
+  'display_broker',
+  'display_broker_before',
+  'display_broker_after'
+]);
+
+const maskDisplayBrokerAccountNumber = (value) => {
+  if (typeof value !== 'string') return value;
+  return value.replace(/(\b(?:Acc|Account|Login)\s*:\s*)[^|,;\s]+/gi, '$1[MASKED_ACCOUNT]');
+};
+
 export const maskForLocalView = (obj) => {
   if (obj === null || typeof obj !== 'object') {
     return obj;
@@ -118,6 +129,8 @@ export const maskForSubmission = (obj) => {
     // login_masked is safe, but raw login must be masked for submission
     if (lowerKey === 'login_masked') {
       maskedObj[key] = value;
+    } else if (DISPLAY_BROKER_KEYS.has(lowerKey)) {
+      maskedObj[key] = maskDisplayBrokerAccountNumber(value);
     } else if (lowerKey === 'login' || SENSITIVE_ACCOUNT_KEYS.has(lowerKey)) {
       maskedObj[key] = '[MASKED_ACCOUNT]';
     } else if (SENSITIVE_FINANCIAL_KEYS.has(lowerKey)) {

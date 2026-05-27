@@ -239,7 +239,33 @@ export default function SynkEvidenceConsole() {
           rotation_max_bytes: activeSession.rotationMetadata?.max_bytes || null,
           rotation_event_count: activeSession.rotationMetadata?.rotation_event_count || 0,
           rotation_reason_counts: activeSession.rotationMetadata?.rotation_reason_counts || {},
-          submission_created_at: new Date().toISOString()
+          submission_created_at: new Date().toISOString(),
+          ticket_masking_policy: "sequential_alias_per_submission_v1",
+          ticket_alias_prefix: "TICKET",
+          ticket_alias_scope: "submission",
+          raw_ticket_included: false,
+          ticket_last4_included: false,
+          lock_key_ticket_masking: "embedded_ticket_alias_v1",
+          account_display_masking: "account_number_only_v1",
+          broker_name_included: true,
+          account_number_included: false,
+          support_full_evidence: false,
+          panel_visual_ticket_semantics: "panel_visual_diff_not_mt5_execution",
+          mt5_execution_ticket_sources: [
+            "MT5_REQUEST.ticket",
+            "MT5_RESPONSE.ticket",
+            "COMMAND_RESULT.ticket",
+            "ticket_results[].ticket",
+            "payload.order_req.position",
+            "payload.order_req.order"
+          ],
+          panel_visual_ticket_sources: [
+            "FINAL_RENDER.added_tickets",
+            "FINAL_RENDER.removed_tickets"
+          ],
+          ui_operation_ticket_sources: [
+            "USER_ACTION.extraData.ticket"
+          ]
         }
       };
       blobParts.push(JSON.stringify(manifestEvent));
@@ -251,11 +277,38 @@ export default function SynkEvidenceConsole() {
           // 1. Deep copy to avoid mutating activeSession.data
           const copy = JSON.parse(JSON.stringify(event));
 
-          // 2. Anonymize ticket/position_ticket/order
-          const walkAndAnonymize = (obj) => {
+          // 2. Anonymize ticket/position_ticket/order and PF-4 visual ticket arrays
+          const ticketArrayKeys = new Set(['added_tickets', 'removed_tickets']);
+          const isTicketScalar = (value) => (
+            (typeof value === 'string' || typeof value === 'number' || typeof value === 'bigint') &&
+            value !== ''
+          );
+          const isOrderRequestPositionPath = (path, key) => (
+            key.toLowerCase() === 'position' &&
+            path.length > 0 &&
+            String(path[path.length - 1]).toLowerCase() === 'order_req'
+          );
+          const anonymizeLockKey = (value) => {
+            if (typeof value !== 'string') return value;
+            const match = value.match(/^(pos|ticket|close)_(\d+)$/i);
+            if (!match) return value;
+            return `${match[1]}_${getAnonymousTicket(match[2])}`;
+          };
+          const walkAndAnonymize = (obj, path = []) => {
             if (obj === null || typeof obj !== 'object') return;
             if (Array.isArray(obj)) {
-              obj.forEach(walkAndAnonymize);
+              const arrayKey = path.length > 0 ? String(path[path.length - 1]).toLowerCase() : '';
+              if (ticketArrayKeys.has(arrayKey)) {
+                for (let idx = 0; idx < obj.length; idx++) {
+                  if (isTicketScalar(obj[idx])) {
+                    obj[idx] = getAnonymousTicket(obj[idx]);
+                  } else {
+                    walkAndAnonymize(obj[idx], path.concat(idx));
+                  }
+                }
+                return;
+              }
+              obj.forEach((item, idx) => walkAndAnonymize(item, path.concat(idx)));
               return;
             }
             for (const [k, v] of Object.entries(obj)) {
@@ -263,12 +316,14 @@ export default function SynkEvidenceConsole() {
               
               const lowerK = k.toLowerCase();
               const isTargetKey = lowerK === 'ticket' || lowerK === 'position_ticket' || lowerK === 'order';
-              const isScalar = typeof v === 'string' || typeof v === 'number' || typeof v === 'bigint';
+              const isTargetPosition = isOrderRequestPositionPath(path, k);
               
-              if (isTargetKey && isScalar && v !== '') {
+              if (lowerK === 'lockkey' && typeof v === 'string') {
+                obj[k] = anonymizeLockKey(v);
+              } else if ((isTargetKey || isTargetPosition) && isTicketScalar(v)) {
                 obj[k] = getAnonymousTicket(v);
               } else if (typeof v === 'object') {
-                walkAndAnonymize(v);
+                walkAndAnonymize(v, path.concat(k));
               }
             }
           };
