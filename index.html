@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Synk Mushroom - Desktop Workflow Utility</title>
+    <title>Synk Mushroom - TradingView-Embedded Local Execution Utility</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -240,17 +240,17 @@
 
             <div class="relative z-10">
                 <div
-                    class="inline-block mb-8 px-4 py-1.5 bg-dark-card border border-dark-border rounded-full text-xs font-bold tracking-[0.2em] text-uguisu-light">
+                    class="inline-block mb-8 px-4 py-1.5 bg-dark-base border border-dark-border rounded-full text-xs font-bold tracking-[0.2em] text-uguisu-light shadow-lg">
                     Synk Mushroom
                 </div>
                 <h1 class="text-5xl md:text-7xl font-bold text-text-main leading-tight mb-4">
                     Synk Mushroom
                 </h1>
-                <p class="text-2xl md:text-3xl font-medium text-text-main tracking-wide leading-snug mb-6">
-                    Reduce Friction Across Multiple Workspaces
+                <p class="text-2xl md:text-3xl font-medium text-text-main tracking-wide leading-snug mb-6 max-w-3xl mx-auto">
+                    Operate MT5 from your TradingView screen.
                 </p>
-                <p class="text-base md:text-lg text-text-sub leading-loose max-w-3xl mx-auto mb-10">
-                    Synk Mushroom is a desktop utility that streamlines on-screen operations and input handling across multiple applications, enabling more efficient and uninterrupted workflows.
+                <p class="text-base md:text-lg text-text-sub leading-loose max-w-2xl mx-auto mb-10">
+                    Manual execution. Local bridge. No cloud order relay.
                 </p>
                 <div class="flex flex-col sm:flex-row justify-center items-center gap-4">
                     <a href="#pricing"
@@ -269,10 +269,9 @@
         <section id="problem" class="py-24 md:py-24 bg-dark-card border-t border-dark-border">
             <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-16">
-                    <h2 class="text-3xl font-bold text-text-main mb-6 tracking-wide">Delays Caused by Fragmented Operations</h2>
+                    <h2 class="text-3xl font-bold text-text-main mb-6 tracking-wide">The Gap Between Analysis and Execution</h2>
                     <p class="text-text-sub leading-relaxed max-w-3xl mx-auto">
-                        When working across multiple applications, switching screens, moving the cursor, and activating windows introduce small but constant interruptions.
-                        These physical steps create friction during workspace interaction.
+                        TradingView analysis and MT5 execution should not break the flow. Switching between charting tools and execution terminals introduces small but constant interruptions, creating friction during manual operation.
                     </p>
                 </div>
 
@@ -280,25 +279,25 @@
                     <div
                         class="p-4 md:p-8 bg-dark-base border border-dark-border rounded-lg hover:border-text-muted shadow-lg hover:shadow-xl hover:-translate-y-1 transition">
                         <div class="text-text-muted font-mono text-sm mb-4">01.</div>
-                        <h3 class="text-lg font-bold text-text-main mb-3">Context Switching Interrupts Flow</h3>
+                        <h3 class="text-lg font-bold text-text-main mb-3">Separated Environments</h3>
                         <p class="text-sm text-text-sub leading-relaxed">
-                            Each time you switch windows, your workflow is momentarily disrupted.
+                            Each time you switch from TradingView to MT5, your analytical focus is momentarily disrupted.
                         </p>
                     </div>
                     <div
                         class="p-4 md:p-8 bg-dark-base border border-dark-border rounded-lg hover:border-text-muted shadow-lg hover:shadow-xl hover:-translate-y-1 transition">
                         <div class="text-text-muted font-mono text-sm mb-4">02.</div>
-                        <h3 class="text-lg font-bold text-text-main mb-3">Repetitive Actions Add Up</h3>
+                        <h3 class="text-lg font-bold text-text-main mb-3">Physical Friction</h3>
                         <p class="text-sm text-text-sub leading-relaxed">
-                            Similar operations must be repeated across different environments, increasing unnecessary steps.
+                            Moving the cursor and activating windows to place an order adds unnecessary physical steps.
                         </p>
                     </div>
                     <div
                         class="p-4 md:p-8 bg-dark-base border border-dark-border rounded-lg hover:border-text-muted shadow-lg hover:shadow-xl hover:-translate-y-1 transition">
                         <div class="text-text-muted font-mono text-sm mb-4">03.</div>
-                        <h3 class="text-lg font-bold text-text-main mb-3">Inconsistent Operating Environments</h3>
+                        <h3 class="text-lg font-bold text-text-main mb-3">Order Delays</h3>
                         <p class="text-sm text-text-sub leading-relaxed">
-                            Differences in setup and configuration can lead to inconsistent user experiences and reduced efficiency.
+                            These brief interruptions can cause delays when you need to act on your analysis quickly.
                         </p>
                     </div>
                 </div>
@@ -311,15 +310,15 @@
                 class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-uguisu-bg to-dark-base opacity-50">
             </div>
             <div class="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                <h2 class="text-3xl font-bold text-uguisu-light mb-6 tracking-wide">Seamless Integration of Your Workspace</h2>
+                <h2 class="text-3xl font-bold text-uguisu-light mb-6 tracking-wide">Keep TradingView Open. Execute Through Your Local MT5.</h2>
                 <p class="text-text-main leading-relaxed mb-10 text-lg">
-                    Synk Mushroom reduces these physical barriers by unifying window control and input handling into a single, streamlined interface.
+                    Synk Mushroom reduces these physical barriers by providing user-controlled local execution directly from your charting screen.
                     All operations are triggered directly by user actions, ensuring full control at all times.
                 </p>
                 <div
                     class="inline-flex items-center gap-3 p-4 border border-dark-border bg-dark-card rounded text-sm text-text-sub">
                     <span class="text-uguisu-light font-bold">i</span>
-                    <span>This software does not perform any automated decision-making or execution.</span>
+                    <span>This software does not make trading decisions, generate trading signals, or execute trades automatically. All order actions are manually initiated by the user.</span>
                 </div>
             </div>
         </section>
@@ -340,11 +339,11 @@
                             </div>
                         </div>
                         <div class="md:w-7/12">
-                            <div class="text-uguisu text-xs font-mono tracking-[0.2em] mb-2">WINDOW MANAGEMENT
+                            <div class="text-uguisu text-xs font-mono tracking-[0.2em] mb-2">EMBEDDED PANEL
                             </div>
-                            <h3 class="text-2xl font-bold text-text-main mb-4">Operate Everything from One Place</h3>
+                            <h3 class="text-2xl font-bold text-text-main mb-4">Operate from TradingView Directly</h3>
                             <p class="text-text-sub leading-relaxed">
-                                Access and control multiple application windows from a single interface, reducing the need for constant switching.
+                                Initiate your manual order operations from an embedded panel within your TradingView screen, reducing the need for constant switching.
                             </p>
                         </div>
                     </div>
@@ -356,10 +355,10 @@
                             </div>
                         </div>
                         <div class="md:w-7/12">
-                            <div class="text-uguisu text-xs font-mono tracking-[0.2em] mb-2">INPUT PROCESSING</div>
-                            <h3 class="text-2xl font-bold text-text-main mb-4">Reduce Repetitive Input</h3>
+                            <div class="text-uguisu text-xs font-mono tracking-[0.2em] mb-2">LOCAL BRIDGE EXECUTION</div>
+                            <h3 class="text-2xl font-bold text-text-main mb-4">Local Connection to MT5</h3>
                             <p class="text-text-sub leading-relaxed">
-                                Access frequently used operations directly from the panel, minimizing repetitive movements and improving workflow consistency.
+                                Connect to your MT5 terminal running on your local PC via a Python local bridge. Order commands are not routed through external cloud relay servers.
                             </p>
                         </div>
                     </div>
@@ -371,11 +370,11 @@
                             </div>
                         </div>
                         <div class="md:w-7/12">
-                            <div class="text-uguisu text-xs font-mono tracking-[0.2em] mb-2">LOCAL ENVIRONMENT
+                            <div class="text-uguisu text-xs font-mono tracking-[0.2em] mb-2">EVIDENCE LOGS
                             </div>
-                            <h3 class="text-2xl font-bold text-text-main mb-4">Stable Local Operation</h3>
+                            <h3 class="text-2xl font-bold text-text-main mb-4">Execution-Path Visibility</h3>
                             <p class="text-text-sub leading-relaxed">
-                                All processes run locally, ensuring consistent and stable responsiveness without reliance on continuous external communication.
+                                The Evidence Console helps separate local processing, MT5 response, and panel sync behavior for support and debugging visibility. It does not provide investment analysis or performance tracking.
                             </p>
                             
                         </div>
@@ -542,13 +541,13 @@
                     </div>
 
                     <div class="border border-dark-border rounded-lg p-4 md:p-8 bg-dark-base flex flex-col">
-                        <h3 class="text-lg font-bold text-text-main mb-2">Lifetime Plan</h3>
+                        <h3 class="text-lg font-bold text-text-main mb-2">3-Year License</h3>
                         <div class="text-3xl font-bold text-text-main mb-6">$1,300 <span
-                                class="text-sm font-normal text-text-muted">one-time</span></div>
+                                class="text-sm font-normal text-text-muted">/ 3 years</span></div>
                         <ul class="space-y-4 text-sm text-text-sub mb-8 flex-grow">
-                            <li class="flex items-start"><span class="text-uguisu-light mr-3">✓</span> Lifetime license</li>
+                            <li class="flex items-start"><span class="text-uguisu-light mr-3">✓</span> 3-Year license</li>
                             <li class="flex items-start"><span class="text-uguisu-light mr-3">✓</span> Full access to all features</li>
-                            <li class="flex items-start"><span class="text-uguisu-light mr-3">✓</span> Includes major updates</li>
+                            <li class="flex items-start"><span class="text-uguisu-light mr-3">✓</span> Includes updates during the license term</li>
                         </ul>
                         <a href="#"
                             class="block text-center w-full py-3 border border-dark-border text-text-main font-medium rounded hover:bg-dark-card transition">Select Plan</a>
@@ -598,50 +597,53 @@
                     <div class="border border-dark-border rounded bg-dark-card hover:border-text-muted transition">
                         <button
                             class="accordion-btn w-full px-6 py-5 text-left font-bold text-text-main flex justify-between items-center focus:outline-none">
-                            Does this software perform automated actions or decisions?
+                            Is this automated trading or an AI trading bot?
                             <span class="text-text-muted font-mono text-lg font-normal">+</span>
                         </button>
                         <div class="accordion-content bg-dark-base px-6">
                             <p class="py-5 text-text-sub text-sm leading-relaxed border-t border-dark-border">
-                                No. This software does not include any automation, bots, or decision-making functions. All actions are executed manually by the user.
+                                No. This software does not make trading decisions, generate signals, or execute trades automatically. It is strictly a local execution utility. All order decisions are made by the user, and all actions are manually initiated by the user.
                             </p>
                         </div>
                     </div>
                     <div class="border border-dark-border rounded bg-dark-card hover:border-text-muted transition">
                         <button
                             class="accordion-btn w-full px-6 py-5 text-left font-bold text-text-main flex justify-between items-center focus:outline-none">
-                            Does it communicate with external servers?
+                            Are order commands routed through external servers?
                             <span class="text-text-muted font-mono text-lg font-normal">+</span>
                         </button>
                         <div class="accordion-content bg-dark-base px-6">
                             <p class="py-5 text-text-sub text-sm leading-relaxed border-t border-dark-border">
-                                Communication occurs only for license verification and update checks. No operational data is transmitted externally.
+                                No. Order commands are not routed through public webhook URLs or external cloud relay servers. External communication is limited to license verification, update checks, and payment-related services.
                             </p>
                         </div>
                     </div>
                     <div class="border border-dark-border rounded bg-dark-card hover:border-text-muted transition">
                         <button
                             class="accordion-btn w-full px-6 py-5 text-left font-bold text-text-main flex justify-between items-center focus:outline-none">
-                            What environments does it support?
+                            What environments are required to use this software?
                             <span class="text-text-muted font-mono text-lg font-normal">+</span>
                         </button>
                         <div class="accordion-content bg-dark-base px-6">
                             <p class="py-5 text-text-sub text-sm leading-relaxed border-t border-dark-border">
-                                It is designed for general desktop applications.
+                                You need the TradingView web interface, the provided local bridge application, and your own MT5 terminal running on your local PC.
                             </p>
                         </div>
                     </div>
                     <div class="border border-dark-border rounded bg-dark-card hover:border-text-muted transition">
                         <button
                             class="accordion-btn w-full px-6 py-5 text-left font-bold text-text-main flex justify-between items-center focus:outline-none">
-                            Does it include API or external integrations?
+                            Are you a broker or investment advisor?
                             <span class="text-text-muted font-mono text-lg font-normal">+</span>
                         </button>
                         <div class="accordion-content bg-dark-base px-6">
                             <p class="py-5 text-text-sub text-sm leading-relaxed border-t border-dark-border">
-                                No. This software does not provide direct API connections or external system integrations.
+                                No. We are solely a software developer. We do not provide brokerage services, investment advice, signal distribution, or asset management services.
                             </p>
                         </div>
+                    </div>
+                    <div class="text-center pt-4">
+                        <a href="/continuity/pages/faq.html" class="text-sm font-medium text-text-sub hover:text-uguisu transition">OTHER</a>
                     </div>
                 </div>
 
@@ -666,15 +668,15 @@
                     <ul class="space-y-4 text-sm text-text-sub list-none">
                         <li class="flex items-start">
                             <span class="text-enji-pale mr-3 mt-0.5">-</span>
-                            <span>This software is a general-purpose utility designed to improve operational efficiency within a local PC environment.</span>
+                            <span>This software is a TradingView-embedded local execution utility designed to improve manual execution efficiency within a local PC environment.</span>
                         </li>
                         <li class="flex items-start">
                             <span class="text-enji-pale mr-3 mt-0.5">-</span>
-                            <span>It does not provide financial advice, data services, or investment-related functionality of any kind.</span>
+                            <span>It does not provide financial advice, trading signals, strategy recommendations, automated trading strategies, brokerage services, custody, asset management, or investment performance services.</span>
                         </li>
                         <li class="flex items-start">
                             <span class="text-enji-pale mr-3 mt-0.5">-</span>
-                            <span>The software does not include any features intended to automate actions, guarantee outcomes, or perform operations on behalf of the user.</span>
+                            <span>The software does not include any features intended to automate actions, guarantee outcomes, or perform automated operations on behalf of the user.</span>
                         </li>
                         <li class="flex items-start">
                             <span class="text-enji-pale mr-3 mt-0.5">-</span>
@@ -700,7 +702,7 @@
                     <div id="tab-terms" class="tab-content active text-sm text-text-sub space-y-6 p-2">
                         <div>
                             <p class="leading-relaxed mb-4">This agreement defines the terms of use for the software "Synk Mushroom" provided by Oichi Equipment.</p>
-                            <p class="leading-relaxed mb-4">The software is a utility tool designed to improve operational efficiency within a local PC environment. It does not provide financial advice or investment-related services.</p>
+                            <p class="leading-relaxed mb-4">The software is a TradingView-embedded local execution utility designed to improve manual execution efficiency within a local PC environment. It does not provide financial advice, trading signals, strategy recommendations, automated trading strategies, brokerage services, custody, asset management, or investment performance services.</p>
                             <p class="leading-relaxed mb-4">Users are granted a non-exclusive, non-transferable license for personal use only.</p>
                             <p class="leading-relaxed mb-4">Users are responsible for managing their licenses and purchase information. Unauthorized use may result in suspension.</p>
                             <p class="leading-relaxed mb-4">The company may modify or discontinue the software without prior notice.</p>
@@ -732,7 +734,7 @@
                             <div class="font-medium text-text-main border-t border-dark-border pt-4">Email</div>
                             <div class="sm:col-span-2 text-text-sub border-t border-dark-border pt-4"><a href="mailto:support@oichi-equipment.com" class="hover:text-uguisu transition">support@oichi-equipment.com</a></div>
                             <div class="font-medium text-text-main border-t border-dark-border pt-4">Pricing</div>
-                            <div class="sm:col-span-2 text-text-sub border-t border-dark-border pt-4">Monthly $59 / Annual $540 / Lifetime $1,300</div>
+                            <div class="sm:col-span-2 text-text-sub border-t border-dark-border pt-4">Monthly $59 / Annual $540 / 3-Year $1,300</div>
                             <div class="font-medium text-text-main border-t border-dark-border pt-4">Additional Costs</div>
                             <div class="sm:col-span-2 text-text-sub border-t border-dark-border pt-4">Internet communication fees</div>
                             <div class="font-medium text-text-main border-t border-dark-border pt-4">Payment Method</div>

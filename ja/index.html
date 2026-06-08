@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Synk Mushroom - デスクトップ操作支援ソフトウェア</title>
+    <title>Synk Mushroom - TradingView内蔵型ローカル実行ユーティリティ</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -260,8 +260,7 @@
                     この速さは、もう戻れない
                 </p>
                 <p class="text-base md:text-lg text-text-sub leading-loose max-w-3xl mx-auto mb-10">
-                    Synk Mushroomは、複数のアプリケーション環境における画面操作や入力処理を統合し、<br>
-                    無駄のないPC操作を実現するデスクトップユーティリティです。
+                    Synk Mushroomは、TradingViewの分析画面から、自分のMT5端末へ手動発注するための専用ユーティリティです。<br>ローカルブリッジによるダイレクトな連携が、無駄のない操作感を実現します。
                 </p>
                 <div class="flex flex-col sm:flex-row justify-center items-center gap-4">
                     <a href="#pricing"
@@ -280,9 +279,9 @@
         <section id="problem" class="py-24 md:py-24 bg-dark-card border-t border-dark-border">
             <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-16">
-                    <h2 class="text-3xl font-bold text-text-main mb-6 tracking-wide">分断された操作による遅延</h2>
+                    <h2 class="text-3xl font-bold text-text-main mb-6 tracking-wide">分析と発注の分断</h2>
                     <p class="text-text-sub leading-relaxed max-w-3xl mx-auto">
-                        複数のアプリケーションを同時に操作する際、画面間での視線移動、マウスの移動、ウィンドウのアクティブ化などの物理的なステップが、思考と入力の間に遅延を生み出しています。
+                        TradingViewでチャートを分析し、MT5で手動発注する際、画面間の視線移動やウィンドウの切り替えといった物理的なステップが、思考と実行の間に遅延を生み出しています。
                     </p>
                 </div>
 
@@ -290,28 +289,25 @@
                     <div
                         class="p-4 md:p-8 bg-dark-base border border-dark-border rounded-lg hover:border-text-muted shadow-lg hover:shadow-xl hover:-translate-y-1 transition">
                         <div class="text-text-muted font-mono text-sm mb-4">01.</div>
-                        <h3 class="text-lg font-bold text-text-main mb-3">画面切替えで手が止まる</h3>
+                        <h3 class="text-lg font-bold text-text-main mb-3">画面切替えによるタイムロス</h3>
                         <p class="text-sm text-text-sub leading-relaxed">
-                            画面を切り替えるたびに、操作の流れが一度途切れます。
-                            大きな問題ではないものの、その積み重ねがリズムを崩します。
+                            分析画面から発注画面へ切り替えるたびに、目線の移動やウィンドウ選択が発生し、操作の流れが途切れます。
                         </p>
                     </div>
                     <div
                         class="p-4 md:p-8 bg-dark-base border border-dark-border rounded-lg hover:border-text-muted shadow-lg hover:shadow-xl hover:-translate-y-1 transition">
                         <div class="text-text-muted font-mono text-sm mb-4">02.</div>
-                        <h3 class="text-lg font-bold text-text-main mb-3">同じ操作の繰り返し</h3>
+                        <h3 class="text-lg font-bold text-text-main mb-3">煩雑なロットや決済の計算</h3>
                         <p class="text-sm text-text-sub leading-relaxed">
-                            別の画面でも同じような操作を繰り返す場面が出てきます。
-                            慣れていても、その分だけ動きは増えていきます。
+                            エントリーごとにロットサイズを計算し直したり、複数ポジションの個別決済を繰り返すなど、手動による付帯作業が負担となります。
                         </p>
                     </div>
                     <div
                         class="p-4 md:p-8 bg-dark-base border border-dark-border rounded-lg hover:border-text-muted shadow-lg hover:shadow-xl hover:-translate-y-1 transition">
                         <div class="text-text-muted font-mono text-sm mb-4">03.</div>
-                        <h3 class="text-lg font-bold text-text-main mb-3">操作環境に差がある</h3>
+                        <h3 class="text-lg font-bold text-text-main mb-3">クラウド中継への不安</h3>
                         <p class="text-sm text-text-sub leading-relaxed">
-                            利用する環境や構成によっては、想定している操作環境がそのまま適用できない場合があります。
-                            同じ操作であっても、環境ごとに差が生じることで、一貫した操作性を保つことが難しくなります。
+                            Web API経由の実行は手軽な反面、外部サーバーの障害リスクや、公開Webhookを通じたセキュリティ上の懸念が残ります。
                         </p>
                     </div>
                 </div>
@@ -324,16 +320,16 @@
                 class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-uguisu-bg to-dark-base opacity-50">
             </div>
             <div class="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                <h2 class="text-3xl font-bold text-uguisu-light mb-6 tracking-wide">環境のシームレスな統合</h2>
+                <h2 class="text-3xl font-bold text-uguisu-light mb-6 tracking-wide">ローカルブリッジによる直結</h2>
                 <p class="text-text-main leading-relaxed mb-10 text-lg">
-                    Synk Mushroomは、これらの物理的な操作の障壁を取り除くためのユーティリティです。
-                    ユーザーの手動操作をトリガーとして、ローカルアプリケーションのウィンドウ制御と
-                    入力処理を統合的かつスムーズに処理します。
+                    Synk Mushroomは、TradingView上で裁量判断を行うトレーダーのための実行ユーティリティです。
+                    ユーザーの手動操作をトリガーとし、ローカルPC内の専用ブリッジを経由して、
+                    安全かつダイレクトにMT5への実行をサポートします。
                 </p>
                 <div
                     class="inline-flex items-center gap-3 p-4 border border-dark-border bg-dark-card rounded text-sm text-text-sub">
                     <span class="text-uguisu-light font-bold">i</span>
-                    <span>本ソフトウェアはユーザーの操作を補助するものであり、判断や自動処理は行いません。</span>
+                    <span>本製品は自動売買や投資助言ツールではありません。注文判断と実行操作は完全にユーザー自身が行います。</span>
                 </div>
             </div>
         </section>
@@ -354,11 +350,11 @@
                             </div>
                         </div>
                         <div class="md:w-7/12">
-                            <div class="text-uguisu text-xs font-mono tracking-[0.2em] mb-2">WINDOW MANAGEMENT
+                            <div class="text-uguisu text-xs font-mono tracking-[0.2em] mb-2">TV-EMBEDDED PANEL
                             </div>
-                            <h3 class="text-2xl font-bold text-text-main mb-4">すべてを一箇所で操作する</h3>
+                            <h3 class="text-2xl font-bold text-text-main mb-4">チャート画面から直接操作</h3>
                             <p class="text-text-sub leading-relaxed">
-                                複数の画面を見ながらでも、操作はすべて同じ場所から行えます。必要な操作をまとめて扱えるため、画面を行き来する回数を減らせます。
+                                TradingView画面内にオーバーレイ表示されるパネルから、MT5へ直接手動発注が可能。画面を切り替えることなく、分析から実行までを一箇所で完結させます。
                             </p>
                         </div>
                     </div>
@@ -370,10 +366,10 @@
                             </div>
                         </div>
                         <div class="md:w-7/12">
-                            <div class="text-uguisu text-xs font-mono tracking-[0.2em] mb-2">INPUT PROCESSING</div>
-                            <h3 class="text-2xl font-bold text-text-main mb-4">操作をその場で完結させる</h3>
+                            <div class="text-uguisu text-xs font-mono tracking-[0.2em] mb-2">LOCAL BRIDGE UTILITY</div>
+                            <h3 class="text-2xl font-bold text-text-main mb-4">クラウド中継なしのダイレクト接続</h3>
                             <p class="text-text-sub leading-relaxed">
-                                操作はすべてパネル上で行います。よく使う操作をあらかじめ配置しておくことで、毎回同じ動きを繰り返す必要がなくなります。マウスの移動や画面の切り替えを減らしながら、必要な操作だけをその場で実行できます。
+                                公開Webhook URLや外部の注文中継サーバーを使用せず、ユーザー自身のPC内で動作するローカルブリッジ経由でMT5へコマンドを送信します。
                             </p>
                         </div>
                     </div>
@@ -385,14 +381,11 @@
                             </div>
                         </div>
                         <div class="md:w-7/12">
-                            <div class="text-uguisu text-xs font-mono tracking-[0.2em] mb-2">LOCAL ENVIRONMENT
+                            <div class="text-uguisu text-xs font-mono tracking-[0.2em] mb-2">EVIDENCE VISIBILITY
                             </div>
-                            <h3 class="text-2xl font-bold text-text-main mb-4">遅延を挟まない</h3>
+                            <h3 class="text-2xl font-bold text-text-main mb-4">実行経路の可視化</h3>
                             <p class="text-text-sub leading-relaxed">
-                                すべての処理はローカル環境で完結します。
-                            </p>
-                            <p class="text-text-sub leading-relaxed mt-4">
-                                外部との常時通信に依存しないため、操作に対して安定した反応が得られます。
+                                Evidence Consoleにより、ローカル処理、MT5応答、パネル同期の動作を切り分けて確認可能。サポートおよびデバッグ時の強力な補助となります。
                             </p>
                         </div>
                     </div>
@@ -520,49 +513,19 @@
                     <p class="text-text-sub text-sm">※ すべての決済はセキュリティ基準を満たした外部決済サービスを通じて行われます。</p>
                 </div>
 
-                <div class="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-                    <div class="border border-dark-border rounded-lg p-4 md:p-8 bg-dark-base flex flex-col">
-                        <h3 class="text-lg font-bold text-text-main mb-2">月額プラン</h3>
-                        <div class="text-3xl font-bold text-text-main mb-6">¥7,980 <span
-                                class="text-sm font-normal text-text-muted">/ 月</span></div>
-                        <ul class="space-y-4 text-sm text-text-sub mb-8 flex-grow">
-                            <li class="flex items-start"><span class="text-uguisu-light mr-3">✓</span> 7日間無料トライアル</li>
-                            <li class="flex items-start"><span class="text-uguisu-light mr-3">✓</span> 全機能へのアクセス</li>
-                            <li class="flex items-start"><span class="text-uguisu-light mr-3">✓</span> 継続的なアップデート</li>
-                        </ul>
-                        <button
-                            class="w-full py-3 border border-dark-border text-text-main font-medium rounded hover:bg-dark-card transition">プランを選択</button>
-                    </div>
-
+                <div class="max-w-md mx-auto">
                     <div
-                        class="border border-uguisu-light/50 rounded-lg p-4 md:p-8 bg-dark-base flex flex-col relative ui-glow">
-                        <div
-                            class="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-uguisu text-white px-3 py-1 rounded-full text-[10px] font-bold tracking-widest">
-                            RECOMMENDED</div>
-                        <h3 class="text-lg font-bold text-text-main mb-2">年額プラン</h3>
-                        <div class="text-3xl font-bold text-uguisu mb-6">¥79,800 <span
-                                class="text-sm font-normal text-text-muted">/ 年</span></div>
-                        <ul class="space-y-4 text-sm text-text-main mb-8 flex-grow">
-                            <li class="flex items-start"><span class="text-uguisu-light mr-3">✓</span> 7日間無料トライアル</li>
-                            <li class="flex items-start"><span class="text-uguisu-light mr-3">✓</span> 全機能へのアクセス</li>
-                            <li class="flex items-start"><span class="text-uguisu-light mr-3">✓</span> 継続的なアップデート</li>
-                            <li class="flex items-start"><span class="text-uguisu-light mr-3">✓</span> 月額換算でお得</li>
+                        class="border border-uguisu-light/50 rounded-lg p-6 md:p-10 bg-dark-base flex flex-col relative ui-glow text-center">
+                        <h3 class="text-xl font-bold text-text-main mb-2">日本限定 単年ライセンス</h3>
+                        <div class="text-4xl font-bold text-uguisu mb-6 mt-4">¥198,000 <span
+                                class="text-base font-normal text-text-muted">/ 1年</span></div>
+                        <ul class="space-y-4 text-sm text-text-main mb-10 flex-grow text-left mx-auto">
+                            <li class="flex items-start"><span class="text-uguisu-light mr-3">✓</span> 1年間の利用権</li>
+                            <li class="flex items-start"><span class="text-uguisu-light mr-3">✓</span> 自動更新なし</li>
+                            <li class="flex items-start"><span class="text-uguisu-light mr-3">✓</span> ライセンス期間中のアップデートを含む</li>
                         </ul>
                         <button
-                            class="w-full py-3 bg-uguisu text-dark-base font-bold rounded hover:bg-uguisu-hover transition">プランを選択</button>
-                    </div>
-
-                    <div class="border border-dark-border rounded-lg p-4 md:p-8 bg-dark-base flex flex-col">
-                        <h3 class="text-lg font-bold text-text-main mb-2">買い切りプラン</h3>
-                        <div class="text-3xl font-bold text-text-main mb-6">¥198,000 <span
-                                class="text-sm font-normal text-text-muted">/ 一括</span></div>
-                        <ul class="space-y-4 text-sm text-text-sub mb-8 flex-grow">
-                            <li class="flex items-start"><span class="text-uguisu-light mr-3">✓</span> 永続ライセンス</li>
-                            <li class="flex items-start"><span class="text-uguisu-light mr-3">✓</span> 全機能へのアクセス</li>
-                            <li class="flex items-start"><span class="text-uguisu-light mr-3">✓</span> メジャーアップデート対応</li>
-                        </ul>
-                        <button
-                            class="w-full py-3 border border-dark-border text-text-main font-medium rounded hover:bg-dark-card transition">プランを選択</button>
+                            class="w-full py-4 bg-uguisu text-dark-base font-bold rounded hover:bg-uguisu-hover transition text-lg">プランを選択</button>
                     </div>
                 </div>
             </div>
@@ -637,38 +600,36 @@
                     <div class="border border-dark-border rounded bg-dark-card hover:border-text-muted transition">
                         <button
                             class="accordion-btn w-full px-6 py-5 text-left font-bold text-text-main flex justify-between items-center focus:outline-none">
-                            具体的にどのような環境と連携できますか？
+                            具体的にどのような環境に対応していますか？
                             <span class="text-text-muted font-mono text-lg font-normal">+</span>
                         </button>
                         <div class="accordion-content bg-dark-base px-6">
                             <p class="py-5 text-text-sub text-sm leading-relaxed border-t border-dark-border">
-                                本ソフトウェアは、OS上で動作する一般的なウィンドウアプリケーションを対象とします。<br>
-                                例として、ブラウザベースの分析ツール（例：TradingView）の画面配置と、ローカルアプリケーション（例：MetaTrader
-                                5）の操作入力を配置や操作の効率化を補助する用途などにご利用いただけます。
+                                TradingView（ブラウザまたはデスクトップアプリ）と、ユーザーご自身のPC上で動作するローカルのMetaTrader 5（MT5）との連携をサポートします。
                             </p>
                         </div>
                     </div>
                     <div class="border border-dark-border rounded bg-dark-card hover:border-text-muted transition">
                         <button
                             class="accordion-btn w-full px-6 py-5 text-left font-bold text-text-main flex justify-between items-center focus:outline-none">
-                            APIや外部システムとの接続機能はありますか？
+                            外部システムとの接続機能はありますか？
                             <span class="text-text-muted font-mono text-lg font-normal">+</span>
                         </button>
                         <div class="accordion-content bg-dark-base px-6">
                             <p class="py-5 text-text-sub text-sm leading-relaxed border-t border-dark-border">
-                                本ソフトウェアは外部サービスと直接接続するAPI機能は提供していません。OS上のウィンドウ操作と入力補助に限定されたローカルツールです。
+                                注文コマンドが公開Webhook URLや外部クラウド中継サーバーを経由することはありません。外部通信は、起動時のライセンス有効性確認およびアップデート確認等に限定されています。
                             </p>
                         </div>
                     </div>
                     <div class="border border-dark-border rounded bg-dark-card hover:border-text-muted transition">
                         <button
                             class="accordion-btn w-full px-6 py-5 text-left font-bold text-text-main flex justify-between items-center focus:outline-none">
-                            このソフトは特定の用途に限定されていますか？
+                            自動売買やAIトレード機能はありますか？
                             <span class="text-text-muted font-mono text-lg font-normal">+</span>
                         </button>
                         <div class="accordion-content bg-dark-base px-6">
                             <p class="py-5 text-text-sub text-sm leading-relaxed border-t border-dark-border">
-                                本ソフトウェアは特定の用途に限定されず、複数のアプリケーションを扱う環境で操作性を向上させるための汎用ユーティリティです。
+                                いいえ。本製品は自動売買、AIトレード、投資助言、売買シグナル配信、資産運用サービスではありません。注文判断と実行操作は完全にユーザー自身の手動で行うローカル実行ユーティリティです。
                             </p>
                         </div>
                     </div>
@@ -695,19 +656,19 @@
                     <ul class="space-y-4 text-sm text-text-sub list-none">
                         <li class="flex items-start">
                             <span class="text-enji-pale mr-3 mt-0.5">-</span>
-                            <span>本製品は、ローカルPC環境におけるアプリケーション間の操作性を向上させるための汎用ユーティリティソフトウェアです。</span>
+                            <span>本製品は、TradingViewからMT5への手動発注を補助するためのローカル実行ユーティリティです。</span>
                         </li>
                         <li class="flex items-start">
                             <span class="text-enji-pale mr-3 mt-0.5">-</span>
-                            <span>いかなる形においても、金融商品取引法に基づく投資助言、データ提供、投資運用、またはそれに類するサービスを提供するものではありません。</span>
+                            <span>自動売買、AIトレード、投資助言、売買シグナル配信、ブローカー、または資産運用サービスではありません。</span>
                         </li>
                         <li class="flex items-start">
                             <span class="text-enji-pale mr-3 mt-0.5">-</span>
-                            <span>本ソフトウェアには、市場の優位性を高める機能、利益を保証する機能、または取引処理を自動化・代行する機能（EA、自動売買bot等）は一切含まれていません。</span>
+                            <span>市場の優位性を高める機能、利益を保証する機能、または取引処理を自動化・代行する機能は一切含まれていません。注文判断は完全にユーザー自身が行い、操作は手動で開始されます。</span>
                         </li>
                         <li class="flex items-start">
                             <span class="text-enji-pale mr-3 mt-0.5">-</span>
-                            <span>連携先アプリケーションに対する操作の入力およびソフトウェアへの反映は、すべてユーザーご自身の完全な判断と責任において実行されます。</span>
+                            <span>注文コマンドは公開Webhook URLや外部クラウド中継サーバーを経由しません。</span>
                         </li>
                         <li class="flex items-start">
                             <span class="text-enji-pale mr-3 mt-0.5">-</span>
@@ -716,7 +677,7 @@
                         </li>
                         <li class="flex items-start">
                             <span class="text-enji-pale mr-3 mt-0.5">-</span>
-                            <span>本ソフトウェアは金融市場データの提供、注文処理、またはブローカーとの直接的な通信機能を提供しません。</span>
+                            <span>外部通信はライセンス認証、アップデート確認、決済関連サービスなどに限定されます。</span>
                         </li>
                     </ul>
                 </div>
@@ -744,7 +705,7 @@
                         <div>
                             <h4 class="font-bold text-text-main mb-2">第2条（本ソフトウェアの性質）</h4>
                             <p class="leading-relaxed">
-                                本ソフトウェアは、ユーザーのローカルPC環境における操作性を向上させるためのユーティリティツールです。投資助言、金融データ提供、投資運用、またはそれに類するサービスを提供するものではありません。
+                                本ソフトウェアは、ユーザーの手動操作をトリガーとするローカル実行ユーティリティです。自動売買、AIトレード、投資助言、金融データ提供、投資運用、またはそれに類するサービスを提供するものではありません。
                             </p>
                         </div>
                         <div>
@@ -870,8 +831,7 @@
                             <div class="sm:col-span-2 text-text-sub border-t border-dark-border pt-4">
                                 support@oichi-equipment.com</div>
                             <div class="font-medium text-text-main border-t border-dark-border pt-4">販売価格</div>
-                            <div class="sm:col-span-2 text-text-sub border-t border-dark-border pt-4">月額 ¥7,980、年額
-                                ¥79,800、買い切り ¥198,000</div>
+                            <div class="sm:col-span-2 text-text-sub border-t border-dark-border pt-4">日本限定 単年ライセンス ¥198,000（1年間）</div>
                             <div class="font-medium text-text-main border-t border-dark-border pt-4">必要料金</div>
                             <div class="sm:col-span-2 text-text-sub border-t border-dark-border pt-4">
                                 ソフトウェアのダウンロードおよび利用に伴うインターネット通信料</div>
@@ -880,15 +840,14 @@
                                 外部決済サービスによるクレジットカード決済等</div>
                             <div class="font-medium text-text-main border-t border-dark-border pt-4">支払時期</div>
                             <div class="sm:col-span-2 text-text-sub border-t border-dark-border pt-4">
-                                月額/年額プラン：7日間の無料トライアル終了後に初回決済。<br>買い切りプラン：購入申し込み時に一括決済。</div>
+                                単年ライセンス：購入申し込み時に一括決済。</div>
                             <div class="font-medium text-text-main border-t border-dark-border pt-4">引渡時期</div>
                             <div class="sm:col-span-2 text-text-sub border-t border-dark-border pt-4">
                                 決済手続き完了後、マイページより直ちにダウンロード可能。</div>
                             <div class="font-medium text-text-main border-t border-dark-border pt-4">返品・キャンセル</div>
                             <div class="sm:col-span-2 text-text-sub border-t border-dark-border pt-4 leading-relaxed">
                                 デジタルコンテンツという商品の性質上、購入後の返品・返金には一切応じられません。<br>
-                                ・月額/年額プラン：解約はいつでも可能。解約後の日割り計算等の返金はいたしません。<br>
-                                ・買い切りプラン：購入後のキャンセル・返金不可。
+                                ・単年ライセンス：購入後のキャンセル・返金不可（自動更新はありません）。
                             </div>
                         </div>
                     </div>
