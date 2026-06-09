@@ -226,15 +226,15 @@
         <!-- Hero: Underground Terminal Opener -->
         <header class="w-full h-screen flex flex-col items-center justify-center relative mb-24">
             <div class="absolute inset-0 z-0">
-                <img src="https://placehold.co/2000x1200/0a0a0a/1a1a1a?text=+" alt="Dark environment" class="w-full h-full object-cover opacity-40 mix-blend-screen grayscale">
+                <img src="assets/TEST-HERO.avif" alt="Underground Terminal" class="w-full h-full object-cover opacity-40">
                 <!-- Vignette effect -->
                 <div class="absolute inset-0 bg-gradient-to-b from-black via-transparent to-black"></div>
                 <div class="absolute inset-0 bg-gradient-to-r from-black via-transparent to-black"></div>
             </div>
             
-            <div class="z-10 text-center mix-blend-difference -mt-20">
-                <div class="font-mono text-xs text-[#8abf36] tracking-[0.2em] uppercase mb-6 opacity-70">Synk Mushroom</div>
-                <h1 class="font-serif text-4xl md:text-6xl text-zinc-300 font-light tracking-widest uppercase">
+            <div class="relative z-20 text-center -mt-20">
+                <div class="font-mono text-xs text-[#8abf36] tracking-[0.2em] uppercase mb-6 opacity-100 drop-shadow-md">Synk Mushroom</div>
+                <h1 class="font-serif text-4xl md:text-6xl text-zinc-100 font-light tracking-widest uppercase opacity-100 drop-shadow-[0_4px_12px_rgba(0,0,0,0.8)]">
                     The Continuity<br>Layer
                 </h1>
             </div>
@@ -759,9 +759,18 @@
                 <div class="font-serif text-2xl md:text-4xl text-[#d1d1d6] font-light tracking-widest mb-16 uppercase text-center w-full">Contact</div>
                 <div class="branch right mb-12">
                     <div class="text-fragment flex flex-col gap-3">
-                        <a href="#" class="terminal-link fragment-desc block">Support Channel.</a>
-                        <a href="#" class="terminal-link fragment-desc block">Deployment Contact.</a>
-                        <a href="#" class="terminal-link fragment-desc block">Infrastructure Inquiry.</a>
+                        <a href="mailto:support@oichi-equipment.com?subject=Support%20Channel&body=Product%3A%0D%0ALicense%20email%3A%0D%0AEnvironment%3A%0D%0AIssue%3A%0D%0ASteps%20already%20tried%3A" class="group relative terminal-link fragment-desc block">
+                            Support Channel.
+                            <span class="absolute right-full pr-3 top-1/2 -translate-y-1/2 opacity-0 lg:group-hover:opacity-100 transition-opacity duration-500 fragment-desc whitespace-nowrap pointer-events-none">Prepare support mail -</span>
+                        </a>
+                        <a href="mailto:support@oichi-equipment.com?subject=Deployment%20Contact&body=Product%3A%0D%0AIntended%20environment%3A%0D%0AMT5%20broker%20or%20terminal%3A%0D%0ATradingView%20usage%3A%0D%0AQuestion%3A" class="group relative terminal-link fragment-desc block">
+                            Deployment Contact.
+                            <span class="absolute right-full pr-3 top-1/2 -translate-y-1/2 opacity-0 lg:group-hover:opacity-100 transition-opacity duration-500 fragment-desc whitespace-nowrap pointer-events-none">Prepare deployment mail -</span>
+                        </a>
+                        <a href="mailto:support@oichi-equipment.com?subject=Infrastructure%20Inquiry&body=Topic%3A%0D%0ASystem%20or%20service%20involved%3A%0D%0ATechnical%20context%3A%0D%0AQuestion%3A" class="group relative terminal-link fragment-desc block">
+                            Infrastructure Inquiry.
+                            <span class="absolute right-full pr-3 top-1/2 -translate-y-1/2 opacity-0 lg:group-hover:opacity-100 transition-opacity duration-500 fragment-desc whitespace-nowrap pointer-events-none">Prepare infrastructure mail -</span>
+                        </a>
                     </div>
                 </div>
             </div>
