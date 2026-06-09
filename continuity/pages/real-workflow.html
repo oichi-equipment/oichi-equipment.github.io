@@ -52,6 +52,25 @@
         .terminal-link:hover {
             color: #739735;
         }
+
+        .fragment-desc {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.85rem;
+            line-height: 1.6;
+            color: #a1a1aa;
+        }
+        .subpage-title {
+            color: #d1d1d6;
+        }
+        .subpage-meta {
+            color: #739735;
+        }
+        .subpage-divider {
+            background-color: #18181b;
+        }
+        .subpage-note {
+            color: #a1a1aa;
+        }
     </style>
 </head>
 <body class="font-sans antialiased selection:bg-accent selection:text-white relative">
@@ -61,25 +80,25 @@
         <div class="w-full max-w-2xl flex flex-col items-start">
             
             <!-- Navigation -->
-            <a href="../index.html#faq" class="terminal-link font-mono text-[0.7rem] text-zinc-600 hover:text-[#739735] tracking-[0.2em] uppercase flex items-center gap-2 mb-16 inline-flex">
+            <a href="../index.html#faq" class="terminal-link fragment-desc font-mono text-[0.7rem] tracking-[0.2em] uppercase flex items-center gap-2 mb-16 inline-flex">
                 <span>←</span> BACK TO INDEX
             </a>
 
             <!-- Document Meta Label -->
-            <div class="font-mono text-[0.65rem] text-[#739735] tracking-[0.25em] uppercase mb-4">
+            <div class="font-mono text-[0.65rem] subpage-meta tracking-[0.25em] uppercase mb-4">
                 ARCHIVE DOCUMENT // REF_WKF // OICHI EQUIPMENT
             </div>
 
             <!-- Page Title -->
-            <h1 class="font-serif text-3xl md:text-4xl text-zinc-100 font-light tracking-wide mb-6">
+            <h1 class="font-serif text-3xl md:text-4xl subpage-title font-light tracking-wide mb-6">
                 Real Workflow
             </h1>
 
             <!-- Divider -->
-            <div class="w-full h-[1px] bg-zinc-900 mb-10"></div>
+            <div class="w-full h-[1px] subpage-divider mb-10"></div>
 
             <!-- Quiet Document Flow -->
-            <div class="font-sans text-sm md:text-base text-zinc-400 leading-relaxed space-y-8 max-w-full text-justify">
+            <div class="fragment-desc space-y-8 max-w-full text-justify">
                 <p>
                     The intended workflow is simple: analyze on TradingView, decide manually, execute through the connected MT5 environment.
                 </p>
@@ -95,25 +114,25 @@
                 <p>
                     The workflow remains human. Responsibility remains human. The infrastructure remains quiet.
                 </p>
-                <p class="text-zinc-500 text-sm border-l border-zinc-800 pl-4 py-1">
+                <p class="subpage-note text-sm border-l border-zinc-800 pl-4 py-1">
                     This page may later link to YouTube execution archive videos:<br>
-                    <a href="https://youtube.com/@oichiequipment?si=QMrwPAN9fWnktAkJ" target="_blank" rel="noopener noreferrer" class="terminal-link text-[#739735] font-mono text-xs tracking-wider inline-block mt-2 hover:underline">
+                    <a href="https://youtube.com/@oichiequipment?si=QMrwPAN9fWnktAkJ" target="_blank" rel="noopener noreferrer" class="terminal-link fragment-desc font-mono text-xs tracking-wider inline-block mt-2">
                         youtube.com/@oichiequipment
                     </a>
                 </p>
             </div>
 
             <!-- Discrete Footer Navigation -->
-            <div class="w-full h-[1px] bg-zinc-900 mt-24 mb-10"></div>
-            <a href="../index.html#faq" class="terminal-link font-mono text-[0.65rem] text-zinc-600 hover:text-[#739735] tracking-[0.2em] uppercase mb-16 self-center">
+            <div class="w-full h-[1px] subpage-divider mt-24 mb-10"></div>
+            <a href="../index.html#faq" class="terminal-link fragment-desc font-mono text-[0.65rem] tracking-[0.2em] uppercase mb-16 self-center">
                 [ RETURN TO SYSTEM INDEX ]
             </a>
 
             <!-- Footer -->
             <footer class="w-full flex flex-col items-center">
-                <div class="font-mono text-[0.7rem] text-[#739735] tracking-[0.2em] uppercase mb-2">Oichi Equipment</div>
-                <div class="font-mono text-[0.6rem] text-[#71717a] tracking-[0.2em] uppercase leading-relaxed text-center">
-                    &copy; 2026 Oichi Equipment. All rights reserved.
+                <div class="font-mono text-xs text-[#739735] tracking-[0.2em] uppercase mb-2">Oichi Equipment</div>
+                <div class="font-mono text-[0.55rem] text-[#71717a] tracking-[0.2em] uppercase leading-relaxed text-center">
+                    &copy; 2026 Oichi Equipment.<br>All rights reserved.
                 </div>
             </footer>
         </div>

@@ -52,6 +52,25 @@
         .terminal-link:hover {
             color: #739735;
         }
+
+        .fragment-desc {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.85rem;
+            line-height: 1.6;
+            color: #a1a1aa;
+        }
+        .subpage-title {
+            color: #d1d1d6;
+        }
+        .subpage-meta {
+            color: #739735;
+        }
+        .subpage-divider {
+            background-color: #18181b;
+        }
+        .subpage-note {
+            color: #a1a1aa;
+        }
     </style>
 </head>
 <body class="font-sans antialiased selection:bg-accent selection:text-white relative">
@@ -61,59 +80,58 @@
         <div class="w-full max-w-2xl flex flex-col items-start">
             
             <!-- Navigation -->
-            <a href="../index.html#about" class="terminal-link font-mono text-[0.7rem] text-zinc-600 hover:text-[#739735] tracking-[0.2em] uppercase flex items-center gap-2 mb-16 inline-flex">
+            <a href="../index.html#about" class="terminal-link fragment-desc font-mono text-[0.7rem] tracking-[0.2em] uppercase flex items-center gap-2 mb-16 inline-flex">
                 <span>←</span> BACK TO INDEX
             </a>
 
             <!-- Document Meta Label -->
-            <div class="font-mono text-[0.65rem] text-[#739735] tracking-[0.25em] uppercase mb-4">
+            <div class="font-mono text-[0.65rem] subpage-meta tracking-[0.25em] uppercase mb-4">
                 ARCHIVE DOCUMENT // REF_ORG // OICHI EQUIPMENT
             </div>
 
             <!-- Page Title -->
-            <h1 class="font-serif text-3xl md:text-4xl text-zinc-100 font-light tracking-wide mb-6">
+            <h1 class="font-serif text-3xl md:text-4xl subpage-title font-light tracking-wide mb-6">
                 Origin Archive
             </h1>
 
             <!-- Divider -->
-            <div class="w-full h-[1px] bg-zinc-900 mb-10"></div>
+            <div class="w-full h-[1px] subpage-divider mb-10"></div>
 
             <!-- Quiet Document Flow -->
-            <div class="font-sans text-sm md:text-base text-zinc-400 leading-relaxed space-y-8 max-w-full text-justify">
+            <div class="fragment-desc space-y-8 max-w-full text-justify">
                 <p>
-                    The origin of Synk Mushroom began with a simple frustration: TradingView was excellent as an analytical environment, but execution freedom was limited.
-                </p>
-                <p class="font-serif text-zinc-200 text-lg md:text-xl tracking-wide border-l border-zinc-800 pl-4 py-1 italic">
-                    The problem was not the chart. The problem was the fracture between charting and execution.
+                    The origin began with a practical fracture. TradingView is excellent as an analytical surface. MT5 remains the real execution terminal for many traders.
                 </p>
                 <p>
-                    TradingView offered a strong visual and analytical environment, but many traders still needed MetaTrader 5 brokers, high leverage environments, preferred execution conditions, or specific account structures.
+                    Many preferred brokers, account types, leverage structures, and execution environments live outside official TradingView broker connections. The problem is not that TradingView is weak, nor that MT5 is unnecessary. The problem is the fracture between the analytical surface and the execution terminal.
                 </p>
                 <p>
-                    The original frustration was: why should using a better charting environment force the trader to abandon execution freedom?
+                    Window switching, Alt+Tab, cursor movement, visual context loss, and order panel hunting create friction. This friction appears exactly when the trader must act. The chart that produced the decision should not disappear at the moment of execution.
                 </p>
                 <p>
-                    Synk Mushroom emerged from that fracture.
+                    Webhooks solve alert transport, not manual execution presence. Automation solves a different problem. Synk Mushroom was not built to replace discretion. It was built to keep manual action close to the chart.
                 </p>
                 <p>
-                    It was not created to automate trading. It was created to preserve the trader’s environment.
+                    The missing piece was a local execution layer. TradingView remains the cockpit. MT5 remains the engine. Synk Mushroom exists between them as continuity infrastructure.
                 </p>
-                <p>
-                    TradingView remains the surface. MT5 remains the execution layer. Synk Mushroom exists in between as continuity infrastructure.
+                <p class="font-serif subpage-note text-lg md:text-xl tracking-wide border-l border-zinc-800 pl-4 py-1 italic">
+                    The problem was not the chart. The problem was the fracture between decision and execution.
                 </p>
             </div>
 
             <!-- Discrete Footer Navigation -->
-            <div class="w-full h-[1px] bg-zinc-900 mt-24 mb-10"></div>
-            <a href="../index.html#about" class="terminal-link font-mono text-[0.65rem] text-zinc-600 hover:text-[#739735] tracking-[0.2em] uppercase mb-16 self-center">
-                [ RETURN TO SYSTEM INDEX ]
-            </a>
+            <div class="w-full h-[1px] subpage-divider mt-24 mb-10"></div>
+            <div class="w-full grid grid-cols-[1fr_auto_1fr] items-center mb-16">
+                <a href="oichi-equipment.html" class="terminal-link fragment-desc font-mono text-[0.65rem] tracking-[0.2em] uppercase justify-self-end pr-6">Oichi Equipment</a>
+                <span class="fragment-desc font-mono text-[0.65rem] tracking-[0.2em] uppercase pointer-events-none justify-self-center">|</span>
+                <a href="continuity-philosophy.html" class="terminal-link fragment-desc font-mono text-[0.65rem] tracking-[0.2em] uppercase justify-self-start pl-6">Continuity Philosophy</a>
+            </div>
 
             <!-- Footer -->
             <footer class="w-full flex flex-col items-center">
-                <div class="font-mono text-[0.7rem] text-[#739735] tracking-[0.2em] uppercase mb-2">Oichi Equipment</div>
-                <div class="font-mono text-[0.6rem] text-[#71717a] tracking-[0.2em] uppercase leading-relaxed text-center">
-                    &copy; 2026 Oichi Equipment. All rights reserved.
+                <div class="font-mono text-xs text-[#739735] tracking-[0.2em] uppercase mb-2">Oichi Equipment</div>
+                <div class="font-mono text-[0.55rem] text-[#71717a] tracking-[0.2em] uppercase leading-relaxed text-center">
+                    &copy; 2026 Oichi Equipment.<br>All rights reserved.
                 </div>
             </footer>
         </div>

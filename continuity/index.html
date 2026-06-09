@@ -129,8 +129,8 @@
         }
 
         .title-core {
-            font-family: 'Inter', sans-serif;
-            font-size: clamp(1.1rem, 2.5vw, 1.75rem);
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(1.75rem, 3vw, 2rem);
             font-weight: 300;
             color: #e4e4e7;
             text-align: center;
@@ -213,15 +213,15 @@
             color: #a1a1aa;
         }
 
-        .faq-group:has(.faq-hover-trigger:hover) .faq-archive-link { color: #b8a46a !important; }
-        .faq-archive-link:hover { color: #b8a46a !important; }
+        .faq-group:has(.faq-hover-trigger:hover) .faq-archive-link { color: #e38707 !important; }
+        .faq-archive-link:hover { color: #e38707 !important; }
     </style>
 </head>
 <body class="font-sans antialiased selection:bg-accent selection:text-white relative">
 
     <div class="noise-overlay"></div>
 
-    <main class="w-full min-h-screen relative pb-8 overflow-hidden">
+    <main id="top" class="w-full min-h-screen relative pb-8 overflow-hidden">
         
         <!-- Hero: Underground Terminal Opener -->
         <header class="w-full h-screen flex flex-col items-center justify-center relative mb-24">
@@ -233,7 +233,7 @@
             </div>
             
             <div class="z-10 text-center mix-blend-difference -mt-20">
-                <div class="font-mono text-xs text-[#739735] tracking-[0.2em] uppercase mb-6 opacity-70">Synk Mushroom</div>
+                <div class="font-mono text-xs text-[#8abf36] tracking-[0.2em] uppercase mb-6 opacity-70">Synk Mushroom</div>
                 <h1 class="font-serif text-4xl md:text-6xl text-zinc-300 font-light tracking-widest uppercase">
                     The Continuity<br>Layer
                 </h1>
@@ -250,7 +250,7 @@
             <!-- Node 01: Default density -->
             <div class="node-block">
                 <div class="number-core">01</div>
-                <div class="title-core">TradingView Should Control MT5</div>
+                <div class="title-core">TradingView as the Control Surface</div>
                 <div class="branch left">
                     <div class="text-fragment">
                         <div class="fragment-meta">
@@ -280,7 +280,7 @@
             <!-- Node 03: Default density (descender) -->
             <div class="node-block">
                 <div class="number-core digit-descender">03</div>
-                <div class="title-core">High-Leverage MT5, Still Yours</div>
+                <div class="title-core">High Leverage MT5, Still Yours</div>
                 <div class="branch left">
                     <div class="text-fragment">
                         <div class="fragment-meta">
@@ -296,7 +296,7 @@
             <div class="node-block">
                 <!-- MODIFIED: 4を含むためディセンダーとして扱い、理想的な見え方を維持 -->
                 <div class="number-core digit-descender">04</div>
-                <div class="title-core">Full-Screen TradingView Cockpit</div>
+                <div class="title-core">Full Screen TradingView Cockpit</div>
                 <div class="branch right">
                     <div class="text-fragment">
                         <div class="fragment-meta">
@@ -311,7 +311,7 @@
             <!-- Node 05: Default density (descender) -->
             <div class="node-block">
                 <div class="number-core digit-descender">05</div>
-                <div class="title-core">Kill The Alt+Tab Tax</div>
+                <div class="title-core">Kill the Alt+Tab Tax</div>
                 <div class="branch left">
                     <div class="text-fragment">
                         <div class="fragment-meta">
@@ -341,7 +341,7 @@
             <!-- Node 07: Default density (descender) -->
             <div class="node-block">
                 <div class="number-core digit-descender">07</div>
-                <div class="title-core">Not An EA In Disguise</div>
+                <div class="title-core">Not an EA in Disguise</div>
                 <div class="branch left">
                     <div class="text-fragment">
                         <div class="fragment-meta">
@@ -356,7 +356,7 @@
             <!-- Node 08: Default density -->
             <div class="node-block">
                 <div class="number-core">08</div>
-                <div class="title-core">The Broker Stays MT5</div>
+                <div class="title-core">The Broker Remains MT5</div>
                 <div class="branch right">
                     <div class="text-fragment">
                         <div class="fragment-meta">
@@ -401,7 +401,7 @@
             <!-- Node 11: Default density -->
             <div class="node-block">
                 <div class="number-core">11</div>
-                <div class="title-core">Cloud Relay Breaks The Feel</div>
+                <div class="title-core">Cloud Relay Breaks the Feel</div>
                 <div class="branch left">
                     <div class="text-fragment">
                         <div class="fragment-meta">
@@ -416,7 +416,7 @@
             <!-- Node 12: spacing-airy (short title, standard digit, short desc) -->
             <div class="node-block spacing-airy">
                 <div class="number-core">12</div>
-                <div class="title-core">Existing Tools Aim At Bots</div>
+                <div class="title-core">Existing Tools Aim at Bots</div>
                 <div class="branch right">
                     <div class="text-fragment">
                         <div class="fragment-meta">
@@ -461,7 +461,7 @@
             <!-- Node 15: Default density (descender) -->
             <div class="node-block">
                 <div class="number-core digit-descender">15</div>
-                <div class="title-core">The Panel Belongs On The Chart</div>
+                <div class="title-core">The Panel Belongs on the Chart</div>
                 <div class="branch left">
                     <div class="text-fragment">
                         <div class="fragment-meta">
@@ -476,7 +476,7 @@
             <!-- Node 16: Default density -->
             <div class="node-block">
                 <div class="number-core">16</div>
-                <div class="title-core">BUY / SELL From The Chart</div>
+                <div class="title-core">Buy and Sell from the Chart</div>
                 <div class="branch right">
                     <div class="text-fragment">
                         <div class="fragment-meta">
@@ -491,7 +491,7 @@
             <!-- Node 17: Default density (descender) -->
             <div class="node-block">
                 <div class="number-core digit-descender">17</div>
-                <div class="title-core">Pending Orders In The Cockpit</div>
+                <div class="title-core">Pending Orders in the Cockpit</div>
                 <div class="branch left">
                     <div class="text-fragment">
                         <div class="fragment-meta">
@@ -506,7 +506,7 @@
             <!-- Node 18: spacing-airy (standard digit, short desc) -->
             <div class="node-block spacing-airy">
                 <div class="number-core">18</div>
-                <div class="title-core">SL / TP Without Leaving Flow</div>
+                <div class="title-core">Stops and Targets Without Leaving Flow</div>
                 <div class="branch right">
                     <div class="text-fragment">
                         <div class="fragment-meta">
@@ -521,7 +521,7 @@
             <!-- Node 19: Default density (descender) -->
             <div class="node-block">
                 <div class="number-core digit-descender">19</div>
-                <div class="title-core">Close Is A Moment</div>
+                <div class="title-core">Close Is a Moment</div>
                 <div class="branch left">
                     <div class="text-fragment">
                         <div class="fragment-meta">
@@ -551,7 +551,7 @@
             <!-- Node 21: Default density -->
             <div class="node-block">
                 <div class="number-core">21</div>
-                <div class="title-core">Your MT5 Terminal Stays The Engine</div>
+                <div class="title-core">Your MT5 Terminal Stays the Engine</div>
                 <div class="branch left">
                     <div class="text-fragment">
                         <div class="fragment-meta">
@@ -596,7 +596,7 @@
             <!-- Node 24: Default density (descender) -->
             <div class="node-block">
                 <div class="number-core digit-descender">24</div>
-                <div class="title-core">Evidence Beneath The Button</div>
+                <div class="title-core">Evidence Beneath the Button</div>
                 <div class="branch right">
                     <div class="text-fragment">
                         <div class="fragment-meta">
@@ -611,7 +611,7 @@
             <!-- Node 25: Default density (descender) -->
             <div class="node-block">
                 <div class="number-core digit-descender">25</div>
-                <div class="title-core">Layer Latency</div>
+                <div class="title-core">Latency by Layer</div>
                 <div class="branch left">
                     <div class="text-fragment">
                         <div class="fragment-meta">
@@ -802,5 +802,31 @@
         </div>
     </main>
 
+    <a href="#top" id="top-return-arrow" class="fixed bottom-12 right-12 z-40 opacity-0 pointer-events-none transition-opacity duration-500 terminal-link fragment-desc">↑</a>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const topReturnArrow = document.getElementById('top-return-arrow');
+            const faqSection = document.getElementById('faq');
+
+            if (topReturnArrow && faqSection) {
+                window.addEventListener('scroll', () => {
+                    // Show arrow when scrolling past the FAQ section's top position
+                    if (window.scrollY >= faqSection.offsetTop - window.innerHeight / 2) {
+                        topReturnArrow.classList.remove('opacity-0', 'pointer-events-none');
+                        topReturnArrow.classList.add('opacity-100', 'pointer-events-auto');
+                    } else {
+                        topReturnArrow.classList.remove('opacity-100', 'pointer-events-auto');
+                        topReturnArrow.classList.add('opacity-0', 'pointer-events-none');
+                    }
+                });
+
+                topReturnArrow.addEventListener('click', (event) => {
+                    event.preventDefault();
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                });
+            }
+        });
+    </script>
 </body>
 </html>

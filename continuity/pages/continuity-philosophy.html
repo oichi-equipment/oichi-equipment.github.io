@@ -52,6 +52,25 @@
         .terminal-link:hover {
             color: #739735;
         }
+
+        .fragment-desc {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.85rem;
+            line-height: 1.6;
+            color: #a1a1aa;
+        }
+        .subpage-title {
+            color: #d1d1d6;
+        }
+        .subpage-meta {
+            color: #739735;
+        }
+        .subpage-divider {
+            background-color: #18181b;
+        }
+        .subpage-note {
+            color: #a1a1aa;
+        }
     </style>
 </head>
 <body class="font-sans antialiased selection:bg-accent selection:text-white relative">
@@ -61,59 +80,67 @@
         <div class="w-full max-w-2xl flex flex-col items-start">
             
             <!-- Navigation -->
-            <a href="../index.html#about" class="terminal-link font-mono text-[0.7rem] text-zinc-600 hover:text-[#739735] tracking-[0.2em] uppercase flex items-center gap-2 mb-16 inline-flex">
+            <a href="../index.html#about" class="terminal-link fragment-desc font-mono text-[0.7rem] tracking-[0.2em] uppercase flex items-center gap-2 mb-16 inline-flex">
                 <span>←</span> BACK TO INDEX
             </a>
 
             <!-- Document Meta Label -->
-            <div class="font-mono text-[0.65rem] text-[#739735] tracking-[0.25em] uppercase mb-4">
+            <div class="font-mono text-[0.65rem] subpage-meta tracking-[0.25em] uppercase mb-4">
                 ARCHIVE DOCUMENT // REF_PHL // OICHI EQUIPMENT
             </div>
 
             <!-- Page Title -->
-            <h1 class="font-serif text-3xl md:text-4xl text-zinc-100 font-light tracking-wide mb-6">
+            <h1 class="font-serif text-3xl md:text-4xl subpage-title font-light tracking-wide mb-6">
                 Continuity Philosophy
             </h1>
 
             <!-- Divider -->
-            <div class="w-full h-[1px] bg-zinc-900 mb-10"></div>
+            <div class="w-full h-[1px] subpage-divider mb-10"></div>
 
             <!-- Quiet Document Flow -->
-            <div class="font-sans text-sm md:text-base text-zinc-400 leading-relaxed space-y-8 max-w-full text-justify">
+            <div class="fragment-desc space-y-8 max-w-full text-justify">
                 <p>
                     Synk Mushroom is built around continuity.
                 </p>
                 <p>
-                    Workflow continuity means that analysis, decision, execution, and review should not be broken by unnecessary interface switching.
+                    Workflow continuity means analysis, decision, execution, response, and review should remain connected. Unnecessary interface switching weakens the flow.
                 </p>
                 <p>
-                    Cognitive continuity means the trader’s state of attention should remain intact. The environment that produced the decision should not collapse at the moment of execution.
+                    Cognitive continuity means decisions are made inside attention. If the environment collapses at execution, part of the decision context is lost. Synk Mushroom protects attention from avoidable interface jumps.
                 </p>
                 <p>
-                    Execution continuity means that MT5 execution remains available without forcing the trader to abandon TradingView.
+                    Execution continuity means TradingView remains the decision surface and MT5 remains the execution terminal. Synk Mushroom exists between them as an execution route, not as an automated strategy.
                 </p>
                 <p>
-                    Discretion remains human. Synk Mushroom does not replace the trader, does not decide trades, does not provide signals, and does not guarantee outcomes.
+                    Local continuity means the route stays local. No public webhook endpoint is created for order commands. The user’s own terminal and local environment remain the operating base.
                 </p>
                 <p>
-                    The ideal infrastructure is quiet. It supports the workflow without becoming the center of attention.
+                    Evidence continuity means execution should leave a trace. Synk Evidence Console exists because timing, response, and local route behavior should be observable. Evidence does not guarantee outcomes. Evidence clarifies responsibility boundaries.
                 </p>
-                <p class="font-serif text-zinc-200 text-lg md:text-xl tracking-wide py-4 border-l border-zinc-800 pl-6 leading-relaxed">
-                    Synk Mushroom is not trading automation. It is discretionary trading infrastructure.
+                <p>
+                    Human discretion continuity means the human still presses. The system does not decide. The system does not advise. The system does not promise. The final action belongs to the trader.
+                </p>
+                <p>
+                    The ideal infrastructure is quiet and supports the workflow without becoming the center of attention.
+                </p>
+                <p class="font-serif subpage-note text-lg md:text-xl tracking-wide py-4 border-l border-zinc-800 pl-6 leading-relaxed">
+                    Continuity is not automation. It is the preservation of the path between attention, decision, action, response, and evidence.
                 </p>
             </div>
 
             <!-- Discrete Footer Navigation -->
-            <div class="w-full h-[1px] bg-zinc-900 mt-24 mb-10"></div>
-            <a href="../index.html#about" class="terminal-link font-mono text-[0.65rem] text-zinc-600 hover:text-[#739735] tracking-[0.2em] uppercase mb-16 self-center">
-                [ RETURN TO SYSTEM INDEX ]
-            </a>
+            <div class="w-full h-[1px] subpage-divider mt-24 mb-10"></div>
+            <div class="w-full grid grid-cols-[1fr_auto_1fr] items-center mb-16">
+                <a href="oichi-equipment.html" class="terminal-link fragment-desc font-mono text-[0.65rem] tracking-[0.2em] uppercase justify-self-end pr-6">Oichi Equipment</a>
+                <span class="fragment-desc font-mono text-[0.65rem] tracking-[0.2em] uppercase pointer-events-none justify-self-center">|</span>
+                <a href="origin-archive.html" class="terminal-link fragment-desc font-mono text-[0.65rem] tracking-[0.2em] uppercase justify-self-start pl-6">Origin Archive</a>
+            </div>
 
             <!-- Footer -->
             <footer class="w-full flex flex-col items-center">
-                <div class="font-mono text-[0.7rem] text-[#739735] tracking-[0.2em] uppercase mb-2">Oichi Equipment</div>
-                <div class="font-mono text-[0.6rem] text-[#71717a] tracking-[0.2em] uppercase leading-relaxed text-center">
-                    &copy; 2026 Oichi Equipment. All rights reserved.
+                <div class="font-mono text-xs text-[#739735] tracking-[0.2em] uppercase mb-2">Oichi Equipment</div>
+                <div class="font-mono text-[0.55rem] text-[#71717a] tracking-[0.2em] uppercase leading-relaxed text-center">
+                    &copy; 2026 Oichi Equipment.<br>All rights reserved.
                 </div>
             </footer>
         </div>

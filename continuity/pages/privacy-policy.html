@@ -52,6 +52,25 @@
         .terminal-link:hover {
             color: #739735;
         }
+
+        .fragment-desc {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.85rem;
+            line-height: 1.6;
+            color: #a1a1aa;
+        }
+        .subpage-title {
+            color: #d1d1d6;
+        }
+        .subpage-meta {
+            color: #739735;
+        }
+        .subpage-divider {
+            background-color: #18181b;
+        }
+        .subpage-note {
+            color: #a1a1aa;
+        }
     </style>
 </head>
 <body class="font-sans antialiased selection:bg-accent selection:text-white relative">
@@ -61,62 +80,103 @@
         <div class="w-full max-w-2xl flex flex-col items-start">
             
             <!-- Navigation -->
-            <a href="../index.html#legal" class="terminal-link font-mono text-[0.7rem] text-zinc-600 hover:text-[#739735] tracking-[0.2em] uppercase flex items-center gap-2 mb-16 inline-flex">
+            <a href="../index.html#legal" class="terminal-link fragment-desc font-mono text-[0.7rem] tracking-[0.2em] uppercase flex items-center gap-2 mb-16 inline-flex">
                 <span>←</span> BACK TO INDEX
             </a>
 
             <!-- Document Meta Label -->
-            <div class="font-mono text-[0.65rem] text-[#739735] tracking-[0.25em] uppercase mb-4">
+            <div class="font-mono text-[0.65rem] subpage-meta tracking-[0.25em] uppercase mb-4">
                 ARCHIVE DOCUMENT // REF_PRV // OICHI EQUIPMENT
             </div>
 
             <!-- Page Title -->
-            <h1 class="font-serif text-3xl md:text-4xl text-zinc-100 font-light tracking-wide mb-6">
+            <h1 class="font-serif text-3xl md:text-4xl subpage-title font-light tracking-wide mb-6">
                 Privacy Policy
             </h1>
 
             <!-- Divider -->
-            <div class="w-full h-[1px] bg-zinc-900 mb-10"></div>
+            <div class="w-full h-[1px] subpage-divider mb-10"></div>
 
             <!-- Quiet Document Flow -->
-            <div class="font-sans text-sm md:text-base text-zinc-400 leading-relaxed space-y-8 max-w-full text-justify">
-                <p>
-                    Oichi Equipment respects user privacy and handles personal information only to the extent necessary for service provision, support, license management, fraud prevention, and system security.
-                </p>
-                <p>
-                    Information that may be collected includes email address, payment-related information, access logs, IP address, browser information, and information required for support or license verification.
-                </p>
-                <p>
-                    Credit card details are not stored or collected directly by Oichi Equipment. Payment processing is handled by external third-party payment providers.
-                </p>
-                <p>
-                    Collected information may be used for service operation, user support, license management, fraud prevention, security maintenance, and communication related to the service.
-                </p>
-                <p>
-                    Personal information will not be disclosed to third parties without consent, except where required by law or legal request.
-                </p>
-                <p>
-                    The service may use external services for payment processing, license verification, hosting, analytics, or support. Information handled by those services is subject to their respective privacy policies.
-                </p>
-                <p>
-                    Synk Mushroom primarily operates locally within the user’s PC, browser, and MetaTrader 5 environment. Oichi Equipment is not responsible for data handling, security issues, leaks, or failures caused by the user’s local system, network, device, broker, or third-party platform.
-                </p>
-                <p>
-                    This policy may be updated as necessary.
-                </p>
+            <div class="fragment-desc space-y-8 max-w-full text-justify">
+                <div>
+                    <h2 class="font-mono text-xs subpage-meta tracking-[0.15em] uppercase mb-2">1. Information Collected</h2>
+                    <p class="fragment-desc text-justify">Oichi Equipment may collect information necessary for service operation, including email address, account or license identifiers, payment-related metadata received from external payment providers, access logs, IP address, browser or device information, support inquiries, error logs, diagnostic logs submitted by the user, and license verification records.<br>Oichi Equipment does not directly collect or store full credit card numbers.</p>
+                </div>
+
+                <div>
+                    <h2 class="font-mono text-xs subpage-meta tracking-[0.15em] uppercase mb-2">2. Purpose of Use</h2>
+                    <p class="fragment-desc text-justify">Collected information may be used for software provision, license issuance, license verification, account management, payment confirmation, support, fraud prevention, security, bug investigation, service improvement, legal compliance, and notices regarding important updates or operational changes.</p>
+                </div>
+
+                <div>
+                    <h2 class="font-mono text-xs subpage-meta tracking-[0.15em] uppercase mb-2">3. Payment Providers and External Services</h2>
+                    <p class="fragment-desc text-justify">Payments are processed by external payment providers.<br>Payment information is handled by the applicable provider under its own terms and privacy policy.<br>Oichi Equipment may receive transaction status, plan information, license status, payer email, payment identifiers, or similar metadata necessary to provide and manage the service.</p>
+                </div>
+
+                <div>
+                    <h2 class="font-mono text-xs subpage-meta tracking-[0.15em] uppercase mb-2">4. Local Software and User Environment</h2>
+                    <p class="fragment-desc text-justify">Synk Mushroom primarily operates within the user’s local PC, browser, MetaTrader 5 terminal, and related environment.<br>Trading data, broker account data, chart data, or local logs may remain within the user’s environment unless the user voluntarily submits logs, screenshots, support materials, or diagnostic files.<br>The user is responsible for the security and management of their local device, broker account, MetaTrader 5 terminal, TradingView account, network, and related settings.</p>
+                </div>
+
+                <div>
+                    <h2 class="font-mono text-xs subpage-meta tracking-[0.15em] uppercase mb-2">5. Third-Party Disclosure</h2>
+                    <p class="fragment-desc text-justify">Oichi Equipment does not disclose personal information to third parties without user consent except where required by law, legal request, fraud prevention, payment processing, license management, support operation, security operation, or other necessary service operations.</p>
+                </div>
+
+                <div>
+                    <h2 class="font-mono text-xs subpage-meta tracking-[0.15em] uppercase mb-2">6. Outsourcing and Service Providers</h2>
+                    <p class="fragment-desc text-justify">Oichi Equipment may use external providers for payment processing, license management, hosting, analytics, email delivery, security, support, or similar operational functions.<br>Such providers may handle information only to the extent necessary for their respective purposes.</p>
+                </div>
+
+                <div>
+                    <h2 class="font-mono text-xs subpage-meta tracking-[0.15em] uppercase mb-2">7. Cookies and Logs</h2>
+                    <p class="fragment-desc text-justify">The website or related services may use cookies, access logs, analytics tools, or similar technologies for security, operation, usage analysis, and service improvement.<br>Users may restrict cookies through browser settings, but some functions may not operate properly.</p>
+                </div>
+
+                <div>
+                    <h2 class="font-mono text-xs subpage-meta tracking-[0.15em] uppercase mb-2">8. Data Retention</h2>
+                    <p class="fragment-desc text-justify">Information is retained for as long as necessary for service operation, license management, support, accounting, legal compliance, fraud prevention, security, dispute resolution, and business records.<br>When information is no longer necessary, Oichi Equipment will delete or anonymize it where practical and appropriate.</p>
+                </div>
+
+                <div>
+                    <h2 class="font-mono text-xs subpage-meta tracking-[0.15em] uppercase mb-2">9. Security</h2>
+                    <p class="fragment-desc text-justify">Oichi Equipment takes reasonable measures to protect information from unauthorized access, loss, misuse, alteration, or leakage.<br>However, no system, network, software, or method of transmission can be guaranteed to be completely secure.</p>
+                </div>
+
+                <div>
+                    <h2 class="font-mono text-xs subpage-meta tracking-[0.15em] uppercase mb-2">10. User Rights</h2>
+                    <p class="fragment-desc text-justify">Where applicable law allows, users may request disclosure, correction, deletion, suspension of use, or other handling of their personal information.<br>Requests should be sent to the contact address listed in this policy.<br>Oichi Equipment may verify identity before responding.</p>
+                </div>
+
+                <div>
+                    <h2 class="font-mono text-xs subpage-meta tracking-[0.15em] uppercase mb-2">11. Changes</h2>
+                    <p class="fragment-desc text-justify">This Privacy Policy may be updated when necessary.<br>The updated policy becomes effective when published unless otherwise stated.<br>Continued use of the software or service after publication constitutes acceptance where applicable.</p>
+                </div>
+
+                <div>
+                    <h2 class="font-mono text-xs subpage-meta tracking-[0.15em] uppercase mb-2">12. Contact</h2>
+                    <p class="fragment-desc text-justify">For privacy inquiries, contact:<br><span class="fragment-desc font-mono text-sm">support@oichi-equipment.com</span></p>
+                </div>
             </div>
 
             <!-- Discrete Footer Navigation -->
-            <div class="w-full h-[1px] bg-zinc-900 mt-24 mb-10"></div>
-            <a href="../index.html#legal" class="terminal-link font-mono text-[0.65rem] text-zinc-600 hover:text-[#739735] tracking-[0.2em] uppercase mb-16 self-center">
-                [ RETURN TO SYSTEM INDEX ]
-            </a>
+            <div class="w-full h-[1px] subpage-divider mt-24 mb-10"></div>
+            <div class="w-full grid grid-cols-[1fr_auto_1fr] items-center mb-6">
+                <a href="terms-of-service.html" class="terminal-link fragment-desc font-mono text-[0.65rem] tracking-[0.2em] uppercase justify-self-end pr-6">Terms of Service</a>
+                <span class="fragment-desc font-mono text-[0.65rem] tracking-[0.2em] uppercase pointer-events-none justify-self-center">|</span>
+                <a href="legal-disclosure.html" class="terminal-link fragment-desc font-mono text-[0.65rem] tracking-[0.2em] uppercase justify-self-start pl-6">Legal Disclosure</a>
+            </div>
+
+            <div class="w-full flex items-center justify-center mb-16">
+                <a href="privacy-policy-ja.html" class="terminal-link fragment-desc font-mono text-[0.65rem] tracking-[0.2em] uppercase">JA</a>
+            </div>
 
             <!-- Footer -->
             <footer class="w-full flex flex-col items-center">
-                <div class="font-mono text-[0.7rem] text-[#739735] tracking-[0.2em] uppercase mb-2">Oichi Equipment</div>
-                <div class="font-mono text-[0.6rem] text-[#71717a] tracking-[0.2em] uppercase leading-relaxed text-center">
-                    &copy; 2026 Oichi Equipment. All rights reserved.
+                <div class="font-mono text-xs text-[#739735] tracking-[0.2em] uppercase mb-2">Oichi Equipment</div>
+                <div class="font-mono text-[0.55rem] text-[#71717a] tracking-[0.2em] uppercase leading-relaxed text-center">
+                    &copy; 2026 Oichi Equipment.<br>All rights reserved.
                 </div>
             </footer>
         </div>

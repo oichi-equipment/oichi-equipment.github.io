@@ -52,6 +52,25 @@
         .terminal-link:hover {
             color: #739735;
         }
+
+        .fragment-desc {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.85rem;
+            line-height: 1.6;
+            color: #a1a1aa;
+        }
+        .subpage-title {
+            color: #d1d1d6;
+        }
+        .subpage-meta {
+            color: #739735;
+        }
+        .subpage-divider {
+            background-color: #18181b;
+        }
+        .subpage-note {
+            color: #a1a1aa;
+        }
     </style>
 </head>
 <body class="font-sans antialiased selection:bg-accent selection:text-white relative">
@@ -61,65 +80,103 @@
         <div class="w-full max-w-2xl flex flex-col items-start">
             
             <!-- Navigation -->
-            <a href="../index.html#legal" class="terminal-link font-mono text-[0.7rem] text-zinc-600 hover:text-[#739735] tracking-[0.2em] uppercase flex items-center gap-2 mb-16 inline-flex">
+            <a href="../index.html#legal" class="terminal-link fragment-desc font-mono text-[0.7rem] tracking-[0.2em] uppercase flex items-center gap-2 mb-16 inline-flex">
                 <span>←</span> BACK TO INDEX
             </a>
 
             <!-- Document Meta Label -->
-            <div class="font-mono text-[0.65rem] text-[#739735] tracking-[0.25em] uppercase mb-4">
+            <div class="font-mono text-[0.65rem] subpage-meta tracking-[0.25em] uppercase mb-4">
                 ARCHIVE DOCUMENT // REF_TOS // OICHI EQUIPMENT
             </div>
 
             <!-- Page Title -->
-            <h1 class="font-serif text-3xl md:text-4xl text-zinc-100 font-light tracking-wide mb-6">
+            <h1 class="font-serif text-3xl md:text-4xl subpage-title font-light tracking-wide mb-6">
                 Terms of Service
             </h1>
 
             <!-- Divider -->
-            <div class="w-full h-[1px] bg-zinc-900 mb-10"></div>
+            <div class="w-full h-[1px] subpage-divider mb-10"></div>
 
             <!-- Quiet Document Flow -->
-            <div class="font-sans text-sm md:text-base text-zinc-400 leading-relaxed space-y-8 max-w-full text-justify">
-                <p>
-                    Oichi Equipment provides discretionary trade execution support software for MetaTrader 5. The software is a manual execution support utility and does not provide trading decisions, investment strategies, automated trading bots, investment advice, trading signals, or profit guarantees.
-                </p>
-                <p>
-                    Trading and FX-related financial instruments involve risk. Market fluctuations may result in loss of part or all of the user’s funds. All trading decisions are made entirely at the user’s own discretion and responsibility.
-                </p>
-                <p>
-                    The software operates in the user’s local environment and depends on the user’s PC, browser, network environment, MetaTrader 5 terminal, broker infrastructure, and related third-party systems. Oichi Equipment is not responsible for malfunctions, delays, execution failures, communication failures, broker-side issues, MetaTrader-side issues, user configuration errors, or losses arising from these dependencies.
-                </p>
-                <p>
-                    Users must conduct sufficient testing in demo environments before using the software in live trading environments.
-                </p>
-                <p>
-                    Prohibited actions include reverse engineering, decompilation, modification, redistribution, resale, lending, unauthorized license sharing, fraudulent use, and illegal use.
-                </p>
-                <p>
-                    Fees and payments are processed through external payment providers. Payment terms, renewals, and billing conditions are subject to the applicable payment provider and product plan.
-                </p>
-                <p>
-                    Due to the nature of digital software and licenses, refunds, returns, and cancellations after purchase are generally not accepted, except where required by applicable law.
-                </p>
-                <p>
-                    Terms may be updated when necessary. Continued use of the software after publication of updated terms constitutes acceptance of those terms.
-                </p>
-                <p>
-                    Governing law is Japan. Disputes are subject to the jurisdiction of the courts governing the seller’s location in Japan.
-                </p>
+            <div class="fragment-desc space-y-8 max-w-full text-justify">
+                <div>
+                    <h2 class="font-mono text-xs subpage-meta tracking-[0.15em] uppercase mb-2">1. Scope and Acceptance</h2>
+                    <p class="fragment-desc text-justify">Oichi Equipment provides Synk Mushroom and related software, license, support, and documentation.<br>By accessing, installing, downloading, activating, or using the software, the user agrees to these Terms.<br>If the user does not agree, the user must not use the software.</p>
+                </div>
+
+                <div>
+                    <h2 class="font-mono text-xs subpage-meta tracking-[0.15em] uppercase mb-2">2. Nature of the Software</h2>
+                    <p class="fragment-desc text-justify">Synk Mushroom is a manual execution support utility and discretionary trading infrastructure.<br>It does not provide automated trading, AI trading, investment advice, trading strategies, trading signals, brokerage services, asset management, financial data services, or profit guarantees.<br>All order actions must be initiated by the user’s own manual operation.</p>
+                </div>
+
+                <div>
+                    <h2 class="font-mono text-xs subpage-meta tracking-[0.15em] uppercase mb-2">3. User Responsibility</h2>
+                    <p class="fragment-desc text-justify">All trading decisions, broker selection, account selection, lot size, order type, order parameters, stop loss, take profit, close action, risk management, and trading outcomes are the sole responsibility of the user.<br>Financial markets involve risk, and losses may occur.<br>Users must conduct sufficient testing in demo or non-production environments before using the software in live trading environments.</p>
+                </div>
+
+                <div>
+                    <h2 class="font-mono text-xs subpage-meta tracking-[0.15em] uppercase mb-2">4. Local Environment and Third-Party Dependencies</h2>
+                    <p class="fragment-desc text-justify">The software depends on the user’s PC, operating system, browser, Chrome extension environment, network connection, MetaTrader 5 terminal, broker server, TradingView environment, external payment provider, and license verification system.<br>Oichi Equipment is not responsible for delays, disconnections, outages, order rejection, slippage, broker-side issues, TradingView-side issues, MetaTrader-side issues, device issues, user configuration errors, or failures caused by third-party systems.</p>
+                </div>
+
+                <div>
+                    <h2 class="font-mono text-xs subpage-meta tracking-[0.15em] uppercase mb-2">5. License and Access</h2>
+                    <p class="fragment-desc text-justify">The user receives a non-exclusive, non-transferable, non-sublicensable right to use the software during the applicable license period.<br>The license period, access rights, update eligibility, and renewal conditions depend on the selected plan.<br>Oichi Equipment may suspend or terminate access in cases of unauthorized sharing, license abuse, reverse engineering, payment failure, violation of these Terms, or illegal use.</p>
+                </div>
+
+                <div>
+                    <h2 class="font-mono text-xs subpage-meta tracking-[0.15em] uppercase mb-2">6. Fees and Payment</h2>
+                    <p class="fragment-desc text-justify">Fees are shown on the applicable pricing page, product page, checkout page, or payment page.<br>Prices may be displayed in USD, JPY, or other supported currencies depending on region, plan, and payment provider.<br>Payments are processed by external payment providers.<br>Taxes, bank fees, card issuer fees, currency conversion fees, communication fees, broker fees, and other related costs are the user’s responsibility unless expressly stated otherwise.</p>
+                </div>
+
+                <div>
+                    <h2 class="font-mono text-xs subpage-meta tracking-[0.15em] uppercase mb-2">7. Refunds, Cancellations, and Digital Software</h2>
+                    <p class="fragment-desc text-justify">Due to the nature of digital software, digital access, and software licenses, refunds, returns, and cancellations after purchase are generally not accepted except where required by applicable law.<br>Subscription plans, if provided, must be cancelled through the applicable payment provider or prescribed cancellation process before the next renewal.<br>Fixed-term or one-time license plans do not renew unless expressly stated on the sales or checkout page.</p>
+                </div>
+
+                <div>
+                    <h2 class="font-mono text-xs subpage-meta tracking-[0.15em] uppercase mb-2">8. Prohibited Conduct</h2>
+                    <p class="fragment-desc text-justify">Users must not reverse engineer, decompile, modify, redistribute, resell, lend, sublicense, share licenses without authorization, bypass license verification, overload systems, interfere with service operation, scrape, abuse, or use the software for illegal purposes.<br>Users must not use the software in a manner that violates applicable laws, broker terms, platform terms, or third-party rights.</p>
+                </div>
+
+                <div>
+                    <h2 class="font-mono text-xs subpage-meta tracking-[0.15em] uppercase mb-2">9. Updates, Suspension, and Changes</h2>
+                    <p class="fragment-desc text-justify">Oichi Equipment may update, modify, suspend, discontinue, or change the software, related services, documentation, pricing, plans, or license conditions when necessary.<br>Compatibility may change due to updates or changes made by MetaTrader 5, TradingView, browsers, operating systems, brokers, payment providers, or other third parties.</p>
+                </div>
+
+                <div>
+                    <h2 class="font-mono text-xs subpage-meta tracking-[0.15em] uppercase mb-2">10. Disclaimer of Warranty</h2>
+                    <p class="fragment-desc text-justify">The software is provided on an “as is” and “as available” basis.<br>Oichi Equipment does not guarantee uninterrupted operation, compatibility, execution success, accuracy, availability, profitability, suitability for a particular purpose, or freedom from defects.</p>
+                </div>
+
+                <div>
+                    <h2 class="font-mono text-xs subpage-meta tracking-[0.15em] uppercase mb-2">11. Limitation of Liability</h2>
+                    <p class="fragment-desc text-justify">To the maximum extent permitted by applicable law, Oichi Equipment is not liable for trading losses, lost profits, indirect damages, incidental damages, consequential damages, data loss, account loss, business interruption, broker failures, platform failures, network failures, user operation errors, or losses arising from use or inability to use the software.</p>
+                </div>
+
+                <div>
+                    <h2 class="font-mono text-xs subpage-meta tracking-[0.15em] uppercase mb-2">12. Governing Law and Jurisdiction</h2>
+                    <p class="fragment-desc text-justify">These Terms are governed by the laws of Japan.<br>Any dispute arising from or relating to the software, service, license, or these Terms shall be subject to the jurisdiction of the courts having jurisdiction over the seller’s location in Japan, unless otherwise required by applicable law.</p>
+                </div>
             </div>
 
             <!-- Discrete Footer Navigation -->
-            <div class="w-full h-[1px] bg-zinc-900 mt-24 mb-10"></div>
-            <a href="../index.html#legal" class="terminal-link font-mono text-[0.65rem] text-zinc-600 hover:text-[#739735] tracking-[0.2em] uppercase mb-16 self-center">
-                [ RETURN TO SYSTEM INDEX ]
-            </a>
+            <div class="w-full h-[1px] subpage-divider mt-24 mb-10"></div>
+            <div class="w-full grid grid-cols-[1fr_auto_1fr] items-center mb-6">
+                <a href="privacy-policy.html" class="terminal-link fragment-desc font-mono text-[0.65rem] tracking-[0.2em] uppercase justify-self-end pr-6">Privacy Policy</a>
+                <span class="fragment-desc font-mono text-[0.65rem] tracking-[0.2em] uppercase pointer-events-none justify-self-center">|</span>
+                <a href="legal-disclosure.html" class="terminal-link fragment-desc font-mono text-[0.65rem] tracking-[0.2em] uppercase justify-self-start pl-6">Legal Disclosure</a>
+            </div>
+
+            <div class="w-full flex items-center justify-center mb-16">
+                <a href="terms-of-service-ja.html" class="terminal-link fragment-desc font-mono text-[0.65rem] tracking-[0.2em] uppercase">JA</a>
+            </div>
 
             <!-- Footer -->
             <footer class="w-full flex flex-col items-center">
-                <div class="font-mono text-[0.7rem] text-[#739735] tracking-[0.2em] uppercase mb-2">Oichi Equipment</div>
-                <div class="font-mono text-[0.6rem] text-[#71717a] tracking-[0.2em] uppercase leading-relaxed text-center">
-                    &copy; 2026 Oichi Equipment. All rights reserved.
+                <div class="font-mono text-xs text-[#739735] tracking-[0.2em] uppercase mb-2">Oichi Equipment</div>
+                <div class="font-mono text-[0.55rem] text-[#71717a] tracking-[0.2em] uppercase leading-relaxed text-center">
+                    &copy; 2026 Oichi Equipment.<br>All rights reserved.
                 </div>
             </footer>
         </div>
