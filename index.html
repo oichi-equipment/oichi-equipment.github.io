@@ -89,6 +89,14 @@
             align-items: center;
         }
 
+        .node-block.story-node {
+            margin-bottom: 7rem;
+        }
+
+        .node-block.story-node .text-fragment {
+            max-width: 340px;
+        }
+
         /* Lightweight optical density group system */
         .node-block.spacing-airy {
             /* Adds a slight breathing space for visually lighter nodes (short title, standard digits, short desc) */
@@ -253,23 +261,23 @@
 
         <div class="trunk-container px-4">
 
-            <!-- Node 01: Default density -->
-            <div class="node-block">
+            <!-- Node 01 -->
+            <div class="node-block story-node">
                 <div class="number-core">01</div>
                 <div class="title-core">TradingView as the Control Surface</div>
                 <div class="branch left">
                     <div class="text-fragment">
                         <div class="fragment-meta">
-                            <span>CORE DESIRE</span>
+                            <span>CONTROL SURFACE</span>
                             <div class="fragment-line"></div>
                         </div>
-                        <p class="fragment-desc">Analyze on TradingView. Execute through MT5. Synk Mushroom pulls that broken flow back toward the chart.</p>
+                        <p class="fragment-desc">The screen for analysis<br>and the screen for execution<br>are often separated.<br>Synk Mushroom carries TradingView decisions<br>directly toward MT5 execution.</p>
                     </div>
                 </div>
             </div>
 
-            <!-- Node 02: Default density -->
-            <div class="node-block">
+            <!-- Node 02 -->
+            <div class="node-block story-node">
                 <div class="number-core">02</div>
                 <div class="title-core">Beyond Official Broker Lists</div>
                 <div class="branch right">
@@ -278,29 +286,28 @@
                             <div class="fragment-line"></div>
                             <span>BROKER FREEDOM</span>
                         </div>
-                        <p class="fragment-desc">Some of the real trading environments live outside TradingView’s official broker connections. Synk Mushroom opens a local route to your own MT5 terminal.</p>
+                        <p class="fragment-desc">Even when your MT5 environment<br>is outside TradingView’s official broker connections,<br>your own terminal can still become<br>the execution target through a local route.</p>
                     </div>
                 </div>
             </div>
 
-            <!-- Node 03: Default density (descender) -->
-            <div class="node-block">
+            <!-- Node 03 -->
+            <div class="node-block story-node">
                 <div class="number-core digit-descender">03</div>
                 <div class="title-core">High Leverage MT5, Still Yours</div>
                 <div class="branch left">
                     <div class="text-fragment">
                         <div class="fragment-meta">
-                            <span>USER ACCOUNT</span>
+                            <span>USER CONTROL</span>
                             <div class="fragment-line"></div>
                         </div>
-                        <p class="fragment-desc">Offshore MT5 brokers, high-leverage accounts, your chosen battlefield. No custody. No broker switch. Your terminal stays yours.</p>
+                        <p class="fragment-desc">Keep using the offshore MT5 broker,<br>high-leverage account,<br>and battlefield you selected.<br>Synk Mushroom connects to the MT5 terminal<br>that remains under your control.</p>
                     </div>
                 </div>
             </div>
 
-            <!-- Node 04: Default density (descender) -->
-            <div class="node-block">
-                <!-- MODIFIED: 4を含むためディセンダーとして扱い、理想的な見え方を維持 -->
+            <!-- Node 04 -->
+            <div class="node-block story-node">
                 <div class="number-core digit-descender">04</div>
                 <div class="title-core">Full Screen TradingView Cockpit</div>
                 <div class="branch right">
@@ -309,28 +316,28 @@
                             <div class="fragment-line"></div>
                             <span>ONE SCREEN</span>
                         </div>
-                        <p class="fragment-desc">Keep the chart open. Keep the context alive. Bring execution closer to the screen where the decision is made.</p>
+                        <p class="fragment-desc">Keep the chart open.<br>Keep the context alive.<br>Place execution controls<br>directly onto the TradingView screen.</p>
                     </div>
                 </div>
             </div>
 
-            <!-- Node 05: Default density (descender) -->
-            <div class="node-block">
+            <!-- Node 05 -->
+            <div class="node-block story-node">
                 <div class="number-core digit-descender">05</div>
-                <div class="title-core">Kill the Alt+Tab Tax</div>
+                <div class="title-core">Reduce the Screen-Switching Tax</div>
                 <div class="branch left">
                     <div class="text-fragment">
                         <div class="fragment-meta">
                             <span>VISUAL FRICTION</span>
                             <div class="fragment-line"></div>
                         </div>
-                        <p class="fragment-desc">Alt+Tab, second monitors, cursor travel, window activation. Every small interruption becomes expensive when timing matters.</p>
+                        <p class="fragment-desc">Window switching, monitor shifting,<br>cursor travel, and window activation<br>look small in isolation.<br>In live execution, those small delays<br>accumulate between decision and action.</p>
                     </div>
                 </div>
             </div>
 
-            <!-- Node 06: spacing-airy (standard digit, short visual blocks) -->
-            <div class="node-block spacing-airy">
+            <!-- Node 06 -->
+            <div class="node-block story-node">
                 <div class="number-core">06</div>
                 <div class="title-core">Manual Execution, Not Automation</div>
                 <div class="branch right">
@@ -339,149 +346,89 @@
                             <div class="fragment-line"></div>
                             <span>HUMAN TRIGGER</span>
                         </div>
-                        <p class="fragment-desc">Synk Mushroom does not trade for you. It gives your hand a shorter route from TradingView to MT5.</p>
+                        <p class="fragment-desc">Synk Mushroom does not trade<br>on behalf of the user.<br>It is a manual execution layer<br>designed to shorten the operating route<br>from TradingView to MT5.</p>
                     </div>
                 </div>
             </div>
 
-            <!-- Node 07: Default density (descender) -->
-            <div class="node-block">
+            <!-- Node 07 -->
+            <div class="node-block story-node">
                 <div class="number-core digit-descender">07</div>
-                <div class="title-core">Not an EA in Disguise</div>
+                <div class="title-core">Execution Path, Not Strategy Logic</div>
                 <div class="branch left">
                     <div class="text-fragment">
                         <div class="fragment-meta">
-                            <span>NO BOT</span>
+                            <span>NO SIGNAL ENGINE</span>
                             <div class="fragment-line"></div>
                         </div>
-                        <p class="fragment-desc">No black-box strategy. No AI signal engine. No Pine alert automation pretending to be discretion.</p>
+                        <p class="fragment-desc">The core of Synk Mushroom<br>is not trade decision-making.<br>It is an execution route<br>that carries already-decided actions<br>from TradingView to MT5.</p>
                     </div>
                 </div>
             </div>
 
-            <!-- Node 08: Default density -->
-            <div class="node-block">
+            <!-- Node 08 -->
+            <div class="node-block story-node">
                 <div class="number-core">08</div>
-                <div class="title-core">The Broker Remains MT5</div>
+                <div class="title-core">Beyond Webhooks and Alerts</div>
+                <div class="branch right">
+                    <div class="text-fragment">
+                        <div class="fragment-meta">
+                            <div class="fragment-line"></div>
+                            <span>MANUAL ROUTE</span>
+                        </div>
+                        <p class="fragment-desc">Webhooks and Pine alerts<br>are useful for notifications<br>and automation routes.<br>They are not the same as<br>a manual execution panel operated by a human.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Node 09 -->
+            <div class="node-block story-node">
+                <div class="number-core digit-descender">09</div>
+                <div class="title-core">Local Bridge, No Cloud Relay</div>
+                <div class="branch left">
+                    <div class="text-fragment">
+                        <div class="fragment-meta">
+                            <span>LOCAL ROUTE</span>
+                            <div class="fragment-line"></div>
+                        </div>
+                        <p class="fragment-desc">Keep the command path<br>as close to your own machine as possible.<br>The TradingView-side panel<br>and the local bridge communicate<br>without a public order endpoint or cloud relay.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Node 10 -->
+            <div class="node-block story-node">
+                <div class="number-core">10</div>
+                <div class="title-core">MT5 Remains the Execution Engine</div>
                 <div class="branch right">
                     <div class="text-fragment">
                         <div class="fragment-meta">
                             <div class="fragment-line"></div>
                             <span>TERMINAL TRUTH</span>
                         </div>
-                        <p class="fragment-desc">Execution, account state, broker server, and positions remain in MT5. Synk Mushroom connects the cockpit to the engine.</p>
+                        <p class="fragment-desc">Execution, account state,<br>broker server, and position data<br>remain inside MT5.<br>Synk Mushroom lets the TradingView cockpit<br>reach the MT5 engine.</p>
                     </div>
                 </div>
             </div>
 
-            <!-- Node 09: Default density (descender) -->
-            <div class="node-block">
-                <div class="number-core digit-descender">09</div>
-                <div class="title-core">Webhook Was Never Enough</div>
-                <div class="branch left">
-                    <div class="text-fragment">
-                        <div class="fragment-meta">
-                            <span>WRONG TOOL</span>
-                            <div class="fragment-line"></div>
-                        </div>
-                        <p class="fragment-desc">Webhooks are built for alerts and automation. They were never the missing manual execution panel inside TradingView.</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Node 10: Default density -->
-            <div class="node-block">
-                <div class="number-core">10</div>
-                <div class="title-core">Alerts Are Not Hands</div>
-                <div class="branch right">
-                    <div class="text-fragment">
-                        <div class="fragment-meta">
-                            <div class="fragment-line"></div>
-                            <span>PINE LIMIT</span>
-                        </div>
-                        <p class="fragment-desc">Pine can tell you something happened. It cannot replace the moment when you decide, press, stop, or escape.</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Node 11: Default density -->
-            <div class="node-block">
+            <!-- Node 11 -->
+            <div class="node-block story-node">
                 <div class="number-core">11</div>
-                <div class="title-core">Cloud Relay Breaks the Feel</div>
+                <div class="title-core">Market Watch Resolves Intent</div>
                 <div class="branch left">
                     <div class="text-fragment">
                         <div class="fragment-meta">
-                            <span>REMOTE ROUTE</span>
+                            <span>SYMBOL ROUTE</span>
                             <div class="fragment-line"></div>
                         </div>
-                        <p class="fragment-desc">The more order commands leave your machine, the farther execution feels from your hand. Synk Mushroom keeps the route local.</p>
+                        <p class="fragment-desc">Symbol intent from TradingView<br>is resolved against the visible symbols<br>in MT5 Market Watch.<br>Execution points toward<br>the account environment you actually use.</p>
                     </div>
                 </div>
             </div>
 
-            <!-- Node 12: spacing-airy (short title, standard digit, short desc) -->
-            <div class="node-block spacing-airy">
+            <!-- Node 12 -->
+            <div class="node-block story-node">
                 <div class="number-core">12</div>
-                <div class="title-core">Existing Tools Aim at Bots</div>
-                <div class="branch right">
-                    <div class="text-fragment">
-                        <div class="fragment-meta">
-                            <div class="fragment-line"></div>
-                            <span>MARKET GAP</span>
-                        </div>
-                        <p class="fragment-desc">Most bridges point toward automation, alerts, or light workflows. Synk Mushroom points back to discretionary execution.</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Node 13: Default density (descender) -->
-            <div class="node-block">
-                <div class="number-core digit-descender">13</div>
-                <div class="title-core">The Trader Still Presses</div>
-                <div class="branch left">
-                    <div class="text-fragment">
-                        <div class="fragment-meta">
-                            <span>MANUAL EDGE</span>
-                            <div class="fragment-line"></div>
-                        </div>
-                        <p class="fragment-desc">The final action still belongs to the trader. Synk Mushroom is built around that moment, not around replacing it.</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Node 14: Default density (descender) -->
-            <div class="node-block">
-                <div class="number-core digit-descender">14</div>
-                <div class="title-core">Execution Is Physical</div>
-                <div class="branch right">
-                    <div class="text-fragment">
-                        <div class="fragment-meta">
-                            <div class="fragment-line"></div>
-                            <span>HAND / EYE</span>
-                        </div>
-                        <p class="fragment-desc">Focus, cursor position, screen switching, and confirmation delay are not abstract problems. They are execution problems.</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Node 15: Default density (descender) -->
-            <div class="node-block">
-                <div class="number-core digit-descender">15</div>
-                <div class="title-core">The Panel Belongs on the Chart</div>
-                <div class="branch left">
-                    <div class="text-fragment">
-                        <div class="fragment-meta">
-                            <span>EMBEDDED</span>
-                            <div class="fragment-line"></div>
-                        </div>
-                        <p class="fragment-desc">If the decision happens on TradingView, the execution control should live there too.</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Node 16: Default density -->
-            <div class="node-block">
-                <div class="number-core">16</div>
                 <div class="title-core">Buy and Sell from the Chart</div>
                 <div class="branch right">
                     <div class="text-fragment">
@@ -489,14 +436,14 @@
                             <div class="fragment-line"></div>
                             <span>ORDER PANEL</span>
                         </div>
-                        <p class="fragment-desc">Place manual market actions from the TradingView screen and route them through your own local MT5 environment.</p>
+                        <p class="fragment-desc">Place manual market actions<br>from the TradingView screen<br>and route them into your own<br>local MT5 environment.<br>Bring decision closer to launch.</p>
                     </div>
                 </div>
             </div>
 
-            <!-- Node 17: Default density (descender) -->
-            <div class="node-block">
-                <div class="number-core digit-descender">17</div>
+            <!-- Node 13 -->
+            <div class="node-block story-node">
+                <div class="number-core digit-descender">13</div>
                 <div class="title-core">Pending Orders in the Cockpit</div>
                 <div class="branch left">
                     <div class="text-fragment">
@@ -504,14 +451,14 @@
                             <span>LIMIT / STOP</span>
                             <div class="fragment-line"></div>
                         </div>
-                        <p class="fragment-desc">Prepare pending orders without leaving the analysis screen. Keep the setup and the execution path in the same visual flow.</p>
+                        <p class="fragment-desc">Prepare Limit and Stop pending orders<br>without leaving the analysis screen.<br>Keep the setup and execution route<br>inside the same visual flow.</p>
                     </div>
                 </div>
             </div>
 
-            <!-- Node 18: spacing-airy (standard digit, short desc) -->
-            <div class="node-block spacing-airy">
-                <div class="number-core">18</div>
+            <!-- Node 14 -->
+            <div class="node-block story-node">
+                <div class="number-core digit-descender">14</div>
                 <div class="title-core">Stops and Targets Without Leaving Flow</div>
                 <div class="branch right">
                     <div class="text-fragment">
@@ -519,104 +466,44 @@
                             <div class="fragment-line"></div>
                             <span>MODIFY PATH</span>
                         </div>
-                        <p class="fragment-desc">Adjust protection and targets without breaking context. The execution engine remains MT5; the operating layer stays close to the chart.</p>
+                        <p class="fragment-desc">Adjust stops, targets,<br>and order changes without breaking context.<br>MT5 remains the execution engine<br>while the operating layer<br>stays close to the chart.</p>
                     </div>
                 </div>
             </div>
 
-            <!-- Node 19: Default density (descender) -->
-            <div class="node-block">
-                <div class="number-core digit-descender">19</div>
-                <div class="title-core">Close Is a Moment</div>
+            <!-- Node 15 -->
+            <div class="node-block story-node">
+                <div class="number-core digit-descender">15</div>
+                <div class="title-core">Close and Close All Stay on the Route</div>
                 <div class="branch left">
                     <div class="text-fragment">
                         <div class="fragment-meta">
                             <span>EXIT CONTROL</span>
                             <div class="fragment-line"></div>
                         </div>
-                        <p class="fragment-desc">Exits matter. Close and Close All actions deserve the same route discipline as entry.</p>
+                        <p class="fragment-desc">Exit matters as much as entry.<br>Close and Close All should not depend<br>on screen switching or operational drift.<br>They belong inside the same<br>disciplined execution route.</p>
                     </div>
                 </div>
             </div>
 
-            <!-- Node 20: Default density -->
-            <div class="node-block">
-                <div class="number-core">20</div>
-                <div class="title-core">Market Watch Resolves Intent</div>
-                <div class="branch right">
-                    <div class="text-fragment">
-                        <div class="fragment-meta">
-                            <div class="fragment-line"></div>
-                            <span>SYMBOL ROUTE</span>
-                        </div>
-                        <p class="fragment-desc">TradingView intent is resolved against visible MT5 Market Watch symbols, so execution points toward the account environment you actually use.</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Node 21: Default density -->
-            <div class="node-block">
-                <div class="number-core">21</div>
-                <div class="title-core">Your MT5 Terminal Stays the Engine</div>
-                <div class="branch left">
-                    <div class="text-fragment">
-                        <div class="fragment-meta">
-                            <span>LOCAL TERMINAL</span>
-                            <div class="fragment-line"></div>
-                        </div>
-                        <p class="fragment-desc">You launch it. You log in. You keep control. Synk Mushroom does not replace MT5; it reaches it.</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Node 22: Default density -->
-            <div class="node-block">
-                <div class="number-core">22</div>
-                <div class="title-core">Local Bridge, No Public Endpoint</div>
-                <div class="branch right">
-                    <div class="text-fragment">
-                        <div class="fragment-meta">
-                            <div class="fragment-line"></div>
-                            <span>NO WEBHOOK URL</span>
-                        </div>
-                        <p class="fragment-desc">No public order endpoint. No exposed webhook URL. The panel and bridge communicate inside the user’s local environment.</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Node 23: Default density (descender) -->
-            <div class="node-block">
-                <div class="number-core digit-descender">23</div>
-                <div class="title-core">Synk Evidence Console</div>
-                <div class="branch left">
-                    <div class="text-fragment">
-                        <div class="fragment-meta">
-                            <span>EXECUTION EVIDENCE</span>
-                            <div class="fragment-line"></div>
-                        </div>
-                        <p class="fragment-desc">Synk Mushroom is not just a button layer. Synk Evidence Console shows the route behind the action.</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Node 24: Default density (descender) -->
-            <div class="node-block">
-                <div class="number-core digit-descender">24</div>
+            <!-- Node 16 -->
+            <div class="node-block story-node">
+                <div class="number-core">16</div>
                 <div class="title-core">Evidence Beneath the Button</div>
                 <div class="branch right">
                     <div class="text-fragment">
                         <div class="fragment-meta">
                             <div class="fragment-line"></div>
-                            <span>VISIBLE ROUTE</span>
+                            <span>EXECUTION EVIDENCE</span>
                         </div>
-                        <p class="fragment-desc">Panel activity, local bridge behavior, MT5 response, and visual sync should not be a black box.</p>
+                        <p class="fragment-desc">Synk Mushroom is not just a button layer.<br>Synk Evidence Console makes visible<br>the flow between panel action,<br>local bridge behavior, MT5 response,<br>and visual synchronization.</p>
                     </div>
                 </div>
             </div>
 
-            <!-- Node 25: Default density (descender) -->
-            <div class="node-block">
-                <div class="number-core digit-descender">25</div>
+            <!-- Node 17 -->
+            <div class="node-block story-node">
+                <div class="number-core digit-descender">17</div>
                 <div class="title-core">Latency by Layer</div>
                 <div class="branch left">
                     <div class="text-fragment">
@@ -624,14 +511,14 @@
                             <span>PATH BREAKDOWN</span>
                             <div class="fragment-line"></div>
                         </div>
-                        <p class="fragment-desc">See the difference between local processing, MT5 response, and panel synchronization instead of guessing where time went.</p>
+                        <p class="fragment-desc">Do not guess<br>where time disappeared.<br>By separating local processing,<br>MT5 response, and panel synchronization,<br>each layer can be inspected.</p>
                     </div>
                 </div>
             </div>
 
-            <!-- Node 26: spacing-airy (standard digit, short desc) -->
-            <div class="node-block spacing-airy">
-                <div class="number-core">26</div>
+            <!-- Node 18 -->
+            <div class="node-block story-node">
+                <div class="number-core">18</div>
                 <div class="title-core">Command Forensics</div>
                 <div class="branch right">
                     <div class="text-fragment">
@@ -639,14 +526,14 @@
                             <div class="fragment-line"></div>
                             <span>ORDER TRACE</span>
                         </div>
-                        <p class="fragment-desc">BUY, SELL, Pending, Close. Each command leaves a trace that can be inspected across the execution path.</p>
+                        <p class="fragment-desc">BUY, SELL, Pending, Close.<br>Each command leaves a trace<br>across the execution route.<br>See where the action traveled<br>and how it came back.</p>
                     </div>
                 </div>
             </div>
 
-            <!-- Node 27: Default density (descender) -->
-            <div class="node-block">
-                <div class="number-core digit-descender">27</div>
+            <!-- Node 19 -->
+            <div class="node-block story-node">
+                <div class="number-core digit-descender">19</div>
                 <div class="title-core">Raw Event Ledger</div>
                 <div class="branch left">
                     <div class="text-fragment">
@@ -654,52 +541,22 @@
                             <span>EVENT MEMORY</span>
                             <div class="fragment-line"></div>
                         </div>
-                        <p class="fragment-desc">The route is written as events, not vibes. A quiet ledger for what happened beneath the surface.</p>
+                        <p class="fragment-desc">The route is recorded as events,<br>not vibes.<br>A quiet ledger remains<br>for what happened<br>beneath the surface.</p>
                     </div>
                 </div>
             </div>
 
-            <!-- Node 28: spacing-airy (standard digit, short desc) -->
-            <div class="node-block spacing-airy">
-                <div class="number-core">28</div>
-                <div class="title-core">Not Trading Analytics</div>
-                <div class="branch right">
-                    <div class="text-fragment">
-                        <div class="fragment-meta">
-                            <div class="fragment-line"></div>
-                            <span>NO PERFORMANCE CLAIM</span>
-                        </div>
-                        <p class="fragment-desc">Synk Evidence Console does not score your strategy or promise better results. It shows execution-path evidence.</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Node 29: Default density (descender) -->
-            <div class="node-block">
-                <div class="number-core digit-descender">29</div>
+            <!-- Node 20 -->
+            <div class="node-block story-node">
+                <div class="number-core">20</div>
                 <div class="title-core">Equipment, Not Finance</div>
-                <div class="branch left">
-                    <div class="text-fragment">
-                        <div class="fragment-meta">
-                            <span>OICHI EQUIPMENT</span>
-                            <div class="fragment-line"></div>
-                        </div>
-                        <p class="fragment-desc">Oichi Equipment does not sell signals, custody, or advice. It builds execution infrastructure for discretionary traders.</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Node 30: Default density (descender) -->
-            <div class="node-block">
-                <div class="number-core digit-descender">30</div>
-                <div class="title-core">The Continuity Layer</div>
                 <div class="branch right">
                     <div class="text-fragment">
                         <div class="fragment-meta">
                             <div class="fragment-line"></div>
-                            <span>FINAL SIGNAL</span>
+                            <span>OICHI EQUIPMENT</span>
                         </div>
-                        <p class="fragment-desc">TradingView as cockpit. MT5 as engine. Synk Mushroom as the missing layer between decision, action, response, and evidence.</p>
+                        <p class="fragment-desc">Oichi Equipment does not sell signals,<br>custody, investment advice,<br>or performance promises.<br>Synk Mushroom is equipment<br>for discretionary traders.</p>
                     </div>
                 </div>
             </div>
