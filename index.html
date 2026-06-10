@@ -240,8 +240,14 @@
             </div>
             
             <!-- Scroll indicator leading to the trunk -->
-            <div class="absolute bottom-12 z-10 flex flex-col items-center opacity-40">
-                <div class="w-[1px] h-16 bg-white"></div>
+            <div class="absolute bottom-12 left-1/2 -translate-x-1/2 z-10 group flex flex-col items-center justify-center w-24 h-16 cursor-default">
+                <a id="lower-sections-link" href="#faq" class="absolute bottom-full mb-3 opacity-0 group-hover:opacity-100 transition-opacity duration-500 fragment-desc text-white/40 whitespace-nowrap no-underline">
+                    Lower sections
+                </a>
+                <div class="w-[1px] h-16 bg-white opacity-40"></div>
+                <span class="absolute top-full mt-3 opacity-0 group-hover:opacity-100 transition-opacity duration-500 font-sans text-xs leading-none text-[#3f3f46] whitespace-nowrap pointer-events-none">
+                    scroll below
+                </span>
             </div>
         </header>
 
@@ -702,33 +708,40 @@
             <div id="faq" class="node-block mt-16 pt-16 faq-group">
                 <div class="font-serif text-2xl md:text-4xl text-[#d1d1d6] font-light tracking-widest mb-16 uppercase text-center w-full">FAQ</div>
                 
-                <a href="pages/faq.html" class="faq-archive-link terminal-link fragment-desc block md:hidden text-center mb-8">Full FAQ Archive.</a>
-
                 <div class="branch left mb-12">
                     <div class="text-fragment flex flex-col gap-3">
                         <a href="#" class="faq-hover-trigger group relative terminal-link fragment-desc block">
                             Automation Systems.
-                            <span class="absolute left-full pl-8 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-500 fragment-desc whitespace-nowrap pointer-events-none">No EA. No bot. No signals. Manual actions only.</span>
+                            <span class="absolute left-full pl-3 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-500 fragment-desc whitespace-nowrap pointer-events-none">- No EA. No bot. No signals. Manual actions only.</span>
                         </a>
                         <a href="#" class="faq-hover-trigger group relative terminal-link fragment-desc block">
                             Local Execution.
-                            <span class="absolute left-full pl-8 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-500 fragment-desc whitespace-nowrap pointer-events-none">No public webhook URL. No cloud order relay. Local bridge only.</span>
+                            <span class="absolute left-full pl-3 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-500 fragment-desc whitespace-nowrap pointer-events-none">- No public webhook URL. No cloud order relay. Local bridge only.</span>
                         </a>
                         <a href="#" class="faq-hover-trigger group relative terminal-link fragment-desc block">
                             Installation Flow.
-                            <span class="absolute left-full pl-8 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-500 fragment-desc whitespace-nowrap pointer-events-none">Extension. Local bridge. Your MT5 terminal. TradingView panel.</span>
+                            <span class="absolute left-full pl-3 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-500 fragment-desc whitespace-nowrap pointer-events-none">- Extension. Local bridge. Your MT5 terminal. TradingView panel.</span>
                         </a>
                         <a href="#" class="faq-hover-trigger group relative terminal-link fragment-desc block">
                             Deployment Questions.
-                            <span class="absolute left-full pl-8 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-500 fragment-desc whitespace-nowrap pointer-events-none">Symbols, server context, Market Watch, and local setup define the route.</span>
+                            <span class="absolute left-full pl-3 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-500 fragment-desc whitespace-nowrap pointer-events-none">- Symbols, server context, Market Watch, and local setup define the route.</span>
                         </a>
                     </div>
                 </div>
                 <div class="branch right mb-12">
                     <div class="text-fragment flex flex-col gap-3">
-                        <a href="pages/faq.html" class="faq-archive-link terminal-link fragment-desc hidden md:block">Full FAQ Archive.</a>
-                        <a href="pages/real-workflow.html" class="terminal-link fragment-desc block">Real Workflow.</a>
-                        <a href="https://www.youtube.com/" target="_blank" rel="noopener noreferrer" class="terminal-link fragment-desc block">Execution Archive.</a>
+                        <a href="pages/faq.html" class="faq-archive-link group relative terminal-link fragment-desc block">
+                            Full FAQ Archive.
+                            <span class="absolute right-full pr-3 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-500 fragment-desc whitespace-nowrap pointer-events-none">Open full FAQ →</span>
+                        </a>
+                        <a href="pages/real-workflow.html" class="group relative terminal-link fragment-desc block">
+                            Real Workflow.
+                            <span class="absolute right-full pr-3 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-500 fragment-desc whitespace-nowrap pointer-events-none">Open workflow →</span>
+                        </a>
+                        <a href="https://www.youtube.com/" target="_blank" rel="noopener noreferrer" class="group relative terminal-link fragment-desc block">
+                            Execution Archive.
+                            <span class="absolute right-full pr-3 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-500 fragment-desc whitespace-nowrap pointer-events-none">Open video archive →</span>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -740,15 +753,15 @@
                     <div class="text-fragment flex flex-col gap-3">
                         <a href="#" class="group relative terminal-link fragment-desc block">
                             Monthly Access.
-                            <span class="absolute left-full pl-8 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-500 fragment-desc whitespace-nowrap pointer-events-none">$59 / month · 7-day free trial</span>
+                            <span class="absolute left-full pl-3 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-500 fragment-desc whitespace-nowrap pointer-events-none">- $59 / month · 7-day free trial</span>
                         </a>
                         <a href="#" class="group relative terminal-link fragment-desc block">
                             Annual Access.
-                            <span class="absolute left-full pl-8 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-500 fragment-desc whitespace-nowrap pointer-events-none">$540 / year · 7-day free trial</span>
+                            <span class="absolute left-full pl-3 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-500 fragment-desc whitespace-nowrap pointer-events-none">- $540 / year · 7-day free trial</span>
                         </a>
                         <a href="#" class="group relative terminal-link fragment-desc block">
                             3-Year License.
-                            <span class="absolute left-full pl-8 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-500 fragment-desc whitespace-nowrap pointer-events-none">$1,300 / 3 years · one-time license</span>
+                            <span class="absolute left-full pl-3 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-500 fragment-desc whitespace-nowrap pointer-events-none">- $1,300 / 3 years · one-time license</span>
                         </a>
                     </div>
                 </div>
@@ -780,9 +793,18 @@
                 <div class="font-serif text-2xl md:text-4xl text-[#d1d1d6] font-light tracking-widest mb-16 uppercase text-center w-full">Legal</div>
                 <div class="branch left mb-12">
                     <div class="text-fragment flex flex-col gap-3">
-                        <a href="pages/terms-of-service.html" class="terminal-link fragment-desc block">Terms of Service.</a>
-                        <a href="pages/privacy-policy.html" class="terminal-link fragment-desc block">Privacy Policy.</a>
-                        <a href="pages/legal-disclosure.html" class="terminal-link fragment-desc block">Legal Disclosure.</a>
+                        <a href="pages/terms-of-service.html" class="group relative terminal-link fragment-desc block">
+                            Terms of Service.
+                            <span class="absolute left-full pl-3 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-500 fragment-desc whitespace-nowrap pointer-events-none">- Usage terms</span>
+                        </a>
+                        <a href="pages/privacy-policy.html" class="group relative terminal-link fragment-desc block">
+                            Privacy Policy.
+                            <span class="absolute left-full pl-3 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-500 fragment-desc whitespace-nowrap pointer-events-none">- Data handling</span>
+                        </a>
+                        <a href="pages/legal-disclosure.html" class="group relative terminal-link fragment-desc block">
+                            Legal Disclosure.
+                            <span class="absolute left-full pl-3 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-500 fragment-desc whitespace-nowrap pointer-events-none">- Legal notice</span>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -792,16 +814,25 @@
                 <div class="font-serif text-2xl md:text-4xl text-[#d1d1d6] font-light tracking-widest mb-16 uppercase text-center w-full">About</div>
                 <div class="branch right">
                     <div class="text-fragment flex flex-col gap-3">
-                        <a href="pages/oichi-equipment.html" class="terminal-link fragment-desc block">Oichi Equipment.</a>
-                        <a href="pages/origin-archive.html" class="terminal-link fragment-desc block">Origin Archive.</a>
-                        <a href="pages/continuity-philosophy.html" class="terminal-link fragment-desc block">Continuity Philosophy.</a>
+                        <a href="pages/oichi-equipment.html" class="group relative terminal-link fragment-desc block">
+                            Oichi Equipment.
+                            <span class="absolute right-full pr-3 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-500 fragment-desc whitespace-nowrap pointer-events-none">Company note -</span>
+                        </a>
+                        <a href="pages/origin-archive.html" class="group relative terminal-link fragment-desc block">
+                            Origin Archive.
+                            <span class="absolute right-full pr-3 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-500 fragment-desc whitespace-nowrap pointer-events-none">Origin record -</span>
+                        </a>
+                        <a href="pages/continuity-philosophy.html" class="group relative terminal-link fragment-desc block">
+                            Continuity Philosophy.
+                            <span class="absolute right-full pr-3 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-500 fragment-desc whitespace-nowrap pointer-events-none">Continuity note -</span>
+                        </a>
                     </div>
                 </div>
             </div>
 
             <!-- FOOTER -->
             <footer class="node-block mt-16 pt-16 flex flex-col items-center mb-0">
-                <div class="font-mono text-xs text-[#739735] tracking-[0.2em] uppercase mb-2">Oichi Equipment</div>
+                <a href="/" class="terminal-link font-mono text-xs text-[#739735] tracking-[0.2em] uppercase mb-2 block">Oichi Equipment</a>
                 <div class="font-mono text-[0.65rem] text-[#a1a1aa] tracking-[0.1em] uppercase mb-4">Discretionary Trading Infrastructure</div>
                 <div class="font-mono text-[0.55rem] text-[#71717a] tracking-[0.2em] uppercase leading-relaxed text-center">
                     &copy; 2026 Oichi Equipment.<br>All rights reserved.
@@ -817,6 +848,15 @@
         document.addEventListener('DOMContentLoaded', () => {
             const topReturnArrow = document.getElementById('top-return-arrow');
             const faqSection = document.getElementById('faq');
+
+            const lowerSectionsLink = document.getElementById('lower-sections-link');
+
+            if (lowerSectionsLink && faqSection) {
+                lowerSectionsLink.addEventListener('click', (event) => {
+                    event.preventDefault();
+                    faqSection.scrollIntoView({ behavior: 'smooth' });
+                });
+            }
 
             if (topReturnArrow && faqSection) {
                 window.addEventListener('scroll', () => {
