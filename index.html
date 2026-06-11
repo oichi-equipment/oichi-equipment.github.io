@@ -93,6 +93,10 @@
             margin-bottom: 7rem;
         }
 
+        .node-block.story-node.spacing-extended-15 {
+            margin-bottom: 11rem;
+        }
+
         .node-block.story-node .text-fragment {
             max-width: 340px;
         }
@@ -223,6 +227,80 @@
 
         .faq-group:has(.faq-hover-trigger:hover) .faq-archive-link { color: #e38707 !important; }
         .faq-archive-link:hover { color: #e38707 !important; }
+
+        .node-block.story-node .node-hover-trigger {
+            position: relative;
+        }
+
+        .node-block.story-node .node-hover-panel {
+            position: absolute;
+            top: 0;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.45s ease;
+            z-index: 20;
+        }
+
+        .node-block.story-node .node-hover-trigger:hover .node-hover-panel {
+            opacity: 1;
+        }
+
+        .node-block.story-node .node-hover-right {
+            left: calc(100% + 3rem);
+            text-align: left;
+        }
+
+        .node-block.story-node .node-hover-left {
+            right: calc(100% + 3rem);
+            text-align: right;
+        }
+
+        .node-block.story-node .node-hover-image {
+            width: min(420px, 42vw);
+            aspect-ratio: 16 / 10;
+            top: -1.55rem;
+        }
+
+        .node-block.story-node .node-hover-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            -webkit-mask-image: linear-gradient(to bottom, black 0%, black 80%, transparent 100%);
+            mask-image: linear-gradient(to bottom, black 0%, black 80%, transparent 100%);
+        }
+
+        .node-block.story-node .node-hover-text {
+            white-space: nowrap;
+        }
+
+        .node-block.story-node .node-hover-text p {
+            margin: 0;
+        }
+
+        .node-block.story-node .node-hover-text::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 1px;
+            background: rgba(244, 244, 245, 0.75);
+            pointer-events: none;
+        }
+
+        .node-block.story-node .node-hover-text.node-hover-right::before {
+            left: -1.5rem;
+        }
+
+        .node-block.story-node .node-hover-text.node-hover-left::before {
+            right: -1.5rem;
+        }
+
+        @media (max-width: 1023px) {
+            .node-block.story-node .node-hover-panel {
+                display: none;
+            }
+        }
     </style>
 </head>
 <body class="font-sans antialiased selection:bg-accent selection:text-white relative">
@@ -271,7 +349,12 @@
                             <span>CONTROL SURFACE</span>
                             <div class="fragment-line"></div>
                         </div>
-                        <p class="fragment-desc">The screen for analysis<br>and the screen for execution<br>are often separated.<br>Synk Mushroom carries TradingView decisions<br>directly toward MT5 execution.</p>
+                        <div class="node-hover-trigger">
+                            <p class="fragment-desc">The screen for analysis<br>and the screen for execution<br>are often separated.<br>Synk Mushroom carries TradingView decisions<br>directly toward MT5 execution.</p>
+                            <div class="node-hover-panel node-hover-image node-hover-right">
+                                <img src="assets/node-01-hover.jpg" alt="">
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -286,7 +369,12 @@
                             <div class="fragment-line"></div>
                             <span>BROKER FREEDOM</span>
                         </div>
-                        <p class="fragment-desc">Even when your MT5 environment<br>is outside TradingView’s official broker connections,<br>your own terminal can still become<br>the execution target through a local route.</p>
+                        <div class="node-hover-trigger">
+                            <p class="fragment-desc">Even when your MT5 environment<br>is outside TradingView’s official broker connections<br>your own terminal can still become<br>the execution target through a local route.</p>
+                            <div class="node-hover-panel node-hover-text node-hover-left">
+                                <p class="fragment-desc">EXNESS, XM Trading, Titan FX<br>ThreeTrader, FXGT, BigBoss<br>HFM, Axiory, Vantage, FBS —<br>not always inside official lists.</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -301,7 +389,12 @@
                             <span>USER CONTROL</span>
                             <div class="fragment-line"></div>
                         </div>
-                        <p class="fragment-desc">Keep using the offshore MT5 broker,<br>high-leverage account,<br>and battlefield you selected.<br>Synk Mushroom connects to the MT5 terminal<br>that remains under your control.</p>
+                        <div class="node-hover-trigger">
+                            <p class="fragment-desc">Keep using the offshore MT5 broker<br>high-leverage account<br>and battlefield you selected.<br>Synk Mushroom connects to the MT5 terminal<br>that remains under your control.</p>
+                            <div class="node-hover-panel node-hover-text node-hover-right">
+                                <p class="fragment-desc">Synk Mushroom does not<br>manage your broker account.<br>It does not hold your funds.<br>Login, server, positions<br>and execution remain inside MT5.</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -316,7 +409,12 @@
                             <div class="fragment-line"></div>
                             <span>ONE SCREEN</span>
                         </div>
-                        <p class="fragment-desc">Keep the chart open.<br>Keep the context alive.<br>Place execution controls<br>directly onto the TradingView screen.</p>
+                        <div class="node-hover-trigger">
+                            <p class="fragment-desc">Keep the chart open.<br>Keep the context alive.<br>Place execution controls<br>directly onto the TradingView screen.</p>
+                            <div class="node-hover-panel node-hover-image node-hover-left">
+                                <img src="assets/node-04-hover.jpg" alt="">
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -331,7 +429,12 @@
                             <span>VISUAL FRICTION</span>
                             <div class="fragment-line"></div>
                         </div>
-                        <p class="fragment-desc">Window switching, monitor shifting,<br>cursor travel, and window activation<br>look small in isolation.<br>In live execution, those small delays<br>accumulate between decision and action.</p>
+                        <div class="node-hover-trigger">
+                            <p class="fragment-desc">Window switching, monitor shifting<br>cursor travel, and window activation<br>look small in isolation.<br>In live execution, those small delays<br>accumulate between decision and action.</p>
+                            <div class="node-hover-panel node-hover-text node-hover-right">
+                                <p class="fragment-desc">The cost is not only time.<br>It is attention, visual focus<br>cursor distance, and context loss<br>between seeing the setup<br>and acting on it.</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -346,7 +449,12 @@
                             <div class="fragment-line"></div>
                             <span>HUMAN TRIGGER</span>
                         </div>
-                        <p class="fragment-desc">Synk Mushroom does not trade<br>on behalf of the user.<br>It is a manual execution layer<br>designed to shorten the operating route<br>from TradingView to MT5.</p>
+                        <div class="node-hover-trigger">
+                            <p class="fragment-desc">Synk Mushroom does not trade<br>on behalf of the user.<br>It is a manual execution layer<br>designed to shorten the operating route<br>from TradingView to MT5.</p>
+                            <div class="node-hover-panel node-hover-text node-hover-left">
+                                <p class="fragment-desc">No signals are automated into trades.<br>No condition fires an order by itself.<br>The trader decides, presses<br>stops, and closes.<br>Synk Mushroom carries that action into MT5.</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -361,7 +469,12 @@
                             <span>NO SIGNAL ENGINE</span>
                             <div class="fragment-line"></div>
                         </div>
-                        <p class="fragment-desc">The core of Synk Mushroom<br>is not trade decision-making.<br>It is an execution route<br>that carries already-decided actions<br>from TradingView to MT5.</p>
+                        <div class="node-hover-trigger">
+                            <p class="fragment-desc">The core of Synk Mushroom<br>is not trade decision-making.<br>It is an execution route<br>that carries already-decided actions<br>from TradingView to MT5.</p>
+                            <div class="node-hover-panel node-hover-text node-hover-right">
+                                <p class="fragment-desc">No hidden strategy logic<br>sits underneath.<br>No AI signal engine.<br>No automated decision-making<br>disguised as discretion.</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -376,7 +489,12 @@
                             <div class="fragment-line"></div>
                             <span>MANUAL ROUTE</span>
                         </div>
-                        <p class="fragment-desc">Webhooks and Pine alerts<br>are useful for notifications<br>and automation routes.<br>They are not the same as<br>a manual execution panel operated by a human.</p>
+                        <div class="node-hover-trigger">
+                            <p class="fragment-desc">Webhooks and Pine alerts<br>are useful for notifications<br>and automation routes.<br>They are not the same as<br>a manual execution panel operated by a human.</p>
+                            <div class="node-hover-panel node-hover-text node-hover-left">
+                                <p class="fragment-desc">An alert can notify.<br>A webhook can send.<br>But watching, waiting<br>pressing, stopping, or escaping<br>remains a human act.</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -391,7 +509,12 @@
                             <span>LOCAL ROUTE</span>
                             <div class="fragment-line"></div>
                         </div>
-                        <p class="fragment-desc">Keep the command path<br>as close to your own machine as possible.<br>The TradingView-side panel<br>and the local bridge communicate<br>without a public order endpoint or cloud relay.</p>
+                        <div class="node-hover-trigger">
+                            <p class="fragment-desc">Keep the command path<br>as close to your own machine as possible.<br>The TradingView-side panel<br>and the local bridge communicate<br>without a public order endpoint or cloud relay.</p>
+                            <div class="node-hover-panel node-hover-text node-hover-right">
+                                <p class="fragment-desc">No public order endpoint is created.<br>No exposed webhook URL is required.<br>Commands are not handed<br>to a cloud relay service.<br>The route stays inside the local environment.</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -406,7 +529,12 @@
                             <div class="fragment-line"></div>
                             <span>TERMINAL TRUTH</span>
                         </div>
-                        <p class="fragment-desc">Execution, account state,<br>broker server, and position data<br>remain inside MT5.<br>Synk Mushroom lets the TradingView cockpit<br>reach the MT5 engine.</p>
+                        <div class="node-hover-trigger">
+                            <p class="fragment-desc">Execution, account state<br>broker server, and position data<br>remain inside MT5.<br>Synk Mushroom lets the TradingView cockpit<br>reach the MT5 engine.</p>
+                            <div class="node-hover-panel node-hover-text node-hover-left">
+                                <p class="fragment-desc">Broker context, account state<br>orders, positions<br>and server response<br>remain grounded in MT5.<br>Synk Mushroom reaches the terminal you use.</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -421,7 +549,12 @@
                             <span>SYMBOL ROUTE</span>
                             <div class="fragment-line"></div>
                         </div>
-                        <p class="fragment-desc">Symbol intent from TradingView<br>is resolved against the visible symbols<br>in MT5 Market Watch.<br>Execution points toward<br>the account environment you actually use.</p>
+                        <div class="node-hover-trigger">
+                            <p class="fragment-desc">Symbol intent from TradingView<br>is resolved against the visible symbols<br>in MT5 Market Watch.<br>Execution points toward<br>the account environment you actually use.</p>
+                            <div class="node-hover-panel node-hover-text node-hover-right">
+                                <p class="fragment-desc">Broker symbols are not always clean.<br>Suffixes, account conditions<br>and Market Watch visibility<br>can define the actual route.<br>Intent resolves against open MT5.</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -436,7 +569,12 @@
                             <div class="fragment-line"></div>
                             <span>ORDER PANEL</span>
                         </div>
-                        <p class="fragment-desc">Place manual market actions<br>from the TradingView screen<br>and route them into your own<br>local MT5 environment.<br>Bring decision closer to launch.</p>
+                        <div class="node-hover-trigger">
+                            <p class="fragment-desc">Place manual market actions<br>from the TradingView screen<br>and route them into your own<br>local MT5 environment.<br>Bring decision closer to launch.</p>
+                            <div class="node-hover-panel node-hover-image node-hover-left">
+                                <img src="assets/node-12-hover.jpg" alt="">
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -451,7 +589,12 @@
                             <span>LIMIT / STOP</span>
                             <div class="fragment-line"></div>
                         </div>
-                        <p class="fragment-desc">Prepare Limit and Stop pending orders<br>without leaving the analysis screen.<br>Keep the setup and execution route<br>inside the same visual flow.</p>
+                        <div class="node-hover-trigger">
+                            <p class="fragment-desc">Prepare Limit and Stop pending orders<br>without leaving the analysis screen.<br>Keep the setup and execution route<br>inside the same visual flow.</p>
+                            <div class="node-hover-panel node-hover-image node-hover-right">
+                                <img src="assets/node-13-hover.jpg" alt="">
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -466,13 +609,18 @@
                             <div class="fragment-line"></div>
                             <span>MODIFY PATH</span>
                         </div>
-                        <p class="fragment-desc">Adjust stops, targets,<br>and order changes without breaking context.<br>MT5 remains the execution engine<br>while the operating layer<br>stays close to the chart.</p>
+                        <div class="node-hover-trigger">
+                            <p class="fragment-desc">Adjust stops, targets<br>and order changes without breaking context.<br>MT5 remains the execution engine<br>while the operating layer<br>stays close to the chart.</p>
+                            <div class="node-hover-panel node-hover-image node-hover-left">
+                                <img src="assets/node-14-hover.jpg" alt="">
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
 
             <!-- Node 15 -->
-            <div class="node-block story-node">
+            <div class="node-block story-node spacing-extended-15">
                 <div class="number-core digit-descender">15</div>
                 <div class="title-core">Close and Close All Stay on the Route</div>
                 <div class="branch left">
@@ -481,13 +629,18 @@
                             <span>EXIT CONTROL</span>
                             <div class="fragment-line"></div>
                         </div>
-                        <p class="fragment-desc">Exit matters as much as entry.<br>Close and Close All should not depend<br>on screen switching or operational drift.<br>They belong inside the same<br>disciplined execution route.</p>
+                        <div class="node-hover-trigger">
+                            <p class="fragment-desc">Exit matters as much as entry.<br>Close and Close All should not depend<br>on screen switching or operational drift.<br>They belong inside the same<br>disciplined execution route.</p>
+                            <div class="node-hover-panel node-hover-image node-hover-right">
+                                <img src="assets/node-15-hover.jpg" alt="">
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
 
             <!-- Node 16 -->
-            <div class="node-block story-node">
+            <div class="node-block story-node story-node-gap-after">
                 <div class="number-core">16</div>
                 <div class="title-core">Evidence Beneath the Button</div>
                 <div class="branch right">
@@ -496,7 +649,12 @@
                             <div class="fragment-line"></div>
                             <span>EXECUTION EVIDENCE</span>
                         </div>
-                        <p class="fragment-desc">Synk Mushroom is not just a button layer.<br>Synk Evidence Console makes visible<br>the flow between panel action,<br>local bridge behavior, MT5 response,<br>and visual synchronization.</p>
+                        <div class="node-hover-trigger">
+                            <p class="fragment-desc">Synk Mushroom is not just a button layer.<br>Synk Evidence Console makes visible<br>the flow between panel action<br>local bridge behavior, MT5 response<br>and visual synchronization.</p>
+                            <div class="node-hover-panel node-hover-image node-hover-left">
+                                <img src="assets/node-16-hover.jpg" alt="">
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -511,7 +669,12 @@
                             <span>PATH BREAKDOWN</span>
                             <div class="fragment-line"></div>
                         </div>
-                        <p class="fragment-desc">Do not guess<br>where time disappeared.<br>By separating local processing,<br>MT5 response, and panel synchronization,<br>each layer can be inspected.</p>
+                        <div class="node-hover-trigger">
+                            <p class="fragment-desc">Do not guess<br>where time disappeared.<br>By separating local processing<br>MT5 response, and panel synchronization<br>each layer can be inspected.</p>
+                            <div class="node-hover-panel node-hover-text node-hover-right">
+                                <p class="fragment-desc">The point is not to blame the broker.<br>The point is to separate<br>local processing, MT5 response<br>and visual synchronization<br>so each layer can be inspected.</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -526,7 +689,12 @@
                             <div class="fragment-line"></div>
                             <span>ORDER TRACE</span>
                         </div>
-                        <p class="fragment-desc">BUY, SELL, Pending, Close.<br>Each command leaves a trace<br>across the execution route.<br>See where the action traveled<br>and how it came back.</p>
+                        <div class="node-hover-trigger">
+                            <p class="fragment-desc">BUY, SELL, Pending, Close.<br>Each command leaves a trace<br>across the execution route.<br>See where the action traveled<br>and how it came back.</p>
+                            <div class="node-hover-panel node-hover-image node-hover-left">
+                                <img src="assets/node-18-hover.jpg" alt="">
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -541,7 +709,12 @@
                             <span>EVENT MEMORY</span>
                             <div class="fragment-line"></div>
                         </div>
-                        <p class="fragment-desc">The route is recorded as events,<br>not vibes.<br>A quiet ledger remains<br>for what happened<br>beneath the surface.</p>
+                        <div class="node-hover-trigger">
+                            <p class="fragment-desc">The route is recorded as events<br>not vibes.<br>A quiet ledger remains<br>for what happened<br>beneath the surface.</p>
+                            <div class="node-hover-panel node-hover-text node-hover-right">
+                                <p class="fragment-desc">Raw events preserve the route<br>beneath the interface.<br>They are not performance analytics.<br>They record what the equipment<br>saw, sent, received, and synchronized.</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -556,7 +729,12 @@
                             <div class="fragment-line"></div>
                             <span>OICHI EQUIPMENT</span>
                         </div>
-                        <p class="fragment-desc">Oichi Equipment does not sell signals,<br>custody, investment advice,<br>or performance promises.<br>Synk Mushroom is equipment<br>for discretionary traders.</p>
+                        <div class="node-hover-trigger">
+                            <p class="fragment-desc">Oichi Equipment does not sell signals<br>custody, investment advice<br>or performance promises.<br>Synk Mushroom is equipment<br>for discretionary traders.</p>
+                            <div class="node-hover-panel node-hover-text node-hover-left">
+                                <p class="fragment-desc">Synk Evidence Console<br>does not score a strategy<br>or promise profit.<br>It shows where an action traveled<br>returned, and spent time.</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
