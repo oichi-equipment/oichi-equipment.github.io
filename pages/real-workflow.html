@@ -29,6 +29,9 @@
         }
     </script>
     <style>
+        html {
+            scroll-behavior: smooth;
+        }
         body {
             background-color: #030303;
             color: #a1a1aa;
@@ -77,7 +80,7 @@
     <div class="noise-overlay"></div>
 
     <main class="w-full min-h-screen px-6 py-20 flex flex-col items-center">
-        <div class="w-full max-w-2xl flex flex-col items-start">
+        <div id="workflow-top" class="w-full max-w-2xl flex flex-col items-start">
             
             <!-- Navigation -->
             <a href="../index.html#faq" class="terminal-link fragment-desc font-mono text-[0.7rem] tracking-[0.2em] uppercase flex items-center gap-2 mb-16 inline-flex">
@@ -90,42 +93,156 @@
             </div>
 
             <!-- Page Title -->
-            <h1 class="font-serif text-3xl md:text-4xl subpage-title font-light tracking-wide mb-6">
-                Real Workflow
-            </h1>
+            <div class="w-full flex items-center gap-6 mb-6">
+                <div class="h-[1px] flex-1 bg-[#d1d1d6]/70"></div>
+                <h1 class="font-serif text-3xl md:text-4xl subpage-title font-light tracking-wide text-right whitespace-nowrap">
+                    Real Workflow
+                </h1>
+                <div class="h-[1px] w-8 bg-[#d1d1d6]/70"></div>
+            </div>
 
             <!-- Divider -->
             <div class="w-full h-[1px] subpage-divider mb-10"></div>
 
-            <!-- Quiet Document Flow -->
-            <div class="fragment-desc space-y-8 max-w-full text-justify">
-                <p>
-                    The intended workflow is simple: analyze on TradingView, decide manually, execute through the connected MT5 environment.
+            <!-- Workflow Lead -->
+            <div class="w-full max-w-full mb-24">
+                <p class="font-serif text-xl md:text-2xl subpage-title tracking-wide leading-relaxed mb-10">
+                    From chart context to manual MT5 execution.
                 </p>
-                <p>
-                    Synk Mushroom does not make trading decisions. It does not run automated strategies. It does not provide signals. It does not replace discretion.
-                </p>
-                <p>
-                    Its purpose is to reduce the fracture between analysis and execution. The trader remains inside the TradingView environment while keeping MT5 execution continuity available.
-                </p>
-                <p>
-                    The value is not automation. The value is preserving rhythm: analysis, decision, execution, and review without unnecessary relocation, interface switching, or environment collapse.
-                </p>
-                <p>
-                    The workflow remains human. Responsibility remains human. The infrastructure remains quiet.
-                </p>
-                <p class="subpage-note text-sm border-l border-zinc-800 pl-4 py-1">
-                    This page may later link to YouTube execution archive videos:<br>
-                    <a href="https://youtube.com/@oichiequipment?si=QMrwPAN9fWnktAkJ" target="_blank" rel="noopener noreferrer" class="terminal-link fragment-desc font-mono text-xs tracking-wider inline-block mt-2">
-                        youtube.com/@oichiequipment
-                    </a>
-                </p>
+                <div class="fragment-desc space-y-6 max-w-full text-justify">
+                    <p>The intended workflow is simple: analyze on TradingView, decide manually, and execute through the connected MT5 environment. Synk Mushroom exists between the chart context and the local execution terminal.</p>
+                    <p>It does not make trading decisions, run automated strategies, provide signals, or replace discretion. The workflow remains human: the trader observes, decides, and manually triggers each action.</p>
+                    <p>The value is not automation. The value is preserving rhythm: analysis, decision, execution, and review without unnecessary relocation, interface switching, or environment collapse.</p>
+                </div>
             </div>
+
+            <!-- 01. Before the Session -->
+            <section class="w-full mt-24 text-left">
+                <h2 class="font-serif subpage-meta tracking-widest uppercase mb-6 border-b border-[#18181b] pb-2">
+                    <span class="text-2xl md:text-3xl leading-none">01.</span>
+                    <span class="text-base md:text-lg">Before the Session</span>
+                </h2>
+                <div class="fragment-desc space-y-6 text-justify">
+                    <p>Before initiating any trading action, the user prepares the local execution environment. This begins by launching the intended MetaTrader 5 terminal and logging into the target broker account. The user should verify the connection state, confirm the relevant symbols are visible in Market Watch, and ensure that the local bridge is running.</p>
+                    <p>Synk Mushroom relies on this local setup. It does not connect to brokers remotely, hold account credentials, or replace the terminal. Using the correct and isolated MT5 environment is the first operational step, because subsequent manual commands are routed toward that active terminal.</p>
+                </div>
+            </section>
+
+            <!-- 02. Chart Analysis Stays in TradingView -->
+            <section class="w-full mt-24 text-left">
+                <h2 class="font-serif subpage-meta tracking-widest uppercase mb-6 border-b border-[#18181b] pb-2 text-right">
+                    <span class="text-2xl md:text-3xl leading-none">02.</span>
+                    <span class="text-base md:text-lg">Chart Analysis Stays in TradingView</span>
+                </h2>
+                <div class="fragment-desc space-y-6 text-justify">
+                    <p>With the local route prepared, the trader keeps analysis inside TradingView. This is where chart context, technical structure, timeframe review, and visual focus remain concentrated. Synk Mushroom places the operating layer closer to that chart environment instead of forcing the trader to repeatedly move between separate windows.</p>
+                    <p>The purpose is not to automate the analysis. The purpose is to preserve the rhythm between seeing the setup, deciding manually, and sending an action toward MT5 without unnecessary interface switching.</p>
+                </div>
+            </section>
+
+            <!-- 03. Manual Decision, Manual Trigger -->
+            <section class="w-full mt-24 text-left">
+                <h2 class="font-serif subpage-meta tracking-widest uppercase mb-6 border-b border-[#18181b] pb-2">
+                    <span class="text-2xl md:text-3xl leading-none">03.</span>
+                    <span class="text-base md:text-lg">Manual Decision, Manual Trigger</span>
+                </h2>
+                <div class="fragment-desc space-y-6 text-justify">
+                    <p>Every action requires human intent. Synk Mushroom does not analyze market conditions, evaluate strategies, or predict price movements. It is a manual execution equipment layer for discretionary traders.</p>
+                    <p>When the user manually clicks an execution control on the TradingView-side panel, the user is confirming the intention to act. The system carries that manual trigger across the local bridge. It acts as a manual conduit for human decisions. It does not add automated judgment or evaluate trades.</p>
+                </div>
+            </section>
+
+            <!-- 04. Market Execution Flow -->
+            <section class="w-full mt-24 text-left">
+                <h2 class="font-serif subpage-meta tracking-widest uppercase mb-6 border-b border-[#18181b] pb-2 text-right">
+                    <span class="text-2xl md:text-3xl leading-none">04.</span>
+                    <span class="text-base md:text-lg">Market Execution Flow</span>
+                </h2>
+                <div class="fragment-desc space-y-6 text-justify">
+                    <p>When the user decides to initiate a market action, the panel sends the requested parameters through the local bridge toward MT5. A BUY or SELL action may include context such as the symbol, volume, and related execution settings, depending on the implemented panel state.</p>
+                    <p>MT5 remains the terminal that communicates with the broker server. The order request is handled within the broker-dependent MT5 environment. Synk Mushroom carries the manual command toward that engine, but broker-side processing, acceptance, rejection, and resulting execution remain outside Synk Mushroom’s control.</p>
+                </div>
+            </section>
+
+            <!-- 05. Pending Order Flow -->
+            <section class="w-full mt-24 text-left">
+                <h2 class="font-serif subpage-meta tracking-widest uppercase mb-6 border-b border-[#18181b] pb-2">
+                    <span class="text-2xl md:text-3xl leading-none">05.</span>
+                    <span class="text-base md:text-lg">Pending Order Flow</span>
+                </h2>
+                <div class="fragment-desc space-y-6 text-justify">
+                    <p>For traders who prefer to prepare an order at a defined price level, the workflow can include pending orders such as Limit and Stop entries. The user defines the intended price, volume, and conditions before sending the order.</p>
+                    <p>This is still manual operation. Synk Mushroom does not wait for a market condition and decide to trade on its own. Once transmitted, the pending order exists in the MT5 environment, and later execution depends on broker-side handling, price movement, account conditions, and the broker’s matching rules.</p>
+                </div>
+            </section>
+
+            <!-- 06. Modify / Risk Adjustment Flow -->
+            <section class="w-full mt-24 text-left">
+                <h2 class="font-serif subpage-meta tracking-widest uppercase mb-6 border-b border-[#18181b] pb-2 text-right">
+                    <span class="text-2xl md:text-3xl leading-none">06.</span>
+                    <span class="text-base md:text-lg">Modify / Risk Adjustment Flow</span>
+                </h2>
+                <div class="fragment-desc space-y-6 text-justify">
+                    <p>Risk adjustment remains a manual process. After an order is placed or a position is opened, the user may adjust Stop Loss, Take Profit, or related order parameters through the operating panel.</p>
+                    <p>The panel provides a closer route for sending those modifications, but MT5 remains the source of truth for the actual position state, order state, and accepted values. Synk Mushroom does not independently manage risk or monitor the market on the user’s behalf.</p>
+                </div>
+            </section>
+
+            <!-- 07. Close / Close All Flow -->
+            <section class="w-full mt-24 text-left">
+                <h2 class="font-serif subpage-meta tracking-widest uppercase mb-6 border-b border-[#18181b] pb-2">
+                    <span class="text-2xl md:text-3xl leading-none">07.</span>
+                    <span class="text-base md:text-lg">Close / Close All Flow</span>
+                </h2>
+                <div class="fragment-desc space-y-6 text-justify">
+                    <p>When the user decides to exit, the closing sequence is also manual. The user may close a specific position or use a broader Close All style action depending on the available workflow.</p>
+                    <p>The close request is carried through the local route toward MT5. The actual speed, fill price, partial handling, rejection, or delay depends on MT5, broker conditions, market volatility, and account state. Synk Mushroom delivers the instruction, but broker-side execution remains broker-dependent.</p>
+                </div>
+            </section>
+
+            <!-- 08. After the Action -->
+            <section class="w-full mt-24 text-left">
+                <h2 class="font-serif subpage-meta tracking-widest uppercase mb-6 border-b border-[#18181b] pb-2 text-right">
+                    <span class="text-2xl md:text-3xl leading-none">08.</span>
+                    <span class="text-base md:text-lg">After the Action</span>
+                </h2>
+                <div class="fragment-desc space-y-6 text-justify">
+                    <p>After an action is sent, the workflow shifts from operation to confirmation and review. MT5 receives the broker-side response, the panel may synchronize its visual state, and the local route records what happened along the way.</p>
+                    <p>Synk Evidence Console is designed for this diagnostic layer. It is not a trading performance analyzer, strategy scorer, or advice system. Its role is to help inspect the execution path: what was pressed, what was sent, what came back, and where the timing context appears in the recorded route.</p>
+                </div>
+            </section>
+
+            <!-- 09. What This Workflow Does Not Do -->
+            <section class="w-full mt-24 text-left">
+                <h2 class="font-serif subpage-meta tracking-widest uppercase mb-6 border-b border-[#18181b] pb-2">
+                    <span class="text-2xl md:text-3xl leading-none">09.</span>
+                    <span class="text-base md:text-lg">What This Workflow Does Not Do</span>
+                </h2>
+                <div class="fragment-desc space-y-6 text-justify">
+                    <p>This workflow does not turn Synk Mushroom into an automated trading robot, EA, signal provider, copy-trading service, or investment advisor. It does not promise profit, better strategy quality, guaranteed execution, or protection against slippage.</p>
+                    <p>It also does not bypass the broker, replace MT5, solve broker-side restrictions, or remove the trader’s responsibility. The user remains responsible for broker selection, account conditions, order size, risk management, and every trading decision.</p>
+                </div>
+            </section>
+
+            <!-- 10. Video Archive / Execution Record -->
+            <section class="w-full mt-24 text-left">
+                <h2 class="font-serif subpage-meta tracking-widest uppercase mb-6 border-b border-[#18181b] pb-2 text-right">
+                    <span class="text-2xl md:text-3xl leading-none">10.</span>
+                    <span class="text-base md:text-lg">Video Archive / Execution Record</span>
+                </h2>
+                <div class="fragment-desc space-y-6 text-justify">
+                    <p>The workflow is easier to understand when the equipment is seen in motion. The video archive is intended to show recorded demonstrations, local route behavior, panel response, and the mechanical sequence and timing context of manual execution using Synk Mushroom.</p>
+                    <p>The text on this page describes the architectural workflow. The archive provides a practical record of the equipment’s operating surface and execution route. It should not be read as investment advice, a performance claim, or a guarantee of future trading outcomes.</p>
+                    <a href="https://youtube.com/@oichiequipment?si=QMrwPAN9fWnktAkJ" target="_blank" rel="noopener noreferrer" class="terminal-link fragment-desc font-mono text-xs tracking-wider inline-flex items-center gap-2 mt-4">
+                        <span>youtube.com/@oichiequipment</span> <span>↗</span>
+                    </a>
+                </div>
+            </section>
 
             <!-- Discrete Footer Navigation -->
             <div class="w-full h-[1px] subpage-divider mt-24 mb-10"></div>
-            <a href="../index.html#faq" class="terminal-link fragment-desc font-mono text-[0.65rem] tracking-[0.2em] uppercase mb-16 self-center">
-                [ RETURN TO SYSTEM INDEX ]
+            <a href="#workflow-top" class="terminal-link fragment-desc font-mono text-[0.65rem] tracking-[0.2em] uppercase mb-16 self-center">
+                WORKFLOW TOP
             </a>
 
             <!-- Footer -->

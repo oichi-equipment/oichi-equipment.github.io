@@ -77,7 +77,7 @@
     <div class="noise-overlay"></div>
 
     <main class="w-full min-h-screen px-6 py-20 flex flex-col items-center">
-        <div class="w-full max-w-2xl flex flex-col items-start text-center">
+        <div id="faq-top" class="w-full max-w-2xl flex flex-col items-start text-center">
             
             <!-- Navigation -->
             <a href="../index.html#faq" class="terminal-link fragment-desc font-mono text-[0.7rem] tracking-[0.2em] uppercase flex items-center gap-2 mb-16 inline-flex self-start">
@@ -90,14 +90,344 @@
             </div>
 
             <!-- Page Title -->
-            <h1 class="font-serif text-3xl md:text-4xl subpage-title font-light tracking-wide mb-6 self-center">
+            <h1 class="font-serif text-3xl md:text-4xl subpage-title font-light tracking-wide mb-16 self-center">
                 Full FAQ Archive
             </h1>
 
+            <div class="faq-search w-full mb-16 text-left">
+                <label for="faq-search-input" class="font-mono text-[0.65rem] subpage-meta tracking-[0.2em] uppercase block mb-3">
+                    Search Archive
+                </label>
+                <div class="faq-search-shell flex items-center gap-3 border-b border-[#18181b] pb-2 focus-within:border-[#739735] transition-colors duration-300">
+                    <span class="font-mono text-[0.95rem] subpage-meta leading-none" aria-hidden="true">⌕</span>
+                    <input id="faq-search-input" type="search" class="w-full bg-transparent border-none fragment-desc placeholder:text-[#71717a] focus:outline-none" placeholder="Search FAQ categories and answers">
+                </div>
+            </div>
+
+            <!-- FAQ Archive List (TOC + Content) -->
+            <div class="faq-archive-list w-full text-left mb-24 flex flex-col gap-3">
+                
+                <!-- 01 -->
+                <div class="faq-category-container">
+                    <button type="button" class="faq-category-trigger terminal-link fragment-desc block text-left w-full outline-none transition-colors duration-300" data-faq-target="core-concept">
+                        01. Core Concept / What Synk Mushroom Is
+                    </button>
+                    <div id="core-concept" class="faq-category-panel hidden mt-8 mb-12 ml-4 border-l border-[#18181b] pl-6 flex flex-col gap-8">
+                        <div class="faq-item">
+                            <h3 class="font-sans font-medium text-sm text-[#e4e4e7] mb-2 leading-relaxed">Q: What is Synk Mushroom?</h3>
+                            <p class="fragment-desc">A: Synk Mushroom is manual execution equipment for discretionary traders. It brings a TradingView-side operating panel closer to a local MT5 terminal, without turning the system into an automated trading strategy.</p>
+                        </div>
+                        <div class="faq-item">
+                            <h3 class="font-sans font-medium text-sm text-[#e4e4e7] mb-2 leading-relaxed">Q: What problem does it solve?</h3>
+                            <p class="fragment-desc">A: It reduces the operational gap between analysis and execution. The trader can keep the chart context in view while sending manual actions toward the MT5 terminal already running on the user’s machine.</p>
+                        </div>
+                        <div class="faq-item">
+                            <h3 class="font-sans font-medium text-sm text-[#e4e4e7] mb-2 leading-relaxed">Q: Is Synk Mushroom a broker?</h3>
+                            <p class="fragment-desc">A: No. Synk Mushroom is not a broker, exchange, dealer, signal provider, or custodian. The broker relationship, account state, order execution, and server response remain inside MT5 and the broker environment.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 02 -->
+                <div class="faq-category-container">
+                    <button type="button" class="faq-category-trigger terminal-link fragment-desc block text-left w-full outline-none transition-colors duration-300" data-faq-target="tradingview-mt5">
+                        02. TradingView / MT5 Relationship
+                    </button>
+                    <div id="tradingview-mt5" class="faq-category-panel hidden mt-8 mb-12 ml-4 border-l border-[#18181b] pl-6 flex flex-col gap-8">
+                        <div class="faq-item">
+                            <h3 class="font-sans font-medium text-sm text-[#e4e4e7] mb-2 leading-relaxed">Q: Does TradingView execute the order directly?</h3>
+                            <p class="fragment-desc">A: No. TradingView is used as the cockpit and operating surface. MT5 remains the execution terminal connected to the broker account.</p>
+                        </div>
+                        <div class="faq-item">
+                            <h3 class="font-sans font-medium text-sm text-[#e4e4e7] mb-2 leading-relaxed">Q: Why connect TradingView to MT5 this way?</h3>
+                            <p class="fragment-desc">A: Many traders analyze on TradingView but execute on MT5. Synk Mushroom is designed to reduce that split by placing manual execution controls closer to the chart.</p>
+                        </div>
+                        <div class="faq-item">
+                            <h3 class="font-sans font-medium text-sm text-[#e4e4e7] mb-2 leading-relaxed">Q: Does this replace MT5?</h3>
+                            <p class="fragment-desc">A: No. MT5 remains the terminal. Synk Mushroom does not replace MT5, the broker server, account login, order book, positions, or execution engine.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 03 -->
+                <div class="faq-category-container">
+                    <button type="button" class="faq-category-trigger terminal-link fragment-desc block text-left w-full outline-none transition-colors duration-300" data-faq-target="manual-execution">
+                        03. Manual Execution / Not Automation
+                    </button>
+                    <div id="manual-execution" class="faq-category-panel hidden mt-8 mb-12 ml-4 border-l border-[#18181b] pl-6 flex flex-col gap-8">
+                        <div class="faq-item">
+                            <h3 class="font-sans font-medium text-sm text-[#e4e4e7] mb-2 leading-relaxed">Q: Is Synk Mushroom an EA or trading bot?</h3>
+                            <p class="fragment-desc">A: No. Synk Mushroom does not decide trades, generate signals, or run a hidden strategy. It only carries manual user actions toward the local MT5 terminal.</p>
+                        </div>
+                        <div class="faq-item">
+                            <h3 class="font-sans font-medium text-sm text-[#e4e4e7] mb-2 leading-relaxed">Q: Can Synk Mushroom trade automatically from alerts?</h3>
+                            <p class="fragment-desc">A: No. It is not designed as a Pine alert automation tool or webhook bot. A trade action requires the user’s manual decision and operation.</p>
+                        </div>
+                        <div class="faq-item">
+                            <h3 class="font-sans font-medium text-sm text-[#e4e4e7] mb-2 leading-relaxed">Q: Who decides when to buy, sell, modify, or close?</h3>
+                            <p class="fragment-desc">A: The trader does. Synk Mushroom is equipment for carrying the action, not a system for making the trading decision.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 04 -->
+                <div class="faq-category-container">
+                    <button type="button" class="faq-category-trigger terminal-link fragment-desc block text-left w-full outline-none transition-colors duration-300" data-faq-target="local-bridge">
+                        04. Local Bridge / Security Model
+                    </button>
+                    <div id="local-bridge" class="faq-category-panel hidden mt-8 mb-12 ml-4 border-l border-[#18181b] pl-6 flex flex-col gap-8">
+                        <div class="faq-item">
+                            <h3 class="font-sans font-medium text-sm text-[#e4e4e7] mb-2 leading-relaxed">Q: Does Synk Mushroom use a public webhook URL?</h3>
+                            <p class="fragment-desc">A: No. The design avoids a public order endpoint. The operating route is local between the TradingView-side panel and the user’s local bridge.</p>
+                        </div>
+                        <div class="faq-item">
+                            <h3 class="font-sans font-medium text-sm text-[#e4e4e7] mb-2 leading-relaxed">Q: Are orders sent through a cloud relay?</h3>
+                            <p class="fragment-desc">A: No cloud order relay is used for the local execution route. The action is carried inside the user’s local environment toward MT5.</p>
+                        </div>
+                        <div class="faq-item">
+                            <h3 class="font-sans font-medium text-sm text-[#e4e4e7] mb-2 leading-relaxed">Q: Do I need to open a public port?</h3>
+                            <p class="fragment-desc">A: The intended design does not require exposing a public order URL. The local bridge operates on the user’s machine instead of publishing an internet-facing trading endpoint.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 05 -->
+                <div class="faq-category-container">
+                    <button type="button" class="faq-category-trigger terminal-link fragment-desc block text-left w-full outline-none transition-colors duration-300" data-faq-target="broker-compatibility">
+                        05. Broker / Account / Symbol Compatibility
+                    </button>
+                    <div id="broker-compatibility" class="faq-category-panel hidden mt-8 mb-12 ml-4 border-l border-[#18181b] pl-6 flex flex-col gap-8">
+                        <div class="faq-item">
+                            <h3 class="font-sans font-medium text-sm text-[#e4e4e7] mb-2 leading-relaxed">Q: Which brokers can Synk Mushroom work with?</h3>
+                            <p class="fragment-desc">A: Synk Mushroom is designed around MT5 terminal environments, especially cases where a trader uses a broker that is not available as an official TradingView connection. Actual compatibility depends on the user’s MT5 terminal, account, symbol visibility, and broker conditions.</p>
+                        </div>
+                        <div class="faq-item">
+                            <h3 class="font-sans font-medium text-sm text-[#e4e4e7] mb-2 leading-relaxed">Q: What about brokers like EXNESS, XM Trading, Titan FX, ThreeTrader, FXGT, BigBoss, HFM, Axiory, Vantage, or FBS?</h3>
+                            <p class="fragment-desc">A: These are examples of MT5 environments traders may use outside official TradingView broker connections. The practical route still depends on the local MT5 terminal, visible symbols, account permissions, and broker execution conditions.</p>
+                        </div>
+                        <div class="faq-item">
+                            <h3 class="font-sans font-medium text-sm text-[#e4e4e7] mb-2 leading-relaxed">Q: How are symbols resolved?</h3>
+                            <p class="fragment-desc">A: Synk Mushroom resolves TradingView-side intent against the symbols visible in MT5 Market Watch. Broker suffixes, account conditions, and Market Watch visibility can affect the actual execution route.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 06 -->
+                <div class="faq-category-container">
+                    <button type="button" class="faq-category-trigger terminal-link fragment-desc block text-left w-full outline-none transition-colors duration-300" data-faq-target="installation-setup">
+                        06. Installation / Local Setup
+                    </button>
+                    <div id="installation-setup" class="faq-category-panel hidden mt-8 mb-12 ml-4 border-l border-[#18181b] pl-6 flex flex-col gap-8">
+                        <div class="faq-item">
+                            <h3 class="font-sans font-medium text-sm text-[#e4e4e7] mb-2 leading-relaxed">Q: What do I need to run Synk Mushroom?</h3>
+                            <p class="fragment-desc">A: The expected setup is a supported browser environment, the Synk Mushroom panel, the local bridge, and the user’s own MT5 terminal. Detailed installation requirements may be described separately in the deployment guide.</p>
+                        </div>
+                        <div class="faq-item">
+                            <h3 class="font-sans font-medium text-sm text-[#e4e4e7] mb-2 leading-relaxed">Q: Does MT5 need to be running?</h3>
+                            <p class="fragment-desc">A: Yes. MT5 is the execution terminal. The user should start and manage the correct MT5 terminal before using the local execution route.</p>
+                        </div>
+                        <div class="faq-item">
+                            <h3 class="font-sans font-medium text-sm text-[#e4e4e7] mb-2 leading-relaxed">Q: Can I run multiple MT5 terminals at the same time?</h3>
+                            <p class="fragment-desc">A: The safer operating model is to use one intended MT5 terminal at a time. Multiple terminals can create ambiguity and should not be treated as the default operating condition.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 07 -->
+                <div class="faq-category-container">
+                    <button type="button" class="faq-category-trigger terminal-link fragment-desc block text-left w-full outline-none transition-colors duration-300" data-faq-target="operation-panel">
+                        07. Operation / Trading Panel
+                    </button>
+                    <div id="operation-panel" class="faq-category-panel hidden mt-8 mb-12 ml-4 border-l border-[#18181b] pl-6 flex flex-col gap-8">
+                        <div class="faq-item">
+                            <h3 class="font-sans font-medium text-sm text-[#e4e4e7] mb-2 leading-relaxed">Q: What actions can the panel support?</h3>
+                            <p class="fragment-desc">A: The panel is intended for manual operations such as market actions, pending order preparation, stop and target handling, modification workflows, and close-related actions, depending on the implemented version.</p>
+                        </div>
+                        <div class="faq-item">
+                            <h3 class="font-sans font-medium text-sm text-[#e4e4e7] mb-2 leading-relaxed">Q: Does Close All mean it guarantees every position will close?</h3>
+                            <p class="fragment-desc">A: No. Close commands are sent toward MT5 and the broker environment. Actual closing depends on MT5 response, broker execution, market conditions, and account state.</p>
+                        </div>
+                        <div class="faq-item">
+                            <h3 class="font-sans font-medium text-sm text-[#e4e4e7] mb-2 leading-relaxed">Q: Are stop loss and take profit managed by Synk Mushroom?</h3>
+                            <p class="fragment-desc">A: Synk Mushroom may help the user operate SL/TP inputs and send modifications, but MT5 and the broker environment remain responsible for the actual order state and execution result.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 08 -->
+                <div class="faq-category-container">
+                    <button type="button" class="faq-category-trigger terminal-link fragment-desc block text-left w-full outline-none transition-colors duration-300" data-faq-target="latency-speed">
+                        08. Latency / Execution Speed / Responsibility Boundary
+                    </button>
+                    <div id="latency-speed" class="faq-category-panel hidden mt-8 mb-12 ml-4 border-l border-[#18181b] pl-6 flex flex-col gap-8">
+                        <div class="faq-item">
+                            <h3 class="font-sans font-medium text-sm text-[#e4e4e7] mb-2 leading-relaxed">Q: Does Synk Mushroom guarantee execution speed?</h3>
+                            <p class="fragment-desc">A: No. Synk Mushroom can reduce local operating friction, but broker-side execution speed, fills, rejection, and slippage remain broker- and market-dependent.</p>
+                        </div>
+                        <div class="faq-item">
+                            <h3 class="font-sans font-medium text-sm text-[#e4e4e7] mb-2 leading-relaxed">Q: What does local latency mean?</h3>
+                            <p class="fragment-desc">A: Local latency refers to the time spent inside the user-side route, such as panel action, local bridge handling, and communication toward MT5. It is not the same as broker execution time.</p>
+                        </div>
+                        <div class="faq-item">
+                            <h3 class="font-sans font-medium text-sm text-[#e4e4e7] mb-2 leading-relaxed">Q: Can Synk Mushroom prevent slippage?</h3>
+                            <p class="fragment-desc">A: No. Slippage is affected by broker execution, liquidity, market movement, instrument conditions, and order type. Synk Mushroom is not a slippage prevention system.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 09 -->
+                <div class="faq-category-container">
+                    <button type="button" class="faq-category-trigger terminal-link fragment-desc block text-left w-full outline-none transition-colors duration-300" data-faq-target="evidence-console">
+                        09. Evidence Console / Logs / Diagnostics
+                    </button>
+                    <div id="evidence-console" class="faq-category-panel hidden mt-8 mb-12 ml-4 border-l border-[#18181b] pl-6 flex flex-col gap-8">
+                        <div class="faq-item">
+                            <h3 class="font-sans font-medium text-sm text-[#e4e4e7] mb-2 leading-relaxed">Q: What is Synk Evidence Console?</h3>
+                            <p class="fragment-desc">A: Synk Evidence Console is a diagnostic archive for inspecting the route behind actions. It helps separate local processing, MT5 response, visual synchronization, and related event records.</p>
+                        </div>
+                        <div class="faq-item">
+                            <h3 class="font-sans font-medium text-sm text-[#e4e4e7] mb-2 leading-relaxed">Q: Is Evidence Console trading performance analytics?</h3>
+                            <p class="fragment-desc">A: No. It is not a strategy scorer, profit analyzer, or trading advice tool. It is intended to show execution-path evidence and diagnostic context.</p>
+                        </div>
+                        <div class="faq-item">
+                            <h3 class="font-sans font-medium text-sm text-[#e4e4e7] mb-2 leading-relaxed">Q: What kind of evidence can it show?</h3>
+                            <p class="fragment-desc">A: It may show command traces, timing by layer, raw event records, environment boundaries, and related diagnostic information depending on the available logs.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 10 -->
+                <div class="faq-category-container">
+                    <button type="button" class="faq-category-trigger terminal-link fragment-desc block text-left w-full outline-none transition-colors duration-300" data-faq-target="privacy-data">
+                        10. Privacy / Data Handling
+                    </button>
+                    <div id="privacy-data" class="faq-category-panel hidden mt-8 mb-12 ml-4 border-l border-[#18181b] pl-6 flex flex-col gap-8">
+                        <div class="faq-item">
+                            <h3 class="font-sans font-medium text-sm text-[#e4e4e7] mb-2 leading-relaxed">Q: Does Synk Mushroom hold my funds?</h3>
+                            <p class="fragment-desc">A: No. Synk Mushroom does not hold user funds, custody assets, or operate as a broker. Funds remain with the user’s broker account.</p>
+                        </div>
+                        <div class="faq-item">
+                            <h3 class="font-sans font-medium text-sm text-[#e4e4e7] mb-2 leading-relaxed">Q: Does Synk Mushroom need my broker password?</h3>
+                            <p class="fragment-desc">A: The system should not require the user to send broker passwords to support or to Oichi Equipment. Users should never share broker passwords through email or support messages.</p>
+                        </div>
+                        <div class="faq-item">
+                            <h3 class="font-sans font-medium text-sm text-[#e4e4e7] mb-2 leading-relaxed">Q: Are logs always safe to send?</h3>
+                            <p class="fragment-desc">A: Logs may contain operational context. Submission logs should be masked or prepared through the intended submission flow when available. Users should avoid sending passwords, private keys, or unnecessary personal information.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 11 -->
+                <div class="faq-category-container">
+                    <button type="button" class="faq-category-trigger terminal-link fragment-desc block text-left w-full outline-none transition-colors duration-300" data-faq-target="limits">
+                        11. Limits / What It Does Not Do
+                    </button>
+                    <div id="limits" class="faq-category-panel hidden mt-8 mb-12 ml-4 border-l border-[#18181b] pl-6 flex flex-col gap-8">
+                        <div class="faq-item">
+                            <h3 class="font-sans font-medium text-sm text-[#e4e4e7] mb-2 leading-relaxed">Q: Does Synk Mushroom make traders profitable?</h3>
+                            <p class="fragment-desc">A: No. It does not promise profit, improve strategy quality, or guarantee trading outcomes. It is execution equipment, not a trading method.</p>
+                        </div>
+                        <div class="faq-item">
+                            <h3 class="font-sans font-medium text-sm text-[#e4e4e7] mb-2 leading-relaxed">Q: Does it provide signals?</h3>
+                            <p class="fragment-desc">A: No. Synk Mushroom does not provide entry signals, exit signals, market predictions, or copy-trading instructions.</p>
+                        </div>
+                        <div class="faq-item">
+                            <h3 class="font-sans font-medium text-sm text-[#e4e4e7] mb-2 leading-relaxed">Q: Does it fix broker problems?</h3>
+                            <p class="fragment-desc">A: No. It cannot control broker-side rejection, liquidity, slippage, maintenance, server delay, or account restrictions. It can only help inspect and shorten the user-side operating route.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 12 -->
+                <div class="faq-category-container">
+                    <button type="button" class="faq-category-trigger terminal-link fragment-desc block text-left w-full outline-none transition-colors duration-300" data-faq-target="pricing-license">
+                        12. Pricing / Trial / License
+                    </button>
+                    <div id="pricing-license" class="faq-category-panel hidden mt-8 mb-12 ml-4 border-l border-[#18181b] pl-6 flex flex-col gap-8">
+                        <div class="faq-item">
+                            <h3 class="font-sans font-medium text-sm text-[#e4e4e7] mb-2 leading-relaxed">Q: Is there a trial?</h3>
+                            <p class="fragment-desc">A: The service may provide a trial period according to the current checkout and license terms. The exact trial details should be confirmed at checkout.</p>
+                        </div>
+                        <div class="faq-item">
+                            <h3 class="font-sans font-medium text-sm text-[#e4e4e7] mb-2 leading-relaxed">Q: What is the difference between monthly, annual, and longer licenses?</h3>
+                            <p class="fragment-desc">A: The difference is the access period and billing structure. Exact terms, renewal behavior, and regional availability should be confirmed on the purchase page or license terms.</p>
+                        </div>
+                        <div class="faq-item">
+                            <h3 class="font-sans font-medium text-sm text-[#e4e4e7] mb-2 leading-relaxed">Q: Can I move my license to another PC?</h3>
+                            <p class="fragment-desc">A: License transfer or device change handling may depend on the license terms and support policy. Users should check the current license rules or contact support before assuming availability.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 13 -->
+                <div class="faq-category-container">
+                    <button type="button" class="faq-category-trigger terminal-link fragment-desc block text-left w-full outline-none transition-colors duration-300" data-faq-target="troubleshooting">
+                        13. Troubleshooting / Common Issues
+                    </button>
+                    <div id="troubleshooting" class="faq-category-panel hidden mt-8 mb-12 ml-4 border-l border-[#18181b] pl-6 flex flex-col gap-8">
+                        <div class="faq-item">
+                            <h3 class="font-sans font-medium text-sm text-[#e4e4e7] mb-2 leading-relaxed">Q: The panel does not appear. What should I check?</h3>
+                            <p class="fragment-desc">A: Check that the browser extension or panel environment is installed correctly, the correct TradingView page is open, and the local setup has been started as described in the deployment guide.</p>
+                        </div>
+                        <div class="faq-item">
+                            <h3 class="font-sans font-medium text-sm text-[#e4e4e7] mb-2 leading-relaxed">Q: MT5 does not respond. What should I check?</h3>
+                            <p class="fragment-desc">A: Confirm that the intended MT5 terminal is open, logged in, connected to the broker server, and showing the relevant symbols in Market Watch.</p>
+                        </div>
+                        <div class="faq-item">
+                            <h3 class="font-sans font-medium text-sm text-[#e4e4e7] mb-2 leading-relaxed">Q: The wrong symbol appears or the order route looks incorrect. What should I check?</h3>
+                            <p class="fragment-desc">A: Check Market Watch visibility, broker suffixes, account-specific symbols, and whether the TradingView symbol intent matches the MT5 instrument available in the terminal.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 14 -->
+                <div class="faq-category-container">
+                    <button type="button" class="faq-category-trigger terminal-link fragment-desc block text-left w-full outline-none transition-colors duration-300" data-faq-target="legal-risk">
+                        14. Legal / Risk / Disclaimer
+                    </button>
+                    <div id="legal-risk" class="faq-category-panel hidden mt-8 mb-12 ml-4 border-l border-[#18181b] pl-6 flex flex-col gap-8">
+                        <div class="faq-item">
+                            <h3 class="font-sans font-medium text-sm text-[#e4e4e7] mb-2 leading-relaxed">Q: Is Synk Mushroom investment advice?</h3>
+                            <p class="fragment-desc">A: No. Synk Mushroom does not provide investment advice, trade recommendations, strategy instructions, or financial planning. The user remains responsible for all trading decisions.</p>
+                        </div>
+                        <div class="faq-item">
+                            <h3 class="font-sans font-medium text-sm text-[#e4e4e7] mb-2 leading-relaxed">Q: Does Oichi Equipment sell financial products?</h3>
+                            <p class="fragment-desc">A: No. Oichi Equipment provides execution infrastructure and related equipment. It does not sell securities, derivatives, brokerage services, or managed investment products.</p>
+                        </div>
+                        <div class="faq-item">
+                            <h3 class="font-sans font-medium text-sm text-[#e4e4e7] mb-2 leading-relaxed">Q: Who is responsible for trading losses?</h3>
+                            <p class="fragment-desc">A: The user is responsible for trading decisions, broker selection, account conditions, risk management, and resulting profit or loss. Synk Mushroom does not guarantee trading results.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 15 -->
+                <div class="faq-category-container">
+                    <button type="button" class="faq-category-trigger terminal-link fragment-desc block text-left w-full outline-none transition-colors duration-300" data-faq-target="support-contact">
+                        15. Support / Contact / Submission
+                    </button>
+                    <div id="support-contact" class="faq-category-panel hidden mt-8 mb-12 ml-4 border-l border-[#18181b] pl-6 flex flex-col gap-8">
+                        <div class="faq-item">
+                            <h3 class="font-sans font-medium text-sm text-[#e4e4e7] mb-2 leading-relaxed">Q: What should I prepare before contacting support?</h3>
+                            <p class="fragment-desc">A: Prepare the product name, license email, operating environment, MT5 broker or terminal context, issue description, and steps already tried. Do not send passwords.</p>
+                        </div>
+                        <div class="faq-item">
+                            <h3 class="font-sans font-medium text-sm text-[#e4e4e7] mb-2 leading-relaxed">Q: Should I send logs to support?</h3>
+                            <p class="fragment-desc">A: Logs may be useful for diagnosing route behavior. Use the intended masked submission flow when available, and avoid sending unnecessary private or financial information.</p>
+                        </div>
+                        <div class="faq-item">
+                            <h3 class="font-sans font-medium text-sm text-[#e4e4e7] mb-2 leading-relaxed">Q: What should I not send?</h3>
+                            <p class="fragment-desc">A: Do not send broker passwords, private keys, full account credentials, unrelated personal documents, or sensitive information that is not required for support.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
             <!-- Discrete Footer Navigation -->
             <div class="w-full h-[1px] subpage-divider mt-24 mb-10"></div>
-            <a href="../index.html#faq" class="terminal-link fragment-desc font-mono text-[0.65rem] tracking-[0.2em] uppercase mb-16 self-center">
-                [ RETURN TO SYSTEM INDEX ]
+            <a href="#faq-top" id="faq-top-link" class="terminal-link fragment-desc font-mono text-[0.65rem] tracking-[0.2em] uppercase mb-16 self-center">
+                FAQ TOP
             </a>
 
             <!-- Footer -->
@@ -109,5 +439,60 @@
             </footer>
         </div>
     </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const triggers = document.querySelectorAll('.faq-category-trigger');
+            const panels = document.querySelectorAll('.faq-category-panel');
+
+            triggers.forEach(trigger => {
+                trigger.addEventListener('click', () => {
+                    const targetId = trigger.getAttribute('data-faq-target');
+                    const targetPanel = document.getElementById(targetId);
+                    const isOpening = targetPanel.classList.contains('hidden');
+
+                    // Close all panels and reset text color
+                    panels.forEach(panel => panel.classList.add('hidden'));
+                    triggers.forEach(t => t.classList.remove('!text-customGreen'));
+
+                    // Open the clicked one if it was closed
+                    if (isOpening) {
+                        targetPanel.classList.remove('hidden');
+                        trigger.classList.add('!text-customGreen');
+                    }
+                });
+            });
+
+            const searchInput = document.getElementById('faq-search-input');
+            const categoryContainers = document.querySelectorAll('.faq-category-container');
+
+            if (searchInput) {
+                searchInput.addEventListener('input', () => {
+                    const query = searchInput.value.trim().toLowerCase();
+
+                    if (!query) {
+                        categoryContainers.forEach(container => {
+                            container.style.display = '';
+                        });
+                        return;
+                    }
+
+                    categoryContainers.forEach(container => {
+                        const haystack = container.textContent.toLowerCase();
+                        container.style.display = haystack.includes(query) ? '' : 'none';
+                    });
+                });
+            }
+
+            const topLink = document.getElementById('faq-top-link');
+            if (topLink) {
+                topLink.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    document.getElementById('faq-top').scrollIntoView({ behavior: 'smooth' });
+                    history.pushState(null, null, '#faq-top');
+                });
+            }
+        });
+    </script>
 </body>
 </html>
