@@ -71,6 +71,21 @@
         .subpage-note {
             color: #a1a1aa;
         }
+        @media (max-width: 767px) {
+            .text-justify {
+                text-align: left !important;
+            }
+
+            .flex.items-center.gap-6 > div.h-\[1px\] {
+                display: none !important;
+            }
+
+            h1.subpage-title {
+                text-align: left !important;
+                white-space: normal !important;
+                width: 100% !important;
+            }
+        }
     </style>
 </head>
 <body class="font-sans antialiased selection:bg-accent selection:text-white relative">
