@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Synk Mushroom 詳細FAQ | OICHI EQUIPMENT</title>
+    <meta name="description" content="Synk Mushroomの日本語向け購入前確認、手動実行、ローカル動作、MT5要件、サポート範囲、ライセンス、外部チェックアウトに関する詳細FAQです。">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        uguisu: {
+                            DEFAULT: '#52662c',
+                            hover: '#6b823e',
+                            dark: '#2d3b17',
+                            light: '#8ba36b',
+                            bg: '#161a11',
+                        },
+                        enji: {
+                            DEFAULT: '#7a2d2d',
+                            light: '#9b3f3f',
+                            pale: '#d69e9e',
+                            bg: '#1c1212',
+                        },
+                        dark: {
+                            base: '#0c0d0c',
+                            card: '#141614',
+                            border: '#242824',
+                        },
+                        text: {
+                            main: '#f3f4f6',
+                            sub: '#a1a1aa',
+                            muted: '#52525b',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Noto Sans JP', 'sans-serif'],
+                        mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', '"Liberation Mono"', '"Courier New"', 'monospace'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&display=swap');
+        .logo-text {
+            font-family: 'Bebas Neue', sans-serif;
+            letter-spacing: 0.08em;
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+    <link rel="manifest" href="/site.webmanifest">
+</head>
+
+<body class="antialiased bg-dark-base text-text-main flex flex-col min-h-screen">
+
+    <main class="flex-grow pt-16 pb-24">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <a href="/ja/#faq-section" class="inline-block mb-16 font-mono text-xs text-[#739735] tracking-[0.16em] uppercase hover:text-[#8ba36b] transition">&larr; Synk Mushroom FAQ</a>
+            <div class="mb-16">
+                <div class="text-uguisu font-mono text-sm tracking-widest mb-3">SYNK MUSHROOM</div>
+                <h1 class="text-3xl md:text-4xl font-bold text-text-main mb-6 tracking-wide">Synk Mushroom 詳細FAQ</h1>
+                <p class="text-text-sub text-sm leading-relaxed max-w-2xl">
+                    手動実行、ローカル動作、MT5環境、サポート範囲、外部チェックアウトなどについて、購入前に確認しておきたい事項をまとめています。
+                </p>
+            </div>
+
+            <!-- FAQ Category: 製品の範囲 -->
+            <div class="mb-16">
+                <h2 class="text-lg font-mono font-bold text-[#739735] uppercase tracking-widest border-b border-dark-border pb-2 mb-6">製品の範囲</h2>
+                <div class="space-y-6">
+                    <div>
+                        <h3 class="font-bold text-text-main mb-2">Synk Mushroomとは何ですか？</h3>
+                        <p class="text-text-sub text-sm leading-relaxed">Synk Mushroomは、TradingViewの分析画面から、MT5環境への操作導線を近づけるためのローカル実行インターフェースです。取引戦略やシグナル配信サービス、ブローカーではありません。</p>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-text-main mb-2">取引戦略（ストラテジー）は含まれていますか？</h3>
+                        <p class="text-text-sub text-sm leading-relaxed">いいえ。本製品はエントリーやエグジットのタイミング、リスク、方向、ポジションサイズを決定しません。これらの取引判断は、すべてユーザー自身が行います。</p>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-text-main mb-2">シグナル配信やコピー取引システムですか？</h3>
+                        <p class="text-text-sub text-sm leading-relaxed">いいえ。外部からのシグナルを配信したり、他者の口座の取引をコピーしたりする機能はありません。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FAQ Category: 手動実行 -->
+            <div class="mb-16">
+                <h2 class="text-lg font-mono font-bold text-[#739735] uppercase tracking-widest border-b border-dark-border pb-2 mb-6">手動実行</h2>
+                <div class="space-y-6">
+                    <div>
+                        <h3 class="font-bold text-text-main mb-2">自動売買を行いますか？</h3>
+                        <p class="text-text-sub text-sm leading-relaxed">いいえ。本製品は手動操作を前提として設計されています。ユーザー自身の操作によって、手動でアクションを開始します。</p>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-text-main mb-2">投資助言は受けられますか？</h3>
+                        <p class="text-text-sub text-sm leading-relaxed">いいえ。本製品は投資助言、市場予測、金融商品の推奨や、利益に関する助言・指針も提供しません。</p>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-text-main mb-2">利益や成果は保証されますか？</h3>
+                        <p class="text-text-sub text-sm leading-relaxed">いいえ。本製品はいかなる取引成果や利益も保証しません。また、取引の優位性を高めるものでもありません。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FAQ Category: TradingView / MT5 の関係 -->
+            <div class="mb-16">
+                <h2 class="text-lg font-mono font-bold text-[#739735] uppercase tracking-widest border-b border-dark-border pb-2 mb-6">TradingView / MT5 の関係</h2>
+                <div class="space-y-6">
+                    <div>
+                        <h3 class="font-bold text-text-main mb-2">MT5を完全に置き換えるものですか？</h3>
+                        <p class="text-text-sub text-sm leading-relaxed">いいえ。TradingViewは主に分析画面として使われ、本製品はMT5での手動操作を補助するインターフェースとして機能します。MT5端末そのものを置き換えることはできません。</p>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-text-main mb-2">MT5がなくても使えますか？</h3>
+                        <p class="text-text-sub text-sm leading-relaxed">いいえ。ユーザーご自身のローカルPC上で動作するMT5端末が必須です。本製品単体で注文を実行することはできません。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FAQ Category: ローカルブリッジ / クラウド注文中継なし -->
+            <div class="mb-16">
+                <h2 class="text-lg font-mono font-bold text-[#739735] uppercase tracking-widest border-b border-dark-border pb-2 mb-6">ローカルブリッジ / クラウド注文中継なし</h2>
+                <div class="space-y-6">
+                    <div>
+                        <h3 class="font-bold text-text-main mb-2">注文はクラウドサーバーを経由しますか？</h3>
+                        <p class="text-text-sub text-sm leading-relaxed">いいえ。注文コマンドは公開Webhook URLや外部クラウド注文中継サーバーを経由しません。ユーザー操作は、ローカル環境を通じてMT5環境へ伝達されます。</p>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-text-main mb-2">ローカル動作の目的は何ですか？</h3>
+                        <p class="text-text-sub text-sm leading-relaxed">手動操作からMT5環境での処理までの導線を近づけるためです。ただし、最終的な処理の成否は、MT5端末の状態、ブローカー側の受け付け条件、および口座環境に依存します。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FAQ Category: インストール / 動作環境 -->
+            <div class="mb-16">
+                <h2 class="text-lg font-mono font-bold text-[#739735] uppercase tracking-widest border-b border-dark-border pb-2 mb-6">インストール / 動作環境</h2>
+                <div class="space-y-6">
+                    <div>
+                        <h3 class="font-bold text-text-main mb-2">必要な環境を教えてください。</h3>
+                        <p class="text-text-sub text-sm leading-relaxed">Windows環境、Google Chrome、TradingViewを利用できる状態、およびローカルPCにインストールされたMT5端末が必要です。これらを連携させるためのローカルコンポーネントのセットアップが必要です。</p>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-text-main mb-2">常に正常に動作しますか？</h3>
+                        <p class="text-text-sub text-sm leading-relaxed">いいえ。動作はブラウザのパフォーマンス、MT5の状態、ブローカーサーバーとの接続状況、シンボルの可用性、口座条件などの環境要因に大きく影響されます。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FAQ Category: ブローカー / シンボル / MT5条件 -->
+            <div class="mb-16">
+                <h2 class="text-lg font-mono font-bold text-[#739735] uppercase tracking-widest border-b border-dark-border pb-2 mb-6">ブローカー / シンボル / MT5条件</h2>
+                <div class="space-y-6">
+                    <div>
+                        <h3 class="font-bold text-text-main mb-2">特定のブローカーに依存しますか？</h3>
+                        <p class="text-text-sub text-sm leading-relaxed">汎用的なMT5環境を対象として設計されていますが、ブローカーによってシンボルのルール、ロット制限、または口座条件が異なります。すべてのブローカーでの動作を保証するものではありません。</p>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-text-main mb-2">ブローカー側の設定を変更しますか？</h3>
+                        <p class="text-text-sub text-sm leading-relaxed">いいえ。本製品はブローカー口座の設定を変更したり、制限を回避したりするものではありません。MT5へのアクセスおよび実行は、常にブローカー側の仕様と口座状況に依存します。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FAQ Category: プラン / ライセンス -->
+            <div class="mb-16">
+                <h2 class="text-lg font-mono font-bold text-[#739735] uppercase tracking-widest border-b border-dark-border pb-2 mb-6">プラン / ライセンス</h2>
+                <div class="space-y-6">
+                    <div>
+                        <h3 class="font-bold text-text-main mb-2">どのようなライセンス形態ですか？</h3>
+                        <p class="text-text-sub text-sm leading-relaxed">日本語ページでは「日本限定 単年ライセンス」として案内しています。価格は ¥198,000 / 1年 です。自動更新はありません。価格や期間などの条件は、商品ページまたはチェックアウト画面の表示が優先されます。</p>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-text-main mb-2">ライセンス期間中にアップデートはありますか？</h3>
+                        <p class="text-text-sub text-sm leading-relaxed">はい。有効な1年間のライセンス期間中は、提供されるソフトウェアのアップデートを利用できます。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FAQ Category: 外部チェックアウト -->
+            <div class="mb-16">
+                <h2 class="text-lg font-mono font-bold text-[#739735] uppercase tracking-widest border-b border-dark-border pb-2 mb-6">外部チェックアウト</h2>
+                <div class="space-y-6">
+                    <div>
+                        <h3 class="font-bold text-text-main mb-2">決済はどのように行われますか？</h3>
+                        <p class="text-text-sub text-sm leading-relaxed">決済は外部チェックアウトサービスを通じて行われます。Oichi Equipmentが自社内でクレジットカード番号などを直接保持・処理することはありません。</p>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-text-main mb-2">決済情報はどのように扱われますか？</h3>
+                        <p class="text-text-sub text-sm leading-relaxed">外部チェックアウトに関連する情報は、当該チェックアウトサービスのフローおよび適用される条件に従って処理されます。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FAQ Category: サポート / ログ / 提出 -->
+            <div class="mb-16">
+                <h2 class="text-lg font-mono font-bold text-[#739735] uppercase tracking-widest border-b border-dark-border pb-2 mb-6">サポート / ログ / 提出</h2>
+                <div class="space-y-6">
+                    <div>
+                        <h3 class="font-bold text-text-main mb-2">サポート時にログを提出する必要がありますか？</h3>
+                        <p class="text-text-sub text-sm leading-relaxed">通常利用でログ提出を求めることはありません。ただし、予期せぬ動作が発生した場合など、サポートやデバッグの補助として、関連ログや基本的な環境情報の提供をお願いすることがあります。</p>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-text-main mb-2">ログには何が含まれますか？</h3>
+                        <p class="text-text-sub text-sm leading-relaxed">ローカル処理の状態、事前確認の状態、MT5・ブローカーからの応答、およびパネル同期のタイミング等に関する情報が含まれ、問題の切り分けに利用されます。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FAQ Category: プライバシー / ローカルデータの扱い -->
+            <div class="mb-16">
+                <h2 class="text-lg font-mono font-bold text-[#739735] uppercase tracking-widest border-b border-dark-border pb-2 mb-6">プライバシー / ローカルデータの扱い</h2>
+                <div class="space-y-6">
+                    <div>
+                        <h3 class="font-bold text-text-main mb-2">データは主にローカル環境で扱われますか？</h3>
+                        <p class="text-text-sub text-sm leading-relaxed">はい。基本動作はローカル環境を前提としています。外部通信は、ライセンス有効性確認、アップデート確認、決済関連サービスなどに限定されます。</p>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-text-main mb-2">サポート提出時に注意することはありますか？</h3>
+                        <p class="text-text-sub text-sm leading-relaxed">サポートのために画面のスクリーンショットや情報を提供する際は、パスワードなどの不要な機密認証情報を含めないようご注意ください。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FAQ Category: 制限事項 / Synk Mushroomが行わないこと -->
+            <div class="mb-16">
+                <h2 class="text-lg font-mono font-bold text-[#739735] uppercase tracking-widest border-b border-dark-border pb-2 mb-6">制限事項 / Synk Mushroomが行わないこと</h2>
+                <div class="space-y-6">
+                    <div>
+                        <h3 class="font-bold text-text-main mb-2">約定速度は向上しますか？</h3>
+                        <p class="text-text-sub text-sm leading-relaxed">いいえ。本製品は実行速度や約定速度を保証するものではありません。最終的な約定はブローカーの処理環境やネットワーク状況に依存します。</p>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-text-main mb-2">取引ミスを自動で防止しますか？</h3>
+                        <p class="text-text-sub text-sm leading-relaxed">いいえ。誤操作や意図しない入力を自動的に防ぐ保護機能はありません。操作はユーザー自身の裁量に基づく手動実行です。</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="bg-dark-base border-t border-dark-border py-12 text-center">
+        <div class="max-w-4xl mx-auto px-4 flex flex-col items-center justify-center space-y-4">
+            <a href="/ja/#faq-section" class="text-text-main hover:text-uguisu transition font-bold tracking-wide">Synk Mushroom FAQ</a>
+            <div class="text-text-sub text-sm tracking-wider">TradingView-Embedded Local Execution Utility</div>
+            <div class="text-text-muted text-xs mt-4">
+                <p>&copy; 2026 Oichi Equipment.</p>
+                <p>All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+</body>
+
+</html>

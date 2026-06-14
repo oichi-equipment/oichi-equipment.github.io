@@ -176,6 +176,80 @@
             font-family: 'Bebas Neue', sans-serif;
             letter-spacing: 0.08em;
         }
+
+        .pricing-route-anchor {
+            position: absolute;
+            top: 0;
+            left: 0;
+            display: block;
+            width: 1px;
+            height: 1px;
+            opacity: 0;
+            pointer-events: none;
+            scroll-margin-top: 120px;
+        }
+
+        .pricing-card-monthly,
+        .pricing-card-annual,
+        .pricing-card-three-year {
+            transition: all 0.3s ease;
+        }
+
+        /* targetが存在しない通常閲覧時のみ、カードhoverを選択風にする */
+        #pricing:not(:has(#monthly:target, #annual:target, #three-year:target)) .pricing-card-monthly:hover,
+        #pricing:not(:has(#monthly:target, #annual:target, #three-year:target)) .pricing-card-annual:hover,
+        #pricing:not(:has(#monthly:target, #annual:target, #three-year:target)) .pricing-card-three-year:hover,
+        #pricing:has(#monthly:target) .pricing-card-monthly,
+        #pricing:has(#annual:target) .pricing-card-annual,
+        #pricing:has(#three-year:target) .pricing-card-three-year {
+            border-color: rgba(82, 102, 44, 0.65) !important;
+            box-shadow: 0 0 20px rgba(82, 102, 44, 0.18) !important;
+            background-color: #09090b !important;
+        }
+
+        /* targetが存在しない通常閲覧時のみ、hoverカードの価格を落ち着いた緑にする。target時はtargetカードだけ適用 */
+        #pricing:not(:has(#monthly:target, #annual:target, #three-year:target)) .pricing-card-monthly:hover .text-3xl,
+        #pricing:not(:has(#monthly:target, #annual:target, #three-year:target)) .pricing-card-annual:hover .text-3xl,
+        #pricing:not(:has(#monthly:target, #annual:target, #three-year:target)) .pricing-card-three-year:hover .text-3xl,
+        #pricing:has(#monthly:target) .pricing-card-monthly .text-3xl,
+        #pricing:has(#annual:target) .pricing-card-annual .text-3xl,
+        #pricing:has(#three-year:target) .pricing-card-three-year .text-3xl {
+            color: #739735 !important;
+        }
+
+        /* targetが存在しない通常閲覧時のみ、hoverカードのリストを少し明るくする。target時はtargetカードだけ適用 */
+        #pricing:not(:has(#monthly:target, #annual:target, #three-year:target)) .pricing-card-monthly:hover ul,
+        #pricing:not(:has(#monthly:target, #annual:target, #three-year:target)) .pricing-card-annual:hover ul,
+        #pricing:not(:has(#monthly:target, #annual:target, #three-year:target)) .pricing-card-three-year:hover ul,
+        #pricing:has(#monthly:target) .pricing-card-monthly ul,
+        #pricing:has(#annual:target) .pricing-card-annual ul,
+        #pricing:has(#three-year:target) .pricing-card-three-year ul {
+            color: #f4f4f5 !important;
+        }
+
+        /* targetが存在しない通常閲覧時のみ、hoverカードのボタンを落ち着いたオリーブにする。target時はtargetカードだけ適用 */
+        #pricing:not(:has(#monthly:target, #annual:target, #three-year:target)) .pricing-card-monthly:hover a,
+        #pricing:not(:has(#monthly:target, #annual:target, #three-year:target)) .pricing-card-annual:hover a,
+        #pricing:not(:has(#monthly:target, #annual:target, #three-year:target)) .pricing-card-three-year:hover a,
+        #pricing:has(#monthly:target) .pricing-card-monthly a,
+        #pricing:has(#annual:target) .pricing-card-annual a,
+        #pricing:has(#three-year:target) .pricing-card-three-year a {
+            background-color: #52662C !important;
+            color: #f4f4f5 !important;
+            border-color: #52662C !important;
+            font-weight: 700 !important;
+        }
+
+        /* targetが存在しない通常閲覧時のみ、hoverカード内ボタンhoverを少しだけ変化させる。target時はtargetカードだけ適用 */
+        #pricing:not(:has(#monthly:target, #annual:target, #three-year:target)) .pricing-card-monthly:hover a:hover,
+        #pricing:not(:has(#monthly:target, #annual:target, #three-year:target)) .pricing-card-annual:hover a:hover,
+        #pricing:not(:has(#monthly:target, #annual:target, #three-year:target)) .pricing-card-three-year:hover a:hover,
+        #pricing:has(#monthly:target) .pricing-card-monthly a:hover,
+        #pricing:has(#annual:target) .pricing-card-annual a:hover,
+        #pricing:has(#three-year:target) .pricing-card-three-year a:hover {
+            background-color: #5f7333 !important;
+            border-color: #5f7333 !important;
+        }
     </style>
     <meta name="google-site-verification" content="_BJ8SMDc7Ya_Lg_R5Nz0q-lN7LTn7AlXJ-XfUaDphx4" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
@@ -194,7 +268,7 @@
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16 flex-wrap relative">
                 <div class="flex items-center justify-between w-full md:w-auto">
-                    <a href="#hero" class="text-xl font-semibold tracking-[0.08em] text-uguisu hover:text-uguisu-hover transition logo-text">OICHI EQUIPMENT</a>
+                    <a href="/#pricing" class="text-xl font-semibold tracking-[0.08em] text-uguisu hover:text-uguisu-hover transition logo-text">OICHI EQUIPMENT</a>
                     <div class="flex items-center gap-3">
                         <div class="md:hidden text-sm font-medium text-text-sub"><a href="../ja/index.html" class="text-text-sub hover:text-uguisu transition">JA</a> / <a href="index.html" class="text-text-main hover:text-uguisu transition">EN</a></div>
                         <button id="mobile-menu-btn" class="md:hidden text-text-main p-2 focus:outline-none">
@@ -501,15 +575,18 @@
         </section>
 
         <!-- Pricing -->
-        <section id="pricing" class="py-16 md:py-24 bg-dark-card">
+        <section id="pricing" class="relative py-16 md:py-24 bg-dark-card">
+            <span id="monthly" class="pricing-route-anchor" aria-hidden="true"></span>
+            <span id="annual" class="pricing-route-anchor" aria-hidden="true"></span>
+            <span id="three-year" class="pricing-route-anchor" aria-hidden="true"></span>
             <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-16">
                     <h2 class="text-3xl font-bold text-text-main mb-4 tracking-wide">Pricing Plans</h2>
-                    <p class="text-text-sub text-sm">All payments are securely processed through trusted external payment providers.</p>
+                    <p class="text-text-sub text-sm">Payments are handled through an external checkout provider.</p>
                 </div>
 
                 <div class="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-                    <div class="border border-dark-border rounded-lg p-4 md:p-8 bg-dark-base flex flex-col">
+                    <div class="border border-dark-border rounded-lg p-4 md:p-8 bg-dark-base flex flex-col pricing-card-monthly">
                         <h3 class="text-lg font-bold text-text-main mb-2">Monthly Plan</h3>
                         <div class="text-3xl font-bold text-text-main mb-6">$59 <span
                                 class="text-sm font-normal text-text-muted">/ month</span></div>
@@ -522,25 +599,21 @@
                             class="block text-center w-full py-3 border border-dark-border text-text-main font-medium rounded hover:bg-dark-card transition">Select Plan</a>
                     </div>
 
-                    <div
-                        class="border border-uguisu-light/50 rounded-lg p-4 md:p-8 bg-dark-base flex flex-col relative ui-glow">
-                        <div
-                            class="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-uguisu text-white px-3 py-1 rounded-full text-[10px] font-bold tracking-widest">
-                            RECOMMENDED</div>
+                    <div class="border border-dark-border rounded-lg p-4 md:p-8 bg-dark-base flex flex-col pricing-card-annual">
                         <h3 class="text-lg font-bold text-text-main mb-2">Annual Plan</h3>
-                        <div class="text-3xl font-bold text-uguisu mb-6">$540 <span
+                        <div class="text-3xl font-bold text-text-main mb-6">$540 <span
                                 class="text-sm font-normal text-text-muted">/ year</span></div>
-                        <ul class="space-y-4 text-sm text-text-main mb-8 flex-grow">
+                        <ul class="space-y-4 text-sm text-text-sub mb-8 flex-grow">
                             <li class="flex items-start"><span class="text-uguisu-light mr-3">✓</span> 7-day free trial</li>
                             <li class="flex items-start"><span class="text-uguisu-light mr-3">✓</span> Full access to all features</li>
                             <li class="flex items-start"><span class="text-uguisu-light mr-3">✓</span> Continuous updates</li>
                             <li class="flex items-start"><span class="text-uguisu-light mr-3">✓</span> Better value compared to monthly</li>
                         </ul>
                         <a href="#"
-                            class="block text-center w-full py-3 bg-uguisu text-dark-base font-bold rounded hover:bg-uguisu-hover transition">Select Plan</a>
+                            class="block text-center w-full py-3 border border-dark-border text-text-main font-medium rounded hover:bg-dark-card transition">Select Plan</a>
                     </div>
 
-                    <div class="border border-dark-border rounded-lg p-4 md:p-8 bg-dark-base flex flex-col">
+                    <div class="border border-dark-border rounded-lg p-4 md:p-8 bg-dark-base flex flex-col pricing-card-three-year">
                         <h3 class="text-lg font-bold text-text-main mb-2">3-Year License</h3>
                         <div class="text-3xl font-bold text-text-main mb-6">$1,300 <span
                                 class="text-sm font-normal text-text-muted">/ 3 years</span></div>
@@ -568,8 +641,8 @@
                     </div>
                     <div class="p-6 border-l-2 border-dark-border hover:border-[#52662c] transition group">
                         <div class="text-text-muted font-mono text-sm mb-2 group-hover:text-[#52662c] transition">Step 02</div>
-                        <h4 class="font-bold text-text-main mb-2">Secure Checkout</h4>
-                        <p class="text-xs text-text-sub leading-relaxed">Complete your payment securely through our external payment platform.</p>
+                        <h4 class="font-bold text-text-main mb-2">Checkout</h4>
+                        <p class="text-xs text-text-sub leading-relaxed">Complete checkout through the external checkout flow.</p>
                     </div>
                     <div class="p-6 border-l-2 border-dark-border hover:border-[#52662c] transition group">
                         <div class="text-text-muted font-mono text-sm mb-2 group-hover:text-[#52662c] transition">Step 03</div>
@@ -643,7 +716,7 @@
                         </div>
                     </div>
                     <div class="text-center pt-4">
-                        <a href="/pages/faq.html" class="text-sm font-medium text-text-sub hover:text-uguisu transition">OTHER</a>
+                        <a href="/synk-mushroom/faq.html" class="text-sm font-medium text-text-sub hover:text-uguisu transition">Read the full FAQ before purchase</a>
                     </div>
                 </div>
 
@@ -766,13 +839,11 @@
 
     </main>
 
-    <footer
-        class="bg-dark-base border-t border-dark-border text-text-muted py-12 text-center text-sm font-mono tracking-wider">
-        <div class="max-w-6xl mx-auto px-4">
-            <div class="mb-4">
-                Oichi Equipment
-            </div>
-            <p class="text-xs">&copy; 2026 Oichi Equipment. All rights reserved.</p>
+    <footer class="bg-dark-base border-t border-dark-border py-16 flex flex-col items-center mb-0">
+        <a href="/#pricing" class="terminal-link font-mono text-xs text-[#739735] tracking-[0.2em] uppercase mb-2 block">Oichi Equipment</a>
+        <div class="font-mono text-[0.65rem] text-[#a1a1aa] tracking-[0.1em] uppercase mb-4 text-center">Discretionary Trading Infrastructure</div>
+        <div class="font-mono text-[0.55rem] text-[#71717a] tracking-[0.2em] uppercase leading-relaxed text-center">
+            &copy; 2026 Oichi Equipment.<br>All rights reserved.
         </div>
     </footer>
 
